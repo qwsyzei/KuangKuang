@@ -143,6 +143,7 @@
     <string name="personal_signature">个性签名</string>
     <string name="select_from_album">从相册中选择</string>
     <string name="take_photo">拍照</string>
+    <string name="head_pic">头像</string>
     <!-- 我的消息 -->
     <string name="my_message">我的消息</string>
     <string name="everyday_sign">每日签到</string>

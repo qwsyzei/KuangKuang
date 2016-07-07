@@ -12,7 +12,11 @@
 
         <include layout="@layout/title_three"></include>
     </LinearLayout>
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swip_msubject"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/lightgray">
     <ListView
         android:id="@+id/listview_msubject"
         android:layout_width="match_parent"
@@ -23,5 +27,5 @@
         android:layout_weight="1"
         android:divider="@color/lightgray"
         android:dividerHeight="@dimen/login_p_l_r"></ListView>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

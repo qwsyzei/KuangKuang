@@ -14,13 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity android:name=".main.MainActivity" >
-        </activity>
-        <activity android:name=".main.EnterActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".main.EnterActivity" >
         </activity>
         <activity android:name=".main.LoginActivity" >
         </activity>
@@ -53,6 +53,8 @@
         <activity android:name=".main.S_ArticleActivity" >
         </activity>
         <activity android:name=".main.LogoActivity" >
+        </activity>
+        <activity android:name=".main.M_BigHeadActivity" >
         </activity>
     </application>
 

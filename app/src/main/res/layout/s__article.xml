@@ -29,6 +29,7 @@
                 android:id="@+id/tv_article_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/login_p_l_r"
                 android:layout_below="@+id/article_title_layout"/>
             <RelativeLayout
                 android:layout_width="fill_parent"

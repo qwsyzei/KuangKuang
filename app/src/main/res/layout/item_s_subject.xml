@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
-        android:id="@+id/item_subject_background"
+        android:id="@+id/item_subject_picture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
@@ -46,7 +46,7 @@
         android:textSize="@dimen/middle_text_size"
         />
     <TextView
-        android:id="@+id/item_subject_content"
+        android:id="@+id/item_subject_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/login_p_l_r"

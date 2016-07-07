@@ -2,7 +2,11 @@ package klsd.kuangkuang.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -10,13 +14,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,12 +41,20 @@ import klsd.kuangkuang.views.SelectPicDialog;
  */
 public class M_PersonalDataActivity extends BaseActivity implements View.OnClickListener, View.OnFocusChangeListener {
     private TextView tv_birthday, tv_city;
-    private Spinner spinner_sex,spinner_profession;
+    private Spinner spinner_sex, spinner_profession;
     private EditText edit_per_nickname, edit_per_signature;
-    private RelativeLayout relativeLayout;
-private SelectPicDialog selectPicDialog;
-    private LinearLayout layout_from_album,layout_take_photo;
+    private TextView tv_change_head;
+    private SelectPicDialog selectPicDialog;
+    private LinearLayout layout_from_album, layout_take_photo;
     private TextView tv_dialog_cancel;
+    private ImageView im_head;
+
+    public static final int NONE = 0;
+    public static final int PHOTOHRAPH = 1;// 拍照
+    public static final int PHOTOZOOM = 2; // 缩放
+    public static final int PHOTORESOULT = 3;// 结果
+
+    public static final String IMAGE_UNSPECIFIED = "image/*";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +66,8 @@ private SelectPicDialog selectPicDialog;
     }
 
     private void initView() {
-        relativeLayout= (RelativeLayout) findViewById(R.id.per_change_head_pic);
+        im_head = (ImageView) findViewById(R.id.im_head_pic);
+        tv_change_head = (TextView) findViewById(R.id.per_change_head_pic);
         edit_per_nickname = (EditText) findViewById(R.id.per_nickname);
         edit_per_signature = (EditText) findViewById(R.id.per_edit_signature);
         edit_per_nickname.setOnFocusChangeListener(this);//用于判断焦点
@@ -63,11 +80,12 @@ private SelectPicDialog selectPicDialog;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.myspinner, mItems);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_sex.setAdapter(adapter);
-        String [] profession={"销售","IT","房产","金融","传媒","财务"};
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, R.layout.myspinner, profession);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_profession.setAdapter(adapter1);
-        relativeLayout.setOnClickListener(this);
+//        String[] profession = {"销售", "IT", "房产", "金融", "传媒", "财务"};
+//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, R.layout.myspinner, profession);
+//        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner_profession.setAdapter(adapter1);
+        im_head.setOnClickListener(this);
+        tv_change_head.setOnClickListener(this);
         tv_birthday.setOnClickListener(this);
         tv_city.setOnClickListener(this);
 
@@ -119,6 +137,9 @@ private SelectPicDialog selectPicDialog;
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.im_head_pic:
+                myStartActivity(new Intent(M_PersonalDataActivity.this, M_BigHeadActivity.class));
+                break;
             case R.id.per_change_head_pic:
                 initDialog();
                 break;
@@ -128,22 +149,20 @@ private SelectPicDialog selectPicDialog;
             case R.id.per_city:
                 initCityPicker();
                 break;
-            case R.id.per_profession:
-                ToastUtil.show(M_PersonalDataActivity.this, "这些职业写成spinner选择，还是让用户自己填");
-                break;
             case R.id.layout_from_album:
-//                Intent intent2 = new Intent(Intent.ACTION_VIEW);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null, null));
-//
-//                intent.setDataAndType(uri, "image/*");
-//                startActivity(intent2);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        IMAGE_UNSPECIFIED);
+                startActivityForResult(intent, PHOTOZOOM);
 
                 selectPicDialog.dismiss();
                 break;
             case R.id.layout_take_photo:
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                startActivityForResult(intent, 100);
+                Intent intent123 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent123.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
+                        Environment.getExternalStorageDirectory(), "temp.jpg")));
+                System.out.println("=============" + Environment.getExternalStorageDirectory());
+                startActivityForResult(intent123, PHOTOHRAPH);
                 selectPicDialog.dismiss();
                 break;
             case R.id.tv_dialog_cancel:
@@ -168,6 +187,7 @@ private SelectPicDialog selectPicDialog;
             edit_per_signature.setCursorVisible(false);
         }
     }
+
     //创建dialog
     private void initDialog() {
         selectPicDialog = new SelectPicDialog(M_PersonalDataActivity.this, R.style.dialog123);//创建Dialog并设置样式主题
@@ -190,4 +210,53 @@ private SelectPicDialog selectPicDialog;
         tv_dialog_cancel.setOnClickListener(this);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == NONE)
+            return;
+        // 拍照
+        if (requestCode == PHOTOHRAPH) {
+            // 设置文件保存路径这里放在跟目录下
+            File picture = new File(Environment.getExternalStorageDirectory()
+                    + "/temp.jpg");
+            System.out.println("------------------------" + picture.getPath());
+            startPhotoZoom(Uri.fromFile(picture));
+        }
+
+        if (data == null)
+            return;
+
+        // 读取相册缩放图片
+        if (requestCode == PHOTOZOOM) {
+            startPhotoZoom(data.getData());
+        }
+        // 处理结果
+        if (requestCode == PHOTORESOULT) {
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                Bitmap photo = extras.getParcelable("data");
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);// (0 -
+                // 100)压缩文件
+                im_head.setImageBitmap(photo);
+            }
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void startPhotoZoom(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, IMAGE_UNSPECIFIED);
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 200);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, PHOTORESOULT);
+    }
 }

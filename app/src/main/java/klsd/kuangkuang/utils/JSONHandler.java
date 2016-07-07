@@ -20,6 +20,7 @@ import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.models.OHLCEntity;
 import klsd.kuangkuang.models.Order;
 import klsd.kuangkuang.models.OrderId;
+import klsd.kuangkuang.models.Subject;
 
 public class JSONHandler {
 	Context ctx;
@@ -38,28 +39,21 @@ public class JSONHandler {
 	public final static String JTYPE_GET_TRADES = "get_trades";
 	public final static String JTYPE_GET_ORDER_BOOK = "get_order_book";
 	public final static String JTYPE_DELETE_ORDERS = "delete_orders";
-	public final static String JTYPE_CLEAR_ORDERS = "clear_orders";
 	public final static String JTYPE_ORDERS_SELL = "sell";
 	public final static String JTYPE_SIGN = "signup";
 	public final static String JTYPE_RESET = "reset_password";
 	public final static String JTYPE_BIND_PHONE = "bind_phone";
 	public final static String JTYPE_MEMBER_ME = "member_me";
-    public final static String JTYPE_AUTH_PUSHER = "auth_pusher";
     public final static String JTYPE_UPDATE_PAY_PASSWORD = "update_pay_password";
     public final static String JTYPE_VERIFY_PAY_PASSWORD = "verify_pay_password";
 	public final static String JTYPE_GET_TIME = "get_time";
 	
 	public final static String JTYPE_PUSHER_MARKET_TICKER 	= "pusher-market-ticker";
-	public final static String JTYPE_PUSHER_MARKET_TRADES 	= "pusher-market-trades";
 	public final static String JTYPE_PUSHER_PUBLIC_TRADES 	= "pusher-public-trades";
 	public final static String JTYPE_PUSHER_PUBLIC_UPDATE 	= "pusher-public-update";
 	
 	public final static String JTYPE_PUSHER_PRIVATE_ACCOUNT					= "pusher-privat-account";
 	public final static String JTYPE_PUSHER_PRIVATE_ACCOUNTS				= "pusher-privat-accounts";
-	public final static String JTYPE_PUSHER_PRIVATE_DEPOSITES				= "pusher-privat-deposits";
-	public final static String JTYPE_PUSHER_PRIVATE_MEMBERS					= "pusher-privat-members";
-	public final static String JTYPE_PUSHER_PRIVATE_DEPOSIT_ADDRESS			= "pusher-privat-deposit_address";
-	public final static String JTYPE_PUSHER_PRIVATE_WITHDRAWS				= "pusher-privat-withdraws";
 	public final static String JTYPE_PUSHER_PRIVATE_ORDER					= "pusher-privat-order";
 	public final static String JTYPE_PUSHER_PRIVATE_TRADE				= "pusher-privat-trade";
 	
@@ -69,16 +63,15 @@ public class JSONHandler {
 	public final static String JTYPE_RECHARGE 				= "recharge";
 	public final static String JTYPE_RECHARGE_CANCEL				= "recharge_cancel";
 	public final static String JTYPE_DEPOSITS				= "deposits";
-	public final static String JTYPE_DEPOSIT				= "deposit";
 	public final static String JTYPE_WITHDRAW 				= "withdraw";
 	public final static String JTYPE_WITHDRAWS				= "withdraws";
 	public final static String JTYPE_WITHDRAW_CANCEL	= "withdraw_cancel";
 	public final static String JTYPE_SMS_AUTH_CODE			= "sms_code";
 	public final static String JTYPE_VERIFY_CODE			= "verify_code";
 	public final static String JTYPE_GET_ACCOUNT_VERSIONS 	= "account_versions";
-	public final static String JTYPE_GET_ACCOUNT_VERSION 	= "account_version";
 
-	
+
+	public final static String JTYPE_ARTICLES_LIST = "articles_list";
 	public JSONHandler(){
 		
 	}
@@ -186,7 +179,17 @@ public class JSONHandler {
 					orders.add(order);
 				}
 				bundle.putSerializable("orders", orders);
-			} else if (jtype2.equals(JTYPE_GET_ORDERS_ITEM)){
+			}
+			else if (jtype2.equals(JTYPE_ARTICLES_LIST)){
+				ArrayList<Subject> as = new ArrayList<Subject>();
+				for (int i=0;i<olistArrays.size();i++){
+					JSONObject object = olistArrays.get(i);
+					Subject sub = new Subject(ctx);
+					sub.getFromJSONObjectItem(object);
+					as.add(sub);
+				}
+				bundle.putSerializable("subject_article", as);
+			}else if (jtype2.equals(JTYPE_GET_ORDERS_ITEM)){
 				ArrayList<OrderId> orders = new ArrayList<OrderId>();
 				for (int i=0;i<olistArrays.size();i++){
 					JSONObject object = olistArrays.get(i);
@@ -296,7 +299,7 @@ public class JSONHandler {
 		List<String> osStrings = new ArrayList<String>();
 		osStrings.add(JTYPE_GET_ORDERS);
 		osStrings.add(JTYPE_GET_ORDERS_ITEM);
-
+		osStrings.add(JTYPE_ARTICLES_LIST);
 		osStrings.add(JTYPE_GET_TRADES);
 		osStrings.add(JTYPE_GET_FUND_SOURCES);
 		osStrings.add(JTYPE_GET_ACCOUNT_VERSIONS);

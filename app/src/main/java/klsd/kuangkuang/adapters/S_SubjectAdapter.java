@@ -32,18 +32,18 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final Subject subject = getItem(position);
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_s_subject, null);
             viewHolder.title = (TextView) convertView.findViewById(R.id.item_subject_title);
-            viewHolder.content = (TextView) convertView.findViewById(R.id.item_subject_content);
-            viewHolder.author = (TextView) convertView.findViewById(R.id.item_subject_author_name);
-            viewHolder.looked = (TextView) convertView.findViewById(R.id.item_subject_looked);
-            viewHolder.praise = (TextView) convertView.findViewById(R.id.item_subject_praise);
-            viewHolder.comment = (TextView) convertView.findViewById(R.id.item_subject_comment);
-            viewHolder.im_background = (ImageView) convertView.findViewById(R.id.item_subject_background);
-            viewHolder.im_head_pic = (ImageView) convertView.findViewById(R.id.item_subject_head_pic);
+            viewHolder.describe = (TextView) convertView.findViewById(R.id.item_subject_describe);
+//            viewHolder.author = (TextView) convertView.findViewById(R.id.item_subject_author_name);
+//            viewHolder.looked = (TextView) convertView.findViewById(R.id.item_subject_looked);
+//            viewHolder.praise = (TextView) convertView.findViewById(R.id.item_subject_praise);
+//            viewHolder.comment = (TextView) convertView.findViewById(R.id.item_subject_comment);
+            viewHolder.im_picture = (ImageView) convertView.findViewById(R.id.item_subject_picture);
+//            viewHolder.im_head_pic = (ImageView) convertView.findViewById(R.id.item_subject_head_pic);
 
 
             convertView.setTag(viewHolder);
@@ -51,18 +51,19 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.title.setText(subject.getTitle());
-        viewHolder.content.setText(subject.getContent());
-        viewHolder.author.setText(subject.getAuthor());
-        viewHolder.looked.setText(subject.getLooked());
-        viewHolder.praise.setText(subject.getPraise());
-        viewHolder.comment.setText(subject.getComment());
-        viewHolder.im_background.setImageBitmap(subject.getBackground());
-        viewHolder.im_head_pic.setImageBitmap(subject.getHead_pic());
+        viewHolder.describe.setText(subject.getDescribe());
+//        viewHolder.author.setText(subject.getAuthor());
+//        viewHolder.looked.setText(subject.getLooked());
+//        viewHolder.praise.setText(subject.getPraise());
+//        viewHolder.comment.setText(subject.getComment());
+        viewHolder.im_picture.setImageBitmap(subject.getPicture());
+//        viewHolder.im_head_pic.setImageBitmap(subject.getHead_pic());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(ctx, S_ArticleActivity.class);
+                intent.putExtra("content_html",subject.getContent());
                 ctx.startActivity(intent);
             }
         });
@@ -71,7 +72,7 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
     }
 
     public final class ViewHolder {
-        public TextView title, content, author, looked, praise, comment;
-        public ImageView im_background,im_head_pic;
+        public TextView title, describe;
+        public ImageView im_picture;
     }
 }

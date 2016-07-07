@@ -35,7 +35,7 @@ public class ForgetPsdActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.getback_phone);
+        setContentView(R.layout.forget_psd);
         initView();
     }
 
