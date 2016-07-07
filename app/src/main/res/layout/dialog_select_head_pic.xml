@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_select_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dialog_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+        android:orientation="vertical"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_rectangle_top"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/signup__text_m_l_r"
+            android:paddingTop="@dimen/dialog_title_p_t"
+            android:text="@string/change_head_pic"
+            android:textColor="@color/ebpay_gray3"
+            android:textSize="@dimen/big_text_size"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/layout_from_album"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/base_margin"
+            android:paddingTop="@dimen/base_margin">
+
+            <TextView
+                android:id="@+id/tv_dialog_byphone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:layout_marginTop="0.7dp"
+                android:gravity="center"
+                android:text="@string/select_from_album"
+                android:textSize="@dimen/new_title_size" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/dialog_background" />
+
+
+        <LinearLayout
+            android:id="@+id/layout_take_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingBottom="@dimen/base_margin"
+            android:paddingTop="@dimen/base_margin"
+           >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:layout_marginTop="0.7dp"
+                android:gravity="center"
+                android:text="@string/take_photo"
+                android:textSize="@dimen/new_title_size" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_dialog_cancel"
+            android:layout_width="@dimen/dialog_cancel_width"
+            android:layout_height="@dimen/button_height"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/base_margin"
+            android:layout_marginTop="@dimen/signup__text_m_l_r"
+            android:background="@drawable/login_btn"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/new_title_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</LinearLayout>

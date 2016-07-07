@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lightgray"
+    tools:context="klsd.kuangkuang.main.M_AdminManagerActivity">
+
+
+        <RelativeLayout
+            android:id="@+id/user_title_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/title_two" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layout_admin_manager_change_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_margin"
+            android:background="@color/white"
+            android:padding="@dimen/login_p_l_r">
+
+            <TextView
+
+                style="@style/common_text_style"
+                android:text="@string/update_phone" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@android:drawable/ic_media_next" />
+
+
+        </RelativeLayout>
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray" />
+
+    <RelativeLayout
+        android:id="@+id/layout_admin_manager_change_psd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/login_p_l_r">
+
+        <TextView
+            style="@style/common_text_style"
+            android:text="@string/change_password" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@android:drawable/ic_media_next" />
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,74 @@
+<resources>
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference" />
+        <attr name="metaButtonBarButtonStyle" format="reference" />
+    </declare-styleable>
+
+    <attr name="tabView" format="reference"/>
+    <attr name="iconWidth" format="dimension"/>
+    <attr name="iconHeight" format="dimension"/>
+
+    <declare-styleable name="TabView">
+        <attr name="tabView"/>
+        <attr name="iconWidth"/>
+        <attr name="iconHeight"/>
+    </declare-styleable>
+
+    <declare-styleable name="SegmentedGroup">
+        <attr name="sc_corner_radius" format="dimension" />
+        <attr name="sc_border_width" format="dimension" />
+        <attr name="sc_tint_color" format="color" />
+        <attr name="sc_checked_text_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="gridPasswordView">
+        <attr name="textColor" format="color|reference" />
+        <attr name="textSize" format="dimension" />
+
+        <attr name="lineColor" format="color" />
+        <attr name="gridColor" format="color" />
+        <attr name="lineWidth" format="dimension" />
+
+        <attr name="passwordLength" format="integer" />
+        <attr name="passwordTransformation" format="string" />
+
+        <attr name="passwordType" format="enum">
+            <enum name="numberPassword" value="0" />
+            <enum name="textPassword" value="1" />
+            <enum name="textVisiblePassword" value="2" />
+            <enum name="textWebPassword" value="3" />
+        </attr>
+    </declare-styleable>
+    <attr format="dimension" name="borderRadius"/>
+    <attr name="type">
+        <enum name="circle" value="0"/>
+        <enum name="round" value="1"/>
+    </attr>
+    <declare-styleable name="YPRoundImageView">
+        <attr name="borderRadius"/>
+        <attr name="type"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="zhou_RichText">
+        <attr name="zhou_placeHolder" format="reference" />
+        <attr name="zhou_errorImage" format="reference" />
+        <attr name="zhou_default_width" format="dimension" />
+        <attr name="zhou_default_height" format="dimension" />
+    </declare-styleable>
+
+    <attr format="float|reference" name="fromDegrees"/>
+    <attr format="float|reference" name="toDegrees"/>
+    <attr format="dimension|reference" name="childSize"/>
+
+    <attr name="BaseColor" format="color" />
+    <attr name="KelaYellow" format="color"/>
+    <attr name="titleColor" format="color" />
+    <attr name="titleBarColor" format="color" />
+    <attr name="baseBtnColor" format="color" />
+    <attr name="NormalTextColor" format="color" />
+    <attr name="GrayTextColor" format="color" />
+    <attr name="ChexiaoBtnColor" format="color" />
+
+
+</resources>

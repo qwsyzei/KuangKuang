@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lightgray"
+    tools:context="klsd.kuangkuang.fragments.MSubjectFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/title_three"></include>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listview_msubject"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/size_eight"
+        android:layout_marginLeft="@dimen/login_p_l_r"
+        android:layout_marginRight="@dimen/login_p_l_r"
+        android:layout_weight="1"
+        android:divider="@color/lightgray"
+        android:dividerHeight="@dimen/login_p_l_r"></ListView>
+
+</LinearLayout>

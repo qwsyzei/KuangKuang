@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="klsd.kuangkuang.main.M_AboutUsActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/user_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/title_two" />
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:layout_marginTop="@dimen/base_margin"
+        android:src="@mipmap/abc"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="我们一直在你身边"
+        android:layout_marginTop="@dimen/base_margin"
+        android:paddingTop="@dimen/base_margin"
+        android:textSize="@dimen/new_title_size"
+        android:gravity="center"
+        android:id="@+id/about_us_text_title"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/base_margin"
+        android:text="    “山不转，水转;境不转，心转”，渐渐地明白，“事事无法全部看透，人人没法个个看懂”。慢慢地懂得，“穷则变，变则通，通则顺，顺则达”。 “生命无限潜能，人生无限可能”。“看不透，看不懂”才是人生曼妙，“看不明，读不懂”才是生活情怀。"
+        android:id="@+id/about_us_text"/>
+</LinearLayout>
+</RelativeLayout>

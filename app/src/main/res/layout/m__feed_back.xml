@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgray"
+    android:orientation="vertical"
+    tools:context="klsd.kuangkuang.main.M_FeedBackActivity">
+
+    <RelativeLayout
+        android:id="@+id/user_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/title_two" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/base_margin"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/feedback_edit"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="123"
+            android:padding="@dimen/login_p_l_r" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/feedback_button"
+        style="@style/common_button_style"
+        android:layout_width="@dimen/small_dialog_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_gravity="center"
+        android:text="@string/submit" />
+
+</LinearLayout>

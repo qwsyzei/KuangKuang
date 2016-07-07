@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="klsd.kuangkuang" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity android:name=".main.MainActivity" >
+        </activity>
+        <activity android:name=".main.EnterActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".main.LoginActivity" >
+        </activity>
+        <activity android:name=".main.SignupActivity" >
+        </activity>
+        <activity android:name=".main.M_SetActivity" >
+        </activity>
+        <activity android:name=".main.M_PersonalDataActivity" >
+        </activity>
+        <activity android:name=".main.M_AboutUsActivity" >
+        </activity>
+        <activity android:name=".main.M_AdminManagerActivity" >
+        </activity>
+        <activity android:name=".main.M_NewPhoneActivity" >
+        </activity>
+        <activity android:name=".main.M_NewPhoneProActivity" >
+        </activity>
+        <activity android:name=".main.M_ChangePsdActivity" >
+        </activity>
+        <activity android:name=".main.M_ScoreRuleActivity" >
+        </activity>
+        <activity android:name=".main.M_FeedBackActivity" >
+        </activity>
+        <activity android:name=".main.M_GiveMarkActivity" >
+        </activity>
+        <activity android:name=".main.M_MyMessageActivity" >
+        </activity>
+        <activity android:name=".main.ForgetPsdActivity" >
+        </activity>
+        <activity android:name=".main.S_ArticleActivity" >
+        </activity>
+        <activity android:name=".main.LogoActivity" >
+        </activity>
+    </application>
+
+</manifest>

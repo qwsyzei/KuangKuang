@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/hot_comment"
+    android:textSize="@dimen/base_text_size"
+    android:layout_marginTop="@dimen/login_p_t_b"
+    android:layout_marginBottom="@dimen/login_p_t_b"
+    android:layout_marginLeft="@dimen/signup__text_m_l_r"
+    android:id="@+id/article_hot_comment"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/light_font_note"></View>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/base_margin"></ListView>
+    <TextView
+        android:id="@+id/article_look_all_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="@dimen/base_margin"
+        android:text="@string/all_comment"/>
+</LinearLayout>

@@ -1,0 +1,92 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="base_border_width">0.5dp</dimen>
+    
+    <dimen name="radio_button_conner_radius">0dp</dimen>
+    <dimen name="radio_button_stroke_border">0.5dp</dimen>
+    <dimen name="base_period_seg_width">34dp</dimen>
+    
+    <dimen name="base_margin_size">6dp</dimen>
+    <dimen name="segment_panding">5dp</dimen>
+    
+    <dimen name="title_bar_hight">38dp</dimen>
+    <dimen name="tab_bottom_height">43dp</dimen>
+    <dimen name="base_line_item_height">37dp</dimen>
+    
+    <dimen name="market_top_1_height">38dp</dimen>
+    <dimen name="market_top_1_1_height">20dp</dimen>
+    <dimen name="market_top_1_2_height">31dp</dimen>
+    <dimen name="market_top_2_height">29dp</dimen>
+    <dimen name="market_top_3_height">31dp</dimen>
+    <dimen name="market_top_charts_tab_height">31dp</dimen>
+    <dimen name="market_top_charts_height">140dp</dimen>
+    <dimen name="market_bottom_height">82dp</dimen>
+    <dimen name="market_bottom_line_height">@dimen/base_line_item_height</dimen>
+    <dimen name="market_bottom_btn_height">24dp</dimen>
+    
+    <dimen name="pop_menu_height">50dp</dimen>
+    
+     <dimen name="login_title_cancel_size">13sp</dimen>
+       <dimen name="signup_bottom_text">15sp</dimen>
+         <dimen name="signup_main_text">18.7sp</dimen>
+
+    <dimen name="order_number_size">14sp</dimen>
+    <dimen name="title_bar_text_size">15sp</dimen>
+    <dimen name="new_title_size">16sp</dimen>
+    <dimen name="new_hint_size">10sp</dimen>
+
+    <dimen name="large_text_size">18sp</dimen>
+
+    <dimen name="big_text_size">17sp</dimen>
+    <dimen name="base_text_size">15sp</dimen>
+    <dimen name="middle_text_size">13sp</dimen>
+    <dimen name="small_middle_text_size">12sp</dimen>
+    <dimen name="small_text_size">11sp</dimen>
+    <dimen name="tiny_small_text_size">9sp</dimen>
+    <dimen name="tiny_text_size">8sp</dimen>
+    <dimen name="new_card_number">20sp</dimen>
+
+    <dimen name="base_icon_size">22dp</dimen>
+
+    <dimen name="login_p_l_r">4dp</dimen>
+    <dimen name="login_p_t_b">5dp</dimen>
+    <dimen name="login_m_l_r">6dp</dimen>
+    <dimen name="login__text_m_l_r">12dp</dimen>
+    <dimen name="login__line_m_l_r">14dp</dimen>
+
+    <dimen name="signup__text_m_l_r">12dp</dimen>
+
+    <dimen name="button_height">30dp</dimen>
+    <dimen name="code_button_height">27dp</dimen>
+    <dimen name="base_margin">8dp</dimen>
+
+
+    <dimen name="title_layout_height">38dp</dimen>
+    <dimen name="title_red_height">28dp</dimen>
+
+    <dimen name="size_eight">6dp</dimen>
+
+    <dimen name="spinner_p_l">41dp</dimen>
+
+    <dimen name="personal_signature_m_t">13dp</dimen>
+
+    <dimen name="small_dialog_width">248dp</dimen>
+    <dimen name="dialog_width">270dp</dimen>
+    <dimen name="dialog_p_l">27dp</dimen>
+    <dimen name="dialog_text_p_l">64dp</dimen>
+    <dimen name="dialog_yes_height">46dp</dimen>
+    <dimen name="dialog_result_height">21dp</dimen>
+
+    <dimen name="feedback_height">175dp</dimen>
+    <dimen name="dialog_cancel_width">115dp</dimen>
+    <dimen name="dialog_title_p_t">18dp</dimen>
+
+    <dimen name="login_head_m_b">24dp</dimen>
+    <dimen name="article_zan_m_l">24dp</dimen>
+    <dimen name="learn_now_m_t">79dp</dimen>
+    <dimen name="s_subject_back_m_b">28dp</dimen>
+
+    <dimen name="s_subject_title_m">-4dp</dimen>
+</resources>

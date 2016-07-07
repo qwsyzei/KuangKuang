@@ -1,0 +1,51 @@
+<resources>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="tab_text_normal">#696969</color>
+    <color name="editText">#AAAAAA</color>
+    <color name="blue">#008dff</color>
+    <color name="gray">#bbbbbb</color>
+    <color name="edit_hint">#B7B7B7</color>
+
+    <color name="tab_text_selected">#73bf40</color>
+    <color name="title_bg">#ddd</color>
+    <color name="lightWhite">#F5F5F5</color>
+    <color name="border_color">#FFB142</color>
+    <color name="chexiao">@color/white</color>
+    <color name="gray_in_orders">#909094</color>
+    <color name="transparent">#00000000</color>
+    <color name="radio_button_selected_color">#000000</color>
+    <color name="radio_button_unselected_color">@android:color/transparent</color>
+    <color name="dialog_background">#50D8D8D8</color>
+    <color name="learn_background">#282828</color>
+
+    <color name="market_bottom_background">#fadbdc</color>
+
+    <!--20151028  -->
+    <color name="black">#000000</color>
+    <color name="eee">#D8D8D8</color>
+    <color name="lightgray">#F7F7F7</color>
+    <!--<color name="base_btn_color_1">#343434</color>-->
+    <color name="old_gray">#343434</color>
+    <color name="base_btn_color_1">#C81015</color>
+    <color name="tab_color">#000000</color>
+    <color name="kela_yellow">#FFB142</color>
+    <color name="kela_purple">#8B1C62</color>
+    <color name="white">#ffffff</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#00BB00</color>
+
+    <color name="change_box">#e37d7f</color>
+    <color name="ma5">#ae4f4b</color>
+    <color name="ma10">#FFB142</color>
+    <color name="half_alpha">#5000</color>
+    <color name="base_gray_bg">#f7f7f7</color>
+    <color name="light_font_note">#9b9b9b</color>
+
+    <color name="new_text">#C81015</color>
+    <color name="tab_border_color">#000000</color>
+
+    <color name="cancel_blue">#0000EE</color>
+    <color name="details">#EE4000</color>
+    <color name="ebpay_gray3">#757575</color>
+</resources>

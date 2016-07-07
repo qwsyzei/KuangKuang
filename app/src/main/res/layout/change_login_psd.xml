@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgray"
+    tools:context="com.klsd.main.ChangeLoginPsdActivity">
+
+    <LinearLayout
+        android:id="@+id/change_login_psd_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/title_two"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/change_login_psd_title"
+        android:background="@color/gray_in_orders" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/base_margin"
+        android:layout_below="@+id/change_login_psd_title"
+        android:id="@+id/change_login_psd_layout_main"
+        android:orientation="vertical" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingTop="@dimen/size_eight"
+            android:paddingBottom="@dimen/size_eight"
+            android:paddingLeft="@dimen/login_p_l_r"
+            android:paddingRight="@dimen/login_p_l_r"
+            android:background="@color/white">
+            <TextView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/signup__text_m_l_r"
+                android:textSize="@dimen/middle_text_size"
+                android:textColor="@color/black"
+                android:text="@string/old_password" />
+            <EditText
+                android:id="@+id/change_login_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_weight="4"
+                android:maxLines="1"
+                android:maxLength="14"
+                android:paddingLeft="@dimen/login_p_l_r"
+                android:layout_gravity="center"
+                android:textSize="@dimen/middle_text_size"
+                android:textColor="@color/black"
+                android:inputType="textPassword"
+                android:hint="@string/write_old_password" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/signup__text_m_l_r"
+                android:src="@mipmap/icon_content_eye_close"
+                android:id="@+id/change_login_im1" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/login__line_m_l_r"
+            android:layout_marginRight="@dimen/login__line_m_l_r"
+            android:background="@color/gray_in_orders"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingTop="@dimen/size_eight"
+            android:paddingBottom="@dimen/size_eight"
+            android:paddingLeft="@dimen/login_p_l_r"
+            android:paddingRight="@dimen/login_p_l_r"
+            android:background="@color/white">
+            <TextView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/signup__text_m_l_r"
+                android:textSize="@dimen/middle_text_size"
+                android:textColor="@color/black"
+                android:text="@string/newpassword" />
+            <EditText
+                android:id="@+id/change_login_newpassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:paddingLeft="@dimen/login_p_l_r"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:textSize="@dimen/middle_text_size"
+                android:textColor="@color/black"
+                android:inputType="textPassword"
+                android:hint="@string/write_newpassword" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_content_eye_close"
+                android:layout_marginRight="@dimen/signup__text_m_l_r"
+                android:id="@+id/change_login_im2" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/login__line_m_l_r"
+            android:layout_marginRight="@dimen/login__line_m_l_r"
+            android:background="@color/gray_in_orders"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingTop="@dimen/size_eight"
+            android:paddingBottom="@dimen/size_eight"
+            android:paddingLeft="@dimen/login_p_l_r"
+            android:paddingRight="@dimen/login_p_l_r"
+            android:background="@color/white">
+            <TextView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/signup__text_m_l_r"
+                android:textSize="@dimen/middle_text_size"
+                android:textColor="@color/black"
+                android:text="@string/newpassword_confirm" />
+            <EditText
+                android:id="@+id/change_login_newpassword_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:paddingLeft="5dp"
+                android:textSize="@dimen/middle_text_size"
+                android:background="@null"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:inputType="textPassword"
+                android:hint="@string/write_newpassword_again" />
+
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_content_eye_close"
+                android:layout_marginRight="@dimen/signup__text_m_l_r"
+                android:id="@+id/change_login_im3" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/login__line_m_l_r"
+            android:layout_marginRight="@dimen/login__line_m_l_r"
+            android:background="@color/gray_in_orders"
+            />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+
+            android:paddingTop="@dimen/login_p_t_b"
+            android:paddingBottom="@dimen/login_p_t_b"
+            android:paddingLeft="@dimen/login_p_l_r"
+            android:paddingRight="@dimen/login_p_l_r"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/change_login_psd_button"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_margin="@dimen/base_margin"
+                android:textColor="@color/white"
+                android:textSize="@dimen/new_title_size"
+                android:background="@drawable/login_btn"
+                android:text="@string/change" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/change_password_help"
+            android:layout_gravity="center"
+
+            android:textColor="@color/light_font_note"
+            android:textSize="@dimen/new_hint_size"
+           />
+    </LinearLayout>
+
+
+</RelativeLayout>
