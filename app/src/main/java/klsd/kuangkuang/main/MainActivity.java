@@ -39,13 +39,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//    sendS();
         initView();
     }
-    public void sendS() {
 
-        new MyHTTP(this).baseRequest(Consts.htmlApi, JSONHandler.JTYPE_LOGIN, HttpRequest.HttpMethod.GET, null, getHandler());
-    }
     private void initView() {
 
 

@@ -159,9 +159,15 @@
     <!-- 文章用的 -->
     <string name="praise">赞</string>
     <string name="comment">评论</string>
+    <string name="send">发送</string>
     <string name="collect">收藏</string>
-    <string name="hot_comment">热门评论</string>
+    <string name="recent_comment">最新评论</string>
     <string name="all_comment">查看全部评论</string>
+
+    <!-- 圈子 -->
+    <string name="release_word">发布说说</string>
+    <string name="week_hot">本周红人</string>
+    <string name="how_get_on_the_list">如何上榜</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

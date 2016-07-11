@@ -56,6 +56,8 @@
         </activity>
         <activity android:name=".main.M_BigHeadActivity" >
         </activity>
+        <activity android:name=".main.S_AllCommentActivity" >
+        </activity>
     </application>
 
 </manifest>

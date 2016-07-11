@@ -15,7 +15,7 @@ public class Member implements Serializable {
 	private String sn,name,email,activated,phone_number,
 				   totalBalance, btcBalance, totalLocked;
 	private List<Account> accounts;
-
+private ArrayList<AllComment> allCommentList;
 
 	public String getSn() {
 		return sn;
@@ -88,6 +88,14 @@ public class Member implements Serializable {
 			setAccounts(accounts);
 		} catch (Exception e) {
 		}
+	}
+
+	public ArrayList<AllComment> getAllCommentList() {
+		return allCommentList;
+	}
+
+	public void setAllCommentList(ArrayList<AllComment> allCommentList) {
+		this.allCommentList = allCommentList;
 	}
 
 	public List<Account> getAccounts() {

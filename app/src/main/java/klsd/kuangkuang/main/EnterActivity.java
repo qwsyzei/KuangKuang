@@ -60,10 +60,6 @@ public static String secret;
         new MyHTTP(this).baseRequest(Consts.getTimeApi, JSONHandler.JTYPE_GET_TIME,
                 HttpRequest.HttpMethod.GET, null, getHandler());
     }
-    public void getHTML() {
-        new MyHTTP(this).baseRequest(Consts.htmlApi, JSONHandler.JTYPE_SMS_AUTH_CODE,
-                HttpRequest.HttpMethod.GET, null, getHandler());
-    }
     @Override
     public void run() {
         try {

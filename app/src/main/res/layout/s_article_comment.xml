@@ -5,7 +5,7 @@
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/hot_comment"
+    android:text="@string/recent_comment"
     android:textSize="@dimen/base_text_size"
     android:layout_marginTop="@dimen/login_p_t_b"
     android:layout_marginBottom="@dimen/login_p_t_b"
@@ -16,14 +16,16 @@
         android:layout_height="0.5dp"
         android:background="@color/light_font_note"></View>
     <ListView
+        android:id="@+id/listview_article_comment3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"></ListView>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/base_margin"></ListView>
     <TextView
         android:id="@+id/article_look_all_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_margin="@dimen/base_margin"
+        android:padding="@dimen/base_margin"
         android:text="@string/all_comment"/>
 </LinearLayout>

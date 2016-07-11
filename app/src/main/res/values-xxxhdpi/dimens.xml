@@ -93,4 +93,5 @@
     <dimen name="learn_now_m_t">100dp</dimen>
     <dimen name="s_subject_back_m_b">31dp</dimen>
     <dimen name="s_subject_title_m">-6dp</dimen>
+    <dimen name="s_all_comment_height">39dp</dimen>
 </resources>

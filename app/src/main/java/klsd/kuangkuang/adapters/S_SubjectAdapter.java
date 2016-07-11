@@ -2,6 +2,9 @@ package klsd.kuangkuang.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +13,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest;
+
 import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.main.S_ArticleActivity;
 import klsd.kuangkuang.models.Subject;
+import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.ErrorCodes;
+import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.MyHTTP;
+import klsd.kuangkuang.utils.ToastUtil;
 
 /**
  * 专题文章列表的adapter
@@ -23,10 +35,29 @@ import klsd.kuangkuang.models.Subject;
 public class S_SubjectAdapter extends ArrayAdapter<Subject> {
 
     private Context ctx;
+    MyHTTP http;
+    private Handler handler;
+    String jtype, responseJson;
+    String error_code;
+    Bundle handlerBundler;
 
-    public S_SubjectAdapter(Context context, List<Subject> objects) {
+    public S_SubjectAdapter(Context context, List<Subject> objects, Handler h) {
         super(context, R.layout.item_s_subject, objects);
         this.ctx = context;
+        this.handler = h;
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                handlerBundler = msg.getData();
+                responseJson = handlerBundler.getString("result");
+                error_code = handlerBundler.getString("error_code");
+                jtype = handlerBundler.getString("jtype");
+                if (responseJson.equals("OK")) {
+                    updateData();
+                } else {
+                    toastError();
+                }
+            }
+        };
     }
 
     @Override
@@ -39,9 +70,9 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
             viewHolder.title = (TextView) convertView.findViewById(R.id.item_subject_title);
             viewHolder.describe = (TextView) convertView.findViewById(R.id.item_subject_describe);
 //            viewHolder.author = (TextView) convertView.findViewById(R.id.item_subject_author_name);
-//            viewHolder.looked = (TextView) convertView.findViewById(R.id.item_subject_looked);
-//            viewHolder.praise = (TextView) convertView.findViewById(R.id.item_subject_praise);
-//            viewHolder.comment = (TextView) convertView.findViewById(R.id.item_subject_comment);
+            viewHolder.views = (TextView) convertView.findViewById(R.id.item_subject_views);
+            viewHolder.like = (TextView) convertView.findViewById(R.id.item_subject_like);
+            viewHolder.comment = (TextView) convertView.findViewById(R.id.item_subject_comment);
             viewHolder.im_picture = (ImageView) convertView.findViewById(R.id.item_subject_picture);
 //            viewHolder.im_head_pic = (ImageView) convertView.findViewById(R.id.item_subject_head_pic);
 
@@ -53,26 +84,52 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         viewHolder.title.setText(subject.getTitle());
         viewHolder.describe.setText(subject.getDescribe());
 //        viewHolder.author.setText(subject.getAuthor());
-//        viewHolder.looked.setText(subject.getLooked());
-//        viewHolder.praise.setText(subject.getPraise());
-//        viewHolder.comment.setText(subject.getComment());
-        viewHolder.im_picture.setImageBitmap(subject.getPicture());
+        viewHolder.views.setText(subject.getViews().replace(".0", ""));
+        viewHolder.like.setText(subject.getLike().replace(".0", ""));
+        viewHolder.comment.setText(subject.getComment().replace(".0", ""));
+        BitmapUtils bitmapUtils=new BitmapUtils(ctx);
+        bitmapUtils.display(viewHolder.im_picture,subject.getPicture());
 //        viewHolder.im_head_pic.setImageBitmap(subject.getHead_pic());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(ctx, S_ArticleActivity.class);
-                intent.putExtra("content_html",subject.getContent());
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("article_id", subject.getId());
+                params.addQueryStringParameter("side", "views");
+                if (http == null) http = new MyHTTP(ctx);
+                http.baseRequest(Consts.articlesLikeApi, JSONHandler.JTYPE_ARTICLES_VIEWS, HttpRequest.HttpMethod.GET,
+                        params, handler);
+
+
+                Intent intent = new Intent(ctx, S_ArticleActivity.class);
+                intent.putExtra("article_id", subject.getId());
+                intent.putExtra("content_html", subject.getContent());
                 ctx.startActivity(intent);
             }
         });
 
+
         return convertView;
     }
 
+    public void updateData() {
+        if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
+            ToastUtil.show(ctx, "观看了");
+
+        }
+    }
+
+    public void toastError() {
+        try {
+            ToastUtil.show(ctx, ErrorCodes.CODES.get(error_code));
+        } catch (Exception e) {
+            ToastUtil.show(ctx, responseJson);
+        }
+    }
+
     public final class ViewHolder {
-        public TextView title, describe;
+        public TextView title, describe, views, like, comment;
         public ImageView im_picture;
     }
 }

@@ -5,6 +5,7 @@
     android:background="@color/white"
     android:layout_height="wrap_content">
 <LinearLayout
+    android:id="@+id/layout_s_artile_like"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1"
@@ -22,6 +23,7 @@
         android:text="@string/praise"/>
 </LinearLayout>
     <LinearLayout
+        android:id="@+id/layout_s_artile_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -39,6 +41,7 @@
             android:text="@string/comment"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/layout_s_artile_collect"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

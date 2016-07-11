@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:background="@color/lightgray"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:layout_height="@dimen/s_all_comment_height">
+<EditText
+    android:id="@+id/all_comment_send_edit"
+    android:layout_width="0dp"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:hint="@string/comment"
+    android:textSize="@dimen/new_hint_size"
+    android:layout_marginTop="@dimen/login_p_l_r"
+    android:layout_marginBottom="@dimen/login_p_l_r"
+    android:layout_marginLeft="@dimen/base_margin"
+    android:layout_marginRight="@dimen/base_margin"
+    android:paddingLeft="@dimen/login_p_l_r"
+    android:background="@drawable/round_edittext"/>
+    <TextView
+        android:id="@+id/all_comment_send_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/base_margin"
+        android:text="@string/send"/>
+</LinearLayout>

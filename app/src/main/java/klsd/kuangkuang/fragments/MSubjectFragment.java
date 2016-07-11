@@ -80,8 +80,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
         swipt();
         getArticlesList();
 
-
-        listView.setAdapter(sAdapter);
+//        listView.setAdapter(sAdapter);
     }
 
     public void setTitle(String title) {
@@ -104,32 +103,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
     }
 
 
-    /**
-     * 假数据
-     *
-     * @return
-     */
-    private Bitmap bit_back, bit_head;
 
-    private ArrayList<Subject> getSubjectList() {
-        bit_back = BitmapFactory.decodeResource(getResources(), R.mipmap.abcd);
-        bit_head = BitmapFactory.decodeResource(getResources(), R.mipmap.head_pic);
-        sList = new ArrayList<Subject>();
-        for (int i = 0; i < 11; i++) {
-            Subject sub = new Subject(getContext());
-            sub.setTitle("钻石趣闻" + i);
-            sub.setDescribe("    四月生日石。 地球上最坚硬的天然物质。 已有十亿年以上的历史。此种风靡全球的宝石，不仅……" + i);
-            sub.setAuthor("刘关张" + i);
-            sub.setLooked("78");
-            sub.setPraise("30");
-            sub.setComment("10");
-            sub.setPicture(bit_back);
-            sub.setHead_pic(bit_head);
-            sList.add(sub);
-
-        }
-        return sList;
-    }
     private Handler handler = new BaseActivity.KelaHandler(a){
         @SuppressWarnings("unchecked")
         public void handleMessage(android.os.Message msg) {
@@ -145,15 +119,16 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
                 if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIST)) {
                     int curTradesSize = sList.size();
                     ArrayList<Subject> os = (ArrayList<Subject>) bundle.getSerializable("subject_article");
+                    Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
                         UIutils.cancelLoading();
                         ToastUtil.show(a, a.getString(R.string.no_more_data));
                         return;
                     }
-                    addTrades("bottom", os);         //先注释，看看再说
+//                    addTrades("bottom", os);         //先注释，看看再说
                     if (curTradesSize == 0) {
                         sList = os;
-                        sAdapter = new S_SubjectAdapter(getContext(), sList);
+                        sAdapter = new S_SubjectAdapter(a, sList,handler);
                         listView.setAdapter(sAdapter);
 
                     } else {
@@ -173,10 +148,12 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
         int pos = absListView.getLastVisiblePosition();
+        Log.d("现在滑动了", "pos是" + pos);
         try {
             Subject e = sList.get(pos);
             if (e == sList.get(sList.size() - 1)) {
                 loadDataFrom("bottom");
+
             }
         } catch (Exception e) {
         }
@@ -199,23 +176,26 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
         });
     }
 
-    public void addTrades(String from, List<Subject> ess) {
-        List<String> ids = new ArrayList<String>();
-        for (Subject e : ess) {
-                int i = from.equals("top") ? 0 : sList.size();
-                sList.add(i, e);
-        }
-        if (sAdapter != null) {
-            sAdapter.notifyDataSetChanged();
-        }
-    }
+//    public void addTrades(String from, List<Subject> ess) {
+//        List<String> ids = new ArrayList<String>();
+//        for (Subject e : ess) {
+//                int i = from.equals("top") ? 0 : sList.size();
+//                sList.add(i, e);
+//        }
+//        if (sAdapter != null) {
+//            sAdapter.notifyDataSetChanged();
+//        }
+//    }
 
     //刷新数据的方法
     public void loadDataFrom(String from) {
         direction = from;
-        if (from.equals("bottom"))
+        if (from.equals("bottom")) {
+            Log.d("现在page是几", page+"" );
             getArticlesList();
-        else {
+            Log.d("进入了bottom", "loadDataFrom() returned: " + "");
+        }else {
+            Log.d("进入了top", "loadDataFrom() returned: " + "");
             sList = new ArrayList<Subject>();
 //    		timestamp = MyDate.getTonceInt() + "";
             page = 1;

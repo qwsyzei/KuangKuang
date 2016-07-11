@@ -15,9 +15,9 @@ import java.net.URL;
  */
 public class Subject implements Serializable {
     private String id,content,title, describe, member_id, created_at, updated_at, tag, display;//标题，内容描述
-    private Bitmap picture;//背景图
+    private String picture;//背景图
 
-    private String looked, praise, comment;//观看，点赞和评论    数量           暂时不用
+    private String views, like, comment;//观看，点赞和评论    数量           暂时不用
     private String author;//作者名字                                                              暂时不用
     private Bitmap head_pic;          //头像                                                     暂时不用
 
@@ -99,11 +99,11 @@ public class Subject implements Serializable {
         this.display = display;
     }
 
-    public Bitmap getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(Bitmap picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
@@ -115,20 +115,20 @@ public class Subject implements Serializable {
         this.author = author;
     }
 
-    public String getLooked() {
-        return looked;
+    public String getViews() {
+        return views;
     }
 
-    public void setLooked(String looked) {
-        this.looked = looked;
+    public void setViews(String views) {
+        this.views = views;
     }
 
-    public String getPraise() {
-        return praise;
+    public String getLike() {
+        return like;
     }
 
-    public void setPraise(String praise) {
-        this.praise = praise;
+    public void setLike(String like) {
+        this.like = like;
     }
 
     public String getComment() {
@@ -155,11 +155,13 @@ public class Subject implements Serializable {
             setMember_id(object.getString("member_id"));
             setCreated_at(object.getString("created_at"));
             setUpdated_at(object.getString("updated_at"));
-           setPicture(BitmapFactory.decodeStream((new URL(object.getString("picture"))).openStream()));
+           setPicture(object.getString("picture"));
             setTag(object.getString("tag"));
             setDescribe(object.getString("describe"));
             setDisplay(object.getString("display"));
-
+            setLike(object.getString("like"));
+            setViews(object.getString("views"));
+            setComment(object.getString("comment_number"));
 
         } catch (Exception e) {
             e.printStackTrace();

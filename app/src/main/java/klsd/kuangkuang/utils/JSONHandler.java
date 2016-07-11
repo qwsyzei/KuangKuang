@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import klsd.kuangkuang.models.AccountVersion;
+import klsd.kuangkuang.models.AllComment;
 import klsd.kuangkuang.models.Deposits;
 import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.models.OHLCEntity;
@@ -47,15 +48,12 @@ public class JSONHandler {
     public final static String JTYPE_UPDATE_PAY_PASSWORD = "update_pay_password";
     public final static String JTYPE_VERIFY_PAY_PASSWORD = "verify_pay_password";
 	public final static String JTYPE_GET_TIME = "get_time";
-	
+
 	public final static String JTYPE_PUSHER_MARKET_TICKER 	= "pusher-market-ticker";
 	public final static String JTYPE_PUSHER_PUBLIC_TRADES 	= "pusher-public-trades";
-	public final static String JTYPE_PUSHER_PUBLIC_UPDATE 	= "pusher-public-update";
-	
-	public final static String JTYPE_PUSHER_PRIVATE_ACCOUNT					= "pusher-privat-account";
-	public final static String JTYPE_PUSHER_PRIVATE_ACCOUNTS				= "pusher-privat-accounts";
+
 	public final static String JTYPE_PUSHER_PRIVATE_ORDER					= "pusher-privat-order";
-	public final static String JTYPE_PUSHER_PRIVATE_TRADE				= "pusher-privat-trade";
+
 	
 	public final static String JTYPE_ADD_FUND_SOURCE 		= "add_fund_source";
 	public final static String JTYPE_UPDATE_FUND_SOURCE 	= "update_fund_source";
@@ -72,6 +70,10 @@ public class JSONHandler {
 
 
 	public final static String JTYPE_ARTICLES_LIST = "articles_list";
+	public final static String JTYPE_ARTICLES_LIKE = "articles_like";
+	public final static String JTYPE_ARTICLES_VIEWS= "articles_views";
+	public final static String JTYPE_ARTICLES_COMMENT= "articles_comment";
+	public final static String JTYPE_ARTICLES_ALL_COMMENT= "articles_all_comment";
 	public JSONHandler(){
 		
 	}
@@ -179,8 +181,7 @@ public class JSONHandler {
 					orders.add(order);
 				}
 				bundle.putSerializable("orders", orders);
-			}
-			else if (jtype2.equals(JTYPE_ARTICLES_LIST)){
+			} else if (jtype2.equals(JTYPE_ARTICLES_LIST)){
 				ArrayList<Subject> as = new ArrayList<Subject>();
 				for (int i=0;i<olistArrays.size();i++){
 					JSONObject object = olistArrays.get(i);
@@ -189,25 +190,16 @@ public class JSONHandler {
 					as.add(sub);
 				}
 				bundle.putSerializable("subject_article", as);
-			}else if (jtype2.equals(JTYPE_GET_ORDERS_ITEM)){
-				ArrayList<OrderId> orders = new ArrayList<OrderId>();
+			} else if (jtype2.equals(JTYPE_ARTICLES_ALL_COMMENT)){
+				ArrayList<AllComment> ac = new ArrayList<AllComment>();
 				for (int i=0;i<olistArrays.size();i++){
 					JSONObject object = olistArrays.get(i);
-					OrderId order = new OrderId(ctx);
-					order.getFromJSONObjectItem(object);
-					orders.add(order);
+					AllComment sub = new AllComment(ctx);
+					sub.getFromJSONObjectItem(object);
+					ac.add(sub);
 				}
-				bundle.putSerializable("orders_item", orders);
-			}   else if (jtype2.equals(JTYPE_GET_ACCOUNT_VERSIONS)){
-				ArrayList<AccountVersion> avs = new ArrayList<AccountVersion>();
-				for (int i=0;i<olistArrays.size();i++){
-					JSONObject object = olistArrays.get(i);
-					AccountVersion av = new AccountVersion();
-					av.getFromJSONObject(object);
-					avs.add(av);
-				}
-				bundle.putSerializable("account_versions", avs);
-			} else if (jtype2.equals(JTYPE_DEPOSITS)){
+				bundle.putSerializable("all_comment", ac);
+			}else if (jtype2.equals(JTYPE_DEPOSITS)){
 				ArrayList<Deposits> ade = new ArrayList<Deposits>();
 				for (int i=0;i<olistArrays.size();i++){
 					JSONObject object = olistArrays.get(i);
@@ -270,10 +262,8 @@ public class JSONHandler {
 		osStrings.add(JTYPE_WITHDRAW);
 		osStrings.add(JTYPE_WITHDRAW_CANCEL);
 
-		osStrings.add(JTYPE_PUSHER_PRIVATE_ACCOUNT);
-		osStrings.add(JTYPE_PUSHER_PRIVATE_ACCOUNTS);
 		osStrings.add(JTYPE_PUSHER_PRIVATE_ORDER);
-		osStrings.add(JTYPE_PUSHER_PRIVATE_TRADE);
+
 
 		osStrings.add(JTYPE_ADD_FUND_SOURCE);
 		osStrings.add(JTYPE_UPDATE_FUND_SOURCE);
@@ -282,14 +272,16 @@ public class JSONHandler {
 		osStrings.add(JTYPE_VERIFY_PAY_PASSWORD);
 		osStrings.add(JTYPE_UPDATE_PAY_PASSWORD);
 		osStrings.add(JTYPE_GET_TIME);
+		osStrings.add(JTYPE_ARTICLES_LIKE);
+		osStrings.add(JTYPE_ARTICLES_VIEWS);
+		osStrings.add(JTYPE_ARTICLES_COMMENT);
 		return osStrings.contains(jtype2);
 	}
 
 	private boolean isMutipleObjectJtype(String jtype2) {
 		List<String> osStrings = new ArrayList<String>();
 		osStrings.add(JTYPE_K_WITH_TRADES);
-		osStrings.add(JTYPE_PUSHER_PUBLIC_UPDATE);
-		osStrings.add(JTYPE_PUSHER_PUBLIC_TRADES);
+
 		osStrings.add(JTYPE_GET_DEPTH);
 
 		return osStrings.contains(jtype2);
@@ -300,6 +292,7 @@ public class JSONHandler {
 		osStrings.add(JTYPE_GET_ORDERS);
 		osStrings.add(JTYPE_GET_ORDERS_ITEM);
 		osStrings.add(JTYPE_ARTICLES_LIST);
+		osStrings.add(JTYPE_ARTICLES_ALL_COMMENT);
 		osStrings.add(JTYPE_GET_TRADES);
 		osStrings.add(JTYPE_GET_FUND_SOURCES);
 		osStrings.add(JTYPE_GET_ACCOUNT_VERSIONS);
@@ -344,9 +337,13 @@ public class JSONHandler {
 					   bundle.putBoolean("success", true);
 				   }
 
-			 }else if (jtype.equals(JTYPE_K_WITH_TRADES)){
+			 }else if (jtype.equals(JTYPE_ARTICLES_LIKE)){
 	        	
-	        } else if (jtype.equals(JTYPE_PUSHER_PRIVATE_ORDER)){
+	        } else if (jtype.equals(JTYPE_ARTICLES_VIEWS)){
+
+			  } else if (jtype.equals(JTYPE_ARTICLES_COMMENT)){
+
+			  }else if (jtype.equals(JTYPE_PUSHER_PRIVATE_ORDER)){
 	        	Order order = new Order(ctx);
 	        	order.getFromJSONObjectFromPusher(object);
 				bundle.putSerializable("order", order);

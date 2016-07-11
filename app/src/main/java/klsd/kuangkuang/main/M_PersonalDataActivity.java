@@ -75,7 +75,7 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         spinner_sex = (Spinner) findViewById(R.id.per_spinner_sex);
         tv_birthday = (TextView) findViewById(R.id.per_birthday);
         tv_city = (TextView) findViewById(R.id.per_city);
-        spinner_profession = (Spinner) findViewById(R.id.per_profession);
+//        spinner_profession = (Spinner) findViewById(R.id.per_profession);
         String[] mItems = {"男", "女"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.myspinner, mItems);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

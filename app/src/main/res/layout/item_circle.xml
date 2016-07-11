@@ -1,106 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/login_p_l_r"
     android:background="@drawable/box"
-    android:layout_height="wrap_content">
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/item_subject_picture"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:layout_marginBottom="@dimen/s_subject_back_m_b"
-        android:src="@mipmap/abcd"/>
-    <LinearLayout
+    android:orientation="vertical">
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_marginRight="@dimen/signup__text_m_l_r"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/item_subject_author_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/login_p_l_r"
-            android:text="刘关张"
-            />
+        android:layout_marginLeft="@dimen/login_p_l_r"
+        android:layout_marginRight="@dimen/base_margin">
+
         <ImageView
-            android:id="@+id/item_subject_head_pic"
+            android:id="@+id/item_circle_head_pic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/head_pic" />
+
+        <TextView
+            android:id="@+id/item_circle_author_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/head_pic"/>
-    </LinearLayout>
-</FrameLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/login_p_l_r"
+            android:layout_toRightOf="@+id/item_circle_head_pic"
+            android:text="刘关张" />
+
+        <TextView
+            android:id="@+id/item_circle_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="发布时间1小时前" />
+    </RelativeLayout>
+<klsd.kuangkuang.views.SelfGridView
+    android:id="@+id/gridview_circle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:numColumns="3"
+    android:smoothScrollbar="true"
+    android:soundEffectsEnabled="true"
+    android:stretchMode="columnWidth"></klsd.kuangkuang.views.SelfGridView>
     <TextView
-        android:id="@+id/item_subject_title"
+        android:id="@+id/item_circle_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/s_subject_title_m"
         android:layout_marginLeft="@dimen/login_p_l_r"
         android:layout_marginRight="@dimen/login_p_l_r"
         android:text="钻石趣闻"
-        android:textSize="@dimen/middle_text_size"
-        />
+        android:textSize="@dimen/middle_text_size" />
+
     <TextView
-        android:id="@+id/item_subject_describe"
+        android:id="@+id/item_circle_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/login_p_l_r"
         android:text=""
-        android:textSize="@dimen/middle_text_size"
-        />
+        android:textSize="@dimen/middle_text_size" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/light_font_note"/>
+        android:background="@color/light_font_note" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/login_p_l_r"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/login_p_l_r">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/android01"/>
+            android:src="@mipmap/android01" />
+
         <TextView
-            android:id="@+id/item_subject_views"
+            android:id="@+id/item_circle_views"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="78"
-            />
+            android:text="78" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_eight"
-            android:src="@mipmap/android04"/>
+            android:src="@mipmap/android04" />
+
         <TextView
-            android:id="@+id/item_subject_like"
+            android:id="@+id/item_circle_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="10"
-            />
+            android:text="10" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_eight"
-            android:src="@mipmap/android02"/>
+            android:src="@mipmap/android02" />
+
         <TextView
-            android:id="@+id/item_subject_comment"
+            android:id="@+id/item_circle_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginRight="@dimen/login_p_l_r"
-            android:layout_gravity="center"
-            android:text="3"
-            />
+            android:text="3" />
     </LinearLayout>
 </LinearLayout>
