@@ -18,6 +18,7 @@ import klsd.kuangkuang.models.AccountVersion;
 import klsd.kuangkuang.models.AllComment;
 import klsd.kuangkuang.models.Deposits;
 import klsd.kuangkuang.models.Member;
+import klsd.kuangkuang.models.MyCollect;
 import klsd.kuangkuang.models.OHLCEntity;
 import klsd.kuangkuang.models.Order;
 import klsd.kuangkuang.models.OrderId;
@@ -74,6 +75,9 @@ public class JSONHandler {
 	public final static String JTYPE_ARTICLES_VIEWS= "articles_views";
 	public final static String JTYPE_ARTICLES_COMMENT= "articles_comment";
 	public final static String JTYPE_ARTICLES_ALL_COMMENT= "articles_all_comment";
+	public final static String JTYPE_COLLECT_SHOW= "collect_show";
+	public final static String JTYPE_COLLECT= "collect_article";
+	public final static String JTYPE_COLLECT_DESTROY= "collect_destroy";
 	public JSONHandler(){
 		
 	}
@@ -199,6 +203,15 @@ public class JSONHandler {
 					ac.add(sub);
 				}
 				bundle.putSerializable("all_comment", ac);
+			}else if (jtype2.equals(JTYPE_COLLECT_SHOW)){
+				ArrayList<MyCollect> mc = new ArrayList<MyCollect>();
+				for (int i=0;i<olistArrays.size();i++){
+					JSONObject object = olistArrays.get(i);
+					MyCollect sub = new MyCollect(ctx);
+					sub.getFromJSONObjectItem(object);
+					mc.add(sub);
+				}
+				bundle.putSerializable("collect_show", mc);
 			}else if (jtype2.equals(JTYPE_DEPOSITS)){
 				ArrayList<Deposits> ade = new ArrayList<Deposits>();
 				for (int i=0;i<olistArrays.size();i++){
@@ -273,6 +286,8 @@ public class JSONHandler {
 		osStrings.add(JTYPE_UPDATE_PAY_PASSWORD);
 		osStrings.add(JTYPE_GET_TIME);
 		osStrings.add(JTYPE_ARTICLES_LIKE);
+		osStrings.add(JTYPE_COLLECT);
+		osStrings.add(JTYPE_COLLECT_DESTROY);
 		osStrings.add(JTYPE_ARTICLES_VIEWS);
 		osStrings.add(JTYPE_ARTICLES_COMMENT);
 		return osStrings.contains(jtype2);
@@ -293,6 +308,7 @@ public class JSONHandler {
 		osStrings.add(JTYPE_GET_ORDERS_ITEM);
 		osStrings.add(JTYPE_ARTICLES_LIST);
 		osStrings.add(JTYPE_ARTICLES_ALL_COMMENT);
+		osStrings.add(JTYPE_COLLECT_SHOW);
 		osStrings.add(JTYPE_GET_TRADES);
 		osStrings.add(JTYPE_GET_FUND_SOURCES);
 		osStrings.add(JTYPE_GET_ACCOUNT_VERSIONS);
@@ -339,11 +355,7 @@ public class JSONHandler {
 
 			 }else if (jtype.equals(JTYPE_ARTICLES_LIKE)){
 	        	
-	        } else if (jtype.equals(JTYPE_ARTICLES_VIEWS)){
-
-			  } else if (jtype.equals(JTYPE_ARTICLES_COMMENT)){
-
-			  }else if (jtype.equals(JTYPE_PUSHER_PRIVATE_ORDER)){
+	        } else if (jtype.equals(JTYPE_PUSHER_PRIVATE_ORDER)){
 	        	Order order = new Order(ctx);
 	        	order.getFromJSONObjectFromPusher(object);
 				bundle.putSerializable("order", order);

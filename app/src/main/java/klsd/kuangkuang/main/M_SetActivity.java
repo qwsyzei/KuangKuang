@@ -106,9 +106,7 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
     //清理窗口
     private void Clean_Dialog() {
         cleanDialog = new CleanCacheDialog(M_SetActivity.this, R.style.MyDialogStyle, R.layout.dialog_clean_cache);
-
         cleanDialog.show();
-
         tv_clean_yes = (TextView) cleanDialog.findViewById(R.id.dialog_clean_yes);
         tv_clean_no = (TextView) cleanDialog.findViewById(R.id.dialog_clean_no);
         tv_clean_yes.setOnClickListener(this);

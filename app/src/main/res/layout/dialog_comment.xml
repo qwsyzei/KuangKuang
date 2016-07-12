@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent"
+    android:background="@color/dialog_background"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/s_all_comment_height"
+       android:layout_gravity="bottom"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:layout_marginBottom="@dimen/base_margin"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/dialog_comment_edit"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:hint="@string/comment"
+            android:textSize="@dimen/new_hint_size"
+            android:layout_marginTop="@dimen/login_p_l_r"
+            android:layout_marginBottom="@dimen/login_p_l_r"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:layout_marginRight="@dimen/base_margin"
+            android:paddingLeft="@dimen/login_p_l_r"
+            android:background="@drawable/round_edittext"/>
+        <TextView
+            android:id="@+id/dialog_comment_send_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/base_margin"
+            android:background="@drawable/box"
+            android:text="@string/send"/>
+    </LinearLayout>
+
+
+</LinearLayout>

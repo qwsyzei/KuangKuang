@@ -144,10 +144,10 @@
     <string name="select_from_album">从相册中选择</string>
     <string name="take_photo">拍照</string>
     <string name="head_pic">头像</string>
-    <!-- 我的消息 -->
+    <!-- 我的 -->
     <string name="my_message">我的消息</string>
     <string name="everyday_sign">每日签到</string>
-
+    <string name="my_collect">我的收藏</string>
     <!-- 工具 -->
     <string name="check_certificate">查证书</string>
     <string name="measure_hand_size">量手寸</string>

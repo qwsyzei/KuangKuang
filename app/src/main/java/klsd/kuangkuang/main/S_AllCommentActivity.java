@@ -32,7 +32,6 @@ private TextView tv_send;
     String article_id;
     ArrayList<AllComment> mylist;
     private S_AllCommentAdapter allAdapter;
-    Bundle bundle;
     private SwipeRefreshLayout swipeView;
     private ListView listView;
     String direction = "bottom";
@@ -46,7 +45,7 @@ private TextView tv_send;
     }
 
     private void initView() {
-        mylist = new ArrayList<AllComment>();
+        mylist = new ArrayList<>();
         Intent intent=getIntent();
         article_id=intent.getStringExtra("a_id");
         listView= (ListView) findViewById(R.id.listview_allcomment);
@@ -55,7 +54,6 @@ private TextView tv_send;
         swipt();
         gotoAllComment();
 
-        if (swipeView != null) swipeView.setRefreshing(false);
         tv_send= (TextView) findViewById(R.id.all_comment_send_send);
         edit_comment= (EditText) findViewById(R.id.all_comment_send_edit);
         comment=edit_comment.getText().toString();
@@ -78,7 +76,7 @@ private TextView tv_send;
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("article_id",article_id);
         params.addQueryStringParameter("comment", comment);
-//        params.addQueryStringParameter("commenter", commenter);
+        params.addQueryStringParameter("commenter", "48");
 
         if (http == null) http = new MyHTTP(S_AllCommentActivity.this);
         http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
@@ -145,7 +143,7 @@ private TextView tv_send;
     public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
     }
-    public void swipt() {
+    private void swipt() {
         swipeView = (SwipeRefreshLayout) findViewById(R.id.swip_s_all_comment);
         swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

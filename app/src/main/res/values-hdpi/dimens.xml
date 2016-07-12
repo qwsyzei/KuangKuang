@@ -89,5 +89,5 @@
     <dimen name="s_subject_back_m_b">28dp</dimen>
 
     <dimen name="s_subject_title_m">-4dp</dimen>
-    <dimen name="s_all_comment_height">36dp</dimen>
+    <dimen name="s_all_comment_height">40dp</dimen>
 </resources>
