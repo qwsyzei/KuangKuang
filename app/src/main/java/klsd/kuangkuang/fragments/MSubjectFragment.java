@@ -96,7 +96,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
     private void getArticlesList() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("limit","10");
-        params.addQueryStringParameter("page", "1");
+        params.addQueryStringParameter("page", page+"");
         if (http == null) http = new MyHTTP(a);
         http.baseRequest(Consts.articlesListApi, JSONHandler.JTYPE_ARTICLES_LIST, HttpRequest.HttpMethod.GET,
                 params, handler);
@@ -152,6 +152,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
         try {
             Subject e = sList.get(pos);
             if (e == sList.get(sList.size() - 1)) {
+                Log.d("它们相等吗？", "pos是" + pos);
                 loadDataFrom("bottom");
 
             }
@@ -197,7 +198,6 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
         }else {
             Log.d("进入了top", "loadDataFrom() returned: " + "");
             sList = new ArrayList<Subject>();
-//    		timestamp = MyDate.getTonceInt() + "";
             page = 1;
             getArticlesList();
         }

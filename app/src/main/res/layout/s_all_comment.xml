@@ -10,12 +10,18 @@
         android:layout_height="wrap_content">
         <include layout="@layout/title_two"/>
     </LinearLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swip_s_all_comment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/lightgray">
     <ListView
         android:id="@+id/listview_allcomment"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/size_eight"
         android:layout_height="0dp"
         android:layout_weight="1"></ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
     <LinearLayout
         android:id="@+id/all_comment_send"
         android:layout_width="match_parent"

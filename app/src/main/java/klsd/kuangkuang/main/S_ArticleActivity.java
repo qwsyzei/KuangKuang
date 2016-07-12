@@ -33,7 +33,6 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private LinearLayout layout_like,layout_comment,layout_collect;
     private TextView tv_allcomment;
     private S_AllCommentAdapter allAdapter;
-    private   ArrayList<AllComment> aList;
     public  ArrayList<AllComment> os;
     private int page = 1;
     private ListView listView;
@@ -50,7 +49,6 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         article_id=intent.getStringExtra("article_id");
         tv_content= (TextView) findViewById(R.id.tv_article_content);
         RichText.from(testString).into(tv_content);
-        aList=new ArrayList<>();
         listView= (ListView) findViewById(R.id.listview_article_comment3);
         layout_like= (LinearLayout) findViewById(R.id.layout_s_artile_like);
         layout_comment= (LinearLayout) findViewById(R.id.layout_s_artile_comment);
@@ -75,7 +73,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.article_look_all_comment:
                 Intent intent=new Intent(S_ArticleActivity.this,S_AllCommentActivity.class);
-                intent.putExtra("article_id", article_id);
+                intent.putExtra("a_id", article_id);
                 startActivity(intent);
                 break;
         }
@@ -102,8 +100,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("article_id",article_id);
         params.addQueryStringParameter("page", "1");
-        params.addQueryStringParameter("limit", "15");
-//        params.addQueryStringParameter("commenter", commenter);
+        params.addQueryStringParameter("limit", "3");
 
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.articlesCommentaryApi, JSONHandler.JTYPE_ARTICLES_ALL_COMMENT, HttpRequest.HttpMethod.GET,
@@ -115,26 +112,15 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
             ToastUtil.show(S_ArticleActivity.this,"赞成功了");
         }else if(jtype.equals(JSONHandler.JTYPE_ARTICLES_ALL_COMMENT)){
+
             ToastUtil.show(S_ArticleActivity.this, "全部评论获取了");
-                int curTradesSize = aList.size();
                 os = (ArrayList<AllComment>) handlerBundler.getSerializable("all_comment");
-                if (curTradesSize == 0) {
-                    if (os.size()>3){
-                        for (int i=0;i<3;i++){
-                            aList.add(os.get(i));//将前3个筛选出来
-                        }
-                        Log.d("进入筛选界面了", "Alist的长度是" + aList.size());
-                    }else{
-                        aList=os;
-                        Log.d("直接等于就行了", "updateData() returned: " + "");
-                    }
-                    allAdapter = new S_AllCommentAdapter(S_ArticleActivity.this,aList);
+            if (os.size() == 0) {
+                Log.d("评论是没有数据的", "updateData() returned: " +"" );
+                return;
+            }
+                    allAdapter = new S_AllCommentAdapter(S_ArticleActivity.this,os);
                     listView.setAdapter(allAdapter);
-
-                } else {
-
-                    allAdapter.notifyDataSetChanged();
-                }
 
             }
 
