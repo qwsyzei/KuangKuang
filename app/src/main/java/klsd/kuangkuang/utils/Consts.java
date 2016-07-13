@@ -13,12 +13,14 @@ public final static String host123="http://192.168.1.20:3000";
 
     // HTML
     public final static String articlesListApi = baseApiPath + "/articles/articles_list";
+    public final static String articlesTopApi = baseApiPath + "/articles/Top10";
     public final static String articlesLikeApi = baseApiPath + "/articles/numbers";//点赞
     public final static String articlesCommentApi = baseApiPath + "/articles/comment";//评论
     public final static String articlesCommentaryApi = baseApiPath + "/articles/commentary";//文章所有评论
     public final static String articlesCollectArticleApi = baseApiPath + "/collect/collect_article";//收藏
     public final static String articlesCollectDestroyApi = baseApiPath + "/collect/collect_destroy";//取消收藏
     public final static String articlesCollectShowApi = baseApiPath + "/collect/collect_show";//展示收藏列表
+
     // phone_number common
     public final static String getAuthCodeApi = baseApiPath + "/registers/code";
     //send a verify code for a logined member .

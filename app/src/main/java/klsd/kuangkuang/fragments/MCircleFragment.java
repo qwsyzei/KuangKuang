@@ -1,32 +1,23 @@
 package klsd.kuangkuang.fragments;
 
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.C_CircleAdapter;
-import klsd.kuangkuang.adapters.C_CircleGridAdapter;
-import klsd.kuangkuang.main.LoginActivity;
-import klsd.kuangkuang.models.Circle;
-import klsd.kuangkuang.models.CircleGridViewEntity;
+import klsd.kuangkuang.models.Circles;
 import klsd.kuangkuang.utils.DataCenter;
-import klsd.kuangkuang.views.SelfGridView;
 
 /**
  * 圈子
@@ -34,7 +25,7 @@ import klsd.kuangkuang.views.SelfGridView;
 public class MCircleFragment extends MyBaseFragment {
     View view;
 
-    private List<Circle> cirList;
+    private List<Circles> cirList;
     private C_CircleAdapter cAdapter;
 
     private ListView listView;
@@ -77,10 +68,10 @@ public class MCircleFragment extends MyBaseFragment {
      */
     private Bitmap bit_head;
 
-    private List<Circle> getSubjectList() {
-        cirList = new ArrayList<Circle>();
+    private List<Circles> getSubjectList() {
+        cirList = new ArrayList<Circles>();
         for (int i = 0; i < 5; i++) {
-            Circle sub = new Circle(getContext());
+            Circles sub = new Circles(getContext());
             sub.setTitle("钻石趣闻" + i);
             sub.setDescribe("    四月生日石。 地球上最坚硬的天然物质。 已有十亿年以上的历史。此种风靡全球的宝石，不仅……" + i);
             sub.setAuthor("刘备" + i);

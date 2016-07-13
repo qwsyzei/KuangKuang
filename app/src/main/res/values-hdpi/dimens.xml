@@ -79,7 +79,7 @@
     <dimen name="dialog_yes_height">46dp</dimen>
     <dimen name="dialog_result_height">21dp</dimen>
 
-    <dimen name="feedback_height">175dp</dimen>
+    <dimen name="big_edit_height">175dp</dimen>
     <dimen name="dialog_cancel_width">115dp</dimen>
     <dimen name="dialog_title_p_t">18dp</dimen>
 
@@ -90,4 +90,7 @@
 
     <dimen name="s_subject_title_m">-4dp</dimen>
     <dimen name="s_all_comment_height">40dp</dimen>
+
+    <dimen name="s_top_item_height">130dp</dimen>
+    <dimen name="s_top_item_line">26dp</dimen>
 </resources>

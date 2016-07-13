@@ -29,4 +29,5 @@ dependencies {
     compile project(':framework-picker')
     compile files('libs/okio-1.6.0.jar')
     compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile project(':slidingmenu')
 }

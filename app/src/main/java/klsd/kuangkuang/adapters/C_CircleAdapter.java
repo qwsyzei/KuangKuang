@@ -1,7 +1,6 @@
 package klsd.kuangkuang.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.models.Circle;
+import klsd.kuangkuang.models.Circles;
 import klsd.kuangkuang.models.CircleGridViewEntity;
 import klsd.kuangkuang.views.SelfGridView;
 
@@ -24,21 +23,21 @@ import klsd.kuangkuang.views.SelfGridView;
  * 圈子的adapter
  * Created by qiwei on 2016/7/8.
  */
-public class C_CircleAdapter extends ArrayAdapter<Circle> {
+public class C_CircleAdapter extends ArrayAdapter<Circles> {
 
     private Context ctx;
     private ArrayList<String> list;//9宫格图片url
     private List<CircleGridViewEntity> headerEntitiesList;
     private C_CircleGridAdapter cGridAdapter;
 
-    public C_CircleAdapter(Context context, List<Circle> objects) {
+    public C_CircleAdapter(Context context, List<Circles> objects) {
         super(context, R.layout.item_circle, objects);
         this.ctx = context;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final Circle circle = getItem(position);
+        final Circles circles = getItem(position);
         final ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -72,23 +71,23 @@ viewHolder.selfGridView= (SelfGridView) convertView.findViewById(R.id.gridview_c
             CircleGridViewEntity cirEntity=new CircleGridViewEntity(getContext(),list.get(i));
             headerEntitiesList.add(cirEntity);
         }
-        viewHolder.title.setText(circle.getTitle());
-        viewHolder.describe.setText(circle.getDescribe());
-//        viewHolder.author.setText(circle.getAuthor());
-        viewHolder.views.setText(circle.getViews().replace(".0", ""));
-        viewHolder.like.setText(circle.getLike().replace(".0", ""));
-        viewHolder.comment.setText(circle.getComment().replace(".0", ""));
+        viewHolder.title.setText(circles.getTitle());
+        viewHolder.describe.setText(circles.getDescribe());
+//        viewHolder.author.setText(circles.getAuthor());
+        viewHolder.views.setText(circles.getViews().replace(".0", ""));
+        viewHolder.like.setText(circles.getLike().replace(".0", ""));
+        viewHolder.comment.setText(circles.getComment().replace(".0", ""));
         BitmapUtils bitmapUtils=new BitmapUtils(getContext());
-        bitmapUtils.display(viewHolder.im_head_pic, circle.getHead_pic_url());
+        bitmapUtils.display(viewHolder.im_head_pic, circles.getHead_pic_url());
         cGridAdapter = new C_CircleGridAdapter(getContext(),headerEntitiesList);
         viewHolder.selfGridView.setAdapter(cGridAdapter);
-//        viewHolder.im_head_pic.setImageBitmap(circle.getHead_pic());
+//        viewHolder.im_head_pic.setImageBitmap(circles.getHead_pic());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //        Intent intent=new Intent(ctx, S_ArticleActivity.class);
-//        intent.putExtra("content_html",circle.getContent());
+//        intent.putExtra("content_html",circles.getContent());
 //        ctx.startActivity(intent);
             }
         });

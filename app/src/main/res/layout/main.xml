@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
+<FrameLayout
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+    <ImageView
+        android:id="@+id/im_more_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_margin"
+        android:src="@android:drawable/ic_media_previous" />
+    <LinearLayout
+       android:id="@+id/just_subject_layout"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"></LinearLayout>
+</FrameLayout>
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="#2000"
+      />
+
+  <RadioGroup
+      android:id="@+id/main_radiogroup"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginTop="@dimen/nomal_padding_dimen"
+      >
+
+    <RadioButton
+        android:id="@+id/main_rb1"
+        style="@style/tab_radiobutton_style"
+        android:drawableTop="@drawable/selector_ic_home"
+        android:text="@string/main_subject"
+        />
+
+    <RadioButton
+        android:id="@+id/main_rb2"
+        style="@style/tab_radiobutton_style"
+        android:drawableTop="@drawable/selector_ic_win"
+        android:text="@string/main_circle"
+        />
+
+    <RadioButton
+        android:id="@+id/main_rb3"
+        style="@style/tab_radiobutton_style"
+        android:drawableTop="@drawable/selector_ic_listing"
+        android:text="@string/main_tool"
+        />
+
+    <RadioButton
+        android:id="@+id/main_rb4"
+        style="@style/tab_radiobutton_style"
+        android:drawableTop="@drawable/selector_ic_user"
+        android:text="@string/main_me"
+        />
+  </RadioGroup>
+
+
+</LinearLayout>

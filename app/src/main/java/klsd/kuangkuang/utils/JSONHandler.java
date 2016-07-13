@@ -23,6 +23,7 @@ import klsd.kuangkuang.models.OHLCEntity;
 import klsd.kuangkuang.models.Order;
 import klsd.kuangkuang.models.OrderId;
 import klsd.kuangkuang.models.Subject;
+import klsd.kuangkuang.models.Top;
 
 public class JSONHandler {
 	Context ctx;
@@ -71,6 +72,7 @@ public class JSONHandler {
 
 
 	public final static String JTYPE_ARTICLES_LIST = "articles_list";
+	public final static String JTYPE_ARTICLES_TOP = "articles_top";
 	public final static String JTYPE_ARTICLES_LIKE = "articles_like";
 	public final static String JTYPE_ARTICLES_VIEWS= "articles_views";
 	public final static String JTYPE_ARTICLES_COMMENT= "articles_comment";
@@ -212,16 +214,15 @@ public class JSONHandler {
 					mc.add(sub);
 				}
 				bundle.putSerializable("collect_show", mc);
-			}else if (jtype2.equals(JTYPE_DEPOSITS)){
-				ArrayList<Deposits> ade = new ArrayList<Deposits>();
+			} else if (jtype2.equals(JTYPE_ARTICLES_TOP)){
+				ArrayList<Top> mc = new ArrayList<Top>();
 				for (int i=0;i<olistArrays.size();i++){
 					JSONObject object = olistArrays.get(i);
-					Deposits deposits = new Deposits();
-					deposits.getFromJSONObject(object);
-					ade.add(deposits);
+					Top top = new Top(ctx);
+					top.getFromJSONObjectItem(object);
+					mc.add(top);
 				}
-
-				bundle.putSerializable("deposits", ade);
+				bundle.putSerializable("top", mc);
 			}
 		} catch (Exception e) {
 		}
@@ -309,6 +310,7 @@ public class JSONHandler {
 		osStrings.add(JTYPE_ARTICLES_LIST);
 		osStrings.add(JTYPE_ARTICLES_ALL_COMMENT);
 		osStrings.add(JTYPE_COLLECT_SHOW);
+		osStrings.add(JTYPE_ARTICLES_TOP);
 		osStrings.add(JTYPE_GET_TRADES);
 		osStrings.add(JTYPE_GET_FUND_SOURCES);
 		osStrings.add(JTYPE_GET_ACCOUNT_VERSIONS);

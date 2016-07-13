@@ -2,23 +2,16 @@ package klsd.kuangkuang.fragments;
 
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,16 +19,15 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.S_SubjectAdapter;
 import klsd.kuangkuang.main.BaseActivity;
 import klsd.kuangkuang.main.LoginActivity;
+import klsd.kuangkuang.main.S_TopTenActivity;
 import klsd.kuangkuang.models.Subject;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.JSONHandler;
-import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
@@ -43,7 +35,7 @@ import klsd.kuangkuang.utils.UIutils;
 /**
  * 专题
  */
-public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnScrollListener {
+public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnScrollListener,View.OnClickListener {
     View view;
     private S_SubjectAdapter sAdapter;
     private ListView listView;
@@ -53,6 +45,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
    private int limit = 15;
     private int page = 1;
     String direction = "bottom";
+    private TextView tv_top;
     public MSubjectFragment() {
         // Required empty public constructor
     }
@@ -73,6 +66,8 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
     private void initView() {
         sList = new ArrayList<Subject>();
         Log.d("去获取了", "initView() returned: " + "");
+        tv_top= (TextView) view.findViewById(R.id.tv_title_right);
+        tv_top.setOnClickListener(this);
         listView = (ListView) view.findViewById(R.id.listview_msubject);
         listView.setOnScrollListener(this);
 //        getSubjectList();
@@ -125,7 +120,6 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
                         ToastUtil.show(a, a.getString(R.string.no_more_data));
                         return;
                     }
-//                    addTrades("bottom", os);         //先注释，看看再说
                     if (curTradesSize == 0) {
                         sList = os;
                         sAdapter = new S_SubjectAdapter(a, sList,handler);
@@ -137,7 +131,6 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
                     }
                     page += 1;
                     UIutils.cancelLoading();
-//                	timestamp = trades.get(trades.size() - 1).getUnixCreaet();
                 }
             } else {
                 ToastUtil.show(a, res);
@@ -148,11 +141,9 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
         int pos = absListView.getLastVisiblePosition();
-        Log.d("现在滑动了", "pos是" + pos);
         try {
             Subject e = sList.get(pos);
             if (e == sList.get(sList.size() - 1)) {
-                Log.d("它们相等吗？", "pos是" + pos);
                 loadDataFrom("bottom");
 
             }
@@ -177,29 +168,27 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
         });
     }
 
-//    public void addTrades(String from, List<Subject> ess) {
-//        List<String> ids = new ArrayList<String>();
-//        for (Subject e : ess) {
-//                int i = from.equals("top") ? 0 : sList.size();
-//                sList.add(i, e);
-//        }
-//        if (sAdapter != null) {
-//            sAdapter.notifyDataSetChanged();
-//        }
-//    }
 
     //刷新数据的方法
     public void loadDataFrom(String from) {
         direction = from;
         if (from.equals("bottom")) {
-            Log.d("现在page是几", page+"" );
             getArticlesList();
-            Log.d("进入了bottom", "loadDataFrom() returned: " + "");
+
         }else {
-            Log.d("进入了top", "loadDataFrom() returned: " + "");
+
             sList = new ArrayList<Subject>();
             page = 1;
             getArticlesList();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tv_title_right:
+                myStartActivity(new Intent(a, S_TopTenActivity.class));
+                break;
         }
     }
 }

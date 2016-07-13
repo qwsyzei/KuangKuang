@@ -14,4 +14,7 @@
     <dimen name="discount_card_size_dimen">120dp</dimen>
     <dimen name="service_address_image_marginleft_dimen">20dp</dimen>
     <dimen name="padding15_dimen">15dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+
+    <dimen name="slidingmenu_offset">80dp</dimen>
 </resources>

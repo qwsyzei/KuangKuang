@@ -41,7 +41,7 @@
     </declare-styleable>
     <attr format="dimension" name="borderRadius"/>
     <attr name="type">
-        <enum name="circle" value="0"/>
+        <enum name="circles" value="0"/>
         <enum name="round" value="1"/>
     </attr>
     <declare-styleable name="YPRoundImageView">
@@ -69,6 +69,12 @@
     <attr name="NormalTextColor" format="color" />
     <attr name="GrayTextColor" format="color" />
     <attr name="ChexiaoBtnColor" format="color" />
+    <declare-styleable name="CircleImageView">
 
+    <attr name="border_width" format="dimension"/>
+
+    <attr name="border_color" format="color"/>
+
+</declare-styleable>
 
 </resources>

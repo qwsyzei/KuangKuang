@@ -97,6 +97,7 @@
     <orderEntry type="library" exported="" name="xUtils-2.6.14" level="project" />
     <orderEntry type="library" exported="" name="support-v4-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp-3.0.1" level="project" />
+    <orderEntry type="module" module-name="slidingmenu" exported="" />
     <orderEntry type="module" module-name="framework-picker" exported="" />
   </component>
 </module>
