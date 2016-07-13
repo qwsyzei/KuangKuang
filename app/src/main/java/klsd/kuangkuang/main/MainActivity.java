@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -15,7 +16,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.fragment.LeftFragment;
+import klsd.kuangkuang.fragments.LeftFragment;
 import klsd.kuangkuang.fragments.MCircleFragment;
 import klsd.kuangkuang.fragments.MMeFragment;
 import klsd.kuangkuang.fragments.MSubjectFragment;
@@ -36,19 +37,21 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
     private MToolFragment mToolFragment;
     private MMeFragment mMeFragment;
     private Fragment mContent;
+    private LinearLayout layout_main_layout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
-
-        initSlidingMenu(savedInstanceState);
         initView();
+        initSlidingMenu();
+
 
 }
     private void initView() {
         im_title_left= (ImageView) findViewById(R.id.im_more_subject);
        im_title_left.setOnClickListener(this);
+        layout_main_layout= (LinearLayout) findViewById(R.id.layout_main_layout);
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         /**
@@ -64,12 +67,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
     /**
      * 初始化侧边栏
      */
-    private void initSlidingMenu(Bundle savedInstanceState) {
-        // 如果保存的状态不为空则得到之前保存的Fragment，否则实例化MyFragment
-        if (savedInstanceState != null) {
-            mContent  = fm.getFragment(
-                    savedInstanceState, "mContent");
-        }
+    private void initSlidingMenu() {
 
         if (mContent == null) {
             mContent = new MSubjectFragment();
@@ -81,8 +79,13 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
 
         // 实例化滑动菜单对象
         SlidingMenu sm = getSlidingMenu();
+        // 关闭手势滑动
+        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        //设置某个控件不执行触摸滑动事件
+        sm.addIgnoredView(layout_main_layout);//在这里设置整个布局都不能滑动
         // 设置可以左右滑动的菜单
         sm.setMode(SlidingMenu.LEFT);
+
         // 设置滑动阴影的宽度
         sm.setShadowWidthRes(R.dimen.shadow_width);
         // 设置滑动菜单阴影的图像资源
@@ -97,18 +100,13 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         sm.setBehindScrollScale(0.0f);
 
     }
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
-//    }
 
     /**
      * 切换Fragment
      *
      * @param fragment
      */
-    public void switchConent(Fragment fragment, String title) {
+    public void switchConent(Fragment fragment) {
         mContent = fragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.just_subject_layout, fragment).commit();
         getSlidingMenu().showContent();

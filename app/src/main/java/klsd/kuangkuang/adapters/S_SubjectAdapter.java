@@ -74,6 +74,7 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
             viewHolder.like = (TextView) convertView.findViewById(R.id.item_subject_like);
             viewHolder.comment = (TextView) convertView.findViewById(R.id.item_subject_comment);
             viewHolder.im_picture = (ImageView) convertView.findViewById(R.id.item_subject_picture);
+            viewHolder.layout_item= (LinearLayout) convertView.findViewById(R.id.layout_item_subject);
 //            viewHolder.im_head_pic = (ImageView) convertView.findViewById(R.id.item_subject_head_pic);
 
 
@@ -91,7 +92,7 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         bitmapUtils.display(viewHolder.im_picture,subject.getPicture());
 //        viewHolder.im_head_pic.setImageBitmap(subject.getHead_pic());
 
-        convertView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.layout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 RequestParams params = new RequestParams();
@@ -131,5 +132,6 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
     public final class ViewHolder {
         public TextView title, describe, views, like, comment;
         public ImageView im_picture;
+        LinearLayout layout_item;
     }
 }

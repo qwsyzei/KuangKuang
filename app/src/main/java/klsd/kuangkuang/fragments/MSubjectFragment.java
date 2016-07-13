@@ -42,7 +42,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
     private ArrayList<Subject> sList;
     private static Activity a;
     private SwipeRefreshLayout swipeView;
-   private int limit = 15;
+   private int limit = 10;
     private int page = 1;
     String direction = "bottom";
     private TextView tv_top;
@@ -90,7 +90,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
     MyHTTP http;
     private void getArticlesList() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("limit","10");
+        params.addQueryStringParameter("limit",limit+"");
         params.addQueryStringParameter("page", page+"");
         if (http == null) http = new MyHTTP(a);
         http.baseRequest(Consts.articlesListApi, JSONHandler.JTYPE_ARTICLES_LIST, HttpRequest.HttpMethod.GET,

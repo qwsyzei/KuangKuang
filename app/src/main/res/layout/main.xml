@@ -2,6 +2,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
+    android:id="@+id/layout_main_layout"
     >
 <FrameLayout
     android:id="@+id/main_layout"
