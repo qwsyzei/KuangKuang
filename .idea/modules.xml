@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/KuangKuang.iml" filepath="$PROJECT_DIR$/KuangKuang.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/framework-picker/framework-picker.iml" filepath="$PROJECT_DIR$/framework-picker/framework-picker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slidingmenu/slidingmenu.iml" filepath="$PROJECT_DIR$/slidingmenu/slidingmenu.iml" />
     </modules>
   </component>
 </project>

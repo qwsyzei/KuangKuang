@@ -43,11 +43,11 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     public ArrayList<AllComment> os;
     private int page = 1;
     private ListView listView;
-//    private CommentDialog cDialog;
     private TextView tv_dialog_send;
     private EditText edit_dialog_comment;
-    String str_comment;
-private PopupWindow cPopwindow;
+
+    private PopupWindow cPopwindow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +94,7 @@ private PopupWindow cPopwindow;
                 break;
             case R.id.dialog_comment_send_send:
 //                gotoComment();
-                ToastUtil.show(S_ArticleActivity.this,edit_dialog_comment.getText().toString());
+                ToastUtil.show(S_ArticleActivity.this, edit_dialog_comment.getText().toString());
                 break;
         }
     }
@@ -195,8 +195,8 @@ private PopupWindow cPopwindow;
 
     //评论窗口
     private void Comment_Dialog(View v) {
-        View pop_view=getLayoutInflater().inflate(R.layout.dialog_comment,null,false);
-        cPopwindow=new PopupWindow(pop_view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,true);
+        View pop_view = getLayoutInflater().inflate(R.layout.dialog_comment, null, false);
+        cPopwindow = new PopupWindow(pop_view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, true);
         // 设置动画效果
         cPopwindow.setAnimationStyle(R.style.mystyle);
         cPopwindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//可解决被软键盘遮住的问题
@@ -216,7 +216,7 @@ private PopupWindow cPopwindow;
         tv_dialog_send = (TextView) pop_view.findViewById(R.id.dialog_comment_send_send);
         tv_dialog_send.setOnClickListener(this);
         edit_dialog_comment.requestFocus();
-                //调用系统输入法
+        //调用系统输入法
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 

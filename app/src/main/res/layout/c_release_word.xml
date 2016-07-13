@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="klsd.kuangkuang.main.C_ReleaseWordActivity">
+    <RelativeLayout
+        android:id="@+id/user_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/title_three" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/base_margin"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/release_edit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/big_edit_height"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="123"
+            android:padding="@dimen/login_p_l_r" />
+    </LinearLayout>
+
+</LinearLayout>
