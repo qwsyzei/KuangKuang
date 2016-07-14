@@ -35,7 +35,6 @@ public class M_NewPhoneActivity extends BaseActivity {
     private EditText edit_phonenumber, edit_code;
     private ImageView im_delete;
     private Button btn_bind;
-    private Spinner spinner;
     /**
      * 对用户名和密码进行加解密
      */
@@ -55,11 +54,6 @@ public class M_NewPhoneActivity extends BaseActivity {
         tv_getcode = (TextView) findViewById(R.id.new_phone_tv_getcode);
         btn_bind = (Button) findViewById(R.id.new_phone_btn_bind);
         im_delete = (ImageView) findViewById(R.id.new_phone_im_delete);
-        spinner = (Spinner) findViewById(R.id.new_phone_spinner_country);
-        String[] mItems = {"中国"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.myspinner, mItems);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
         im_delete.setOnClickListener(listener);
         tv_getcode.setOnClickListener(listener);

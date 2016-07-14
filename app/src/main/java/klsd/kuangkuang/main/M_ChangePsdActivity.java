@@ -38,7 +38,7 @@ public class M_ChangePsdActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.change_login_psd);
+        setContentView(R.layout.m_change_login_psd);
         setTitle(getString(R.string.change_password));
     }
 

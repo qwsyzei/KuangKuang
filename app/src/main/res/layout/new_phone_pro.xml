@@ -28,8 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:paddingTop="@dimen/login_p_l_r"
-            android:paddingBottom="@dimen/login_p_l_r"
+            android:paddingTop="@dimen/base_margin"
+            android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/login_p_l_r"
             android:paddingRight="@dimen/login_p_l_r"
             android:background="@color/white">
@@ -42,16 +42,6 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/middle_text_size"
                 android:text="@string/phone" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/new_title_size"
-                android:text="@string/phonePre" />
 
             <TextView
                 android:id="@+id/new_phone_tv_phonenumber"
@@ -76,10 +66,10 @@
             android:layout_height="wrap_content"
 
             android:background="@color/white"
-            android:paddingBottom="@dimen/login_p_l_r"
+            android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/login_p_l_r"
             android:paddingRight="@dimen/login_p_l_r"
-            android:paddingTop="@dimen/login_p_l_r">
+            android:paddingTop="@dimen/base_margin">
 
             <TextView
                 android:id="@+id/textView29"
@@ -111,12 +101,12 @@
                 android:layout_height="@dimen/code_button_height"
                 android:layout_marginRight="5dp"
                 android:layout_weight="3"
-                android:background="@drawable/login_btn"
+                android:background="@drawable/box"
                 android:gravity="center"
                 android:clickable="true"
                 android:onClick="getAuthCode"
                 android:text="@string/get_auth_code"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
         <TextView
@@ -139,10 +129,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/base_margin"
-                android:textColor="@color/white"
-                android:background="@drawable/login_btn"
-                android:textSize="@dimen/new_title_size"
-                android:text="@string/update" />
+                android:textColor="@color/kuangkuang_yellow"
+                android:background="@drawable/btn_box"
+                android:textSize="@dimen/middle_text_size"
+                android:text="@string/next" />
         </LinearLayout>
 
         <TextView

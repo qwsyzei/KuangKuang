@@ -1,6 +1,7 @@
 package klsd.kuangkuang.models;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 
 import org.json.JSONObject;
@@ -18,12 +19,20 @@ public class Circles implements Serializable {
 
     private String views, like, comment;//观看，点赞和评论    数量           暂时不用
     private String author;//作者名字                                                              暂时不用
-
+private Bitmap head;//这个是假的，回头删了
 
     private Context context;
 
     public Circles(Context context) {
         this.context = context;
+    }
+
+    public Bitmap getHead() {
+        return head;
+    }
+
+    public void setHead(Bitmap head) {
+        this.head = head;
     }
 
     public String getId() {

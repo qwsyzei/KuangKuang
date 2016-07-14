@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgray"
     tools:context="com.klsd.main.NewPhoneActivity">
+
     <LinearLayout
         android:id="@+id/bindphone_title"
         android:layout_width="match_parent"
@@ -26,60 +28,16 @@
         android:layout_margin="@dimen/base_margin"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/market_bottom_line_height"
-
-            android:background="@color/white"
-            android:padding="@dimen/login_p_l_r">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/login__text_m_l_r"
-                android:layout_weight="2"
-                android:textColor="@color/black"
-                android:gravity="center_vertical"
-                android:text="@string/country"
-                android:textSize="@dimen/middle_text_size" />
-
-            <Spinner
-                android:id="@+id/new_phone_spinner_country"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/signup__text_m_l_r"
-                android:layout_weight="5"
-                android:background="@null"
-                android:gravity="center"
-                android:paddingLeft="@dimen/spinner_p_l"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/login__text_m_l_r"
-                android:clickable="true"
-                android:gravity="center"
-                android:src="@mipmap/icon_arrows_twoway" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="@dimen/login__text_m_l_r"
-            android:layout_marginRight="@dimen/login__text_m_l_r"
-            android:background="@color/gray_in_orders" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:background="@color/white"
-            android:paddingBottom="@dimen/size_eight"
+            android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/login_p_l_r"
             android:paddingRight="@dimen/login_p_l_r"
-            android:paddingTop="@dimen/size_eight">
+            android:paddingTop="@dimen/base_margin">
 
             <TextView
 
@@ -92,16 +50,6 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/middle_text_size" />
 
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/phonePre"
-                android:textColor="@color/black"
-                android:textSize="@dimen/new_title_size" />
 
             <EditText
                 android:id="@+id/new_phone_edit_phonenumber"
@@ -110,8 +58,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="4"
                 android:background="@null"
-                android:inputType="number"
                 android:hint="@string/write_new_phone_number"
+                android:inputType="number"
                 android:maxLines="1"
                 android:paddingLeft="@dimen/login_p_l_r"
                 android:textColorHint="@color/light_font_note"
@@ -139,19 +87,19 @@
             android:layout_height="wrap_content"
 
             android:background="@color/white"
-            android:paddingBottom="@dimen/size_eight"
+            android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/login_p_l_r"
             android:paddingRight="@dimen/login_p_l_r"
-            android:paddingTop="@dimen/size_eight">
+            android:paddingTop="@dimen/base_margin">
 
             <TextView
                 android:id="@+id/textView29"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/login__text_m_l_r"
                 android:layout_weight="2"
                 android:text="@string/auth_code"
-                android:layout_gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/middle_text_size" />
 
@@ -161,9 +109,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:background="@null"
-                android:inputType="number"
                 android:gravity="center"
                 android:hint="@string/auth_code"
+                android:inputType="number"
                 android:maxLength="6"
                 android:maxLines="1"
                 android:textColorHint="@color/light_font_note"
@@ -175,10 +123,10 @@
                 android:layout_height="@dimen/code_button_height"
                 android:layout_marginRight="@dimen/login__text_m_l_r"
                 android:layout_weight="3"
-                android:background="@drawable/login_btn"
+                android:background="@drawable/box"
                 android:gravity="center"
                 android:text="@string/get_auth_code"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -192,11 +140,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:background="@color/white"
             android:orientation="vertical"
-         android:padding="@dimen/login_p_l_r"
-          >
+            android:padding="@dimen/login_p_l_r">
 
             <Button
                 android:id="@+id/new_phone_btn_bind"
@@ -204,11 +150,11 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/base_margin"
-                android:background="@drawable/login_btn"
+                android:background="@drawable/btn_box"
                 android:gravity="center"
-                android:textSize="@dimen/new_title_size"
-                android:text="@string/update_confirm"
-                android:textColor="@color/white" />
+                android:text="@string/done"
+                android:textColor="@color/kuangkuang_yellow"
+                android:textSize="@dimen/middle_text_size" />
         </LinearLayout>
 
 

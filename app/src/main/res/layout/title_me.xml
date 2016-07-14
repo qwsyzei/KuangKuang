@@ -3,7 +3,7 @@
     android:orientation="vertical"      android:id="@+id/title_RelativeLayout"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/title_layout_height"
-    android:background="@color/new_text">
+    android:background="@color/black">
 
 
 
@@ -14,7 +14,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text=""
-            android:textColor="@color/white"
+            android:textColor="@color/kuangkuang_yellow"
             android:padding="2dp"
             android:textSize="@dimen/new_title_size"
             />
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:id="@+id/im_title_set"
-            android:src="@android:drawable/stat_notify_chat"
+            android:src="@mipmap/setup"
             android:layout_marginRight="@dimen/base_margin"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

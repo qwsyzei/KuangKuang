@@ -106,6 +106,11 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
                 Intent intent = new Intent(ctx, S_ArticleActivity.class);
                 intent.putExtra("article_id", subject.getId());
                 intent.putExtra("content_html", subject.getContent());
+                intent.putExtra("title",subject.getTitle());
+                intent.putExtra("tag",subject.getTag());
+                intent.putExtra("views",subject.getViews().replace(".0", ""));
+                intent.putExtra("like",subject.getLike().replace(".0", ""));
+                intent.putExtra("comment", subject.getComment().replace(".0", ""));
                 ctx.startActivity(intent);
             }
         });

@@ -76,11 +76,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/android01"/>
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/small_views"/>
         <TextView
             android:id="@+id/item_subject_views"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
             android:layout_gravity="center"
             android:text="78"
             />
@@ -88,11 +90,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_eight"
-            android:src="@mipmap/android04"/>
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/small_like"/>
         <TextView
             android:id="@+id/item_subject_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
             android:layout_gravity="center"
             android:text="10"
             />
@@ -100,11 +104,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_eight"
-            android:src="@mipmap/android02"/>
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/small_comment"/>
         <TextView
             android:id="@+id/item_subject_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
             android:layout_marginRight="@dimen/login_p_l_r"
             android:layout_gravity="center"
             android:text="3"

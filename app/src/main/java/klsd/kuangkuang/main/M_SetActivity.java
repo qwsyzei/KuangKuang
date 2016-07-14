@@ -26,7 +26,7 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set);
+        setContentView(R.layout.m_set);
         setTitle(getString(R.string.set));
         initView();
     }

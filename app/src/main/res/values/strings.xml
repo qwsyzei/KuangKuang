@@ -80,7 +80,7 @@
     <string name="new_phone">新手机号</string>
     <string name="update">更改</string>
     <string name="update_confirm">确认更改</string>
-
+    <string name="next">下一步</string>
     <string name="unbind">解除绑定</string>
     <string name="bind">绑定</string>
 
@@ -98,15 +98,15 @@
     <string name="bind_phone_success">手机号绑定成功</string>
 
 
-    <string name="ok123">完成</string>
+    <string name="done">完成</string>
     <string name="confirm">确认</string>
     <string name="missingImage">图片加载失败</string>
-
+    <string name="confirm_password">确认密码</string>
     <string name="agreement">请同意用户协议</string>
     <string name="network_problem">网络连接问题</string>
     <string name="checkup_network">请检查网络连接</string>
     <string name="no_input_psd">未填写密码</string>
-
+    <string name="confirm_new_psd">确认新密码</string>
     <string name="no_input_new_psd">未填写新密码</string>
     <string name="no_confirm_new_psd">未确认新密码</string>
 
@@ -148,6 +148,8 @@
     <string name="my_message">我的消息</string>
     <string name="everyday_sign">每日签到</string>
     <string name="my_collect">我的收藏</string>
+    <string name="today">今天</string>
+    <string name="release_now">马上发表说说</string>
     <!-- 工具 -->
     <string name="check_certificate">查证书</string>
     <string name="measure_hand_size">量手寸</string>
@@ -163,8 +165,14 @@
     <string name="collect">收藏</string>
     <string name="recent_comment">最新评论</string>
     <string name="all_comment">查看全部评论</string>
+    <string name="qq">QQ</string>
+    <string name="weibo">微博</string>
+    <string name="wechat">微信</string>
+    <string name="friend_circle">朋友圈</string>
+
 
     <!-- 圈子 -->
+    <string name="top10">Top10</string>
     <string name="release_word">发布说说</string>
     <string name="week_hot">本周红人</string>
     <string name="how_get_on_the_list">如何上榜</string>

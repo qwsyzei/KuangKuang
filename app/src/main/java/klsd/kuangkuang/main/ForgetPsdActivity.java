@@ -3,6 +3,7 @@ package klsd.kuangkuang.main;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -29,13 +30,14 @@ public class ForgetPsdActivity extends BaseActivity {
     private EditText edit_phonenumber, edit_phoneyan, edit_newpsd, edit_newpsd_confirm;
     private ImageView im_inputcancel;//email输入时删除全部的图标，即“叉”
     private TextView tv_getcode;
-    private Button btn_set;
-
+    private ImageView im_set;
+    private ImageView im_eye1, im_eye2;
+    private int flag1 = 0, flag2 = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.forget_psd);
+        setContentView(R.layout.forget_password);
         initView();
     }
 
@@ -49,12 +51,18 @@ public class ForgetPsdActivity extends BaseActivity {
         edit_newpsd = (EditText) findViewById(R.id.edit_newpassword);
         edit_newpsd_confirm = (EditText) findViewById(R.id.edit_confirm_newpassword);
         tv_getcode = (TextView) findViewById(R.id.getback_code_phone);
-        btn_set = (Button) findViewById(R.id.getback_phone_btn_set);
+        im_set = (ImageView) findViewById(R.id.forget_im_done);
+
+        im_eye1 = (ImageView) findViewById(R.id.forget_im_change1);
+        im_eye2 = (ImageView) findViewById(R.id.forget_im_change2);
+
+        im_eye1.setOnClickListener(listener);
+        im_eye2.setOnClickListener(listener);
 
         im_inputcancel.setOnClickListener(listener);
 
         tv_getcode.setOnClickListener(listener);
-        btn_set.setOnClickListener(listener);
+        im_set.setOnClickListener(listener);
         edit_phonenumber.addTextChangedListener(watcher);
 
     }
@@ -70,8 +78,32 @@ public class ForgetPsdActivity extends BaseActivity {
                 case R.id.getback_code_phone:
                     toPhoneCode();
                     break;
-                case R.id.getback_phone_btn_set:
+                case R.id.forget_im_done:
                     toGetbackPhone();
+                    break;
+                case R.id.forget_im_change1:
+                    if (flag1 == 0) {
+                        //设为密码可见
+                        im_eye1.setImageResource(R.mipmap.icon_content_eye_open);
+                        edit_newpsd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        flag1 = 1;
+                    } else {
+                        im_eye1.setImageResource(R.mipmap.icon_content_eye_close);
+                        edit_newpsd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        flag1 = 0;
+                    }
+                    break;
+                case R.id.forget_im_change2:
+                    if (flag2 == 0) {
+                        //设为密码可见
+                        im_eye2.setImageResource(R.mipmap.icon_content_eye_open);
+                        edit_newpsd_confirm.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        flag2 = 1;
+                    } else {
+                        im_eye2.setImageResource(R.mipmap.icon_content_eye_close);
+                        edit_newpsd_confirm.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        flag2 = 0;
+                    }
                     break;
             }
         }

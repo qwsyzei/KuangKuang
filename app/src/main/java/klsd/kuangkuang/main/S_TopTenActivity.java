@@ -28,6 +28,7 @@ public class S_TopTenActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.s__top_ten);
+        setTitle(getString(R.string.top10));
         initView();
     }
 

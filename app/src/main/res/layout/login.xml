@@ -2,30 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgray">
+    android:background="@mipmap/login_background">
 
     <include
         android:id="@+id/signup_title"
-        layout="@layout/title_two" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="0.5dp"
-        android:layout_below="@+id/signup_title"
-        android:background="@color/gray_in_orders" />
+        layout="@layout/title_login" />
 
     <LinearLayout
         android:id="@+id/signup_main"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/signup_title"
-        android:layout_margin="@dimen/base_margin"
         android:orientation="vertical">
 <ImageView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/login_head_m_b"
-    android:src="@mipmap/head"/>
+    android:layout_marginBottom="@dimen/login_p_l_r"
+    android:src="@mipmap/login_top_im"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/login_head_m_b"
+            android:src="@mipmap/login_top_tv"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,16 +34,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/size_eight"
-                android:paddingLeft="@dimen/login_p_l_r"
-                android:paddingRight="@dimen/login_p_l_r"
+
                 android:paddingTop="@dimen/size_eight">
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/login__text_m_l_r"
-                android:src="@mipmap/android01"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/login_m_l"
+                android:src="@mipmap/phone"/>
 
                 <EditText
                     android:id="@+id/editTPhone"
@@ -64,8 +63,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/login_m_l_r"
-                    android:layout_weight="2"
+                    android:layout_marginRight="@dimen/login_m_l"
+                    android:layout_weight="1"
                     android:src="@mipmap/icon_content_cancel"
                     android:visibility="invisible" />
 
@@ -75,24 +74,24 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="@dimen/login__line_m_l_r"
-                android:layout_marginRight="@dimen/login__line_m_l_r"
+                android:layout_marginLeft="@dimen/login_m_l"
+                android:layout_marginRight="@dimen/login_m_l"
                 android:background="@color/gray_in_orders" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/size_eight"
-                android:paddingLeft="@dimen/login_p_l_r"
-                android:paddingRight="@dimen/login_p_l_r"
+
                 android:paddingTop="@dimen/size_eight">
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login__text_m_l_r"
-                    android:src="@mipmap/android02"/>
+                    android:layout_marginLeft="@dimen/login_m_l"
+                    android:src="@mipmap/password"/>
 
                 <EditText
                     android:id="@+id/editTPassword"
@@ -113,69 +112,66 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/login_m_l_r"
-                    android:layout_weight="2"
+                    android:layout_marginRight="@dimen/login_m_l"
+                    android:layout_weight="1"
                     android:src="@mipmap/icon_content_eye_close" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="@dimen/login__line_m_l_r"
-                android:layout_marginRight="@dimen/login__line_m_l_r"
+                android:layout_marginLeft="@dimen/login_m_l"
+                android:layout_marginRight="@dimen/login_m_l"
                 android:background="@color/gray_in_orders" />
+            <RelativeLayout
+                android:id="@+id/LinearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/tv_forgetpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/login_m_l"
+                    android:layout_marginTop="@dimen/login_m_l_r"
+                    android:gravity="center"
+                    android:text="@string/forget_password"
+                    android:textColor="@color/light_font_note"
+                    android:textSize="@dimen/middle_text_size" />
+
+
+                <TextView
+                    android:id="@+id/tv_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/login_m_l"
+                    android:layout_marginTop="@dimen/login_m_l_r"
+                    android:gravity="center"
+                    android:text="@string/sign_up"
+                    android:textColor="@color/light_font_note"
+                    android:textSize="@dimen/middle_text_size" />
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/base_margin"
-                android:padding="@dimen/login_p_l_r">
+                android:paddingTop="@dimen/login_p_l_r">
 
-                <Button
+                <ImageView
                     android:id="@+id/sign_in"
                     android:layout_width="fill_parent"
-                    android:layout_height="@dimen/button_height"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="@dimen/base_margin"
-                    android:layout_marginLeft="@dimen/login__text_m_l_r"
-                    android:layout_marginRight="@dimen/login__text_m_l_r"
                     android:layout_marginTop="@dimen/base_margin"
-                    android:background="@drawable/login_btn"
+                    android:layout_marginLeft="@dimen/login_m_l"
+                    android:layout_marginRight="@dimen/login_m_l"
+                    android:background="@drawable/background_login"
                     android:onClick="signIn"
-                    android:text="@string/login"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/new_title_size" />
+           />
             </LinearLayout>
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/LinearLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_forgetpassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/login_p_l_r"
-                android:layout_marginTop="@dimen/login_m_l_r"
-                android:gravity="center"
-                android:text="@string/forget_password"
-                android:textColor="@color/light_font_note"
-                android:textSize="@dimen/middle_text_size" />
-
-
-            <TextView
-                android:id="@+id/tv_signup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/login_p_l_r"
-                android:layout_marginTop="@dimen/login_m_l_r"
-                android:gravity="center"
-                android:text="@string/sign_up"
-                android:textColor="@color/light_font_note"
-                android:textSize="@dimen/middle_text_size" />
-        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

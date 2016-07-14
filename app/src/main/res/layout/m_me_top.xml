@@ -5,29 +5,30 @@
     android:layout_height="wrap_content">
 <ImageView
     android:layout_width="match_parent"
-    android:layout_height="130dp"
-    android:src="@mipmap/abc"/>
+    android:layout_height="wrap_content"
+    android:scaleType="fitXY"
+    android:src="@mipmap/images"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/login_p_l_r"
+android:layout_marginBottom="@dimen/signup__text_m_l_r"
+        android:gravity="bottom"
         android:orientation="vertical">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/me"/>
+
         <TextView
             android:id="@+id/me_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/base_margin"
+         android:layout_marginBottom="@dimen/size_eight"
             android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
             android:text="开心就好"/>
         <TextView
             android:id="@+id/personal_signature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="我是一个有理想的人，我愿意为之奋斗"
             android:layout_gravity="center_horizontal"/>
     </LinearLayout>

@@ -35,7 +35,7 @@ public class SignupActivity extends BaseActivity {
 
     private TextView tv_email_signup;//email注册
     private EditText edit_phonenumber, edit_phoneyan, edit_password, edit_password_confirm;
-    private Button btn_signup;
+    private ImageView im_signup;
     private TextView tv_get;
 
     private ImageView im_eye1, im_eye2;
@@ -64,7 +64,7 @@ public class SignupActivity extends BaseActivity {
         edit_password = (EditText) findViewById(R.id.signup_phone_edit_password);
         edit_password_confirm = (EditText) findViewById(R.id.signup_phone_edit_password_again);
         tv_get = (TextView) findViewById(R.id.signup_phone_getyan);
-        btn_signup = (Button) findViewById(R.id.btn_signup_phone);
+       im_signup = (ImageView) findViewById(R.id.im_signup_phone);
         im_eye1 = (ImageView) findViewById(R.id.sign_up_im_change1);
         im_eye2 = (ImageView) findViewById(R.id.sign_up_im_change2);
 
@@ -76,7 +76,7 @@ public class SignupActivity extends BaseActivity {
 
         tv_get.setOnClickListener(listener);
         tv_email_signup.setOnClickListener(listener);
-        btn_signup.setOnClickListener(listener);
+        im_signup.setOnClickListener(listener);
 
     }
 
@@ -116,7 +116,7 @@ public class SignupActivity extends BaseActivity {
                 case R.id.signup_phone_getyan:
                     toPhoneCode();
                     break;
-                case R.id.btn_signup_phone:
+                case R.id.im_signup_phone:
                     toPhoneSignup();
 
                     break;

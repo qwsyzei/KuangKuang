@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -35,9 +36,9 @@ import klsd.kuangkuang.utils.ToastUtil;
  * 专题文章
  */
 public class S_ArticleActivity extends BaseActivity implements View.OnClickListener {
-    String testString, article_id;
+    String testString, article_id,title,tag,views,like_number,comment_number;
     private TextView tv_content;
-    private LinearLayout layout_like, layout_comment, layout_collect;
+    private LinearLayout layout_like, layout_comment;
     private TextView tv_allcomment;
     private S_AllCommentAdapter allAdapter;
     public ArrayList<AllComment> os;
@@ -45,9 +46,11 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private ListView listView;
     private TextView tv_dialog_send;
     private EditText edit_dialog_comment;
-
+private ImageView im_collect,im_share;
     private PopupWindow cPopwindow;
-
+    private PopupWindow sharePopwindow;
+    private TextView tv_title,tv_tag;
+private TextView tv_views,tv_like,tv_comment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,17 +63,40 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         Intent intent = getIntent();
         testString = intent.getStringExtra("content_html");
         article_id = intent.getStringExtra("article_id");
+        title=intent.getStringExtra("title");
+        tag=intent.getStringExtra("tag");
+        views=intent.getStringExtra("views");
+        like_number=intent.getStringExtra("like");
+        comment_number=intent.getStringExtra("comment");
         tv_content = (TextView) findViewById(R.id.tv_article_content);
         RichText.from(testString).into(tv_content);
         listView = (ListView) findViewById(R.id.listview_article_comment3);
+        listView.setFocusable(false);//因为还有个scrollview，会影响显示位置
         layout_like = (LinearLayout) findViewById(R.id.layout_s_artile_like);
         layout_comment = (LinearLayout) findViewById(R.id.layout_s_artile_comment);
-        layout_collect = (LinearLayout) findViewById(R.id.layout_s_artile_collect);
+        im_collect = (ImageView) findViewById(R.id.im_s_artile_collect);
         tv_allcomment = (TextView) findViewById(R.id.article_look_all_comment);
+        tv_views= (TextView) findViewById(R.id.article_views_number);
+        tv_like= (TextView) findViewById(R.id.article_like_number);
+        tv_comment= (TextView) findViewById(R.id.article_comment_number);
+        im_share= (ImageView) findViewById(R.id.im_article_title_share);
+        im_share.setOnClickListener(this);
+
+        tv_views.setText(views);
+        tv_like.setText(like_number);
+        tv_comment.setText(comment_number);
+        Log.d("views是", "initView() returned: " + views);
+        Log.d("like是", "initView() returned: " + like_number);
+        Log.d("comment是", "initView() returned: " + comment_number);
+        tv_title= (TextView) findViewById(R.id.article_author_title);
+        tv_title.setText(title);
+        tv_tag= (TextView) findViewById(R.id.article_author_title_tag);
+        tv_tag.setText("["+tag+"]");
+
         tv_allcomment.setOnClickListener(this);
         layout_like.setOnClickListener(this);
         layout_comment.setOnClickListener(this);
-        layout_collect.setOnClickListener(this);
+        im_collect.setOnClickListener(this);
         gotoAllComment();
     }
 
@@ -83,7 +109,10 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             case R.id.layout_s_artile_comment:
                 Comment_Dialog(view);
                 break;
-            case R.id.layout_s_artile_collect:
+            case R.id.im_article_title_share:
+                Share_Dialog(view);
+                break;
+            case R.id.im_s_artile_collect:
                 gotoCollect();
 //                gotoCollectCancel();
                 break;
@@ -219,6 +248,26 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         //调用系统输入法
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
+    }
+    //分享窗口
+    private void Share_Dialog(View v) {
+        View pop_view = getLayoutInflater().inflate(R.layout.dialog_share, null, false);
+        sharePopwindow = new PopupWindow(pop_view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, true);
+        // 设置动画效果
+//        sharePopwindow.setAnimationStyle(R.style.share_style);
+        sharePopwindow.showAtLocation(v, Gravity.RIGHT, 0, 0);
+        //实例化一个ColorDrawable颜色为半透明
+        ColorDrawable dw = new ColorDrawable(0xb01b1b1b);
+        pop_view.setBackgroundDrawable(dw);
+        pop_view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                sharePopwindow.dismiss();
+                return true;
+            }
+        });
+
 
     }
 }

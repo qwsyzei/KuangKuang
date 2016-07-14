@@ -23,16 +23,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import cn.qqtheme.framework.picker.CityPicker;
 import klsd.kuangkuang.R;
 import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.picker.WheelPicker;
+import klsd.kuangkuang.models.Documents;
+import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.SelectPicDialog;
 
@@ -48,7 +57,9 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
     private LinearLayout layout_from_album, layout_take_photo;
     private TextView tv_dialog_cancel;
     private ImageView im_head;
-
+    String sex;
+String head_url;
+    private Documents documents;
     public static final int NONE = 0;
     public static final int PHOTOHRAPH = 1;// 拍照
     public static final int PHOTOZOOM = 2; // 缩放
@@ -88,9 +99,43 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         tv_change_head.setOnClickListener(this);
         tv_birthday.setOnClickListener(this);
         tv_city.setOnClickListener(this);
+        getData();
+        documents=new Documents();
+    }
+    /**
+     * 获取个人资料
+     */
+    MyHTTP http;
+
+    private void getData() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("member_id", "48");
+        if (http == null) http = new MyHTTP(M_PersonalDataActivity.this);
+        http.baseRequest(Consts.memberDocumentsApi, JSONHandler.JTYPE_MEMBER_DOCUMENTS, HttpRequest.HttpMethod.GET,
+                params, getHandler());
+    }
+    public void updateData() {
+        super.updateData();
+        if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
+            documents= (Documents) handlerBundler.getSerializable("documents");
+            tv_birthday.setText(documents.getBirthday());
+            tv_city.setText(documents.getCity());
+            edit_per_nickname.setText(documents.getName());
+            edit_per_signature.setText(documents.getSignature());
+            sex=documents.getSex();
+            if (sex.equals("男")){
+                spinner_sex.setSelection(0);
+            }else {
+                spinner_sex.setSelection(1);
+            }
+            head_url=documents.getPicture();
+            Log.d("头像的地址是", "updateData() returned: " + documents.getPicture());
+            BitmapUtils bitmapUtils=new BitmapUtils(M_PersonalDataActivity.this);
+            bitmapUtils.display(im_head,documents.getPicture());
+            ToastUtil.show(M_PersonalDataActivity.this, "已获取到个人资料");
+        }
 
     }
-
     /**
      * 时间选择器
      */
@@ -138,7 +183,9 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.im_head_pic:
-                myStartActivity(new Intent(M_PersonalDataActivity.this, M_BigHeadActivity.class));
+               Intent intent_pic=new Intent(M_PersonalDataActivity.this, M_BigHeadActivity.class);
+                intent_pic.putExtra("pic",head_url);
+                startActivity(intent_pic);
                 break;
             case R.id.per_change_head_pic:
                 initDialog();

@@ -97,4 +97,17 @@
 
     <dimen name="s_top_item_height">140dp</dimen>
     <dimen name="s_top_item_line">28dp</dimen>
+    <dimen name="login_title_height">56dp</dimen>
+    <dimen name="login_title_p_t">16dp</dimen>
+    <dimen name="login_title_m_l">12dp</dimen>
+    <dimen name="login_m_l">40dp</dimen>
+
+    <dimen name="article_author_m_t">35dp</dimen>
+    <dimen name="article_author_m_b">30dp</dimen>
+    <dimen name="article_author_layout_height">245dp</dimen>
+    <dimen name="article_author_name_m_t">35dp</dimen>
+    <dimen name="article_author_title_m_t">26dp</dimen>
+    <dimen name="article_layout_m_t">25dp</dimen>
+
+    <dimen name="dialog_share_m_t">70dp</dimen>
 </resources>

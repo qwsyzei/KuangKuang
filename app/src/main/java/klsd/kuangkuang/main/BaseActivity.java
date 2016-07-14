@@ -121,9 +121,12 @@ public class BaseActivity extends FragmentActivity {
 
     public void back(View view) {
         back();
-        aniBack();
     }
-
+    public void gotomain(View view) {
+       myStartActivity(new Intent(BaseActivity.this,MainActivity.class));
+        finish();
+        aniStart();
+    }
     public void back() {
         finish();
         aniBack();

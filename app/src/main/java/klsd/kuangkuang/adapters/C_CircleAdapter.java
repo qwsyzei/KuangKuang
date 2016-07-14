@@ -44,13 +44,13 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_circle, null);
             viewHolder.title = (TextView) convertView.findViewById(R.id.item_circle_title);
             viewHolder.describe = (TextView) convertView.findViewById(R.id.item_circle_describe);
-//            viewHolder.author = (TextView) convertView.findViewById(R.id.item_circle_author_name);
+            viewHolder.author = (TextView) convertView.findViewById(R.id.item_circle_author_name);
             viewHolder.views = (TextView) convertView.findViewById(R.id.item_circle_views);
             viewHolder.like = (TextView) convertView.findViewById(R.id.item_circle_like);
             viewHolder.comment = (TextView) convertView.findViewById(R.id.item_circle_comment);
             viewHolder.im_head_pic = (ImageView) convertView.findViewById(R.id.item_circle_head_pic);
 viewHolder.selfGridView= (SelfGridView) convertView.findViewById(R.id.gridview_circle);
-
+viewHolder.time= (TextView) convertView.findViewById(R.id.item_circle_time);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -73,12 +73,14 @@ viewHolder.selfGridView= (SelfGridView) convertView.findViewById(R.id.gridview_c
         }
         viewHolder.title.setText(circles.getTitle());
         viewHolder.describe.setText(circles.getDescribe());
-//        viewHolder.author.setText(circles.getAuthor());
-        viewHolder.views.setText(circles.getViews().replace(".0", ""));
-        viewHolder.like.setText(circles.getLike().replace(".0", ""));
-        viewHolder.comment.setText(circles.getComment().replace(".0", ""));
-        BitmapUtils bitmapUtils=new BitmapUtils(getContext());
-        bitmapUtils.display(viewHolder.im_head_pic, circles.getHead_pic_url());
+        viewHolder.author.setText(circles.getAuthor());
+//        viewHolder.views.setText(circles.getViews().replace(".0", ""));
+//        viewHolder.like.setText(circles.getLike().replace(".0", ""));
+//        viewHolder.comment.setText(circles.getComment().replace(".0", ""));
+//        BitmapUtils bitmapUtils=new BitmapUtils(getContext());
+//        bitmapUtils.display(viewHolder.im_head_pic, circles.getHead_pic_url());
+        viewHolder.im_head_pic.setImageBitmap(circles.getHead());//这个是假的，回头删了
+        viewHolder.time.setText(circles.getCreated_at());
         cGridAdapter = new C_CircleGridAdapter(getContext(),headerEntitiesList);
         viewHolder.selfGridView.setAdapter(cGridAdapter);
 //        viewHolder.im_head_pic.setImageBitmap(circles.getHead_pic());
@@ -99,5 +101,6 @@ viewHolder.selfGridView= (SelfGridView) convertView.findViewById(R.id.gridview_c
         public TextView title, describe, views, like, comment;
         public ImageView im_head_pic;
         public SelfGridView selfGridView;
+        TextView author,time;
     }
 }

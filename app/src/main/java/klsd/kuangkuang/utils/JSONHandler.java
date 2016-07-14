@@ -17,8 +17,10 @@ import java.util.List;
 import klsd.kuangkuang.models.AccountVersion;
 import klsd.kuangkuang.models.AllComment;
 import klsd.kuangkuang.models.Deposits;
+import klsd.kuangkuang.models.Documents;
 import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.models.MyCollect;
+import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.models.OHLCEntity;
 import klsd.kuangkuang.models.Order;
 import klsd.kuangkuang.models.OrderId;
@@ -56,16 +58,10 @@ public class JSONHandler {
 
 	public final static String JTYPE_PUSHER_PRIVATE_ORDER					= "pusher-privat-order";
 
-	
-	public final static String JTYPE_ADD_FUND_SOURCE 		= "add_fund_source";
-	public final static String JTYPE_UPDATE_FUND_SOURCE 	= "update_fund_source";
-	public final static String JTYPE_DELETE_FUND_SOURCE 	= "delete_fund_source";
 	public final static String JTYPE_RECHARGE 				= "recharge";
 	public final static String JTYPE_RECHARGE_CANCEL				= "recharge_cancel";
 	public final static String JTYPE_DEPOSITS				= "deposits";
-	public final static String JTYPE_WITHDRAW 				= "withdraw";
 	public final static String JTYPE_WITHDRAWS				= "withdraws";
-	public final static String JTYPE_WITHDRAW_CANCEL	= "withdraw_cancel";
 	public final static String JTYPE_SMS_AUTH_CODE			= "sms_code";
 	public final static String JTYPE_VERIFY_CODE			= "verify_code";
 	public final static String JTYPE_GET_ACCOUNT_VERSIONS 	= "account_versions";
@@ -80,6 +76,11 @@ public class JSONHandler {
 	public final static String JTYPE_COLLECT_SHOW= "collect_show";
 	public final static String JTYPE_COLLECT= "collect_article";
 	public final static String JTYPE_COLLECT_DESTROY= "collect_destroy";
+
+	public final static String JTYPE_MEMBER_DOCUMENTS= "member_documents";
+	public final static String JTYPE_MEMBER_UPDATE_DOCUMENTS= "update_member_documents";
+	public final static String JTYPE_MYWORD_LIST = "myword_list";
+
 	public JSONHandler(){
 		
 	}
@@ -196,6 +197,15 @@ public class JSONHandler {
 					as.add(sub);
 				}
 				bundle.putSerializable("subject_article", as);
+			}else if (jtype2.equals(JTYPE_MYWORD_LIST)){
+				ArrayList<MyWord> as = new ArrayList<MyWord>();
+				for (int i=0;i<olistArrays.size();i++){
+					JSONObject object = olistArrays.get(i);
+					MyWord sub = new MyWord(ctx);
+					sub.getFromJSONObjectItem(object);
+					as.add(sub);
+				}
+				bundle.putSerializable("myword_list", as);
 			} else if (jtype2.equals(JTYPE_ARTICLES_ALL_COMMENT)){
 				ArrayList<AllComment> ac = new ArrayList<AllComment>();
 				for (int i=0;i<olistArrays.size();i++){
@@ -264,7 +274,6 @@ public class JSONHandler {
 		osStrings.add(JTYPE_RECHARGE_CANCEL);
 		osStrings.add(JTYPE_ORDERS_SELL);
 		osStrings.add(JTYPE_LOGIN);
-		osStrings.add(JTYPE_EXISTS);
 		osStrings.add(JTYPE_SIGN);
 		osStrings.add(JTYPE_RESET);
 		osStrings.add(JTYPE_SMS_AUTH_CODE);
@@ -273,24 +282,18 @@ public class JSONHandler {
 		osStrings.add(JTYPE_MEMBER_ME);
 		osStrings.add(JTYPE_GET_ORDER_BOOK);
 		osStrings.add(JTYPE_RECHARGE);
-		osStrings.add(JTYPE_WITHDRAW);
-		osStrings.add(JTYPE_WITHDRAW_CANCEL);
-
 		osStrings.add(JTYPE_PUSHER_PRIVATE_ORDER);
 
 
-		osStrings.add(JTYPE_ADD_FUND_SOURCE);
-		osStrings.add(JTYPE_UPDATE_FUND_SOURCE);
-		osStrings.add(JTYPE_DELETE_FUND_SOURCE);
-		
-		osStrings.add(JTYPE_VERIFY_PAY_PASSWORD);
-		osStrings.add(JTYPE_UPDATE_PAY_PASSWORD);
 		osStrings.add(JTYPE_GET_TIME);
 		osStrings.add(JTYPE_ARTICLES_LIKE);
 		osStrings.add(JTYPE_COLLECT);
 		osStrings.add(JTYPE_COLLECT_DESTROY);
 		osStrings.add(JTYPE_ARTICLES_VIEWS);
 		osStrings.add(JTYPE_ARTICLES_COMMENT);
+
+		osStrings.add(JTYPE_MEMBER_DOCUMENTS);
+		osStrings.add(JTYPE_MEMBER_UPDATE_DOCUMENTS);
 		return osStrings.contains(jtype2);
 	}
 
@@ -305,31 +308,30 @@ public class JSONHandler {
 	
 	private boolean isObjectJtypeInJSONArray(String jtype2) {
 		List<String> osStrings = new ArrayList<String>();
-		osStrings.add(JTYPE_GET_ORDERS);
 		osStrings.add(JTYPE_GET_ORDERS_ITEM);
 		osStrings.add(JTYPE_ARTICLES_LIST);
 		osStrings.add(JTYPE_ARTICLES_ALL_COMMENT);
 		osStrings.add(JTYPE_COLLECT_SHOW);
 		osStrings.add(JTYPE_ARTICLES_TOP);
-		osStrings.add(JTYPE_GET_TRADES);
 		osStrings.add(JTYPE_GET_FUND_SOURCES);
 		osStrings.add(JTYPE_GET_ACCOUNT_VERSIONS);
 		osStrings.add(JTYPE_DEPOSITS);
 		osStrings.add(JTYPE_WITHDRAWS);
+		osStrings.add(JTYPE_MYWORD_LIST);
 		return osStrings.contains(jtype2);
 	}
 
 	public void fillBundle(Bundle bundle, JSONObject object, String jtype) {
 		try {
-			  if (jtype.equals(JTYPE_ORDERS_BUY) || jtype.equals(JTYPE_ORDERS_SELL)){
-	        	Order order = new Order(ctx);
-	        	order.getFromJSONObject(object);
-				bundle.putSerializable("order", order);
-	        } else if (jtype.equals(JTYPE_MEMBER_ME)) {
+			 if (jtype.equals(JTYPE_MEMBER_ME)) {
 	        	Member m = new Member();
 	        	m.getFromJSONObject(object);
 				bundle.putSerializable("member", m);
-	        } else if (jtype.equals(JTYPE_LOGIN)){
+	        } else if (jtype.equals(JTYPE_MEMBER_DOCUMENTS)) {
+				  Documents m = new Documents();
+				  m.getFromJSONObject(object);
+				  bundle.putSerializable("documents", m);
+			  }else if (jtype.equals(JTYPE_LOGIN)){
 	        	DataCenter.setAccessKey(object.getString("access_key"));
 	        	DataCenter.setSecretKey(object.getString("secret_key"));
 

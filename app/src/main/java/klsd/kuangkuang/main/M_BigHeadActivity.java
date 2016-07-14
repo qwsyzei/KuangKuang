@@ -1,5 +1,6 @@
 package klsd.kuangkuang.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -13,7 +14,7 @@ import klsd.kuangkuang.photoview.PhotoViewAttacher;
  */
 public class M_BigHeadActivity extends BaseActivity {
     private ImageView im_bighead;
-
+String pic_url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +24,11 @@ public class M_BigHeadActivity extends BaseActivity {
     }
 
     private void initView() {
+        Intent intent=getIntent();
+        pic_url=intent.getStringExtra("pic");
         im_bighead = (ImageView) findViewById(R.id.im_bighead);
         BitmapUtils bitmapUtils = new BitmapUtils(M_BigHeadActivity.this);
-        bitmapUtils.display(im_bighead, "http://img1.3lian.com/2015/w8/75/d/4.jpg");
+        bitmapUtils.display(im_bighead, pic_url);
 
         PhotoViewAttacher mAttacher = new PhotoViewAttacher(im_bighead);
         mAttacher.setScaleType(ImageView.ScaleType.CENTER_CROP);

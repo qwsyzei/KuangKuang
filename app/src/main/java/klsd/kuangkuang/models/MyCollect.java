@@ -19,9 +19,17 @@ public class MyCollect implements Serializable {
     }
 
     private String title, content, picture_url;
-    private String describe;
+    private String describe,id;
     private String member_id, created_at, updated_at, tag, display;//暂时不用
     private String views, like, comment;//观看，点赞和评论    数量           暂时不用
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -121,6 +129,7 @@ public class MyCollect implements Serializable {
 
     public MyCollect getFromJSONObjectItem(JSONObject object) {
         try {
+            setId(object.getString("id"));
             setContent(object.getString("content"));
             setTitle(object.getString("title"));
             setPicture_url(object.getString("picture"));

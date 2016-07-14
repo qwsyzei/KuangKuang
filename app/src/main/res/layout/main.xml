@@ -9,12 +9,14 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1">
-    <ImageView
-        android:id="@+id/im_more_subject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/base_margin"
-        android:src="@android:drawable/ic_media_previous" />
+
+        <ImageView
+            android:id="@+id/im_more_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/title_layout_height"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:src="@mipmap/heng3" />
+
     <LinearLayout
        android:id="@+id/just_subject_layout"
         android:layout_width="match_parent"
@@ -24,7 +26,7 @@
 
   <View
       android:layout_width="match_parent"
-      android:layout_height="1dp"
+      android:layout_height="0.5dp"
       android:background="#2000"
       />
 
@@ -39,28 +41,28 @@
     <RadioButton
         android:id="@+id/main_rb1"
         style="@style/tab_radiobutton_style"
-        android:drawableTop="@drawable/selector_ic_home"
+        android:drawableTop="@drawable/mainback_subject"
         android:text="@string/main_subject"
         />
 
     <RadioButton
         android:id="@+id/main_rb2"
         style="@style/tab_radiobutton_style"
-        android:drawableTop="@drawable/selector_ic_win"
+        android:drawableTop="@drawable/mainback_circle"
         android:text="@string/main_circle"
         />
 
     <RadioButton
         android:id="@+id/main_rb3"
         style="@style/tab_radiobutton_style"
-        android:drawableTop="@drawable/selector_ic_listing"
+        android:drawableTop="@drawable/mainback_tool"
         android:text="@string/main_tool"
         />
 
     <RadioButton
         android:id="@+id/main_rb4"
         style="@style/tab_radiobutton_style"
-        android:drawableTop="@drawable/selector_ic_user"
+        android:drawableTop="@drawable/mainback_user"
         android:text="@string/main_me"
         />
   </RadioGroup>

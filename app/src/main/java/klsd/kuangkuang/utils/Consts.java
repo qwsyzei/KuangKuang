@@ -20,6 +20,9 @@ public final static String host123="http://192.168.1.20:3000";
     public final static String articlesCollectArticleApi = baseApiPath + "/collect/collect_article";//收藏
     public final static String articlesCollectDestroyApi = baseApiPath + "/collect/collect_destroy";//取消收藏
     public final static String articlesCollectShowApi = baseApiPath + "/collect/collect_show";//展示收藏列表
+    public final static String memberDocumentsApi = baseApiPath + "/member_documents";//展示个人资料
+    public final static String memberUpdateDocumentsApi = baseApiPath + "/update/member_documents";//更新个人资料
+    public final static String micropostsMemberListApi = baseApiPath + "/microposts/microposts_member_list";//我的说说
 
     // phone_number common
     public final static String getAuthCodeApi = baseApiPath + "/registers/code";
