@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.main.common.EncrypAES;
 import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
@@ -41,6 +43,8 @@ public class SignupActivity extends BaseActivity {
     private ImageView im_eye1, im_eye2;
     private ImageView im_delete;
     private int flag1 = 0, flag2 = 0;
+
+    String member_id;
     /**
      *对用户名和密码进行加解密
      */
@@ -174,7 +178,9 @@ public class SignupActivity extends BaseActivity {
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_SIGN)) {
-            if (handlerBundler.getBoolean("signup")) {
+                member_id=handlerBundler.getString("signup");
+                Log.d("这个ID是", "updateData() returned: " + member_id);
+               DataCenter.setMember_id(member_id);
                 ToastUtil.show(SignupActivity.this, R.string.signup_success);
                 //保存登录信息
                 SharedPreferences.Editor editor=getSharedPreferences("login_info",MODE_PRIVATE).edit();
@@ -188,7 +194,7 @@ public class SignupActivity extends BaseActivity {
                 editor.commit();
                 myStartActivity(new Intent(SignupActivity.this, MainActivity.class));
                 finish();
-            }
+
         }
     }
     private TextWatcher watcher = new TextWatcher() {

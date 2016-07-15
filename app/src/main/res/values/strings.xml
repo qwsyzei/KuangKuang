@@ -174,9 +174,12 @@
     <!-- 圈子 -->
     <string name="top10">Top10</string>
     <string name="release_word">发布说说</string>
+    <string name="photo_album">相册</string>
     <string name="week_hot">本周红人</string>
     <string name="how_get_on_the_list">如何上榜</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <!-- 返回错误信息 -->
+    <string name="e2017">此号码未获取验证码</string>
+    <string name="e2038">您已收藏过此文章</string>
 </resources>

@@ -61,9 +61,9 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
                 intent.putExtra("content_html", ac.getContent());
                 intent.putExtra("title",ac.getTitle());
                 intent.putExtra("tag",ac.getTag());
-                intent.putExtra("views",ac.getViews().replace(".0", ""));
-                intent.putExtra("like",ac.getLike().replace(".0", ""));
-                intent.putExtra("comment",ac.getComment().replace(".0", ""));
+                intent.putExtra("views",ac.getViews());
+                intent.putExtra("like",ac.getLike());
+                intent.putExtra("comment",ac.getComment());
                 ctx.startActivity(intent);
             }
         });

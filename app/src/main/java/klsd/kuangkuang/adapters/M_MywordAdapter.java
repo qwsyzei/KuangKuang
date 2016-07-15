@@ -48,8 +48,9 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         viewHolder.content.setText(ac.getContent());
 //        BitmapUtils bitmapUtils = new BitmapUtils(ctx);
 //        bitmapUtils.display(viewHolder.head_pic, ac.getPicture_url());
-//        viewHolder.day.setText(ac.getCreated_at());
-//        viewHolder.month.setText(ac.getCreated_at());
+        viewHolder.head_pic.setImageBitmap(ac.getBitmip());
+        viewHolder.day.setText(ac.getDay());
+        viewHolder.month.setText(ac.getMonth());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

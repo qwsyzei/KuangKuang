@@ -1,6 +1,7 @@
 package klsd.kuangkuang.main;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +22,7 @@ import klsd.kuangkuang.fragments.MCircleFragment;
 import klsd.kuangkuang.fragments.MMeFragment;
 import klsd.kuangkuang.fragments.MSubjectFragment;
 import klsd.kuangkuang.fragments.MToolFragment;
+import klsd.kuangkuang.utils.DataCenter;
 
 
 /**
@@ -142,9 +144,13 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
 
                 break;
             case R.id.main_rb4:
-                im_title_left.setVisibility(View.GONE);
-                ft.replace(R.id.just_subject_layout, new MMeFragment());
-
+                if ( DataCenter.isSigned()){
+                    im_title_left.setVisibility(View.GONE);
+                    ft.replace(R.id.just_subject_layout, new MMeFragment());
+                }else{
+                    Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }
                 break;
         }
         ft.commit();

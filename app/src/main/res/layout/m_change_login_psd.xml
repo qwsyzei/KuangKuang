@@ -187,9 +187,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/base_margin"
-                android:textColor="@color/white"
+                android:textColor="@color/kuangkuang_yellow"
                 android:textSize="@dimen/new_title_size"
-                android:background="@drawable/login_btn"
+                android:background="@drawable/btn_box"
                 android:text="@string/change" />
         </LinearLayout>
 

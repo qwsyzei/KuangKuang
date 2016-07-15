@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/login_p_l_r"
-    android:background="@drawable/box"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -44,14 +44,6 @@
     android:smoothScrollbar="true"
     android:soundEffectsEnabled="true"
     android:stretchMode="columnWidth"></klsd.kuangkuang.views.SelfGridView>
-    <TextView
-        android:id="@+id/item_circle_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/login_p_l_r"
-        android:layout_marginRight="@dimen/login_p_l_r"
-        android:text="钻石趣闻"
-        android:textSize="@dimen/middle_text_size" />
 
     <TextView
         android:id="@+id/item_circle_describe"

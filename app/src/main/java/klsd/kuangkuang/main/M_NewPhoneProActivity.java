@@ -36,7 +36,7 @@ public class M_NewPhoneProActivity extends BaseActivity {
         setTitle(getString(R.string.update_phone));
         btn_update = (Button) findViewById(R.id.new_phone_btn_change);
         tv_phone = (TextView) findViewById(R.id.new_phone_tv_phonenumber);
-//        tv_phone.setText(getMember().getPhone_number());
+        tv_phone.setText(getMember().getPhone_number());
         edit_code = (EditText) findViewById(R.id.new_phone_pro_edit_code);
         btn_update.setOnClickListener(listener);
     }

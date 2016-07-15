@@ -16,7 +16,9 @@ import java.net.URL;
 public class CircleGridViewEntity implements Serializable {
     private String picture_url;
 
+
     private Context context;
+
 
     public String getPicture_url() {
         return picture_url;
@@ -34,7 +36,8 @@ public class CircleGridViewEntity implements Serializable {
         this.picture_url = picture_url;
         this.context = context;
     }
-//    public CircleGridViewEntity getFromJSONObjectItem(JSONObject object) {
+
+    //    public CircleGridViewEntity getFromJSONObjectItem(JSONObject object) {
 //        try {
 //            setPicture_url(object.getString("picture"));
 //        } catch (Exception e) {

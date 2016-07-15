@@ -1,6 +1,7 @@
 package klsd.kuangkuang.models;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import org.json.JSONObject;
 
@@ -13,9 +14,35 @@ import java.io.Serializable;
 public class MyWord implements Serializable{
     String id,content,member_id,created_at,picture_url;
     private Context context;
+    String day,month;//假的
+    private Bitmap bitmip;//假的
 
     public MyWord(Context context) {
         this.context = context;
+    }
+
+    public Bitmap getBitmip() {
+        return bitmip;
+    }
+
+    public void setBitmip(Bitmap bitmip) {
+        this.bitmip = bitmip;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
     }
 
     public String getId() {

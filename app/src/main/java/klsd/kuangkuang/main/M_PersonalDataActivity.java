@@ -114,6 +114,16 @@ String head_url;
         http.baseRequest(Consts.memberDocumentsApi, JSONHandler.JTYPE_MEMBER_DOCUMENTS, HttpRequest.HttpMethod.GET,
                 params, getHandler());
     }
+    /**
+     * 更新个人资料
+     */
+    private void updateInfo() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("member_id", "48");
+        if (http == null) http = new MyHTTP(M_PersonalDataActivity.this);
+        http.baseRequest(Consts.memberUpdateDocumentsApi, JSONHandler.JTYPE_MEMBER_UPDATE_DOCUMENTS, HttpRequest.HttpMethod.GET,
+                params, getHandler());
+    }
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {

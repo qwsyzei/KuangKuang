@@ -29,7 +29,6 @@ String pic_url;
         im_bighead = (ImageView) findViewById(R.id.im_bighead);
         BitmapUtils bitmapUtils = new BitmapUtils(M_BigHeadActivity.this);
         bitmapUtils.display(im_bighead, pic_url);
-
         PhotoViewAttacher mAttacher = new PhotoViewAttacher(im_bighead);
         mAttacher.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }

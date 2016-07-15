@@ -77,8 +77,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
     private List<Circles> getSubjectList() {
         cirList = new ArrayList<Circles>();
 //        for (int i = 0; i < 5; i++) {
-        Circles sub = new Circles(getContext());
-        sub.setTitle("钻石趣闻");
+        Circles sub = new Circles(a);
         sub.setDescribe("    四月生日石。 地球上最坚硬的天然物质。 已有十亿年以上的历史。此种风靡全球的宝石，不仅……");
         sub.setAuthor("当年明月");
         sub.setViews("22");
@@ -88,8 +87,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         sub.setHead(BitmapFactory.decodeResource(a.getResources(), R.mipmap.touxiang01));
         cirList.add(sub);
 
-        Circles sub2 = new Circles(getContext());
-        sub2.setTitle("男士珠宝");
+        Circles sub2 = new Circles(a);
         sub2.setDescribe("   连柱子都要镀金，连椅子都要镶钻!那么问题来了，究竟是怎么样的女子才能嫁给如此富得流油的文莱王子……");
         sub2.setAuthor("刘备");
         sub2.setViews("82");
@@ -99,8 +97,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
 //        sub2.setHead_pic_url("http://img4.duitang.com/uploads/item/201511/19/20151119173330_vhFsZ.jpeg");
         sub2.setHead(BitmapFactory.decodeResource(a.getResources(), R.mipmap.touxiang02));
         cirList.add(sub2);
-        Circles sub3 = new Circles(getContext());
-        sub3.setTitle("羊年限量");
+        Circles sub3 = new Circles(a);
         sub3.setDescribe("    那还是在旅游旺季。她试了各种办法，比如把它们移到中间的展示区……");
         sub3.setAuthor("丽莎");
         sub3.setViews("30");
@@ -110,8 +107,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
 //        sub3.setHead_pic_url("http://img4.duitang.com/uploads/item/201511/19/20151119173330_vhFsZ.jpeg");
         sub3.setHead(BitmapFactory.decodeResource(a.getResources(), R.mipmap.touxiang03));
         cirList.add(sub3);
-        Circles sub4 = new Circles(getContext());
-        sub4.setTitle("如何搭配");
+        Circles sub4 = new Circles(a);
         sub4.setDescribe("    很多电影中都会有偷盗珠宝的情节，那些动辄上亿的珠宝引无数大盗竞折腰，上天入地无所不能，荧屏外的观众也看的够爽……");
         sub4.setAuthor("徐小明");
         sub4.setViews("10");
@@ -121,8 +117,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
 //        sub4.setHead_pic_url("http://img4.duitang.com/uploads/item/201511/19/20151119173330_vhFsZ.jpeg");
         sub4.setHead(BitmapFactory.decodeResource(a.getResources(), R.mipmap.touxiang04));
         cirList.add(sub4);
-        Circles sub5 = new Circles(getContext());
-        sub5.setTitle("最大祖母绿");
+        Circles sub5 = new Circles(a);
         sub5.setDescribe("    有一个把商品价格提高反而增加销量的故事：一批绿松石珠宝，眼看就要砸在一位女店主手里了……");
         sub5.setAuthor("一阵风");
         sub5.setViews("33");
@@ -148,7 +143,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         tv_release.setOnClickListener(this);
         listView = (ListView) view.findViewById(R.id.listview_circle);
         getSubjectList();
-        cAdapter = new C_CircleAdapter(getContext(), cirList);
+        cAdapter = new C_CircleAdapter(a, cirList);
 
         listView.setAdapter(cAdapter);
 

@@ -27,16 +27,17 @@
             android:layout_height="@dimen/big_edit_height"
             android:background="@null"
             android:gravity="top"
-            android:hint="123"
+            android:hint=""
             android:padding="@dimen/login_p_l_r" />
     </LinearLayout>
 
     <Button
         android:id="@+id/feedback_button"
-        style="@style/common_button_style"
+        android:background="@drawable/btn_box"
         android:layout_width="@dimen/small_dialog_width"
         android:layout_height="@dimen/button_height"
         android:layout_gravity="center"
+        android:textColor="@color/kuangkuang_yellow"
         android:text="@string/submit" />
 
 </LinearLayout>

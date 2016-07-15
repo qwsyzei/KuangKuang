@@ -84,10 +84,22 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         }
         viewHolder.title.setText(subject.getTitle());
         viewHolder.describe.setText(subject.getDescribe());
-//        viewHolder.author.setText(subject.getAuthor());
-        viewHolder.views.setText(subject.getViews().replace(".0", ""));
-        viewHolder.like.setText(subject.getLike().replace(".0", ""));
-        viewHolder.comment.setText(subject.getComment().replace(".0", ""));
+        if (subject.getViews().toString().equals("null")){
+            viewHolder.views.setText("0");
+        }else{
+            viewHolder.views.setText(subject.getViews().replace(".0", ""));
+        }
+        if (subject.getLike().toString().equals("null")){
+            viewHolder.like.setText("0");
+        }else{
+            viewHolder.like.setText(subject.getLike().replace(".0", ""));
+        }
+        if (subject.getViews().toString().equals("null")){
+            viewHolder.comment.setText("0");
+        }else{
+            viewHolder.comment.setText(subject.getComment().replace(".0", ""));
+        }
+
         BitmapUtils bitmapUtils=new BitmapUtils(ctx);
         bitmapUtils.display(viewHolder.im_picture,subject.getPicture());
 //        viewHolder.im_head_pic.setImageBitmap(subject.getHead_pic());
@@ -138,5 +150,6 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         public TextView title, describe, views, like, comment;
         public ImageView im_picture;
         LinearLayout layout_item;
+//        ImageView im_head_pic;
     }
 }

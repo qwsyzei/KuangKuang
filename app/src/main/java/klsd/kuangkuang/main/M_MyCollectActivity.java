@@ -12,11 +12,13 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.M_MyCollectAdapter;
 import klsd.kuangkuang.models.MyCollect;
 import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
@@ -57,12 +59,24 @@ M_MyCollectAdapter myCollectAdapter;
      */
     private void getCollectShow() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("member_id","48");
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("page", page + "");
         params.addQueryStringParameter("limit", "10");
 
         if (http == null) http = new MyHTTP(M_MyCollectActivity.this);
         http.baseRequest(Consts.articlesCollectShowApi, JSONHandler.JTYPE_COLLECT_SHOW, HttpRequest.HttpMethod.GET,
+                params, getHandler());
+
+    }
+    /**
+     * 取消收藏
+     */
+    private void gotoCollectCancel() {
+        RequestParams params = new RequestParams();
+//        params.addQueryStringParameter("article_id", article_id);
+        params.addQueryStringParameter("member_id", "48");
+        if (http == null) http = new MyHTTP(M_MyCollectActivity.this);
+        http.baseRequest(Consts.articlesCollectDestroyApi, JSONHandler.JTYPE_COLLECT_DESTROY, HttpRequest.HttpMethod.GET,
                 params, getHandler());
 
     }
@@ -78,6 +92,7 @@ M_MyCollectAdapter myCollectAdapter;
                 ToastUtil.show(M_MyCollectActivity.this, getString(R.string.no_more_data));
                 return;
             }
+             addTrades("bottom",os);
             if (curTradesSize == 0) {
                 myList = os;
 //                tv_top.setText(getString(R.string.my_collect)+"："+myList.size());//收藏数，先不用
@@ -90,6 +105,23 @@ M_MyCollectAdapter myCollectAdapter;
             }
             page += 1;
             UIutils.cancelLoading();
+        }else if (jtype.equals(JSONHandler.JTYPE_COLLECT_DESTROY)) {
+             ToastUtil.show(M_MyCollectActivity.this, "已取消收藏");
+         }
+    }
+    public void addTrades(String from, List<MyCollect> ess) {
+        List<String> ids = new ArrayList<String>();
+        for (MyCollect o : myList)
+            ids.add(o.getId());
+
+        for (MyCollect e : ess) {
+            if (!ids.contains(e.getId())) {     //因为后台返回的会有的与前面的id重复，所以把不重复的添加了
+                int i = from.equals("top") ? 0 : myList.size();
+                myList.add(i, e);
+            }
+        }
+        if (myCollectAdapter != null) {
+            myCollectAdapter.notifyDataSetChanged();
         }
     }
     @Override

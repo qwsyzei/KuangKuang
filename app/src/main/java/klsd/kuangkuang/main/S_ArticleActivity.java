@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,6 +28,7 @@ import klsd.kuangkuang.adapters.S_AllCommentAdapter;
 import klsd.kuangkuang.models.AllComment;
 import klsd.kuangkuang.richtext.RichText;
 import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
@@ -36,7 +38,7 @@ import klsd.kuangkuang.utils.ToastUtil;
  * 专题文章
  */
 public class S_ArticleActivity extends BaseActivity implements View.OnClickListener {
-    String testString, article_id,title,tag,views,like_number,comment_number;
+    String testString, article_id, title, tag, views, like_number, comment_number;
     private TextView tv_content;
     private LinearLayout layout_like, layout_comment;
     private TextView tv_allcomment;
@@ -46,11 +48,12 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private ListView listView;
     private TextView tv_dialog_send;
     private EditText edit_dialog_comment;
-private ImageView im_collect,im_share;
+    private ImageView im_collect, im_share;
     private PopupWindow cPopwindow;
     private PopupWindow sharePopwindow;
-    private TextView tv_title,tv_tag;
-private TextView tv_views,tv_like,tv_comment;
+    private TextView tv_title, tv_tag;
+    private TextView tv_views, tv_like, tv_comment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,11 +66,11 @@ private TextView tv_views,tv_like,tv_comment;
         Intent intent = getIntent();
         testString = intent.getStringExtra("content_html");
         article_id = intent.getStringExtra("article_id");
-        title=intent.getStringExtra("title");
-        tag=intent.getStringExtra("tag");
-        views=intent.getStringExtra("views");
-        like_number=intent.getStringExtra("like");
-        comment_number=intent.getStringExtra("comment");
+        title = intent.getStringExtra("title");
+        tag = intent.getStringExtra("tag");
+        views = intent.getStringExtra("views");
+        like_number = intent.getStringExtra("like");
+        comment_number = intent.getStringExtra("comment");
         tv_content = (TextView) findViewById(R.id.tv_article_content);
         RichText.from(testString).into(tv_content);
         listView = (ListView) findViewById(R.id.listview_article_comment3);
@@ -76,22 +79,32 @@ private TextView tv_views,tv_like,tv_comment;
         layout_comment = (LinearLayout) findViewById(R.id.layout_s_artile_comment);
         im_collect = (ImageView) findViewById(R.id.im_s_artile_collect);
         tv_allcomment = (TextView) findViewById(R.id.article_look_all_comment);
-        tv_views= (TextView) findViewById(R.id.article_views_number);
-        tv_like= (TextView) findViewById(R.id.article_like_number);
-        tv_comment= (TextView) findViewById(R.id.article_comment_number);
-        im_share= (ImageView) findViewById(R.id.im_article_title_share);
+        tv_views = (TextView) findViewById(R.id.article_views_number);
+        tv_like = (TextView) findViewById(R.id.article_like_number);
+        tv_comment = (TextView) findViewById(R.id.article_comment_number);
+        im_share = (ImageView) findViewById(R.id.im_article_title_share);
         im_share.setOnClickListener(this);
+        if (views.equals("null")) {
+            tv_views.setText("0");
+        } else {
+            tv_views.setText(views);
+        }
+        if (like_number.equals("null")) {
+            tv_like.setText("0");
+        } else {
+            tv_like.setText(like_number);
+        }
+        if (comment_number.equals("null")) {
+            tv_comment.setText("0");
+        } else {
+            tv_comment.setText(comment_number);
+        }
 
-        tv_views.setText(views);
-        tv_like.setText(like_number);
-        tv_comment.setText(comment_number);
-        Log.d("views是", "initView() returned: " + views);
-        Log.d("like是", "initView() returned: " + like_number);
-        Log.d("comment是", "initView() returned: " + comment_number);
-        tv_title= (TextView) findViewById(R.id.article_author_title);
+        Log.d("我能得到的ID是", "initView() returned: " + DataCenter.getMember_id());
+        tv_title = (TextView) findViewById(R.id.article_author_title);
         tv_title.setText(title);
-        tv_tag= (TextView) findViewById(R.id.article_author_title_tag);
-        tv_tag.setText("["+tag+"]");
+        tv_tag = (TextView) findViewById(R.id.article_author_title_tag);
+        tv_tag.setText("[" + tag + "]");
 
         tv_allcomment.setOnClickListener(this);
         layout_like.setOnClickListener(this);
@@ -107,23 +120,30 @@ private TextView tv_views,tv_like,tv_comment;
                 gotoLike();
                 break;
             case R.id.layout_s_artile_comment:
-                Comment_Dialog(view);
+                if (isSigned()) {
+                    Comment_Dialog(view);
+                } else {
+                    myStartActivity(new Intent(S_ArticleActivity.this, LoginActivity.class));
+                }
                 break;
             case R.id.im_article_title_share:
                 Share_Dialog(view);
                 break;
             case R.id.im_s_artile_collect:
                 gotoCollect();
-//                gotoCollectCancel();
                 break;
             case R.id.article_look_all_comment:
-                Intent intent = new Intent(S_ArticleActivity.this, S_AllCommentActivity.class);
-                intent.putExtra("a_id", article_id);
-                startActivity(intent);
+                if (isSigned()) {
+                    Intent intent = new Intent(S_ArticleActivity.this, S_AllCommentActivity.class);
+                    intent.putExtra("a_id", article_id);
+                    startActivity(intent);
+                } else {
+                    myStartActivity(new Intent(S_ArticleActivity.this, LoginActivity.class));
+                }
                 break;
             case R.id.dialog_comment_send_send:
-//                gotoComment();
-                ToastUtil.show(S_ArticleActivity.this, edit_dialog_comment.getText().toString());
+                gotoComment();
+//                ToastUtil.show(S_ArticleActivity.this, edit_dialog_comment.getText().toString());
                 break;
         }
     }
@@ -157,26 +177,13 @@ private TextView tv_views,tv_like,tv_comment;
     }
 
     /**
-     * 取消收藏
-     */
-    private void gotoCollectCancel() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("article_id", article_id);
-        params.addQueryStringParameter("member_id", "48");
-        if (http == null) http = new MyHTTP(S_ArticleActivity.this);
-        http.baseRequest(Consts.articlesCollectDestroyApi, JSONHandler.JTYPE_COLLECT_DESTROY, HttpRequest.HttpMethod.GET,
-                params, getHandler());
-
-    }
-
-    /**
      * 评论
      */
     private void gotoComment() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("article_id", article_id);
         params.addQueryStringParameter("comment", edit_dialog_comment.getText().toString());
-        params.addQueryStringParameter("commenter", "48");
+        params.addQueryStringParameter("commenter", DataCenter.getMember_id());
         Log.d("写的评论是", "gotoComment() returned: " + edit_dialog_comment.getText().toString());
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
@@ -215,8 +222,9 @@ private TextView tv_views,tv_like,tv_comment;
 
         } else if (jtype.equals(JSONHandler.JTYPE_COLLECT)) {
             ToastUtil.show(S_ArticleActivity.this, "已收藏");
-        } else if (jtype.equals(JSONHandler.JTYPE_COLLECT_DESTROY)) {
-            ToastUtil.show(S_ArticleActivity.this, "已取消收藏");
+        } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
+            cPopwindow.dismiss();
+            ToastUtil.show(S_ArticleActivity.this, "评论成功");
         }
 
     }
@@ -250,6 +258,7 @@ private TextView tv_views,tv_like,tv_comment;
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
+
     //分享窗口
     private void Share_Dialog(View v) {
         View pop_view = getLayoutInflater().inflate(R.layout.dialog_share, null, false);
@@ -267,8 +276,7 @@ private TextView tv_views,tv_like,tv_comment;
                 return true;
             }
         });
-
-
     }
+
 }
 

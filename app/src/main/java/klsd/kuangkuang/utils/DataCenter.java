@@ -14,7 +14,7 @@ public class DataCenter {
 	private static boolean isSign = false;
 	private static String market;
 	private static String payPassword, privateSN;
-
+private static String member_id;
 	private static Member member;
 	// User Related
 	public static String accessKey;
@@ -22,6 +22,13 @@ public class DataCenter {
 	public static SharedPreferences sharedPreferences;
 	private static double curXZMValue;
 
+	public static String getMember_id() {
+		return member_id;
+	}
+
+	public static void setMember_id(String member_id) {
+		DataCenter.member_id = member_id;
+	}
 
 	public static boolean isSigned() {
 		return isSign;

@@ -19,6 +19,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.S_SubjectAdapter;
@@ -42,7 +43,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
     private ArrayList<Subject> sList;
     private static Activity a;
     private SwipeRefreshLayout swipeView;
-   private int limit = 10;
+   private int limit = 5;
     private int page = 1;
     String direction = "bottom";
     private TextView tv_top;
@@ -70,7 +71,6 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
         tv_top.setOnClickListener(this);
         listView = (ListView) view.findViewById(R.id.listview_msubject);
         listView.setOnScrollListener(this);
-//        getSubjectList();
         UIutils.showLoading(a);
         swipt();
         getArticlesList();
@@ -92,6 +92,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("limit",limit+"");
         params.addQueryStringParameter("page", page+"");
+        Log.d("你觉得page是什么", "getArticlesList() returned: " + page);
         if (http == null) http = new MyHTTP(a);
         http.baseRequest(Consts.articlesListApi, JSONHandler.JTYPE_ARTICLES_LIST, HttpRequest.HttpMethod.GET,
                 params, handler);
@@ -120,6 +121,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
                         ToastUtil.show(a, a.getString(R.string.no_more_data));
                         return;
                     }
+                    addTrades("bottom",os);
                     if (curTradesSize == 0) {
                         sList = os;
                         sAdapter = new S_SubjectAdapter(a, sList,handler);
@@ -137,7 +139,21 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
             }
         }
     };
+    public void addTrades(String from, List<Subject> ess) {
+        List<String> ids = new ArrayList<String>();
+        for (Subject o : sList)
+            ids.add(o.getId());
 
+        for (Subject e : ess) {
+            if (!ids.contains(e.getId())) {
+                int i = from.equals("top") ? 0 : sList.size();
+                sList.add(i, e);
+            }
+        }
+        if (sAdapter != null) {
+            sAdapter.notifyDataSetChanged();
+        }
+    }
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
         int pos = absListView.getLastVisiblePosition();

@@ -9,7 +9,7 @@ public class Consts extends Application {
 
 public final static String host123="http://192.168.1.20:3000";
     public final static String host2 = "http://119.254.100.167:8080";
-    public final static String baseApiPath = host123+ "/api/v2";
+    public final static String baseApiPath = host+ "/api/v2";
 
     // HTML
     public final static String articlesListApi = baseApiPath + "/articles/articles_list";

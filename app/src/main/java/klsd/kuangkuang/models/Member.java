@@ -12,8 +12,7 @@ public class Member implements Serializable {
 
 	private static final long serialVersionUID = -2415624110939646059L;
 
-	private String sn,name,email,activated,phone_number,
-				   totalBalance, btcBalance, totalLocked;
+	private String sn,name,activated,phone_number;
 	private List<Account> accounts;
 private ArrayList<AllComment> allCommentList;
 
@@ -33,13 +32,6 @@ private ArrayList<AllComment> allCommentList;
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	
 	public String getPhone_number() {
 		return phone_number;
@@ -56,12 +48,11 @@ private ArrayList<AllComment> allCommentList;
 	public void setActivated(String activated) {
 		this.activated = activated;
 	}
-	
+
 	public void getFromJSONObject(JSONObject object) {
 		try {
 			setSn(object.getString("sn"));
 			setActivated(object.getString("activated"));
-			setEmail(object.getString("email"));
 			setName(object.getString("name"));
 			setPhone_number(object.getString("phone_number"));
 			JSONArray as = object.getJSONArray("accounts");
@@ -82,9 +73,7 @@ private ArrayList<AllComment> allCommentList;
 //				locked = locked.add(new BigDecimal(a.getLocked()));          //将它移动到if里面了
 				accounts.add(a);
 			}
-			setTotalBalance(n + "");
-			setBtcBalance(btc + "");
-			setTotalLocked(locked + "");
+
 			setAccounts(accounts);
 		} catch (Exception e) {
 		}
@@ -106,38 +95,4 @@ private ArrayList<AllComment> allCommentList;
 		this.accounts = accounts;
 	}
 
-	public void setTotalBalance(String totalBalance) {
-		this.totalBalance = totalBalance;
-	}
-
-
-	public void setBtcBalance(String btcBalance) {
-		this.btcBalance = btcBalance;
-	}
-
-
-	public double getOriginMyWealth() {
-	                  //交易界面的“我的资产”，是     “ 总资产”与“挂单金额”的差
-		return getOriginTotalBalance();
-	}
-	public void setTotalLocked(String s) {
-		this.totalLocked = s;
-	}
-
-	public double getOriginBtnBalance() {
-		return Double.parseDouble(btcBalance);
-	}
-	
-	public double getOriginTotalBalance() {               //余额
-		return Double.parseDouble(totalBalance);
-	}
-
-	public double getOriginTotalLocked() {
-		return Double.parseDouble(totalLocked);
-	}
-
-
-    public String getPassword(){
-        return "123456";
-    }
 }

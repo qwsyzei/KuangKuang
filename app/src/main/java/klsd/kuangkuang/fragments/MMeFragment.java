@@ -3,6 +3,8 @@ package klsd.kuangkuang.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -20,6 +22,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.M_MywordAdapter;
@@ -40,6 +43,7 @@ import klsd.kuangkuang.utils.UIutils;
  */
 public class MMeFragment extends MyBaseFragment implements View.OnClickListener, AbsListView.OnScrollListener {
     View view;
+    private List<MyWord> cirList;
     private M_MywordAdapter mywordAdapter;
     private ImageView im_set;
     private RelativeLayout layout_collect;
@@ -64,7 +68,48 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
         initView();
         return view;
     }
+    /**
+     * 假数据
+     *
+     * @return
+     */
+    private List<MyWord> getSubjectList() {
+        cirList = new ArrayList<MyWord>();
+//        for (int i = 0; i < 5; i++) {
+        MyWord sub = new MyWord(a);
+        sub.setDay("10");
+        sub.setContent("    四月生日石。 地球上最坚硬的天然物质。 已有十亿年以上的历史。此种风靡全球的宝石，不仅……");
+        sub.setMonth("7");
+        sub.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m31));
+        cirList.add(sub);
 
+        MyWord sub2 = new MyWord(a);
+        sub2.setDay("12");
+        sub2.setContent("    昨天老公给买了个大大的钻戒，但他不让我晒");
+        sub2.setMonth("6");
+        sub2.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m53));
+        cirList.add(sub2);
+        MyWord sub3 = new MyWord(a);
+        sub3.setDay("01");
+        sub3.setContent("   谁说我自己不会鉴赏珠宝，我今天就要让你们都看看");
+        sub3.setMonth("6");
+        sub3.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m32));
+        cirList.add(sub3);
+        MyWord sub4 = new MyWord(a);
+        sub4.setDay("26");
+        sub4.setContent(" 今天过生日，让我最想不到的是，我的好弟弟给我买了个金项链");
+        sub4.setMonth("5");
+        sub4.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m51));
+        cirList.add(sub4);
+        MyWord sub5 = new MyWord(a);
+        sub5.setDay("30");
+        sub5.setContent(" 好吧，我觉得我还是得相信我自己的感觉，毕竟这是自己的爱好");
+        sub5.setMonth("4");
+        sub5.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m21));
+        cirList.add(sub5);
+//        }
+        return cirList;
+    }
     private void initView() {
         sList = new ArrayList<>();
         im_set = (ImageView) view.findViewById(R.id.im_title_set);
@@ -75,12 +120,15 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
         layout_release.setOnClickListener(this);
         layout_collect.setOnClickListener(this);
         im_set.setOnClickListener(this);
-        getMywordList();
+//        getMyWordList();
+        getSubjectList();
+        mywordAdapter = new M_MywordAdapter(a, cirList);
+        listView.setAdapter(mywordAdapter);
     }
 
     MyHTTP http;
 
-    private void getMywordList() {
+    private void getMyWordList() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("member_id", "48");
         params.addQueryStringParameter("limit", limit + "");
@@ -103,12 +151,13 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
             } else if (res.equals("OK")) {
                 if (jtype.equals(JSONHandler.JTYPE_MYWORD_LIST)) {
                     int curTradesSize = sList.size();
-                    ArrayList<MyWord> os = (ArrayList<MyWord>) bundle.getSerializable("myword_list");
+                    ArrayList<MyWord> os = (ArrayList<MyWord>) bundle.getSerializable("MyWord_list");
                     Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
                         ToastUtil.show(a, a.getString(R.string.no_more_data));
                         return;
                     }
+                    addTrades("bottom",os);
                     if (curTradesSize == 0) {
                         sList = os;
                         mywordAdapter = new M_MywordAdapter(a, sList);
@@ -126,7 +175,21 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
             }
         }
     };
+    public void addTrades(String from, List<MyWord> ess) {
+        List<String> ids = new ArrayList<String>();
+        for (MyWord o : sList)
+            ids.add(o.getId());
 
+        for (MyWord e : ess) {
+            if (!ids.contains(e.getId())) {
+                int i = from.equals("top") ? 0 : sList.size();
+                sList.add(i, e);
+            }
+        }
+        if (mywordAdapter != null) {
+            mywordAdapter.notifyDataSetChanged();
+        }
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -172,6 +235,6 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
 
     //刷新数据的方法
     public void loadDataFrom() {
-        getMywordList();
+        getMyWordList();
     }
 }

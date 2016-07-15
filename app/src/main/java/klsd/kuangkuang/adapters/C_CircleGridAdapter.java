@@ -1,6 +1,7 @@
 package klsd.kuangkuang.adapters;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 
 import com.lidroid.xutils.BitmapUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import klsd.kuangkuang.R;
@@ -40,7 +42,6 @@ public class C_CircleGridAdapter extends ArrayAdapter<CircleGridViewEntity> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         View ret = null;
         if (convertView != null) {
             ret= convertView;
