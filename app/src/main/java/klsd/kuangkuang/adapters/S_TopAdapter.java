@@ -8,16 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
-
 import java.util.List;
-
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.main.S_ArticleActivity;
-import klsd.kuangkuang.models.MyCollect;
 import klsd.kuangkuang.models.Top;
 
 /**
@@ -27,8 +23,8 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
 
     private Context ctx;
 
-    public S_TopAdapter(Context context, List<Top> objects) {
-        super(context, R.layout.item_top_ten, objects);
+    public S_TopAdapter(Context context, List<Top> list) {
+        super(context, R.layout.item_top_ten, list);
         this.ctx = context;
     }
 
@@ -47,7 +43,7 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+       viewHolder.top.setText("Top"+(position+1)+"");
         viewHolder.title.setText(ac.getTitle());
         viewHolder.tag.setText(ac.getTag());
         BitmapUtils bitmapUtils=new BitmapUtils(ctx);

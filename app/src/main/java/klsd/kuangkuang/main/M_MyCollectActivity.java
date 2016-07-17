@@ -74,7 +74,7 @@ M_MyCollectAdapter myCollectAdapter;
     private void gotoCollectCancel() {
         RequestParams params = new RequestParams();
 //        params.addQueryStringParameter("article_id", article_id);
-        params.addQueryStringParameter("member_id", "48");
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         if (http == null) http = new MyHTTP(M_MyCollectActivity.this);
         http.baseRequest(Consts.articlesCollectDestroyApi, JSONHandler.JTYPE_COLLECT_DESTROY, HttpRequest.HttpMethod.GET,
                 params, getHandler());

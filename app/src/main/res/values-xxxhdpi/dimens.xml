@@ -109,4 +109,6 @@
     <dimen name="article_layout_m_t">25dp</dimen>
 
     <dimen name="dialog_share_m_t">72dp</dimen>
+
+    <dimen name="release_word_edit_height">143dp</dimen>
 </resources>

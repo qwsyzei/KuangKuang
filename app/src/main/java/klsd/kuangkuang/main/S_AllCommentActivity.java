@@ -80,6 +80,8 @@ private TextView tv_send;
         params.addQueryStringParameter("article_id", article_id);
         params.addQueryStringParameter("comment", edit_comment.getText().toString());
         params.addQueryStringParameter("commenter", DataCenter.getMember_id());
+//        params.addQueryStringParameter("commenter", null);
+
 
         if (http == null) http = new MyHTTP(S_AllCommentActivity.this);
         http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,

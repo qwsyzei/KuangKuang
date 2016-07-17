@@ -20,9 +20,11 @@
 
 
         <EditText
+            android:id="@+id/release_edit"
             android:layout_width="fill_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/release_word_edit_height"
             android:gravity="left|top"
+            android:padding="@dimen/login_p_l_r"
             android:layout_marginBottom="@dimen/size_eight"
             android:background="@color/white" >
         </EditText>

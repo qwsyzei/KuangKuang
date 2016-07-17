@@ -30,6 +30,7 @@ import klsd.kuangkuang.richtext.RichText;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 
@@ -38,7 +39,7 @@ import klsd.kuangkuang.utils.ToastUtil;
  * 专题文章
  */
 public class S_ArticleActivity extends BaseActivity implements View.OnClickListener {
-    String testString, article_id, title, tag, views, like_number, comment_number;
+    String testString, article_id, title, tag, views, like_number, comment_number, created_at;
     private TextView tv_content;
     private LinearLayout layout_like, layout_comment;
     private TextView tv_allcomment;
@@ -53,6 +54,8 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private PopupWindow sharePopwindow;
     private TextView tv_title, tv_tag;
     private TextView tv_views, tv_like, tv_comment;
+    private TextView tv_time;//文章发表时间
+    String common_time;//类似1天前的写法
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,13 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         views = intent.getStringExtra("views");
         like_number = intent.getStringExtra("like");
         comment_number = intent.getStringExtra("comment");
+        created_at = intent.getStringExtra("created_at");
+        common_time = MyDate.timeLogic(created_at.substring(0, 19).replace("T", " "));
+        Log.d("VIEW是", "initView() returned: " + views);
+        Log.d("LIKE是", "initView() returned: " + like_number);
+        Log.d("COMMENT是", "initView() returned: " + comment_number);
+        Log.d("时间是", "initView() returned: " + common_time);
+        Log.d("我算的时间是", "initView() returned: " + (common_time));
         tv_content = (TextView) findViewById(R.id.tv_article_content);
         RichText.from(testString).into(tv_content);
         listView = (ListView) findViewById(R.id.listview_article_comment3);
@@ -83,22 +93,31 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_like = (TextView) findViewById(R.id.article_like_number);
         tv_comment = (TextView) findViewById(R.id.article_comment_number);
         im_share = (ImageView) findViewById(R.id.im_article_title_share);
+        tv_time = (TextView) findViewById(R.id.article_author_time);
+        tv_time.setText(common_time);
         im_share.setOnClickListener(this);
         if (views.equals("null")) {
             tv_views.setText("0");
+        } else if (views.contains(".0")) {
+            tv_views.setText(views.replace(".0", ""));
         } else {
             tv_views.setText(views);
         }
         if (like_number.equals("null")) {
             tv_like.setText("0");
+        } else if (like_number.contains(".0")) {
+            tv_like.setText(like_number.replace(".0", ""));
         } else {
             tv_like.setText(like_number);
         }
         if (comment_number.equals("null")) {
             tv_comment.setText("0");
+        } else if (comment_number.contains(".0")) {
+            tv_comment.setText(comment_number.replace(".0", ""));
         } else {
             tv_comment.setText(comment_number);
         }
+
 
         Log.d("我能得到的ID是", "initView() returned: " + DataCenter.getMember_id());
         tv_title = (TextView) findViewById(R.id.article_author_title);
@@ -184,7 +203,6 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         params.addQueryStringParameter("article_id", article_id);
         params.addQueryStringParameter("comment", edit_dialog_comment.getText().toString());
         params.addQueryStringParameter("commenter", DataCenter.getMember_id());
-        Log.d("写的评论是", "gotoComment() returned: " + edit_dialog_comment.getText().toString());
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
                 params, getHandler());

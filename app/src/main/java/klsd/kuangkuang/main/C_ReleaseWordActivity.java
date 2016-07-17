@@ -19,9 +19,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,7 +51,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     private GridAdapter adapter;
     private TextView tv_release;
     private RelativeLayout layout;
-
+private EditText edit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initView() {
+        edit= (EditText) findViewById(R.id.release_edit);
         layout = (RelativeLayout) findViewById(R.id.layout_release_word_open_pop);
         layout.setOnClickListener(this);
         tv_release = (TextView) findViewById(R.id.tv_title_right);
@@ -72,6 +75,8 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
 
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(edit.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
                 if (arg2 == Bimp.bmp.size()) {
                     new PopupWindows(C_ReleaseWordActivity.this, noScrollgridview);
                 } else {
@@ -105,6 +110,8 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_release_word_open_pop:
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(edit.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
                 new PopupWindows(C_ReleaseWordActivity.this, noScrollgridview);
                 break;
         }

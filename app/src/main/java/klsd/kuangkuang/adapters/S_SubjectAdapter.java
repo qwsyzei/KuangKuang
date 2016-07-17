@@ -74,7 +74,7 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
             viewHolder.like = (TextView) convertView.findViewById(R.id.item_subject_like);
             viewHolder.comment = (TextView) convertView.findViewById(R.id.item_subject_comment);
             viewHolder.im_picture = (ImageView) convertView.findViewById(R.id.item_subject_picture);
-            viewHolder.layout_item= (LinearLayout) convertView.findViewById(R.id.layout_item_subject);
+            viewHolder.layout_item = (LinearLayout) convertView.findViewById(R.id.layout_item_subject);
 //            viewHolder.im_head_pic = (ImageView) convertView.findViewById(R.id.item_subject_head_pic);
 
 
@@ -84,24 +84,30 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         }
         viewHolder.title.setText(subject.getTitle());
         viewHolder.describe.setText(subject.getDescribe());
-        if (subject.getViews().toString().equals("null")){
+        if (subject.getViews().toString().equals("null")) {
             viewHolder.views.setText("0");
-        }else{
+        } else if (subject.getViews().toString().contains(".0")) {
             viewHolder.views.setText(subject.getViews().replace(".0", ""));
+        } else {
+            viewHolder.views.setText(subject.getViews());
         }
-        if (subject.getLike().toString().equals("null")){
+        if (subject.getLike().toString().equals("null")) {
             viewHolder.like.setText("0");
-        }else{
+        } else if (subject.getLike().toString().contains(".0")) {
             viewHolder.like.setText(subject.getLike().replace(".0", ""));
+        } else {
+            viewHolder.like.setText(subject.getLike());
         }
-        if (subject.getViews().toString().equals("null")){
+        if (subject.getComment().toString().equals("null")) {
             viewHolder.comment.setText("0");
-        }else{
+        } else if (subject.getComment().toString().contains(".0")) {
             viewHolder.comment.setText(subject.getComment().replace(".0", ""));
+        } else {
+            viewHolder.comment.setText(subject.getComment());
         }
 
-        BitmapUtils bitmapUtils=new BitmapUtils(ctx);
-        bitmapUtils.display(viewHolder.im_picture,subject.getPicture());
+        BitmapUtils bitmapUtils = new BitmapUtils(ctx);
+        bitmapUtils.display(viewHolder.im_picture, subject.getPicture());
 //        viewHolder.im_head_pic.setImageBitmap(subject.getHead_pic());
 
         viewHolder.layout_item.setOnClickListener(new View.OnClickListener() {
@@ -118,11 +124,12 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
                 Intent intent = new Intent(ctx, S_ArticleActivity.class);
                 intent.putExtra("article_id", subject.getId());
                 intent.putExtra("content_html", subject.getContent());
-                intent.putExtra("title",subject.getTitle());
-                intent.putExtra("tag",subject.getTag());
-                intent.putExtra("views",subject.getViews().replace(".0", ""));
-                intent.putExtra("like",subject.getLike().replace(".0", ""));
-                intent.putExtra("comment", subject.getComment().replace(".0", ""));
+                intent.putExtra("title", subject.getTitle());
+                intent.putExtra("tag", subject.getTag());
+                intent.putExtra("views", subject.getViews());
+                intent.putExtra("like", subject.getLike());
+                intent.putExtra("comment", subject.getComment());
+                intent.putExtra("created_at",subject.getCreated_at());
                 ctx.startActivity(intent);
             }
         });
