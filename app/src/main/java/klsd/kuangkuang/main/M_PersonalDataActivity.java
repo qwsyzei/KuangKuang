@@ -1,8 +1,10 @@
 package klsd.kuangkuang.main;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,11 +16,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -31,7 +31,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import cn.qqtheme.framework.picker.CityPicker;
@@ -40,9 +39,11 @@ import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.picker.WheelPicker;
 import klsd.kuangkuang.models.Documents;
 import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.views.CircleImageView;
 import klsd.kuangkuang.views.SelectPicDialog;
 
 /**
@@ -56,17 +57,19 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
     private SelectPicDialog selectPicDialog;
     private LinearLayout layout_from_album, layout_take_photo;
     private TextView tv_dialog_cancel;
-    private ImageView im_head;
+    private CircleImageView im_head;
+    private TextView tv_save;
     String sex;
-String head_url;
+    String head_url;
+    String photoStr;
     private Documents documents;
     public static final int NONE = 0;
     public static final int PHOTOHRAPH = 1;// 拍照
     public static final int PHOTOZOOM = 2; // 缩放
-    public static final int PHOTORESOULT = 3;// 结果
+    public static final int PHOTORESULT = 3;// 结果
 
     public static final String IMAGE_UNSPECIFIED = "image/*";
-
+//    Uri photoUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +80,8 @@ String head_url;
     }
 
     private void initView() {
-        im_head = (ImageView) findViewById(R.id.im_head_pic);
+        tv_save = (TextView) findViewById(R.id.tv_title_right);
+        im_head = (CircleImageView) findViewById(R.id.im_head_pic);
         tv_change_head = (TextView) findViewById(R.id.per_change_head_pic);
         edit_per_nickname = (EditText) findViewById(R.id.per_nickname);
         edit_per_signature = (EditText) findViewById(R.id.per_edit_signature);
@@ -95,13 +99,15 @@ String head_url;
 //        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, R.layout.myspinner, profession);
 //        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        spinner_profession.setAdapter(adapter1);
+        tv_save.setOnClickListener(this);
         im_head.setOnClickListener(this);
         tv_change_head.setOnClickListener(this);
         tv_birthday.setOnClickListener(this);
         tv_city.setOnClickListener(this);
         getData();
-        documents=new Documents();
+        documents = new Documents();
     }
+
     /**
      * 获取个人资料
      */
@@ -109,43 +115,93 @@ String head_url;
 
     private void getData() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("member_id", "48");
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         if (http == null) http = new MyHTTP(M_PersonalDataActivity.this);
         http.baseRequest(Consts.memberDocumentsApi, JSONHandler.JTYPE_MEMBER_DOCUMENTS, HttpRequest.HttpMethod.GET,
                 params, getHandler());
     }
+
     /**
      * 更新个人资料
      */
     private void updateInfo() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("member_id", "48");
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
+        params.addQueryStringParameter("nickname", edit_per_nickname.getText().toString());
+        params.addQueryStringParameter("birth_date", tv_birthday.getText().toString());
+        params.addQueryStringParameter("city", tv_city.getText().toString());
+        params.addQueryStringParameter("sex", spinner_sex.getSelectedItem().toString());
+        params.addQueryStringParameter("signature", edit_per_signature.getText().toString());
+        Log.d("性别", "updateInfo() returned: " + spinner_sex.getSelectedItem().toString());
         if (http == null) http = new MyHTTP(M_PersonalDataActivity.this);
         http.baseRequest(Consts.memberUpdateDocumentsApi, JSONHandler.JTYPE_MEMBER_UPDATE_DOCUMENTS, HttpRequest.HttpMethod.GET,
                 params, getHandler());
     }
+
+    /**
+     * 上传头像
+     */
+    private void updateHead() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
+        params.addQueryStringParameter("picture", photoStr);
+        if (http == null) http = new MyHTTP(M_PersonalDataActivity.this);
+        http.baseRequest(Consts.memberUpdateHeadApi, JSONHandler.JTYPE_MEMBER_UPDATE_HEAD, HttpRequest.HttpMethod.POST,
+                params, getHandler());
+    }
+
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
-            documents= (Documents) handlerBundler.getSerializable("documents");
-            tv_birthday.setText(documents.getBirthday());
-            tv_city.setText(documents.getCity());
-            edit_per_nickname.setText(documents.getName());
-            edit_per_signature.setText(documents.getSignature());
-            sex=documents.getSex();
-            if (sex.equals("男")){
+            documents = (Documents) handlerBundler.getSerializable("documents");
+            if (documents.getBirthday().equals("null")) {
+                tv_birthday.setText("未选择");
+            } else {
+                tv_birthday.setText(documents.getBirthday());
+            }
+
+            if (documents.getCity().equals("null")) {
+                tv_city.setText("未设置");
+            } else {
+                tv_city.setText(documents.getCity());
+
+            }
+            if (documents.getName().equals("null")) {
+                edit_per_nickname.setText("k" + getMember().getPhone_number());
+            } else {
+                edit_per_nickname.setText(documents.getName());
+            }
+            if (documents.getSignature().equals("null")) {
+                edit_per_signature.setText("");
+
+            } else {
+                edit_per_signature.setText(documents.getSignature());
+
+            }
+            sex = documents.getSex();
+            if (sex.equals("男")) {
                 spinner_sex.setSelection(0);
-            }else {
+            } else {
                 spinner_sex.setSelection(1);
             }
-            head_url=documents.getPicture();
-            Log.d("头像的地址是", "updateData() returned: " + documents.getPicture());
-            BitmapUtils bitmapUtils=new BitmapUtils(M_PersonalDataActivity.this);
-            bitmapUtils.display(im_head,documents.getPicture());
+            head_url =Consts.host + "/" + documents.getPicture();
+            Log.d("头像的地址是", "updateData() returned: " + head_url);
+            if (head_url.equals("null")) {
+                im_head.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.touxiang03));
+            } else {
+                BitmapUtils bitmapUtils = new BitmapUtils(M_PersonalDataActivity.this);
+                bitmapUtils.display(im_head,  head_url);
+            }
+
             ToastUtil.show(M_PersonalDataActivity.this, "已获取到个人资料");
+        } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_HEAD)) {
+            Log.d("头像上传成功", "updateData() returned: " + "");
+        } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_DOCUMENTS)) {
+            Log.d("个人资料上传成功", "updateData() returned: " + "");
         }
 
     }
+
     /**
      * 时间选择器
      */
@@ -153,8 +209,8 @@ String head_url;
 
         DateTimePicker picker = new DateTimePicker(this);
         picker.setMode(DateTimePicker.Mode.YEAR_MONTH_DAY);
-        picker.setRange(1940, 2020);
-        picker.setSelectedDate(1993, 01, 01);//初始时间
+        picker.setRange(1950, 2020);
+        picker.setSelectedDate(1980, 01, 01);//初始时间
         picker.setOnWheelListener(new WheelPicker.OnWheelListener<Date>() {
             @Override
             public void onSubmit(Date result) {
@@ -175,7 +231,6 @@ String head_url;
      * 初始化省市县的Picker
      */
     private void initCityPicker() {
-        Log.d("进入到城市的方法了", "initCityPicker() returned: " + "");
         CityPicker picker = new CityPicker(M_PersonalDataActivity.this);
         picker.setSelectedCity("北京", "北京", "东城区");
         picker.setOnCityPickListener(new CityPicker.OnCityPickListener() {
@@ -193,8 +248,8 @@ String head_url;
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.im_head_pic:
-               Intent intent_pic=new Intent(M_PersonalDataActivity.this, M_BigHeadActivity.class);
-                intent_pic.putExtra("pic",head_url);
+                Intent intent_pic = new Intent(M_PersonalDataActivity.this, M_BigHeadActivity.class);
+                intent_pic.putExtra("pic", head_url);
                 startActivity(intent_pic);
                 break;
             case R.id.per_change_head_pic:
@@ -216,6 +271,11 @@ String head_url;
                 break;
             case R.id.layout_take_photo:
                 Intent intent123 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                ContentValues values=new ContentValues();
+//
+//                photoUri= getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//                intent123.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
+
                 intent123.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
                         Environment.getExternalStorageDirectory(), "temp.jpg")));
                 System.out.println("=============" + Environment.getExternalStorageDirectory());
@@ -225,6 +285,11 @@ String head_url;
             case R.id.tv_dialog_cancel:
                 selectPicDialog.dismiss();
                 break;
+            case R.id.tv_title_right:
+//                updateInfo();
+                updateHead();
+                break;
+
         }
         edit_per_nickname.clearFocus();
         edit_per_signature.clearFocus();
@@ -278,6 +343,7 @@ String head_url;
                     + "/temp.jpg");
             System.out.println("------------------------" + picture.getPath());
             startPhotoZoom(Uri.fromFile(picture));
+//            startPhotoZoom(photoUri);
         }
 
         if (data == null)
@@ -288,19 +354,41 @@ String head_url;
             startPhotoZoom(data.getData());
         }
         // 处理结果
-        if (requestCode == PHOTORESOULT) {
+        if (requestCode == PHOTORESULT) {
             Bundle extras = data.getExtras();
             if (extras != null) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);// (0 -
+                photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 -
                 // 100)压缩文件
+                byte[] bt = stream.toByteArray();//为了转成16进制
+                photoStr = byte2hex(bt);//
                 im_head.setImageBitmap(photo);
             }
 
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 二进制转字符串
+     *
+     * @param b
+     * @return
+     */
+    public static String byte2hex(byte[] b) {
+        StringBuffer sb = new StringBuffer();
+        String stmp = "";
+        for (int n = 0; n < b.length; n++) {
+            stmp = Integer.toHexString(b[n] & 0XFF);
+            if (stmp.length() == 1) {
+                sb.append("0" + stmp);
+            } else {
+                sb.append(stmp);
+            }
+        }
+        return sb.toString();
     }
 
     public void startPhotoZoom(Uri uri) {
@@ -314,6 +402,6 @@ String head_url;
         intent.putExtra("outputX", 200);
         intent.putExtra("outputY", 200);
         intent.putExtra("return-data", true);
-        startActivityForResult(intent, PHOTORESOULT);
+        startActivityForResult(intent, PHOTORESULT);
     }
 }

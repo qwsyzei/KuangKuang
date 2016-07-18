@@ -87,7 +87,7 @@ public class Documents implements Serializable {
 
     public void getFromJSONObject(JSONObject object) {
         try {
-            setName(object.getString("name"));
+            setName(object.getString("nickname"));
             setBirthday(object.getString("birth_date"));
             setAddress(object.getString("address"));
             setSex(object.getString("sex"));

@@ -53,6 +53,7 @@ public class S_TopTenActivity extends BaseActivity {
                 Log.d("Top10是没有数据的", "updateData() returned: " + "");
                 return;
             }
+            Log.d("这个评论是什么呢", "updateData() returned: " + tlist.get(0).getCreated_at());
             sAdapter = new S_TopAdapter(S_TopTenActivity.this, tlist);
             listView.setAdapter(sAdapter);
 

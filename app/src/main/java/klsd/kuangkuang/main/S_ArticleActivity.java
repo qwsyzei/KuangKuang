@@ -75,11 +75,11 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         like_number = intent.getStringExtra("like");
         comment_number = intent.getStringExtra("comment");
         created_at = intent.getStringExtra("created_at");
+//        common_time = MyDate.timeLogic("2014-01-18 12:22:10");
         common_time = MyDate.timeLogic(created_at.substring(0, 19).replace("T", " "));
         Log.d("VIEW是", "initView() returned: " + views);
         Log.d("LIKE是", "initView() returned: " + like_number);
         Log.d("COMMENT是", "initView() returned: " + comment_number);
-        Log.d("时间是", "initView() returned: " + common_time);
         Log.d("我算的时间是", "initView() returned: " + (common_time));
         tv_content = (TextView) findViewById(R.id.tv_article_content);
         RichText.from(testString).into(tv_content);
@@ -188,7 +188,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private void gotoCollect() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("article_id", article_id);
-        params.addQueryStringParameter("member_id", "48");
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.articlesCollectArticleApi, JSONHandler.JTYPE_COLLECT, HttpRequest.HttpMethod.GET,
                 params, getHandler());

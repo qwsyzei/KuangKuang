@@ -191,8 +191,9 @@ public class CircleImageView extends ImageView {
 				bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION,
 						COLORDRAWABLE_DIMENSION, BITMAP_CONFIG);
 			} else {
-				bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-						drawable.getIntrinsicHeight(), BITMAP_CONFIG);
+//				bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),      这两行被注释的是它原来的
+//						drawable.getIntrinsicHeight(), BITMAP_CONFIG);
+				bitmap = Bitmap.createBitmap(100, 100, BITMAP_CONFIG);//这个是我自己写的，把数随便改成100，因为总报宽高错，但好像写多少都不影响
 			}
 
 			Canvas canvas = new Canvas(bitmap);

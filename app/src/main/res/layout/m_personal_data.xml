@@ -30,13 +30,13 @@
             android:padding="@dimen/login_p_l_r">
 
 
-            <ImageView
+            <klsd.kuangkuang.views.CircleImageView
                 android:id="@+id/im_head_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/head_pic_size"
+                android:layout_height="@dimen/head_pic_size"
                 android:layout_marginLeft="@dimen/login_p_l_r"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/touxiang04" />
+             />
 
             <TextView
                 android:id="@+id/per_change_head_pic"
@@ -62,7 +62,7 @@
             android:background="@color/white"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:padding="@dimen/login_p_l_r">
+            android:padding="@dimen/size_eight">
 
             <TextView
 
@@ -92,7 +92,7 @@
             android:layout_height="@dimen/market_bottom_line_height"
 
             android:background="@color/white"
-            android:padding="@dimen/login_p_l_r">
+            android:padding="@dimen/size_eight">
 <TextView
             style="@style/common_text_style123"
     android:layout_weight="1"
@@ -126,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:padding="@dimen/login_p_l_r">
+            android:padding="@dimen/size_eight">
 
             <TextView
                 style="@style/common_text_style123"
@@ -150,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:padding="@dimen/login_p_l_r">
+            android:padding="@dimen/size_eight">
 
             <TextView
                 style="@style/common_text_style123"
@@ -210,13 +210,13 @@
     <EditText
         android:id="@+id/per_edit_signature"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="@dimen/release_word_edit_height"
     android:layout_marginTop="@dimen/personal_signature_m_t"
     android:background="@color/white"
     android:gravity="top"
     android:hint="@string/personal_signature"
-    android:paddingLeft="@dimen/login_p_l_r"
-    android:paddingTop="@dimen/login_p_t_b"
+    android:paddingLeft="@dimen/base_margin"
+    android:paddingTop="@dimen/size_eight"
     android:textSize="@dimen/small_text_size" /></LinearLayout>
 
 

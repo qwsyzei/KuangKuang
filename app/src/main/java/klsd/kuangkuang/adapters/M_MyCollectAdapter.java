@@ -65,6 +65,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
                 intent.putExtra("views",ac.getViews());
                 intent.putExtra("like",ac.getLike());
                 intent.putExtra("comment",ac.getComment());
+                intent.putExtra("created_at",ac.getCreated_at());
         ctx.startActivity(intent);
             }
         });

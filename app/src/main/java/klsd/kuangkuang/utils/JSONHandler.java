@@ -79,6 +79,7 @@ public class JSONHandler {
 
     public final static String JTYPE_MEMBER_DOCUMENTS = "member_documents";
     public final static String JTYPE_MEMBER_UPDATE_DOCUMENTS = "update_member_documents";
+    public final static String JTYPE_MEMBER_UPDATE_HEAD = "update_member_head";
     public final static String JTYPE_MYWORD_LIST = "myword_list";
 
     public JSONHandler() {
@@ -294,6 +295,7 @@ public class JSONHandler {
 
         osStrings.add(JTYPE_MEMBER_DOCUMENTS);
         osStrings.add(JTYPE_MEMBER_UPDATE_DOCUMENTS);
+        osStrings.add(JTYPE_MEMBER_UPDATE_HEAD);
         return osStrings.contains(jtype2);
     }
 

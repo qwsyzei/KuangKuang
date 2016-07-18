@@ -2,6 +2,7 @@ package klsd.kuangkuang.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,11 +56,12 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
                 Intent intent = new Intent(ctx, S_ArticleActivity.class);
                 intent.putExtra("article_id", ac.getId());
                 intent.putExtra("content_html", ac.getContent());
-                intent.putExtra("title",ac.getTitle());
-                intent.putExtra("tag",ac.getTag());
-                intent.putExtra("views",ac.getViews());
-                intent.putExtra("like",ac.getLike());
-                intent.putExtra("comment",ac.getComment());
+                intent.putExtra("title", ac.getTitle());
+                intent.putExtra("tag", ac.getTag());
+                intent.putExtra("views", ac.getViews());
+                intent.putExtra("like", ac.getLike());
+                intent.putExtra("comment", ac.getComment());
+                intent.putExtra("created_at", ac.getCreated_at());
                 ctx.startActivity(intent);
             }
         });
