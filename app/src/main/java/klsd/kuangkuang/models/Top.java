@@ -135,6 +135,10 @@ public class Top implements Serializable {
             setDescribe(object.getString("describe"));
             setComment(object.getString("comment_number"));
             setTag(object.getString("tag"));
+            setCreated_at(object.getString("created_at"));
+            setViews(object.getString("views"));
+            setLike(object.getString("like"));
+            setComment(object.getString("comment"));
         } catch (Exception e) {
             e.printStackTrace();
         }

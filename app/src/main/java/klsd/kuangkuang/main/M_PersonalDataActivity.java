@@ -106,6 +106,7 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         tv_city.setOnClickListener(this);
         getData();
         documents = new Documents();
+
     }
 
     /**
@@ -125,14 +126,15 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
      * 更新个人资料
      */
     private void updateInfo() {
+        Log.d("性别", "updateInfo() returned: " + spinner_sex.getSelectedItemId());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("nickname", edit_per_nickname.getText().toString());
         params.addQueryStringParameter("birth_date", tv_birthday.getText().toString());
         params.addQueryStringParameter("city", tv_city.getText().toString());
-        params.addQueryStringParameter("sex", spinner_sex.getSelectedItem().toString());
-        params.addQueryStringParameter("signature", edit_per_signature.getText().toString());
-        Log.d("性别", "updateInfo() returned: " + spinner_sex.getSelectedItem().toString());
+        params.addQueryStringParameter("sex", spinner_sex.getSelectedItemPosition()==0?"male":"female");
+        params.addQueryStringParameter("note", edit_per_signature.getText().toString());
+
         if (http == null) http = new MyHTTP(M_PersonalDataActivity.this);
         http.baseRequest(Consts.memberUpdateDocumentsApi, JSONHandler.JTYPE_MEMBER_UPDATE_DOCUMENTS, HttpRequest.HttpMethod.GET,
                 params, getHandler());
@@ -179,7 +181,7 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
 
             }
             sex = documents.getSex();
-            if (sex.equals("男")) {
+            if (sex.equals("male")) {
                 spinner_sex.setSelection(0);
             } else {
                 spinner_sex.setSelection(1);
@@ -197,6 +199,7 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_HEAD)) {
             Log.d("头像上传成功", "updateData() returned: " + "");
         } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_DOCUMENTS)) {
+            ToastUtil.show(M_PersonalDataActivity.this,"保存成功");
             Log.d("个人资料上传成功", "updateData() returned: " + "");
         }
 
@@ -271,11 +274,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.layout_take_photo:
                 Intent intent123 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                ContentValues values=new ContentValues();
-//
-//                photoUri= getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//                intent123.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
-
                 intent123.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
                         Environment.getExternalStorageDirectory(), "temp.jpg")));
                 System.out.println("=============" + Environment.getExternalStorageDirectory());
@@ -286,8 +284,8 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 selectPicDialog.dismiss();
                 break;
             case R.id.tv_title_right:
-//                updateInfo();
-                updateHead();
+                updateInfo();
+//                updateHead();
                 break;
 
         }

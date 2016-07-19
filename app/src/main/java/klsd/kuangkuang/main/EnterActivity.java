@@ -101,7 +101,7 @@ public static String secret;
 
                 startActivity(new Intent(EnterActivity.this, LogoActivity.class));//引导界面
             } else {
-                startActivity(new Intent(EnterActivity.this, LoginActivity.class));//登录界面
+                startActivity(new Intent(EnterActivity.this, MainActivity.class));//主界面
             }
 
         }

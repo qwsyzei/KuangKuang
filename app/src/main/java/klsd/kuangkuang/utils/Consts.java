@@ -57,6 +57,7 @@ public final static String host123="http://192.168.1.20:3000";
         getbackPasswordPhoneApi,
             articlesListApi,
             articlesCommentaryApi,
+            articlesTopApi
     };
 
     public final static String MONIT_PUBLIC_TRADES_PUSHER = "monit_public_trades_pusher";

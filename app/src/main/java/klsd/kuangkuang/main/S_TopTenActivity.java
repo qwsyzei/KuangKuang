@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import klsd.kuangkuang.adapters.S_TopAdapter;
 import klsd.kuangkuang.models.Top;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 
 /**
@@ -41,8 +43,10 @@ public class S_TopTenActivity extends BaseActivity {
      * 获取TOP10
      */
     public void getTop10() {
+        RequestParams params = new RequestParams();
+        params = KelaParams.generateSignParam("GET", Consts.articlesTopApi, params);
         new MyHTTP(this).baseRequest(Consts.articlesTopApi, JSONHandler.JTYPE_ARTICLES_TOP,
-                HttpRequest.HttpMethod.GET, null, getHandler());
+                HttpRequest.HttpMethod.GET, params, getHandler());
     }
     public void updateData() {
         super.updateData();

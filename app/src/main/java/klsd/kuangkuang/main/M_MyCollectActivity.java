@@ -61,7 +61,7 @@ M_MyCollectAdapter myCollectAdapter;
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("page", page + "");
-        params.addQueryStringParameter("limit", "10");
+        params.addQueryStringParameter("limit", "6");
 
         if (http == null) http = new MyHTTP(M_MyCollectActivity.this);
         http.baseRequest(Consts.articlesCollectShowApi, JSONHandler.JTYPE_COLLECT_SHOW, HttpRequest.HttpMethod.GET,

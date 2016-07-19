@@ -135,6 +135,10 @@ public class MyCollect implements Serializable {
             setPicture_url(object.getString("picture"));
             setDescribe(object.getString("describe"));
             setComment(object.getString("comment_number"));
+            setCreated_at(object.getString("created_at"));
+            setViews(object.getString("views"));
+            setLike(object.getString("like"));
+            setComment(object.getString("comment"));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -33,6 +33,7 @@ import klsd.kuangkuang.main.M_MyCollectActivity;
 import klsd.kuangkuang.main.M_SetActivity;
 import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
@@ -65,9 +66,20 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
         a = this.getActivity();
         view = inflater.inflate(R.layout.fragment_me, container, false);
         setTitle(getString(R.string.main_me));
-        initView();
+
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (DataCenter.isSigned()){
+            initView();
+        }else {
+            myStartActivity(new Intent(a,LoginActivity.class));
+        }
+    }
+
     /**
      * 假数据
      *

@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ import klsd.kuangkuang.models.AllComment;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
@@ -30,8 +33,8 @@ import klsd.kuangkuang.utils.UIutils;
 /**
  * 全部评论
  */
-public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, AbsListView.OnScrollListener{
-private TextView tv_send;
+public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, AbsListView.OnScrollListener {
+    private TextView tv_send;
     private EditText edit_comment;
     String article_id;
     ArrayList<AllComment> mylist;
@@ -40,6 +43,8 @@ private TextView tv_send;
     private ListView listView;
     String direction = "bottom";
     private int page = 1;
+    private LinearLayout layout_send;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,32 +54,40 @@ private TextView tv_send;
     }
 
     private void initView() {
+        layout_send = (LinearLayout) findViewById(R.id.all_comment_send);
+        if (isSigned()) {
+            layout_send.setVisibility(View.VISIBLE);
+        } else {
+            layout_send.setVisibility(View.GONE);
+        }
         mylist = new ArrayList<>();
-        Intent intent=getIntent();
-        article_id=intent.getStringExtra("a_id");
-        listView= (ListView) findViewById(R.id.listview_allcomment);
+        Intent intent = getIntent();
+        article_id = intent.getStringExtra("a_id");
+        listView = (ListView) findViewById(R.id.listview_allcomment);
         listView.setOnScrollListener(this);
         UIutils.showLoading(S_AllCommentActivity.this);
         swipt();
         gotoAllComment();
 
-        tv_send= (TextView) findViewById(R.id.all_comment_send_send);
-        edit_comment= (EditText) findViewById(R.id.all_comment_send_edit);
+        tv_send = (TextView) findViewById(R.id.all_comment_send_send);
+        edit_comment = (EditText) findViewById(R.id.all_comment_send_edit);
         tv_send.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.all_comment_send_send:
                 gotoComment();
                 break;
         }
     }
+
     /**
      * 评论
      */
     MyHTTP http;
+
     private void gotoComment() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("article_id", article_id);
@@ -88,15 +101,16 @@ private TextView tv_send;
                 params, getHandler());
 
     }
+
     /**
      * 获取所有评论
      */
     private void gotoAllComment() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("article_id",article_id);
-        params.addQueryStringParameter("page", page+"");
-        params.addQueryStringParameter("limit", "10");
-
+        params.addQueryStringParameter("article_id", article_id);
+        params.addQueryStringParameter("page", page + "");
+        params.addQueryStringParameter("limit", "8");
+        params = KelaParams.generateSignParam("GET", Consts.articlesCommentaryApi, params);
         if (http == null) http = new MyHTTP(S_AllCommentActivity.this);
         http.baseRequest(Consts.articlesCommentaryApi, JSONHandler.JTYPE_ARTICLES_ALL_COMMENT, HttpRequest.HttpMethod.GET,
                 params, getHandler());
@@ -111,7 +125,7 @@ private TextView tv_send;
             edit_comment.setCursorVisible(false);
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(edit_comment.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
-        }else if(jtype.equals(JSONHandler.JTYPE_ARTICLES_ALL_COMMENT)){
+        } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_ALL_COMMENT)) {
             if (swipeView != null) swipeView.setRefreshing(false);//当获取到了就把下拉动画关了
             int curTradesSize = mylist.size();
             ArrayList<AllComment> os = (ArrayList<AllComment>) handlerBundler.getSerializable("all_comment");
@@ -135,6 +149,7 @@ private TextView tv_send;
             UIutils.cancelLoading();
         }
     }
+
     public void addTrades(String from, List<AllComment> ess) {
         List<String> ids = new ArrayList<String>();
         for (AllComment o : mylist)
@@ -150,6 +165,7 @@ private TextView tv_send;
             allAdapter.notifyDataSetChanged();
         }
     }
+
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
         int pos = absListView.getLastVisiblePosition();
@@ -167,6 +183,7 @@ private TextView tv_send;
     public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
     }
+
     private void swipt() {
         swipeView = (SwipeRefreshLayout) findViewById(R.id.swip_s_all_comment);
         swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
@@ -179,17 +196,18 @@ private TextView tv_send;
             }
         });
     }
+
     //刷新数据的方法
     public void loadDataFrom(String from) {
         direction = from;
         if (direction.equals("bottom")) {
-           gotoAllComment();
+            gotoAllComment();
 
-        }else {
+        } else {
 
             mylist = new ArrayList<AllComment>();
             page = 1;
-           gotoAllComment();
+            gotoAllComment();
         }
     }
 }

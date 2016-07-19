@@ -39,6 +39,7 @@ import java.util.List;
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.testpic.Bimp;
 import klsd.kuangkuang.testpic.FileUtils;
+import klsd.kuangkuang.testpic.ImageItem;
 import klsd.kuangkuang.testpic.PhotoActivity;
 import klsd.kuangkuang.testpic.TestPicActivity;
 
@@ -51,7 +52,8 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     private GridAdapter adapter;
     private TextView tv_release;
     private RelativeLayout layout;
-private EditText edit;
+    private EditText edit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +63,7 @@ private EditText edit;
     }
 
     private void initView() {
-        edit= (EditText) findViewById(R.id.release_edit);
+        edit = (EditText) findViewById(R.id.release_edit);
         layout = (RelativeLayout) findViewById(R.id.layout_release_word_open_pop);
         layout.setOnClickListener(this);
         tv_release = (TextView) findViewById(R.id.tv_title_right);
@@ -80,10 +82,10 @@ private EditText edit;
                 if (arg2 == Bimp.bmp.size()) {
                     new PopupWindows(C_ReleaseWordActivity.this, noScrollgridview);
                 } else {
-                Intent intent = new Intent(C_ReleaseWordActivity.this,
-                        PhotoActivity.class);
-                intent.putExtra("ID", arg2);
-                startActivity(intent);
+                    Intent intent = new Intent(C_ReleaseWordActivity.this,
+                            PhotoActivity.class);
+                    intent.putExtra("ID", arg2);
+                    startActivity(intent);
                 }
             }
         });
@@ -347,6 +349,8 @@ private EditText edit;
         switch (requestCode) {
             case TAKE_PICTURE:
                 if (Bimp.drr.size() < 9 && resultCode == -1) {
+                    ImageItem item = new ImageItem();
+                    item.imagePath = path;
                     Bimp.drr.add(path);
                 }
                 break;

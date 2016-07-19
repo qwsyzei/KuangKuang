@@ -15,7 +15,7 @@
     <string name="cancel">取消</string>
 
     <string name="no_more_data">没有更多数据了</string>
-
+    <string name="not_login">您未登录</string>
     <string name="not_set">未设置</string>
     <string name="set">设置</string>
     <string name="update_password">更改密码</string>

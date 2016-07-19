@@ -12,8 +12,6 @@ import klsd.kuangkuang.R;
 import klsd.kuangkuang.main.MainActivity;
 
 /**
- * @date 2014/11/14
- * @author wuwenjie
  * @description 侧边栏菜单
  */
 public class LeftFragment extends Fragment implements OnClickListener{

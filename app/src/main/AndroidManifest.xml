@@ -72,8 +72,7 @@
 
         </activity>
         <activity android:name=".testpic.ImageGridActivity"></activity>
-        <activity android:name=".testpic.PublishedActivity"
-            android:configChanges="orientation|keyboardHidden"></activity>
+
         <activity android:name=".testpic.PhotoActivity"></activity>
     </application>
 

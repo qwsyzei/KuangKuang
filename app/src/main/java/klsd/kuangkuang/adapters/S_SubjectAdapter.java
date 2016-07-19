@@ -25,6 +25,7 @@ import klsd.kuangkuang.models.Subject;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.ErrorCodes;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 
@@ -116,10 +117,10 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
                 RequestParams params = new RequestParams();
                 params.addQueryStringParameter("article_id", subject.getId());
                 params.addQueryStringParameter("side", "views");
+                params = KelaParams.generateSignParam("GET", Consts.articlesLikeApi, params);
                 if (http == null) http = new MyHTTP(ctx);
                 http.baseRequest(Consts.articlesLikeApi, JSONHandler.JTYPE_ARTICLES_VIEWS, HttpRequest.HttpMethod.GET,
                         params, handler);
-
 
                 Intent intent = new Intent(ctx, S_ArticleActivity.class);
                 intent.putExtra("article_id", subject.getId());

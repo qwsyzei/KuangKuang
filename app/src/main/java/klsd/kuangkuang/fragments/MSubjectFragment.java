@@ -28,7 +28,10 @@ import klsd.kuangkuang.main.LoginActivity;
 import klsd.kuangkuang.main.S_TopTenActivity;
 import klsd.kuangkuang.models.Subject;
 import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.KelaParams;
+import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
@@ -90,8 +93,9 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
     MyHTTP http;
     private void getArticlesList() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("limit",limit+"");
+        params.addQueryStringParameter("limit", limit+"");
         params.addQueryStringParameter("page", page+"");
+        params = KelaParams.generateSignParam("GET", Consts.articlesListApi, params);
         Log.d("你觉得page是什么", "getArticlesList() returned: " + page);
         if (http == null) http = new MyHTTP(a);
         http.baseRequest(Consts.articlesListApi, JSONHandler.JTYPE_ARTICLES_LIST, HttpRequest.HttpMethod.GET,

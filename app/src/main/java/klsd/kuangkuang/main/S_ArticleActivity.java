@@ -30,6 +30,7 @@ import klsd.kuangkuang.richtext.RichText;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
@@ -76,11 +77,12 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         comment_number = intent.getStringExtra("comment");
         created_at = intent.getStringExtra("created_at");
 //        common_time = MyDate.timeLogic("2014-01-18 12:22:10");
+        Log.d("我算的时间是", "initView() returned: " +created_at.substring(0, 19).replace("T", " "));
         common_time = MyDate.timeLogic(created_at.substring(0, 19).replace("T", " "));
         Log.d("VIEW是", "initView() returned: " + views);
         Log.d("LIKE是", "initView() returned: " + like_number);
         Log.d("COMMENT是", "initView() returned: " + comment_number);
-        Log.d("我算的时间是", "initView() returned: " + (common_time));
+
         tv_content = (TextView) findViewById(R.id.tv_article_content);
         RichText.from(testString).into(tv_content);
         listView = (ListView) findViewById(R.id.listview_article_comment3);
@@ -96,6 +98,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_time = (TextView) findViewById(R.id.article_author_time);
         tv_time.setText(common_time);
         im_share.setOnClickListener(this);
+
         if (views.equals("null")) {
             tv_views.setText("0");
         } else if (views.contains(".0")) {
@@ -136,33 +139,39 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_s_artile_like:
+                if (isSigned()) {
                 gotoLike();
+                } else {
+                    ToastUtil.show(S_ArticleActivity.this, getString(R.string.not_login));
+                }
                 break;
             case R.id.layout_s_artile_comment:
                 if (isSigned()) {
                     Comment_Dialog(view);
                 } else {
-                    myStartActivity(new Intent(S_ArticleActivity.this, LoginActivity.class));
+                    ToastUtil.show(S_ArticleActivity.this, getString(R.string.not_login));
                 }
                 break;
             case R.id.im_article_title_share:
                 Share_Dialog(view);
                 break;
             case R.id.im_s_artile_collect:
+                if (isSigned()) {
                 gotoCollect();
+                } else {
+                    ToastUtil.show(S_ArticleActivity.this,getString(R.string.not_login));
+                }
                 break;
             case R.id.article_look_all_comment:
-                if (isSigned()) {
+
                     Intent intent = new Intent(S_ArticleActivity.this, S_AllCommentActivity.class);
                     intent.putExtra("a_id", article_id);
                     startActivity(intent);
-                } else {
-                    myStartActivity(new Intent(S_ArticleActivity.this, LoginActivity.class));
-                }
+
                 break;
             case R.id.dialog_comment_send_send:
                 gotoComment();
-//                ToastUtil.show(S_ArticleActivity.this, edit_dialog_comment.getText().toString());
+
                 break;
         }
     }
@@ -217,7 +226,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         params.addQueryStringParameter("article_id", article_id);
         params.addQueryStringParameter("page", "1");
         params.addQueryStringParameter("limit", "3");
-
+        params = KelaParams.generateSignParam("GET", Consts.articlesCommentaryApi, params);
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.articlesCommentaryApi, JSONHandler.JTYPE_ARTICLES_ALL_COMMENT, HttpRequest.HttpMethod.GET,
                 params, getHandler());

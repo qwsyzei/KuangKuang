@@ -111,7 +111,7 @@ public class KelaParams {
     }
 
 
-
+        //在不用登录的情况下使用
     public static RequestParams generateSignParam(String mString, String url, RequestParams params) {
         params.addQueryStringParameter("access_key", DataCenter.LOGIN_ACCESSKEY);
         params.addQueryStringParameter("tonce", MyDate.getTonceInt() + "");

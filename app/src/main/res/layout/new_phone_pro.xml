@@ -54,17 +54,11 @@
                 android:layout_weight="4" />
 
         </LinearLayout>
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="@dimen/login__line_m_l_r"
-            android:layout_marginRight="@dimen/login__line_m_l_r"
-            android:background="@color/gray_in_orders"
-            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+android:layout_marginTop="@dimen/size_eight"
             android:background="@color/white"
             android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/login_p_l_r"
@@ -109,41 +103,29 @@
                 android:textColor="@color/black" />
 
         </LinearLayout>
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="@dimen/login__line_m_l_r"
-            android:layout_marginRight="@dimen/login__line_m_l_r"
-            android:background="@color/gray_in_orders"
-            />
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:background="@color/white"
 
-            android:padding="@dimen/login_p_l_r"
-            android:layout_height="match_parent" >
 
             <Button
                 android:id="@+id/new_phone_btn_change"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/base_margin"
-                android:textColor="@color/kuangkuang_yellow"
-                android:background="@drawable/btn_box"
+                android:textColor="@color/white"
+                android:background="@color/kuangkuang_yellow"
                 android:textSize="@dimen/middle_text_size"
                 android:text="@string/next" />
-        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_phone_hint"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/base_margin"
-            android:textColor="@color/light_font_note"
-            android:textSize="@dimen/new_hint_size"
-            />
+
     </LinearLayout>
-
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_phone_hint"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/base_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/base_margin"
+        android:textColor="@color/light_font_note"
+        android:textSize="@dimen/new_hint_size"
+        />
 </RelativeLayout>
