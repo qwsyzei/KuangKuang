@@ -24,6 +24,7 @@ public final static String host123="http://192.168.1.20:3000";
     public final static String memberUpdateDocumentsApi = baseApiPath + "/update/member_documents";//更新个人资料
     public final static String memberUpdateHeadApi = baseApiPath + "/update/member_head_portrait";//上传头像
     public final static String micropostsMemberListApi = baseApiPath + "/microposts/microposts_member_list";//我的说说
+    public final static String createMicropostsApi = baseApiPath + "/microposts/create";//发表说说
 
     // phone_number common
     public final static String getAuthCodeApi = baseApiPath + "/registers/code";
@@ -57,7 +58,8 @@ public final static String host123="http://192.168.1.20:3000";
         getbackPasswordPhoneApi,
             articlesListApi,
             articlesCommentaryApi,
-            articlesTopApi
+            articlesTopApi,
+            articlesLikeApi
     };
 
     public final static String MONIT_PUBLIC_TRADES_PUSHER = "monit_public_trades_pusher";

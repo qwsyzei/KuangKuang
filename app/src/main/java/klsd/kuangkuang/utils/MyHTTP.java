@@ -116,7 +116,6 @@ public class MyHTTP {
             bundle.putString("result",ctx.getString(R.string.checkup_network));
             message.setData(bundle);
             handler.sendMessage(message);
-            Log.d("", "getResponseJSON() returned: " + "从这里发出去的");
             e.printStackTrace();
         }
         new JSONHandler(ctx, res, handler, jtype).parseJSON();

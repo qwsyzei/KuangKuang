@@ -92,7 +92,7 @@
     <dimen name="s_subject_title_m">-5dp</dimen>
     <dimen name="s_all_comment_height">42dp</dimen>
 
-    <dimen name="s_top_item_height">176dp</dimen>
+    <dimen name="s_top_item_height">196dp</dimen>
     <dimen name="s_top_item_line">27dp</dimen>
     <dimen name="login_title_height">56dp</dimen>
     <dimen name="login_title_m_t">16dp</dimen>

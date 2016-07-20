@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,11 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,6 +48,12 @@ import klsd.kuangkuang.testpic.FileUtils;
 import klsd.kuangkuang.testpic.ImageItem;
 import klsd.kuangkuang.testpic.PhotoActivity;
 import klsd.kuangkuang.testpic.TestPicActivity;
+import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.DataCenter;
+import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.KelaParams;
+import klsd.kuangkuang.utils.MyHTTP;
+import klsd.kuangkuang.utils.ToastUtil;
 
 /**
  * 发表说说
@@ -53,6 +65,8 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     private TextView tv_release;
     private RelativeLayout layout;
     private EditText edit;
+    String photostr;
+    String photostr0,photostr1, photostr2, photostr3, photostr4, photostr5, photostr6, photostr7, photostr8 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +82,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
         layout.setOnClickListener(this);
         tv_release = (TextView) findViewById(R.id.tv_title_right);
         tv_release.setText(getString(R.string.send));
+        tv_release.setOnClickListener(this);
         noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
         noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
         adapter = new GridAdapter(this);
@@ -90,22 +105,6 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
             }
         });
 
-        tv_release.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                List<String> list = new ArrayList<String>();
-                for (int i = 0; i < Bimp.drr.size(); i++) {
-                    String Str = Bimp.drr.get(i).substring(
-                            Bimp.drr.get(i).lastIndexOf("/") + 1,
-                            Bimp.drr.get(i).lastIndexOf("."));
-                    list.add(FileUtils.SDPATH + Str + ".JPEG");
-                }
-                // 高清的压缩图片全部就在  list 路径里面了
-                // 高清的压缩过的 bmp 对象  都在 Bimp.bmp里面
-                // 完成上传服务器后 .........
-                FileUtils.deleteDir();
-            }
-        });
     }
 
     @Override
@@ -116,7 +115,115 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 imm.hideSoftInputFromWindow(edit.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
                 new PopupWindows(C_ReleaseWordActivity.this, noScrollgridview);
                 break;
+            case R.id.tv_title_right:
+                List<String> list = new ArrayList<String>();
+                for (int i = 0; i < Bimp.drr.size(); i++) {
+                    String Str = Bimp.drr.get(i).substring(
+                            Bimp.drr.get(i).lastIndexOf("/") + 1,
+                            Bimp.drr.get(i).lastIndexOf("."));
+                    list.add(FileUtils.SDPATH + Str + ".JPEG");
+                }
+                // 高清的压缩图片全部就在  list 路径里面了
+                // 高清的压缩过的 bmp 对象  都在 Bimp.bmp里面
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+                for (int i = 0; i < Bimp.bmp.size(); i++) {
+                    Bimp.bmp.get(i).compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 -
+                    // 100)压缩文件
+                    byte[] bt = stream.toByteArray();//为了转成16进制
+                    photostr = byte2hex(bt);//
+                    switch (i){
+                        case 0:
+                            photostr0=photostr;
+                            break;
+                        case 1:
+                            photostr1=photostr;
+                            break;
+                        case 2:
+                            photostr2=photostr;
+                            break;
+                        case 3:
+                            photostr3=photostr;
+                            break;
+                        case 4:
+                            photostr4=photostr;
+                            break;
+                        case 5:
+                            photostr5=photostr;
+                            break;
+                        case 6:
+                            photostr6=photostr;
+                            break;
+                        case 7:
+                            photostr7=photostr;
+                            break;
+                        case 8:
+                            photostr8=photostr;
+                            break;
+                    }
+                }
+
+
+                Log.d("这串字符是", "onClick() returned: " + photostr1);
+                // 完成上传服务器后 .........
+                release_word();
+
+
+                break;
         }
+    }
+
+    /**
+     * 二进制转字符串
+     *
+     * @param b
+     * @return
+     */
+    public static String byte2hex(byte[] b) {
+        StringBuffer sb = new StringBuffer();
+        String stmp = "";
+        for (int n = 0; n < b.length; n++) {
+            stmp = Integer.toHexString(b[n] & 0XFF);
+            if (stmp.length() == 1) {
+                sb.append("0" + stmp);
+            } else {
+                sb.append(stmp);
+            }
+        }
+        return sb.toString();
+    }
+
+    MyHTTP http;
+
+    /**
+     * 发表说说
+     */
+    private void release_word() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
+        params.addQueryStringParameter("content", edit.getText().toString());
+        params.addQueryStringParameter("picture0", photostr0);
+        params.addQueryStringParameter("picture1", photostr1);
+        params.addQueryStringParameter("picture2", photostr2);
+        params.addQueryStringParameter("picture3", photostr3);
+        params.addQueryStringParameter("picture4", photostr4);
+        params.addQueryStringParameter("picture5", photostr5);
+        params.addQueryStringParameter("picture6", photostr6);
+        params.addQueryStringParameter("picture7", photostr7);
+        params.addQueryStringParameter("picture8", photostr8);
+        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+        http.baseRequest(Consts.createMicropostsApi, JSONHandler.JTYPE_CREATE_WORDS, HttpRequest.HttpMethod.GET,
+                params, getHandler());
+    }
+
+    public void updateData() {
+        super.updateData();
+        if (jtype.equals(JSONHandler.JTYPE_CREATE_WORDS)) {
+            ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+            Log.d("发表成功了哟", "updateData() returned: " + "");
+            FileUtils.deleteDir();
+        }
+
     }
 
     @SuppressLint("HandlerLeak")

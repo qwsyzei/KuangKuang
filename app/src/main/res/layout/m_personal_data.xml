@@ -38,15 +38,6 @@
                 android:layout_centerVertical="true"
              />
 
-            <TextView
-                android:id="@+id/per_change_head_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/base_margin"
-                android:layout_toRightOf="@+id/im_head_pic"
-                android:text="@string/change_head_pic"
-                android:textSize="@dimen/middle_text_size" />
 
         </RelativeLayout>
 

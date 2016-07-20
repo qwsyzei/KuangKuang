@@ -185,6 +185,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("article_id", article_id);
         params.addQueryStringParameter("side", "like");
+        params = KelaParams.generateSignParam("GET", Consts.articlesLikeApi, params);
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.articlesLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
                 params, getHandler());

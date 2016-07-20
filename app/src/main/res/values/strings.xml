@@ -148,6 +148,8 @@
     <string name="my_message">我的消息</string>
     <string name="everyday_sign">每日签到</string>
     <string name="my_collect">我的收藏</string>
+    <string name="cancel_collect">取消收藏</string>
+    <string name="success_cancel_collect">取消收藏成功</string>
     <string name="today">今天</string>
     <string name="release_now">马上发表说说</string>
     <!-- 工具 -->

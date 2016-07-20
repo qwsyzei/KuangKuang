@@ -4,7 +4,11 @@ package klsd.kuangkuang.main;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +27,7 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
+import klsd.kuangkuang.views.ExitDialog;
 
 /**
  * 我的收藏
@@ -35,6 +40,7 @@ M_MyCollectAdapter myCollectAdapter;
     private ListView listView;
     String direction = "bottom";
     private int page = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,7 @@ M_MyCollectAdapter myCollectAdapter;
 //        tv_top= (TextView) findViewById(R.id.my_collect_tv_top);
 
         listView= (ListView) findViewById(R.id.listview_my_collect);
+//        listView.setOnItemLongClickListener(longClickListener);
         listView.setOnScrollListener(this);
         UIutils.showLoading(M_MyCollectActivity.this);
         swipt();
@@ -68,18 +75,7 @@ M_MyCollectAdapter myCollectAdapter;
                 params, getHandler());
 
     }
-    /**
-     * 取消收藏
-     */
-    private void gotoCollectCancel() {
-        RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("article_id", article_id);
-        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
-        if (http == null) http = new MyHTTP(M_MyCollectActivity.this);
-        http.baseRequest(Consts.articlesCollectDestroyApi, JSONHandler.JTYPE_COLLECT_DESTROY, HttpRequest.HttpMethod.GET,
-                params, getHandler());
 
-    }
     public void updateData() {
         super.updateData();
          if(jtype.equals(JSONHandler.JTYPE_COLLECT_SHOW)){
@@ -96,7 +92,7 @@ M_MyCollectAdapter myCollectAdapter;
             if (curTradesSize == 0) {
                 myList = os;
 //                tv_top.setText(getString(R.string.my_collect)+"："+myList.size());//收藏数，先不用
-                myCollectAdapter = new M_MyCollectAdapter(M_MyCollectActivity.this, myList);
+                myCollectAdapter = new M_MyCollectAdapter(M_MyCollectActivity.this, myList,getHandler());
                 listView.setAdapter(myCollectAdapter);
 
             } else {
@@ -106,6 +102,7 @@ M_MyCollectAdapter myCollectAdapter;
             page += 1;
             UIutils.cancelLoading();
         }else if (jtype.equals(JSONHandler.JTYPE_COLLECT_DESTROY)) {
+             exitDialog.dismiss();
              ToastUtil.show(M_MyCollectActivity.this, "已取消收藏");
          }
     }
@@ -166,4 +163,7 @@ M_MyCollectAdapter myCollectAdapter;
             getCollectShow();
         }
     }
+
+
+
 }

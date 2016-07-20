@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/login_p_l_r"
-        android:src="@mipmap/pic_alipay"/>
+        android:src="@mipmap/touxiang03"/>
     <TextView
         android:id="@+id/item_myword_content"
         android:background="@color/lightgray"

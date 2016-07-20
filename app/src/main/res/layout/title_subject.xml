@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:id="@+id/tv_title_right"
-        android:text="Top"
+        android:text="Top10"
         android:layout_marginRight="@dimen/base_margin"
         android:textSize="@dimen/middle_text_size"
         android:gravity="center"
