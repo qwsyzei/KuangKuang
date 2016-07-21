@@ -82,6 +82,16 @@ public class JSONHandler {
     public final static String JTYPE_MEMBER_UPDATE_HEAD = "update_member_head";
     public final static String JTYPE_MYWORD_LIST = "myword_list";
     public final static String JTYPE_CREATE_WORDS = "create_words";
+    public final static String JTYPE_CIRCLE_LIST = "circle_list";
+    public final static String JTYPE_PICTURE1 = "picture1";
+    public final static String JTYPE_PICTURE2 = "picture2";
+    public final static String JTYPE_PICTURE3 = "picture3";
+    public final static String JTYPE_PICTURE4 = "picture4";
+    public final static String JTYPE_PICTURE5 = "picture5";
+    public final static String JTYPE_PICTURE6 = "picture6";
+    public final static String JTYPE_PICTURE7 = "picture7";
+    public final static String JTYPE_PICTURE8 = "picture8";
+    public final static String JTYPE_PICTURE9 = "picture9";
 
     public JSONHandler() {
 
@@ -298,6 +308,16 @@ public class JSONHandler {
         osStrings.add(JTYPE_MEMBER_UPDATE_DOCUMENTS);
         osStrings.add(JTYPE_MEMBER_UPDATE_HEAD);
         osStrings.add(JTYPE_CREATE_WORDS);
+        osStrings.add(JTYPE_PICTURE1);
+        osStrings.add(JTYPE_PICTURE2);
+        osStrings.add(JTYPE_PICTURE3);
+        osStrings.add(JTYPE_PICTURE4);
+        osStrings.add(JTYPE_PICTURE5);
+        osStrings.add(JTYPE_PICTURE6);
+        osStrings.add(JTYPE_PICTURE7);
+        osStrings.add(JTYPE_PICTURE8);
+        osStrings.add(JTYPE_PICTURE9);
+        osStrings.add(JTYPE_CIRCLE_LIST);
         return osStrings.contains(jtype2);
     }
 
@@ -344,7 +364,30 @@ public class JSONHandler {
             } else if (jtype.equals(JTYPE_SIGN)) {
                 String member_id = object.getString("member_id");
                 bundle.putString("signup", member_id);
-            } else if (jtype.equals(JTYPE_RESET)) {
+            } else if (jtype.equals(JTYPE_CREATE_WORDS)) {
+                String id = object.getString("micropost");
+                String url=object.getString("url");
+                bundle.putString("id", id);
+                bundle.putString("url", url);
+            }else if (jtype.equals(JTYPE_PICTURE1)) {
+
+            }else if (jtype.equals(JTYPE_PICTURE2)) {
+
+            }else if (jtype.equals(JTYPE_PICTURE3)) {
+
+            }else if (jtype.equals(JTYPE_PICTURE4)) {
+
+            }else if (jtype.equals(JTYPE_PICTURE5)) {
+
+            }else if (jtype.equals(JTYPE_PICTURE6)) {
+
+            }else if (jtype.equals(JTYPE_PICTURE7)) {
+
+            }else if (jtype.equals(JTYPE_PICTURE8)) {
+
+            }else if (jtype.equals(JTYPE_PICTURE9)) {
+
+            }else if (jtype.equals(JTYPE_RESET)) {
                 bundle.putBoolean("reset_password", true);
             } else if (jtype.equals(JTYPE_RECHARGE)) {
                 String data = object.toString();

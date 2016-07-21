@@ -97,7 +97,7 @@
     <string name="set_success">设置成功</string>
     <string name="bind_phone_success">手机号绑定成功</string>
 
-
+    <string name="upload_dialog_textView">正在上传，请稍候...</string>
     <string name="done">完成</string>
     <string name="confirm">确认</string>
     <string name="missingImage">图片加载失败</string>

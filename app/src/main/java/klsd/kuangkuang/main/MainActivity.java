@@ -1,6 +1,5 @@
 package klsd.kuangkuang.main;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,7 +23,6 @@ import klsd.kuangkuang.fragments.MSubjectFragment;
 import klsd.kuangkuang.fragments.MToolFragment;
 import klsd.kuangkuang.utils.DataCenter;
 
-
 /**
  * 主界面
  */
@@ -33,13 +31,14 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
     RadioGroup radioGroup;
     private FragmentManager fm;
     private FragmentTransaction ft;
-    private   RadioButton rbA;
+    private   RadioButton rbA,rbB;
     private MSubjectFragment mSubjectFragment;
     private MCircleFragment mCircleFragment;
     private MToolFragment mToolFragment;
     private MMeFragment mMeFragment;
     private Fragment mContent;
     private LinearLayout layout_main_layout;
+    String str="0";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +46,10 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         setContentView(R.layout.main);
         initView();
         initSlidingMenu();
-
-
 }
     private void initView() {
+        Intent intent=getIntent();
+        str=intent.getStringExtra("release");
         im_title_left= (ImageView) findViewById(R.id.im_more_subject);
        im_title_left.setOnClickListener(this);
         layout_main_layout= (LinearLayout) findViewById(R.id.layout_main_layout);
@@ -59,9 +58,15 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         /**
          * 应用进入后，默认选择点击Fragment01
          */
-        ft.replace(R.id.just_subject_layout, new MSubjectFragment());//news_every_content是为fragment留出的空间，用fragment替换
-        rbA= (RadioButton) findViewById(R.id.main_rb1);
-        rbA.setChecked(true);
+//        if (str.equals("10")){
+            ft.replace(R.id.just_subject_layout, new MCircleFragment());//news_every_content是为fragment留出的空间，用fragment替换
+            rbB= (RadioButton) findViewById(R.id.main_rb2);
+            rbB.setChecked(true);
+//        }else{
+//            ft.replace(R.id.just_subject_layout, new MSubjectFragment());//news_every_content是为fragment留出的空间，用fragment替换
+//            rbA= (RadioButton) findViewById(R.id.main_rb1);
+//            rbA.setChecked(true);
+//        }
         ft.commit();
         radioGroup = (RadioGroup) findViewById(R.id.main_radiogroup);
         radioGroup.setOnCheckedChangeListener(this);
@@ -74,11 +79,9 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         if (mContent == null) {
             mContent = new MSubjectFragment();
         }
-
         // 设置左侧滑动菜单
         setBehindContentView(R.layout.menu_frame_left);
         getSupportFragmentManager().beginTransaction().replace(R.id.menu_frame, new LeftFragment()).commit();
-
         // 实例化滑动菜单对象
         SlidingMenu sm = getSlidingMenu();
         // 关闭手势滑动
@@ -87,7 +90,6 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         sm.addIgnoredView(layout_main_layout);//在这里设置整个布局都不能滑动
         // 设置可以左右滑动的菜单
         sm.setMode(SlidingMenu.LEFT);
-
         // 设置滑动阴影的宽度
         sm.setShadowWidthRes(R.dimen.shadow_width);
         // 设置滑动菜单阴影的图像资源
@@ -114,7 +116,6 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         getSlidingMenu().showContent();
 //        tv_title.setText(title);
     }
-
 
 
     /**

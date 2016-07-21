@@ -7,7 +7,7 @@ public class Consts extends Application {
     // API
     public final static String host = "http://119.254.211.82:8080";
 
-public final static String host123="http://192.168.1.20:3000";
+public final static String host123="http://192.168.31.167:3000";
     public final static String host2 = "http://119.254.100.167:8080";
     public final static String baseApiPath = host+ "/api/v2";
 
@@ -24,7 +24,18 @@ public final static String host123="http://192.168.1.20:3000";
     public final static String memberUpdateDocumentsApi = baseApiPath + "/update/member_documents";//更新个人资料
     public final static String memberUpdateHeadApi = baseApiPath + "/update/member_head_portrait";//上传头像
     public final static String micropostsMemberListApi = baseApiPath + "/microposts/microposts_member_list";//我的说说
-    public final static String createMicropostsApi = baseApiPath + "/microposts/create";//发表说说
+    public final static String createMicropostsApi = baseApiPath + "/microposts/create_microposts";//发表说说
+    public final static String micropostsListApi = baseApiPath + "/microposts/microposts_list";//朋友圈列表
+    public final static String picture1Api = baseApiPath + "/microposts/picture1";//发图片1
+    public final static String picture2Api = baseApiPath + "/microposts/picture2";//发图片2
+    public final static String picture3Api = baseApiPath + "/microposts/picture3";//发图片3
+    public final static String picture4Api = baseApiPath + "/microposts/picture4";//发图片4
+    public final static String picture5Api = baseApiPath + "/microposts/picture5";//发图片5
+    public final static String picture6Api = baseApiPath + "/microposts/picture6";//发图片6
+    public final static String picture7Api = baseApiPath + "/microposts/picture7";//发图片7
+    public final static String picture8Api = baseApiPath + "/microposts/picture8";//发图片8
+    public final static String picture9Api = baseApiPath + "/microposts/picture9";//发图片9
+
 
     // phone_number common
     public final static String getAuthCodeApi = baseApiPath + "/registers/code";

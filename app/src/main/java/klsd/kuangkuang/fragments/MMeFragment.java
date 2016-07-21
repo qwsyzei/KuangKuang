@@ -132,9 +132,10 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
         layout_release.setOnClickListener(this);
         layout_collect.setOnClickListener(this);
         im_set.setOnClickListener(this);
-//        getMyWordList();
-        getSubjectList();
-        mywordAdapter = new M_MywordAdapter(a, cirList);
+        getMyWordList();
+        mywordAdapter = new M_MywordAdapter(a, sList);
+//        getSubjectList();
+//        mywordAdapter = new M_MywordAdapter(a, cirList);
         listView.setAdapter(mywordAdapter);
     }
 
@@ -142,7 +143,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
 
     private void getMyWordList() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("member_id", "48");
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("limit", limit + "");
         params.addQueryStringParameter("page", page + "");
         if (http == null) http = new MyHTTP(a);
@@ -163,7 +164,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
             } else if (res.equals("OK")) {
                 if (jtype.equals(JSONHandler.JTYPE_MYWORD_LIST)) {
                     int curTradesSize = sList.size();
-                    ArrayList<MyWord> os = (ArrayList<MyWord>) bundle.getSerializable("MyWord_list");
+                    ArrayList<MyWord> os = (ArrayList<MyWord>) bundle.getSerializable("myword_list");
                     Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
                         ToastUtil.show(a, a.getString(R.string.no_more_data));

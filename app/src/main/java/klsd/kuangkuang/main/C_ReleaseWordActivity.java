@@ -1,6 +1,7 @@
 package klsd.kuangkuang.main;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,7 +33,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
@@ -51,9 +51,9 @@ import klsd.kuangkuang.testpic.TestPicActivity;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
-import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.views.UploadDialog;
 
 /**
  * 发表说说
@@ -65,8 +65,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     private TextView tv_release;
     private RelativeLayout layout;
     private EditText edit;
-    String photostr;
-    String photostr0,photostr1, photostr2, photostr3, photostr4, photostr5, photostr6, photostr7, photostr8 ;
+    String photostr[] = new String[]{"", "", "", "", "", "", "", "", ""};
+    String id, url;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,8 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initView() {
+        dialog = new UploadDialog(this, R.style.UploadDialog, R.string.upload_dialog_textView);
+        dialog.setCanceledOnTouchOutside(false);
         edit = (EditText) findViewById(R.id.release_edit);
         layout = (RelativeLayout) findViewById(R.id.layout_release_word_open_pop);
         layout.setOnClickListener(this);
@@ -104,7 +107,6 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 }
             }
         });
-
     }
 
     @Override
@@ -116,61 +118,43 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 new PopupWindows(C_ReleaseWordActivity.this, noScrollgridview);
                 break;
             case R.id.tv_title_right:
-                List<String> list = new ArrayList<String>();
-                for (int i = 0; i < Bimp.drr.size(); i++) {
-                    String Str = Bimp.drr.get(i).substring(
-                            Bimp.drr.get(i).lastIndexOf("/") + 1,
-                            Bimp.drr.get(i).lastIndexOf("."));
-                    list.add(FileUtils.SDPATH + Str + ".JPEG");
+                if (edit.getText().toString().equals("")) {
+                    ToastUtil.show(C_ReleaseWordActivity.this, "您还未输入文字");
+                } else {
+                    send_pro();
                 }
-                // 高清的压缩图片全部就在  list 路径里面了
-                // 高清的压缩过的 bmp 对象  都在 Bimp.bmp里面
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-                for (int i = 0; i < Bimp.bmp.size(); i++) {
-                    Bimp.bmp.get(i).compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 -
-                    // 100)压缩文件
-                    byte[] bt = stream.toByteArray();//为了转成16进制
-                    photostr = byte2hex(bt);//
-                    switch (i){
-                        case 0:
-                            photostr0=photostr;
-                            break;
-                        case 1:
-                            photostr1=photostr;
-                            break;
-                        case 2:
-                            photostr2=photostr;
-                            break;
-                        case 3:
-                            photostr3=photostr;
-                            break;
-                        case 4:
-                            photostr4=photostr;
-                            break;
-                        case 5:
-                            photostr5=photostr;
-                            break;
-                        case 6:
-                            photostr6=photostr;
-                            break;
-                        case 7:
-                            photostr7=photostr;
-                            break;
-                        case 8:
-                            photostr8=photostr;
-                            break;
-                    }
-                }
-
-
-                Log.d("这串字符是", "onClick() returned: " + photostr1);
-                // 完成上传服务器后 .........
-                release_word();
-
-
                 break;
         }
+    }
+
+    /**
+     * 上传之前的准备
+     */
+    private void send_pro() {
+        if (dialog != null) {
+            dialog.show();
+        }
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < Bimp.drr.size(); i++) {
+            String Str = Bimp.drr.get(i).substring(
+                    Bimp.drr.get(i).lastIndexOf("/") + 1,
+                    Bimp.drr.get(i).lastIndexOf("."));
+            list.add(FileUtils.SDPATH + Str + ".JPEG");
+            Log.d("地址是", "onClick() returned: " + FileUtils.SDPATH + Str + ".JPEG");
+        }
+        // 高清的压缩图片全部就在  list 路径里面了
+
+        // 高清的压缩过的 bmp 对象  都在 Bimp.bmp里面
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        for (int i = 0; i < Bimp.bmp.size(); i++) {
+            Bimp.bmp.get(i).compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 -
+            // 100)压缩文件
+            byte[] bt = stream.toByteArray();//为了转成16进制
+            photostr[i] = byte2hex(bt);//
+            Log.d("这串字符是", "onClick() returned: " + photostr[i]);
+        }
+        release_word();
     }
 
     /**
@@ -199,28 +183,254 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
      * 发表说说
      */
     private void release_word() {
+
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("content", edit.getText().toString());
-        params.addQueryStringParameter("picture0", photostr0);
-        params.addQueryStringParameter("picture1", photostr1);
-        params.addQueryStringParameter("picture2", photostr2);
-        params.addQueryStringParameter("picture3", photostr3);
-        params.addQueryStringParameter("picture4", photostr4);
-        params.addQueryStringParameter("picture5", photostr5);
-        params.addQueryStringParameter("picture6", photostr6);
-        params.addQueryStringParameter("picture7", photostr7);
-        params.addQueryStringParameter("picture8", photostr8);
         if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.createMicropostsApi, JSONHandler.JTYPE_CREATE_WORDS, HttpRequest.HttpMethod.GET,
+        http.baseRequest(Consts.createMicropostsApi, JSONHandler.JTYPE_CREATE_WORDS, HttpRequest.HttpMethod.POST,
+                params, getHandler());
+    }
+
+    /**
+     * Picture1
+     */
+    private void picture1() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", id);
+        params.addQueryStringParameter("url", url);
+        params.addQueryStringParameter("picture", photostr[0]);
+        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+        http.baseRequest(Consts.picture1Api, JSONHandler.JTYPE_PICTURE1, HttpRequest.HttpMethod.POST,
+                params, getHandler());
+    }
+
+    /**
+     * Picture2
+     */
+    private void picture2() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", id);
+        params.addQueryStringParameter("url", url);
+        params.addQueryStringParameter("picture", photostr[1]);
+        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+        http.baseRequest(Consts.picture2Api, JSONHandler.JTYPE_PICTURE2, HttpRequest.HttpMethod.POST,
+                params, getHandler());
+    }
+
+    /**
+     * Picture3
+     */
+    private void picture3() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", id);
+        params.addQueryStringParameter("url", url);
+        params.addQueryStringParameter("picture", photostr[2]);
+        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+        http.baseRequest(Consts.picture3Api, JSONHandler.JTYPE_PICTURE3, HttpRequest.HttpMethod.POST,
+                params, getHandler());
+    }
+
+    /**
+     * Picture4
+     */
+    private void picture4() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", id);
+        params.addQueryStringParameter("url", url);
+        params.addQueryStringParameter("picture", photostr[3]);
+        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+        http.baseRequest(Consts.picture4Api, JSONHandler.JTYPE_PICTURE4, HttpRequest.HttpMethod.POST,
+                params, getHandler());
+    }
+
+    /**
+     * Picture5
+     */
+    private void picture5() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", id);
+        params.addQueryStringParameter("url", url);
+        params.addQueryStringParameter("picture", photostr[4]);
+        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+        http.baseRequest(Consts.picture5Api, JSONHandler.JTYPE_PICTURE5, HttpRequest.HttpMethod.POST,
+                params, getHandler());
+    }
+
+    /**
+     * Picture6
+     */
+    private void picture6() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", id);
+        params.addQueryStringParameter("url", url);
+        params.addQueryStringParameter("picture", photostr[5]);
+        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+        http.baseRequest(Consts.picture6Api, JSONHandler.JTYPE_PICTURE6, HttpRequest.HttpMethod.POST,
+                params, getHandler());
+    }
+
+    /**
+     * Picture7
+     */
+    private void picture7() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", id);
+        params.addQueryStringParameter("url", url);
+        params.addQueryStringParameter("picture", photostr[6]);
+        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+        http.baseRequest(Consts.picture7Api, JSONHandler.JTYPE_PICTURE7, HttpRequest.HttpMethod.POST,
+                params, getHandler());
+    }
+
+    /**
+     * Picture8
+     */
+    private void picture8() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", id);
+        params.addQueryStringParameter("url", url);
+        params.addQueryStringParameter("picture", photostr[7]);
+        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+        http.baseRequest(Consts.picture8Api, JSONHandler.JTYPE_PICTURE8, HttpRequest.HttpMethod.POST,
+                params, getHandler());
+    }
+
+    /**
+     * Picture9
+     */
+    private void picture9() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", id);
+        params.addQueryStringParameter("url", url);
+        params.addQueryStringParameter("picture", photostr[8]);
+        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+        http.baseRequest(Consts.picture9Api, JSONHandler.JTYPE_PICTURE9, HttpRequest.HttpMethod.POST,
                 params, getHandler());
     }
 
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_CREATE_WORDS)) {
+            id = (String) handlerBundler.getString("id");
+            url = handlerBundler.getString("url");
+            Log.d("文字发表成功了哟", "updateData() returned: " + "");
+            if (Bimp.drr.size() > 0) {
+                picture1();
+            } else {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                // 完成上传服务器后 .........
+                FileUtils.deleteDir();
+            }
+
+        } else if (jtype.equals(JSONHandler.JTYPE_PICTURE1)) {
+            Log.d("图片111成功", "updateData() returned: " + "");
+            if (Bimp.drr.size() > 1) {
+                picture2();
+            } else {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                // 完成上传服务器后 .........
+                FileUtils.deleteDir();
+            }
+        } else if (jtype.equals(JSONHandler.JTYPE_PICTURE2)) {
+            Log.d("图片222成功", "updateData() returned: " + "");
+            if (Bimp.drr.size() > 2) {
+                picture3();
+            } else {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                // 完成上传服务器后 .........
+                FileUtils.deleteDir();
+            }
+        } else if (jtype.equals(JSONHandler.JTYPE_PICTURE3)) {
+            Log.d("图片333成功", "updateData() returned: " + "");
+            if (Bimp.drr.size() > 3) {
+                picture4();
+            } else {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                // 完成上传服务器后 .........
+                FileUtils.deleteDir();
+            }
+        } else if (jtype.equals(JSONHandler.JTYPE_PICTURE4)) {
+
+            Log.d("图片444成功", "updateData() returned: " + "");
+            if (Bimp.drr.size() > 4) {
+                picture5();
+            } else {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                // 完成上传服务器后 .........
+                FileUtils.deleteDir();
+            }
+        } else if (jtype.equals(JSONHandler.JTYPE_PICTURE5)) {
+
+            Log.d("图片555成功", "updateData() returned: " + "");
+            if (Bimp.drr.size() > 5) {
+                picture6();
+            } else {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                // 完成上传服务器后 .........
+                FileUtils.deleteDir();
+            }
+        } else if (jtype.equals(JSONHandler.JTYPE_PICTURE6)) {
+            Log.d("图片666成功", "updateData() returned: " + "");
+            if (Bimp.drr.size() > 6) {
+                picture7();
+            } else {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                // 完成上传服务器后 .........
+                FileUtils.deleteDir();
+            }
+        } else if (jtype.equals(JSONHandler.JTYPE_PICTURE7)) {
+            Log.d("图片777成功", "updateData() returned: " + "");
+            if (Bimp.drr.size() > 7) {
+                picture8();
+            } else {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                // 完成上传服务器后 .........
+                FileUtils.deleteDir();
+            }
+        } else if (jtype.equals(JSONHandler.JTYPE_PICTURE8)) {
+            Log.d("图片888成功", "updateData() returned: " + "");
+            if (Bimp.drr.size() > 8) {
+                picture9();
+            } else {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                // 完成上传服务器后 .........
+                FileUtils.deleteDir();
+            }
+        } else if (jtype.equals(JSONHandler.JTYPE_PICTURE9)) {
+            Log.d("图片888成功", "updateData() returned: " + "");
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
             ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
-            Log.d("发表成功了哟", "updateData() returned: " + "");
+            // 完成上传服务器后 .........
             FileUtils.deleteDir();
         }
 

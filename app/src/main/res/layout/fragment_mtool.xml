@@ -7,7 +7,7 @@
     tools:context="klsd.kuangkuang.main.T_ToolActivity">
     <include layout="@layout/title_one"></include>
 <ImageView
-
+android:layout_marginTop="@dimen/size_eight"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:scaleType="fitXY"

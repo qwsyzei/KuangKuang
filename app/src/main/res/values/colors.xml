@@ -18,7 +18,7 @@
     <color name="radio_button_unselected_color">@android:color/transparent</color>
     <color name="dialog_background">#50D8D8D8</color>
     <color name="top_background">#90757575</color>
-    <color name="top_background123">#50000000</color>
+    <color name="top_background123">#40000000</color>
     <color name="learn_background">#282828</color>
 
     <color name="market_bottom_background">#fadbdc</color>

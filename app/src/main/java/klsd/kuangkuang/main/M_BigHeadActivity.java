@@ -22,11 +22,15 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.photoview.PhotoViewAttacher;
+import klsd.kuangkuang.testpic.TestPicActivity;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
@@ -91,13 +95,15 @@ public class M_BigHeadActivity extends BaseActivity implements View.OnClickListe
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                         IMAGE_UNSPECIFIED);
                 startActivityForResult(intent, PHOTOZOOM);
-
+//                Intent intent = new Intent(M_BigHeadActivity.this,
+//                        TestPicActivity.class);
+//                startActivity(intent);
                 selectPicDialog.dismiss();
                 break;
             case R.id.layout_take_photo:
                 Intent intent123 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent123.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
-                        Environment.getExternalStorageDirectory(), "temp.jpg")));
+                        Environment.getExternalStorageDirectory().getAbsolutePath()+ "/MedicalApplication/Camera/userImage/", "temp.jpg")));
                 System.out.println("=============" + Environment.getExternalStorageDirectory());
                 startActivityForResult(intent123, PHOTOHRAPH);
                 selectPicDialog.dismiss();
@@ -160,8 +166,7 @@ public class M_BigHeadActivity extends BaseActivity implements View.OnClickListe
         // 拍照
         if (requestCode == PHOTOHRAPH) {
             // 设置文件保存路径这里放在跟目录下
-            File picture = new File(Environment.getExternalStorageDirectory()
-                    + "/temp.jpg");
+            File picture = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/MedicalApplication/Camera/userImage/", "temp.jpg");
             System.out.println("------------------------" + picture.getPath());
             startPhotoZoom(Uri.fromFile(picture));
 //            startPhotoZoom(photoUri);
@@ -186,6 +191,8 @@ public class M_BigHeadActivity extends BaseActivity implements View.OnClickListe
                 photoStr = byte2hex(bt);//
                 im_bighead.setImageBitmap(photo);
             }
+//            String dir = Environment.getExternalStorageDirectory()
+//                    .getAbsolutePath() + "/MedicalApplication/Camera/userImage/";
 
         }
 

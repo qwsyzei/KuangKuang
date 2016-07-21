@@ -33,11 +33,11 @@
 
     <Button
         android:id="@+id/feedback_button"
-        android:background="@drawable/btn_box"
+        android:background="@color/kuangkuang_yellow"
         android:layout_width="@dimen/small_dialog_width"
         android:layout_height="@dimen/button_height"
         android:layout_gravity="center"
-        android:textColor="@color/kuangkuang_yellow"
+        android:textColor="@color/white"
         android:text="@string/submit" />
 
 </LinearLayout>

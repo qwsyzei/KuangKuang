@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +16,25 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.C_CircleAdapter;
+import klsd.kuangkuang.main.BaseActivity;
 import klsd.kuangkuang.main.C_ReleaseWordActivity;
+import klsd.kuangkuang.main.LoginActivity;
 import klsd.kuangkuang.models.Circles;
+import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
+import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.KelaParams;
+import klsd.kuangkuang.utils.MyHTTP;
+import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.utils.UIutils;
 
 import static klsd.kuangkuang.R.mipmap.touxiang01;
 
@@ -48,11 +61,9 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         a = this.getActivity();
         view = inflater.inflate(R.layout.fragment_mcircle, container, false);
         setTitle(getString(R.string.main_circle));
-//        if (isSigned()) {
+//        getcircleList();
         initView();
-//        } else {
-//          myStartActivity(new Intent(getActivity(), LoginActivity.class));
-//        }
+
 
         return view;
     }
@@ -66,7 +77,59 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         TextView textView = (TextView) view.findViewById(R.id.tv_title_right);
         if (textView != null) textView.setText(tv_right);
     }
+    MyHTTP http;
 
+    /**
+     * 得到朋友圈列表
+     */
+    private void getcircleList() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("page", "1");
+        params.addQueryStringParameter("limit", "5");
+        params = KelaParams.generateSignParam("GET", Consts.micropostsListApi, params);
+        if (http == null) http = new MyHTTP(a);
+        http.baseRequest(Consts.micropostsListApi, JSONHandler.JTYPE_CIRCLE_LIST, HttpRequest.HttpMethod.GET,
+                params, handler);
+    }
+    private Handler handler = new BaseActivity.KelaHandler(a){
+        @SuppressWarnings("unchecked")
+        public void handleMessage(android.os.Message msg) {
+            Bundle bundle = msg.getData();
+            String res = bundle.getString("result");
+            String jtype = bundle.getString("jtype");
+            if (res == null) {
+//				ToastUtil.show(a, "交易完成数据网络请求失败");
+                a.startActivity(new Intent(a, LoginActivity.class));
+                a.finish();
+            } else if (res.equals("OK")) {
+//                if (swipeView != null) swipeView.setRefreshing(false);
+//                if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIST)) {
+//                    int curTradesSize = sList.size();
+//                    ArrayList<Subject> os = (ArrayList<Subject>) bundle.getSerializable("subject_article");
+//                    Log.d("OS的长度", "handleMessage() returned: " + os.size());
+//                    if (os.size() == 0) {
+//                        UIutils.cancelLoading();
+//                        ToastUtil.show(a, a.getString(R.string.no_more_data));
+//                        return;
+//                    }
+//                    addTrades("bottom",os);
+//                    if (curTradesSize == 0) {
+//                        sList = os;
+//                        sAdapter = new S_SubjectAdapter(a, sList,handler);
+//                        listView.setAdapter(sAdapter);
+//
+//                    } else {
+//
+//                        sAdapter.notifyDataSetChanged();
+//                    }
+//                    page += 1;
+//                    UIutils.cancelLoading();
+//                }
+            } else {
+                ToastUtil.show(a, res);
+            }
+        }
+    };
     /**
      * 假数据
      *
@@ -153,7 +216,12 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_title_circle_right:
-                myStartActivity(new Intent(getActivity(), C_ReleaseWordActivity.class));
+                if(isSigned()){
+                    myStartActivity(new Intent(getActivity(), C_ReleaseWordActivity.class));
+                }else{
+                    ToastUtil.show(a,"您未登录");
+                }
+
                 break;
         }
     }
