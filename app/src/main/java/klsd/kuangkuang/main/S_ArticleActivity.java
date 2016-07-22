@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
@@ -34,6 +35,7 @@ import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.views.CircleImageView;
 
 
 /**
@@ -41,6 +43,7 @@ import klsd.kuangkuang.utils.ToastUtil;
  */
 public class S_ArticleActivity extends BaseActivity implements View.OnClickListener {
     String testString, article_id, title, tag, views, like_number, comment_number, created_at;
+    private String nickname,picture_head,author_signature;
     private TextView tv_content;
     private LinearLayout layout_like, layout_comment;
     private TextView tv_allcomment;
@@ -56,6 +59,8 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_title, tv_tag;
     private TextView tv_views, tv_like, tv_comment;
     private TextView tv_time;//文章发表时间
+    private TextView tv_author_name,tv_author_signature;
+    private CircleImageView im_author_head;
     String common_time;//类似1天前的写法
 
     @Override
@@ -76,6 +81,9 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         like_number = intent.getStringExtra("like");
         comment_number = intent.getStringExtra("comment");
         created_at = intent.getStringExtra("created_at");
+        nickname=intent.getStringExtra("nickname");
+        picture_head=intent.getStringExtra("picture_son");
+        author_signature=intent.getStringExtra("signature");
 //        common_time = MyDate.timeLogic("2014-01-18 12:22:10");
         Log.d("我算的时间是", "initView() returned: " +created_at.substring(0, 19).replace("T", " "));
         common_time = MyDate.timeLogic(created_at.substring(0, 19).replace("T", " "));
@@ -85,6 +93,18 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
 
         tv_content = (TextView) findViewById(R.id.tv_article_content);
         RichText.from(testString).into(tv_content);
+
+        tv_author_name= (TextView) findViewById(R.id.article_author_name);
+        tv_author_signature= (TextView) findViewById(R.id.article_author_tag);
+        im_author_head= (CircleImageView) findViewById(R.id.article_author_pic);
+        tv_author_name.setText(nickname);
+        tv_author_signature.setText(author_signature);
+        if (!picture_head.equals("null")){
+            BitmapUtils bitmapUtils=new BitmapUtils(S_ArticleActivity.this);
+            bitmapUtils.display(im_author_head,Consts.host+"/"+picture_head);
+        }
+
+
         listView = (ListView) findViewById(R.id.listview_article_comment3);
         listView.setFocusable(false);//因为还有个scrollview，会影响显示位置
         layout_like = (LinearLayout) findViewById(R.id.layout_s_artile_like);

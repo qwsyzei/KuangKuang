@@ -62,6 +62,9 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
                 intent.putExtra("like", ac.getLike());
                 intent.putExtra("comment", ac.getComment());
                 intent.putExtra("created_at", ac.getCreated_at());
+                intent.putExtra("nickname", ac.getNickname());
+                intent.putExtra("picture_son", ac.getPicture_son());
+                intent.putExtra("signature", ac.getSignature());
                 ctx.startActivity(intent);
             }
         });

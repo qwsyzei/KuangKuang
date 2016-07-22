@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="match_parent">
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -37,11 +38,12 @@
 
 </LinearLayout>
 
-<ListView
+<klsd.kuangkuang.views.SelfListView
     android:id="@+id/listview_me_myword"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
 android:layout_marginTop="@dimen/base_margin"
     android:dividerHeight="@dimen/signup__text_m_l_r"
-    android:divider="@color/white"></ListView>
+    android:divider="@color/white"></klsd.kuangkuang.views.SelfListView>
+
 </LinearLayout>

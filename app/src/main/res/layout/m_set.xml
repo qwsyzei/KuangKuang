@@ -10,8 +10,8 @@
         android:id="@+id/user_title_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-        <include
-              layout="@layout/title_two" />
+
+        <include layout="@layout/title_two" />
     </RelativeLayout>
 
     <LinearLayout
@@ -26,11 +26,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:paddingTop="@dimen/base_margin"
             android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/base_margin"
-            android:paddingRight="@dimen/base_margin">
-
+            android:paddingRight="@dimen/base_margin"
+            android:paddingTop="@dimen/base_margin">
 
             <TextView
                 android:id="@+id/fragment_user_fuwudizhi_textview"
@@ -41,6 +40,7 @@
                 android:id="@+id/fragment_user_fuwudizhi_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/clickable" />
@@ -59,10 +59,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:paddingTop="@dimen/base_margin"
             android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/base_margin"
-            android:paddingRight="@dimen/base_margin">
+            android:paddingRight="@dimen/base_margin"
+            android:paddingTop="@dimen/base_margin">
 
             <TextView
                 android:id="@+id/fragment_user_more_ideas_textview"
@@ -73,6 +73,7 @@
                 android:id="@+id/fragment_user_more_ideas_imageview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/clickable" />
@@ -91,10 +92,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/base_margin"
             android:background="@color/white"
-            android:paddingTop="@dimen/base_margin"
             android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/base_margin"
-            android:paddingRight="@dimen/base_margin">
+            android:paddingRight="@dimen/base_margin"
+            android:paddingTop="@dimen/base_margin">
 
             <TextView
                 android:id="@+id/fragment_user_system_message_textview"
@@ -105,6 +106,7 @@
                 android:id="@+id/fragment_user_system_message_imageview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/clickable" />
@@ -122,10 +124,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:paddingTop="@dimen/base_margin"
             android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/base_margin"
-            android:paddingRight="@dimen/base_margin">
+            android:paddingRight="@dimen/base_margin"
+            android:paddingTop="@dimen/base_margin">
 
             <TextView
                 android:id="@+id/fragment_user"
@@ -137,6 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/clickable" />
 
@@ -153,10 +156,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:paddingTop="@dimen/base_margin"
             android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/base_margin"
-            android:paddingRight="@dimen/base_margin">
+            android:paddingRight="@dimen/base_margin"
+            android:paddingTop="@dimen/base_margin">
 
             <TextView
                 android:id="@+id/settings_textview"
@@ -168,6 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/clickable" />
 
@@ -181,10 +185,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/base_margin"
             android:background="@color/white"
-            android:paddingTop="@dimen/base_margin"
             android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/base_margin"
-            android:paddingRight="@dimen/base_margin">
+            android:paddingRight="@dimen/base_margin"
+            android:paddingTop="@dimen/base_margin">
 
             <TextView
                 android:id="@+id/frem_settings_textview"
@@ -196,6 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/clickable" />
 
@@ -212,23 +217,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:paddingTop="@dimen/base_margin"
             android:paddingBottom="@dimen/base_margin"
             android:paddingLeft="@dimen/base_margin"
-            android:paddingRight="@dimen/base_margin">
+            android:paddingRight="@dimen/base_margin"
+            android:paddingTop="@dimen/base_margin">
 
             <TextView
                 android:id="@+id/fragments_textview"
                 style="@style/common_text_style"
                 android:text="@string/start_push" />
 
-            <ImageView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <klsd.kuangkuang.views.ToggleButton
+                android:id="@+id/set_toggle"
+                android:layout_width="@dimen/togglebutton_width"
+                android:layout_height="@dimen/togglebutton_height"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/clickable" />
+                android:src="@mipmap/clickable"></klsd.kuangkuang.views.ToggleButton>
 
         </RelativeLayout>
 
@@ -246,10 +251,10 @@
             android:layout_height="@dimen/button_height"
             android:layout_gravity="center"
             android:layout_margin="@dimen/base_margin"
-            android:background="@drawable/btn_box"
+            android:background="@color/kuangkuang_yellow"
             android:gravity="center"
             android:text="@string/exit"
-            android:textColor="@color/kuangkuang_yellow"
+            android:textColor="@color/white"
             android:textSize="@dimen/middle_text_size" />
     </LinearLayout>
 </RelativeLayout>

@@ -4,11 +4,19 @@
     android:background="@color/lightgray"
     android:orientation="vertical" tools:context="klsd.kuangkuang.fragments.MCircleFragment">
     <include layout="@layout/title_circle"></include>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swip_circle"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="@dimen/size_eight"
+        android:layout_marginLeft="@dimen/login_p_l_r"
+        android:layout_marginRight="@dimen/login_p_l_r"
+        android:background="@color/lightgray">
 <ListView
     android:id="@+id/listview_circle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/base_margin"
     android:divider="@color/lightgray"
     android:dividerHeight="@dimen/login_p_l_r"></ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

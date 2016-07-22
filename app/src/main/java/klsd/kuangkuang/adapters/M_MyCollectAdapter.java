@@ -71,7 +71,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
             viewHolder = new ViewHolder();
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_my_collect, null);
             viewHolder.title = (TextView) convertView.findViewById(R.id.item_my_collect_tv_title);
-            viewHolder.describe = (TextView) convertView.findViewById(R.id.item_my_collect_tv_describe);
+            viewHolder.describe_son = (TextView) convertView.findViewById(R.id.item_my_collect_tv_describe);
             viewHolder.im_pic = (ImageView) convertView.findViewById(R.id.item_my_collect_pic);
             convertView.setTag(viewHolder);
         } else {
@@ -79,7 +79,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
         }
         aid = ac.getId();
         viewHolder.title.setText(ac.getTitle());
-        viewHolder.describe.setText(ac.getDescribe());
+        viewHolder.describe_son.setText(ac.getDescribe_son());
         BitmapUtils bitmapUtils = new BitmapUtils(ctx);
         bitmapUtils.display(viewHolder.im_pic, ac.getPicture_url());
 
@@ -95,6 +95,9 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
                 intent.putExtra("like", ac.getLike());
                 intent.putExtra("comment", ac.getComment());
                 intent.putExtra("created_at", ac.getCreated_at());
+                intent.putExtra("nickname", ac.getNickname());
+                intent.putExtra("picture_son", ac.getPicture_son());
+                intent.putExtra("signature", ac.getSignature());
                 ctx.startActivity(intent);
             }
         });
@@ -159,7 +162,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
     }
 
     public final class ViewHolder {
-        TextView title, describe;
+        TextView title, describe_son;
         ImageView im_pic;
 
 

@@ -3,7 +3,6 @@ package klsd.kuangkuang.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -38,6 +36,7 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
+import klsd.kuangkuang.views.SelfListView;
 
 /**
  * 我
@@ -49,7 +48,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
     private ImageView im_set;
     private RelativeLayout layout_collect;
     private ArrayList<MyWord> sList;
-    private ListView listView;
+    private SelfListView listView;
     private static Activity a;
     private int limit = 10;
     private int page = 1;
@@ -66,18 +65,18 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
         a = this.getActivity();
         view = inflater.inflate(R.layout.fragment_me, container, false);
         setTitle(getString(R.string.main_me));
-
+        if (DataCenter.isSigned()){
+            initView();
+        }else {
+            myStartActivity(new Intent(a,LoginActivity.class));
+        }
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (DataCenter.isSigned()){
-            initView();
-        }else {
-            myStartActivity(new Intent(a,LoginActivity.class));
-        }
+
     }
 
     /**
@@ -90,32 +89,32 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
 //        for (int i = 0; i < 5; i++) {
         MyWord sub = new MyWord(a);
         sub.setDay("10");
-        sub.setContent("    四月生日石。 地球上最坚硬的天然物质。 已有十亿年以上的历史。此种风靡全球的宝石，不仅……");
+//        sub.setContent("    四月生日石。 地球上最坚硬的天然物质。 已有十亿年以上的历史。此种风靡全球的宝石，不仅……");
         sub.setMonth("7");
         sub.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m31));
         cirList.add(sub);
 
         MyWord sub2 = new MyWord(a);
         sub2.setDay("12");
-        sub2.setContent("    昨天老公给买了个大大的钻戒，但他不让我晒");
+//        sub2.setContent("    昨天老公给买了个大大的钻戒，但他不让我晒");
         sub2.setMonth("6");
         sub2.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m53));
         cirList.add(sub2);
         MyWord sub3 = new MyWord(a);
         sub3.setDay("01");
-        sub3.setContent("   谁说我自己不会鉴赏珠宝，我今天就要让你们都看看");
+//        sub3.setContent("   谁说我自己不会鉴赏珠宝，我今天就要让你们都看看");
         sub3.setMonth("6");
         sub3.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m32));
         cirList.add(sub3);
         MyWord sub4 = new MyWord(a);
         sub4.setDay("26");
-        sub4.setContent(" 今天过生日，让我最想不到的是，我的好弟弟给我买了个金项链");
+//        sub4.setContent(" 今天过生日，让我最想不到的是，我的好弟弟给我买了个金项链");
         sub4.setMonth("5");
         sub4.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m51));
         cirList.add(sub4);
         MyWord sub5 = new MyWord(a);
         sub5.setDay("30");
-        sub5.setContent(" 好吧，我觉得我还是得相信我自己的感觉，毕竟这是自己的爱好");
+//        sub5.setContent(" 好吧，我觉得我还是得相信我自己的感觉，毕竟这是自己的爱好");
         sub5.setMonth("4");
         sub5.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m21));
         cirList.add(sub5);
@@ -127,7 +126,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
         im_set = (ImageView) view.findViewById(R.id.im_title_set);
         layout_collect = (RelativeLayout) view.findViewById(R.id.me_collect_layout);
         layout_release = (LinearLayout) view.findViewById(R.id.layout_me_release_word_now);
-        listView = (ListView) view.findViewById(R.id.listview_me_myword);
+        listView = (SelfListView) view.findViewById(R.id.listview_me_myword);
         listView.setOnScrollListener(this);
         layout_release.setOnClickListener(this);
         layout_collect.setOnClickListener(this);

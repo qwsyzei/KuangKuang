@@ -59,13 +59,13 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
          * 应用进入后，默认选择点击Fragment01
          */
 //        if (str.equals("10")){
-            ft.replace(R.id.just_subject_layout, new MCircleFragment());//news_every_content是为fragment留出的空间，用fragment替换
-            rbB= (RadioButton) findViewById(R.id.main_rb2);
-            rbB.setChecked(true);
+//            ft.replace(R.id.just_subject_layout, new MCircleFragment());//news_every_content是为fragment留出的空间，用fragment替换
+//            rbB= (RadioButton) findViewById(R.id.main_rb2);
+//            rbB.setChecked(true);
 //        }else{
-//            ft.replace(R.id.just_subject_layout, new MSubjectFragment());//news_every_content是为fragment留出的空间，用fragment替换
-//            rbA= (RadioButton) findViewById(R.id.main_rb1);
-//            rbA.setChecked(true);
+            ft.replace(R.id.just_subject_layout, new MSubjectFragment());//news_every_content是为fragment留出的空间，用fragment替换
+            rbA= (RadioButton) findViewById(R.id.main_rb1);
+            rbA.setChecked(true);
 //        }
         ft.commit();
         radioGroup = (RadioGroup) findViewById(R.id.main_radiogroup);

@@ -34,10 +34,10 @@
                 android:layout_marginTop="@dimen/login_p_l_r"
                 android:text="马小飞"
                 />
-            <ImageView
+            <klsd.kuangkuang.views.CircleImageView
                 android:id="@+id/item_subject_head_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/subject_author_head_size"
+                android:layout_height="@dimen/subject_author_head_size"
                 android:src="@mipmap/touxiang03"/>
         </LinearLayout>
     </FrameLayout>

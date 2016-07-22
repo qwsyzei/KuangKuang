@@ -16,6 +16,7 @@ import java.util.List;
 
 import klsd.kuangkuang.models.AccountVersion;
 import klsd.kuangkuang.models.AllComment;
+import klsd.kuangkuang.models.Circles;
 import klsd.kuangkuang.models.Deposits;
 import klsd.kuangkuang.models.Documents;
 import klsd.kuangkuang.models.Member;
@@ -204,20 +205,43 @@ public class JSONHandler {
                 ArrayList<Subject> as = new ArrayList<Subject>();
                 for (int i = 0; i < olistArrays.size(); i++) {
                     JSONObject object = olistArrays.get(i);
+                    JSONObject object11=object.getJSONObject("describe");
+                    String nickname=object11.getString("nickname");
+                    String picture_son=object11.getString("picture");
+                    String signature=object11.getString("signature");
+                    String describe_son=object11.getString("describe");
                     Subject sub = new Subject(ctx);
                     sub.getFromJSONObjectItem(object);
+                    sub.getauthorInfo(nickname,picture_son,signature,describe_son);
                     as.add(sub);
                 }
                 bundle.putSerializable("subject_article", as);
-            } else if (jtype2.equals(JTYPE_MYWORD_LIST)) {
+            } else if (jtype2.equals(JTYPE_MYWORD_LIST)) {  //类型特别  [ {"a":"11","b":{ "c":"12345","d":"11"}}  {"a2":"22","b2":{ "c2":"12345","d2":"22"}}]
                 ArrayList<MyWord> as = new ArrayList<MyWord>();
                 for (int i = 0; i < olistArrays.size(); i++) {
                     JSONObject object = olistArrays.get(i);
                     MyWord sub = new MyWord(ctx);
+                    JSONObject object1=object.getJSONObject("content");
+                    String content=object1.getString("mic_content");//content就是上面的12345
                     sub.getFromJSONObjectItem(object);
+                    sub.getcontentfrom(content);
                     as.add(sub);
                 }
                 bundle.putSerializable("myword_list", as);
+            }else if (jtype2.equals(JTYPE_CIRCLE_LIST)) {  //同mywordlist
+                ArrayList<Circles> as = new ArrayList<Circles>();
+                for (int i = 0; i < olistArrays.size(); i++) {
+                    JSONObject object = olistArrays.get(i);
+                    Circles sub = new Circles(ctx);
+                    JSONObject object1=object.getJSONObject("content");
+                    String content=object1.getString("mic_content");
+                    String nickname=object1.getString("nickname");
+                    String picture_son=object1.getString("picture");
+                    sub.getFromJSONObjectItem(object);
+                    sub.getcontentfrom(content,nickname,picture_son);
+                    as.add(sub);
+                }
+                bundle.putSerializable("circle_list", as);
             } else if (jtype2.equals(JTYPE_ARTICLES_ALL_COMMENT)) {
                 ArrayList<AllComment> ac = new ArrayList<AllComment>();
                 for (int i = 0; i < olistArrays.size(); i++) {
@@ -231,8 +255,14 @@ public class JSONHandler {
                 ArrayList<MyCollect> mc = new ArrayList<MyCollect>();
                 for (int i = 0; i < olistArrays.size(); i++) {
                     JSONObject object = olistArrays.get(i);
+                    JSONObject object11=object.getJSONObject("describe");
+                    String nickname=object11.getString("nickname");
+                    String picture_son=object11.getString("picture");
+                    String signature=object11.getString("signature");
+                    String describe_son=object11.getString("describe");
                     MyCollect sub = new MyCollect(ctx);
                     sub.getFromJSONObjectItem(object);
+                    sub.getauthorInfo(nickname, picture_son, signature, describe_son);
                     mc.add(sub);
                 }
                 bundle.putSerializable("collect_show", mc);
@@ -240,8 +270,14 @@ public class JSONHandler {
                 ArrayList<Top> mc = new ArrayList<Top>();
                 for (int i = 0; i < olistArrays.size(); i++) {
                     JSONObject object = olistArrays.get(i);
+                    JSONObject object11=object.getJSONObject("describe");
+                    String nickname=object11.getString("nickname");
+                    String picture_son=object11.getString("picture");
+                    String signature=object11.getString("signature");
+                    String describe_son=object11.getString("describe");
                     Top top = new Top(ctx);
                     top.getFromJSONObjectItem(object);
+                    top.getauthorInfo(nickname, picture_son, signature, describe_son);
                     mc.add(top);
                 }
                 bundle.putSerializable("top", mc);
@@ -317,7 +353,6 @@ public class JSONHandler {
         osStrings.add(JTYPE_PICTURE7);
         osStrings.add(JTYPE_PICTURE8);
         osStrings.add(JTYPE_PICTURE9);
-        osStrings.add(JTYPE_CIRCLE_LIST);
         return osStrings.contains(jtype2);
     }
 
@@ -342,6 +377,7 @@ public class JSONHandler {
         osStrings.add(JTYPE_DEPOSITS);
         osStrings.add(JTYPE_WITHDRAWS);
         osStrings.add(JTYPE_MYWORD_LIST);
+        osStrings.add(JTYPE_CIRCLE_LIST);
         return osStrings.contains(jtype2);
     }
 

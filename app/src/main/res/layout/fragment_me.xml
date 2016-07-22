@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/lightgray"
+    android:orientation="vertical"
     tools:context="klsd.kuangkuang.main.M_MeActivity">
 
     <include layout="@layout/title_me"></include>
-    <include layout="@layout/m_me_top"></include>
-    <include layout="@layout/m_me_collect"></include>
-    <include layout="@layout/m_me_myword"></include>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/m_me_top"></include>
+
+            <include layout="@layout/m_me_collect"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <include layout="@layout/m_me_myword"></include>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

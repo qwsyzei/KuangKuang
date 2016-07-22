@@ -145,14 +145,16 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
         // 高清的压缩图片全部就在  list 路径里面了
 
         // 高清的压缩过的 bmp 对象  都在 Bimp.bmp里面
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
 
         for (int i = 0; i < Bimp.bmp.size(); i++) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();//这句话必须写在循环里面
             Bimp.bmp.get(i).compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 -
             // 100)压缩文件
             byte[] bt = stream.toByteArray();//为了转成16进制
             photostr[i] = byte2hex(bt);//
-            Log.d("这串字符是", "onClick() returned: " + photostr[i]);
+            Log.d("这串字符是", "onClick() returned: " + Bimp.drr.get(i));
+            Log.d("图片的引导是", "onClick() returned: " + Bimp.bmp.get(i));
         }
         release_word();
     }
@@ -538,7 +540,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                         } else {
                             try {
                                 String path = Bimp.drr.get(Bimp.max);
-                                System.out.println(path);
+                                Log.d("它的路径是", "run() returned: " + path);
                                 Bitmap bm = Bimp.revitionImageSize(path);
                                 Bimp.bmp.add(bm);
                                 String newStr = path.substring(

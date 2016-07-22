@@ -69,22 +69,21 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
             viewHolder = new ViewHolder();
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_s_subject, null);
             viewHolder.title = (TextView) convertView.findViewById(R.id.item_subject_title);
-            viewHolder.describe = (TextView) convertView.findViewById(R.id.item_subject_describe);
-//            viewHolder.author = (TextView) convertView.findViewById(R.id.item_subject_author_name);
+            viewHolder.describe_son = (TextView) convertView.findViewById(R.id.item_subject_describe);
+            viewHolder.tv_author_name = (TextView) convertView.findViewById(R.id.item_subject_author_name);
             viewHolder.views = (TextView) convertView.findViewById(R.id.item_subject_views);
             viewHolder.like = (TextView) convertView.findViewById(R.id.item_subject_like);
             viewHolder.comment = (TextView) convertView.findViewById(R.id.item_subject_comment);
             viewHolder.im_picture = (ImageView) convertView.findViewById(R.id.item_subject_picture);
             viewHolder.layout_item = (LinearLayout) convertView.findViewById(R.id.layout_item_subject);
-//            viewHolder.im_head_pic = (ImageView) convertView.findViewById(R.id.item_subject_head_pic);
-
+            viewHolder.im_head_pic = (ImageView) convertView.findViewById(R.id.item_subject_head_pic);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.title.setText(subject.getTitle());
-        viewHolder.describe.setText(subject.getDescribe());
+        viewHolder.describe_son.setText(subject.getDescribe_son());
         if (subject.getViews().toString().equals("null")) {
             viewHolder.views.setText("0");
         } else if (subject.getViews().toString().contains(".0")) {
@@ -106,10 +105,10 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         } else {
             viewHolder.comment.setText(subject.getComment());
         }
-
+        viewHolder.tv_author_name.setText(subject.getNickname());
         BitmapUtils bitmapUtils = new BitmapUtils(ctx);
         bitmapUtils.display(viewHolder.im_picture, subject.getPicture());
-//        viewHolder.im_head_pic.setImageBitmap(subject.getHead_pic());
+        bitmapUtils.display(viewHolder.im_head_pic, Consts.host+"/"+subject.getPicture_son());
 
         viewHolder.layout_item.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +129,10 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
                 intent.putExtra("views", subject.getViews());
                 intent.putExtra("like", subject.getLike());
                 intent.putExtra("comment", subject.getComment());
-                intent.putExtra("created_at",subject.getCreated_at());
+                intent.putExtra("created_at", subject.getCreated_at());
+                intent.putExtra("nickname", subject.getNickname());
+                intent.putExtra("picture_son", subject.getPicture_son());
+                intent.putExtra("signature", subject.getSignature());
                 ctx.startActivity(intent);
             }
         });
@@ -155,9 +157,10 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
     }
 
     public final class ViewHolder {
-        public TextView title, describe, views, like, comment;
+        public TextView title, describe_son, views, like, comment;
         public ImageView im_picture;
         LinearLayout layout_item;
-//        ImageView im_head_pic;
+        ImageView im_head_pic;
+        TextView tv_author_name;
     }
 }

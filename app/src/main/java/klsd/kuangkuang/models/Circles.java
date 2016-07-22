@@ -14,17 +14,87 @@ import java.io.Serializable;
  * Created by qiwei on 2016/7/8.
  */
 public class Circles implements Serializable {
-    private String id,content,title, describe, member_id, created_at, updated_at, tag, display;//标题，内容描述
-    private String head_pic_url;//头像
-
-    private String views, like, comment;//观看，点赞和评论    数量           暂时不用
-    private String author;//作者名字                                                              暂时不用
+    private String id, member_id, created_at, updated_at;//标题，内容描述
+    private String content_son, nickname, picture_son;//内容，作者名字，作者头像
+    private String  like, comment;
 private Bitmap head;//这个是假的，回头删了
-
+    private String url1, url2, url3, url4, url5, url6, url7, url8, url9;
     private Context context;
 
     public Circles(Context context) {
         this.context = context;
+    }
+
+    public String getUrl1() {
+        return url1;
+    }
+
+    public void setUrl1(String url1) {
+        this.url1 = url1;
+    }
+
+    public String getUrl2() {
+        return url2;
+    }
+
+    public void setUrl2(String url2) {
+        this.url2 = url2;
+    }
+
+    public String getUrl3() {
+        return url3;
+    }
+
+    public void setUrl3(String url3) {
+        this.url3 = url3;
+    }
+
+    public String getUrl4() {
+        return url4;
+    }
+
+    public void setUrl4(String url4) {
+        this.url4 = url4;
+    }
+
+    public String getUrl5() {
+        return url5;
+    }
+
+    public void setUrl5(String url5) {
+        this.url5 = url5;
+    }
+
+    public String getUrl6() {
+        return url6;
+    }
+
+    public void setUrl6(String url6) {
+        this.url6 = url6;
+    }
+
+    public String getUrl7() {
+        return url7;
+    }
+
+    public void setUrl7(String url7) {
+        this.url7 = url7;
+    }
+
+    public String getUrl8() {
+        return url8;
+    }
+
+    public void setUrl8(String url8) {
+        this.url8 = url8;
+    }
+
+    public String getUrl9() {
+        return url9;
+    }
+
+    public void setUrl9(String url9) {
+        this.url9 = url9;
     }
 
     public Bitmap getHead() {
@@ -43,29 +113,6 @@ private Bitmap head;//这个是假的，回头删了
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescribe() {
-        return describe;
-    }
-
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
 
     public String getMember_id() {
         return member_id;
@@ -91,44 +138,28 @@ private Bitmap head;//这个是假的，回头删了
         this.updated_at = updated_at;
     }
 
-    public String getTag() {
-        return tag;
+    public String getContent_son() {
+        return content_son;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setContent_son(String content_son) {
+        this.content_son = content_son;
     }
 
-    public String getHead_pic_url() {
-        return head_pic_url;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setHead_pic_url(String head_pic_url) {
-        this.head_pic_url = head_pic_url;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public String getDisplay() {
-        return display;
+    public String getPicture_son() {
+        return picture_son;
     }
 
-    public void setDisplay(String display) {
-        this.display = display;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getViews() {
-        return views;
-    }
-
-    public void setViews(String views) {
-        this.views = views;
+    public void setPicture_son(String picture_son) {
+        this.picture_son = picture_son;
     }
 
     public String getLike() {
@@ -148,23 +179,33 @@ private Bitmap head;//这个是假的，回头删了
     }
 
 
-
     public Circles getFromJSONObjectItem(JSONObject object) {
         try {
             setId(object.getString("id"));
-            setContent(object.getString("content"));
-            setTitle(object.getString("title"));
             setMember_id(object.getString("member_id"));
             setCreated_at(object.getString("created_at"));
             setUpdated_at(object.getString("updated_at"));
-            setHead_pic_url(object.getString("picture"));
-            setTag(object.getString("tag"));
-            setDescribe(object.getString("describe"));
-            setDisplay(object.getString("display"));
-            setLike(object.getString("like"));
-            setViews(object.getString("views"));
-            setComment(object.getString("comment_number"));
-
+//            setLike(object.getString("like"));
+//            setComment(object.getString("comment_number"));
+            setUrl1(object.getString("url1"));
+            setUrl2(object.getString("url2"));
+            setUrl3(object.getString("url3"));
+            setUrl4(object.getString("url4"));
+            setUrl5(object.getString("url5"));
+            setUrl6(object.getString("url6"));
+            setUrl7(object.getString("url7"));
+            setUrl8(object.getString("url8"));
+            setUrl9(object.getString("url9"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+    public Circles getcontentfrom(String content,String nickname,String picture_son) {
+        try {
+            setContent_son(content);
+            setNickname(nickname);
+            setPicture_son(picture_son);
         } catch (Exception e) {
             e.printStackTrace();
         }

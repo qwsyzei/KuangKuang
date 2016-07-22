@@ -15,6 +15,7 @@ import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.models.MyWord;
+import klsd.kuangkuang.utils.Consts;
 
 /**
  * 我的说说adapter
@@ -36,19 +37,21 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_myword, null);
-            viewHolder.content = (TextView) convertView.findViewById(R.id.item_myword_content);
+            viewHolder.content_son = (TextView) convertView.findViewById(R.id.item_myword_content);
             viewHolder.day = (TextView) convertView.findViewById(R.id.item_myword_day);
             viewHolder.month = (TextView) convertView.findViewById(R.id.item_myword_month);
-            viewHolder.head_pic = (ImageView) convertView.findViewById(R.id.item_myword_pic);
+            viewHolder.pic_url1 = (ImageView) convertView.findViewById(R.id.item_myword_pic);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.content.setText(ac.getContent());
-//        BitmapUtils bitmapUtils = new BitmapUtils(ctx);
-//        bitmapUtils.display(viewHolder.head_pic, ac.getPicture_url());
-        viewHolder.head_pic.setImageBitmap(ac.getBitmip());
+        viewHolder.content_son.setText(ac.getContent_son());
+
+                    BitmapUtils bitmapUtils = new BitmapUtils(ctx);
+        bitmapUtils.display(viewHolder.pic_url1, Consts.host + "/" +ac.getUrl1());
+
+//        viewHolder.pic_url1.setImageBitmap(ac.getUrl1());
         viewHolder.day.setText(ac.getDay());
         viewHolder.month.setText(ac.getMonth());
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +67,8 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
     }
 
     public final class ViewHolder {
-        TextView content, day, month;
-        ImageView head_pic;
+        TextView content_son, day, month;
+        ImageView pic_url1;
 
     }
 }

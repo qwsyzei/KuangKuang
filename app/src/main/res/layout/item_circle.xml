@@ -13,10 +13,10 @@
         android:layout_marginLeft="@dimen/login_p_l_r"
         android:layout_marginRight="@dimen/base_margin">
 
-        <ImageView
+        <klsd.kuangkuang.views.CircleImageView
             android:id="@+id/item_circle_head_pic"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/article_author_head_size"
+            android:layout_height="@dimen/article_author_head_size"
             android:src="@mipmap/head_pic" />
 
         <TextView
@@ -48,9 +48,9 @@
     <TextView
         android:id="@+id/item_circle_describe"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/circle_text_height"
         android:layout_margin="@dimen/login_p_l_r"
-        android:text=""
+        android:text="123"
         android:textSize="@dimen/middle_text_size" />
 
     <View
@@ -68,20 +68,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@mipmap/small_views" />
-
-        <TextView
-            android:id="@+id/item_circle_views"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/login_p_l_r"
-            android:layout_gravity="center"
-            android:text="78" />
 
         <ImageView
             android:layout_width="wrap_content"

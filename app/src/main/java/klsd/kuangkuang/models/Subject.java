@@ -14,11 +14,11 @@ import java.net.URL;
  * Created by qiwei on 2016/7/6.
  */
 public class Subject implements Serializable {
-    private String id,content,title, describe, member_id, created_at, updated_at, tag, display;//标题，内容描述
+    private String id,content,title, describe_son, member_id, created_at, updated_at, tag, display;//标题，内容描述
     private String picture;//背景图
 
-    private String views, like, comment;//观看，点赞和评论    数量           暂时不用
-    private String author;//作者名字                                                              暂时不用
+    private String views, like, comment;
+    private String nickname,signature,picture_son;//作者名字  作者描述   作者头像 url
     private Bitmap head_pic;          //头像                                                     暂时不用
 
     private Context context;
@@ -51,12 +51,36 @@ public class Subject implements Serializable {
         this.title = title;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDescribe_son() {
+        return describe_son;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDescribe_son(String describe_son) {
+        this.describe_son = describe_son;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getPicture_son() {
+        return picture_son;
+    }
+
+    public void setPicture_son(String picture_son) {
+        this.picture_son = picture_son;
     }
 
     public String getMember_id() {
@@ -107,13 +131,6 @@ public class Subject implements Serializable {
         this.picture = picture;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
 
     public String getViews() {
         return views;
@@ -157,11 +174,22 @@ public class Subject implements Serializable {
             setUpdated_at(object.getString("updated_at"));
            setPicture(object.getString("picture"));
             setTag(object.getString("tag"));
-            setDescribe(object.getString("describe"));
             setDisplay(object.getString("display"));
             setLike(object.getString("like"));
             setViews(object.getString("views"));
             setComment(object.getString("comment_number"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+    public Subject getauthorInfo(String nickname,String picture_son,String signature,String describe_son) {
+        try {
+            setNickname(nickname);
+            setPicture_son(picture_son);
+            setSignature(signature);
+            setDescribe_son(describe_son);
 
         } catch (Exception e) {
             e.printStackTrace();

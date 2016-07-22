@@ -21,8 +21,8 @@
         android:text="7月"/>
     <ImageView
         android:id="@+id/item_myword_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/myword_pic_size"
+        android:layout_height="@dimen/myword_pic_size"
         android:layout_marginLeft="@dimen/login_p_l_r"
         android:src="@mipmap/touxiang03"/>
     <TextView

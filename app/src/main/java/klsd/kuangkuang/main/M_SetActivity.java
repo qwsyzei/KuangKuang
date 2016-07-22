@@ -13,6 +13,7 @@ import klsd.kuangkuang.R;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.views.CleanCacheDialog;
 import klsd.kuangkuang.views.ExitDialog;
+import klsd.kuangkuang.views.ToggleButton;
 
 /**
  * 设置界面
@@ -23,6 +24,7 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
     private ExitDialog exitDialog;
     private Button btn;
     private TextView tv_clean_yes,tv_clean_no;
+    private ToggleButton toggleButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
     }
 
     private void initView() {
+        toggleButton= (ToggleButton) findViewById(R.id.set_toggle);
         layout_personal= (RelativeLayout) findViewById(R.id.set_personal_data);
         layout_admin= (RelativeLayout) findViewById(R.id.set_admin_manager);
         layout_about_us= (RelativeLayout) findViewById(R.id.set_about_us);

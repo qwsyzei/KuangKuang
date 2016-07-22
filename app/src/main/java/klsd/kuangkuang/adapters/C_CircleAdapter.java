@@ -1,8 +1,7 @@
 package klsd.kuangkuang.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,9 @@ import java.util.List;
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.models.Circles;
 import klsd.kuangkuang.models.CircleGridViewEntity;
+import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.MyDate;
+import klsd.kuangkuang.views.CircleImageView;
 import klsd.kuangkuang.views.SelfGridView;
 
 /**
@@ -28,9 +30,8 @@ import klsd.kuangkuang.views.SelfGridView;
 public class C_CircleAdapter extends ArrayAdapter<Circles> {
 
     private Context ctx;
-    private ArrayList<String> list, list2, list3, list4, list5;//9宫格图片url
-    private List<CircleGridViewEntity> headerEntitiesList, headerEntitiesList2, headerEntitiesList3, headerEntitiesList4, headerEntitiesList5;
-    private ArrayList<CircleGridViewEntity> myList;
+    private int number;//9宫格图片的个数
+    private List<CircleGridViewEntity> headerEntitiesList;
     private C_CircleGridAdapter cGridAdapter;
 
     public C_CircleAdapter(Context context, List<Circles> objects) {
@@ -47,108 +48,68 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_circle, null);
             viewHolder.describe = (TextView) convertView.findViewById(R.id.item_circle_describe);
             viewHolder.author = (TextView) convertView.findViewById(R.id.item_circle_author_name);
-            viewHolder.views = (TextView) convertView.findViewById(R.id.item_circle_views);
             viewHolder.like = (TextView) convertView.findViewById(R.id.item_circle_like);
             viewHolder.comment = (TextView) convertView.findViewById(R.id.item_circle_comment);
-            viewHolder.im_head_pic = (ImageView) convertView.findViewById(R.id.item_circle_head_pic);
+            viewHolder.im_head_pic = (CircleImageView) convertView.findViewById(R.id.item_circle_head_pic);
             viewHolder.selfGridView = (SelfGridView) convertView.findViewById(R.id.gridview_circle);
             viewHolder.time = (TextView) convertView.findViewById(R.id.item_circle_time);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-//        myList = new ArrayList<>();
-        list = new ArrayList<>();
+
+        if (circles.getUrl1().equals("null")){
+            number=0;
+        }else if (circles.getUrl2().equals("null")){
+            number=1;
+        }else if (circles.getUrl3().equals("null")){
+            number=2;
+        }else if (circles.getUrl4().equals("null")){
+            number=3;
+        }else if (circles.getUrl5().equals("null")){
+            number=4;
+        }else if (circles.getUrl6().equals("null")){
+            number=5;
+        }else if (circles.getUrl7().equals("null")){
+            number=6;
+        }else if (circles.getUrl8().equals("null")){
+            number=7;
+        }else if (circles.getUrl9().equals("null")){
+            number=8;
+        }else {
+            number=9;
+        }
         headerEntitiesList = new ArrayList<>();
-        list.add(0,"http://img16.huitu.com/res/20150122/668569_20150122193914528200_2.jpg");
-        list.add(1,"http://img16.huitu.com/res/20150122/668569_20150122193920998200_2.jpg");
-        list.add(2,"http://file.youboy.com/d/153/4/52/7/967307s.jpg");
-        list.add(3,"http://a0.att.hudong.com/28/70/01300534726964138511708002961_140.jpg");
-        list.add(4,"http://img18.huitu.com/res/20150430/668569_20150430171713868200_2.jpg");
-        list.add(5,"http://img17.huitu.com/res/20150206/668569_20150206131213140200_2.jpg");
-        //TODO 进行网络数据的加载
-        for (int i = 0; i < list.size(); i++) {
-            CircleGridViewEntity cirEntity = new CircleGridViewEntity(ctx, list.get(i));
+
+        String[] url = new String[]{circles.getUrl1(), circles.getUrl2(), circles.getUrl3(), circles.getUrl4(), circles.getUrl5(), circles.getUrl6(), circles.getUrl7(), circles.getUrl8(), circles.getUrl9()};
+        for (int i = 0; i < number; i++) {
+            CircleGridViewEntity cirEntity = new CircleGridViewEntity(ctx, Consts.host + "/" + url[i]);
             headerEntitiesList.add(cirEntity);
         }
+        Log.d("地址是", "getView() returned: " + circles.getUrl1());
+        viewHolder.author.setText(circles.getNickname());
+        viewHolder.describe.setText(circles.getContent_son());
+//       if (circles.getLike().equals("null")){
+//           viewHolder.like.setText("0");
+//       }else if (circles.getLike().contains("0")){
+//           viewHolder.like.setText(circles.getLike().replace(".0", ""));
+//       }else{
+//           viewHolder.like.setText(circles.getLike());
+//       }
+//       if (circles.getComment().equals("null")){
+//           viewHolder.comment.setText("0");
+//       }else if (circles.getComment().contains("0")){
+//           viewHolder.comment.setText(circles.getComment().replace(".0", ""));
+//       }else{
+//           viewHolder.comment.setText(circles.getComment());
+//       }
 
-//
-//        headerEntitiesList2 = new ArrayList<>();
-//        list2 = new ArrayList<>();
-//        list2.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/06/02/a194/920/43920194/logo140x1403212568469_src.jpg");
-//        list2.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/07/20/a149/705/44705149/logo140x1407356792827_src.jpg");
-//        list2.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/04/23/a848/115/43115848/logo140x1409774213542_src.jpg");
-//        list2.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/04/25/a403/163/43163403/logo140x1409940428280_src.jpg");
-//
-//        //TODO 进行网络数据的加载
-//        for (int i = 0; i < list2.size(); i++) {
-//            CircleGridViewEntity cirEntity = new CircleGridViewEntity(ctx, list2.get(i));
-//            headerEntitiesList2.add(cirEntity);
-//        }
-//
-//
-//        list3 = new ArrayList<>();
-//        headerEntitiesList3 = new ArrayList<>();
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/06/02/a194/920/43920194/logo140x1403212568469_src.jpg");
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/07/20/a149/705/44705149/logo140x1407356792827_src.jpg");
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/04/23/a848/115/43115848/logo140x1409774213542_src.jpg");
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/04/25/a403/163/43163403/logo140x1409940428280_src.jpg");
-//
-//        //TODO 进行网络数据的加载
-//        for (int i = 0; i < list3.size(); i++) {
-//            CircleGridViewEntity cirEntity = new CircleGridViewEntity(ctx, list3.get(i));
-//            headerEntitiesList3.add(cirEntity);
-//        }
-//
-//
-//        list3 = new ArrayList<>();
-//        headerEntitiesList4 = new ArrayList<>();
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/06/02/a194/920/43920194/logo140x1403212568469_src.jpg");
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/07/20/a149/705/44705149/logo140x1407356792827_src.jpg");
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/04/23/a848/115/43115848/logo140x1409774213542_src.jpg");
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/04/25/a403/163/43163403/logo140x1409940428280_src.jpg");
-//
-//        //TODO 进行网络数据的加载
-//        for (int i = 0; i < list3.size(); i++) {
-//            CircleGridViewEntity cirEntity = new CircleGridViewEntity(ctx, list3.get(i));
-//            headerEntitiesList4.add(cirEntity);
-//        }
-//
-//
-//        list3 = new ArrayList<>();
-//        headerEntitiesList5 = new ArrayList<>();
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/06/02/a194/920/43920194/logo140x1403212568469_src.jpg");
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/07/20/a149/705/44705149/logo140x1407356792827_src.jpg");
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/04/23/a848/115/43115848/logo140x1409774213542_src.jpg");
-//        list3.add("http://u5.mm-img.mmarket.com/rs/res2/21/2015/04/25/a403/163/43163403/logo140x1409940428280_src.jpg");
-//
-//        //TODO 进行网络数据的加载
-//        for (int i = 0; i < list3.size(); i++) {
-//            CircleGridViewEntity cirEntity = new CircleGridViewEntity(ctx, list3.get(i));
-//            headerEntitiesList5.add(cirEntity);
-//        }
-//        myList=new ArrayList<>();
-//        myList.add(headerEntitiesList);
-//        for (int i=0;i<list.size();i++){
-//
-//            CircleGridViewEntity cirEntity=new CircleGridViewEntity(ctx);
-//            headerEntitiesList.add(cirEntity);
-//        }
-        viewHolder.describe.setText(circles.getDescribe());
-        viewHolder.author.setText(circles.getAuthor());
-//        viewHolder.views.setText(circles.getViews().replace(".0", ""));
-//        viewHolder.like.setText(circles.getLike().replace(".0", ""));
-//        viewHolder.comment.setText(circles.getComment().replace(".0", ""));
-        viewHolder.views.setText(circles.getViews().replace(".0", ""));
-        viewHolder.like.setText(circles.getLike().replace(".0", ""));
-        viewHolder.comment.setText(circles.getComment().replace(".0", ""));
-//        BitmapUtils bitmapUtils=new BitmapUtils(getContext());
-//        bitmapUtils.display(viewHolder.im_head_pic, circles.getHead_pic_url());
-        viewHolder.im_head_pic.setImageBitmap(circles.getHead());//这个是假的，回头删了
-        viewHolder.time.setText(circles.getCreated_at());
+        BitmapUtils bitmapUtils = new BitmapUtils(getContext());
+        bitmapUtils.display(viewHolder.im_head_pic, Consts.host + "/" + circles.getPicture_son());
+       String common_time = MyDate.timeLogic(circles.getCreated_at().substring(0, 19).replace("T", " "));
+        viewHolder.time.setText(common_time);
         cGridAdapter = new C_CircleGridAdapter(ctx, headerEntitiesList);
         viewHolder.selfGridView.setAdapter(cGridAdapter);
-
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,8 +124,8 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
     }
 
     public final class ViewHolder {
-        public TextView describe, views, like, comment;
-        public ImageView im_head_pic;
+        public TextView describe, like, comment;
+        public CircleImageView im_head_pic;
         public SelfGridView selfGridView;
         TextView author, time;
     }

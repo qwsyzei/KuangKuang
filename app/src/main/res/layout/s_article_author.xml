@@ -17,10 +17,10 @@
             android:layout_marginTop="@dimen/article_layout_m_t"
             android:orientation="vertical">
 
-            <ImageView
+            <klsd.kuangkuang.views.CircleImageView
                 android:id="@+id/article_author_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/article_author_head_size"
+                android:layout_height="@dimen/article_author_head_size"
                 android:layout_gravity="center_horizontal"
                 android:src="@mipmap/touxiang01" />
 

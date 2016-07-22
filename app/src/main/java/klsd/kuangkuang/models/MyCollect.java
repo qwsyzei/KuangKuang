@@ -19,9 +19,34 @@ public class MyCollect implements Serializable {
     }
 
     private String title, content, picture_url;
-    private String describe,id;
+    private String describe_son,id;
     private String member_id, created_at, updated_at, tag, display;//暂时不用
-    private String views, like, comment;//观看，点赞和评论    数量           暂时不用
+    private String views, like, comment;
+    private String nickname,signature,picture_son;//作者名字  作者描述   作者头像 url
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getPicture_son() {
+        return picture_son;
+    }
+
+    public void setPicture_son(String picture_son) {
+        this.picture_son = picture_son;
+    }
 
     public String getId() {
         return id;
@@ -47,12 +72,12 @@ public class MyCollect implements Serializable {
         this.content = content;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDescribe_son() {
+        return describe_son;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDescribe_son(String describe_son) {
+        this.describe_son = describe_son;
     }
 
     public String getMember_id() {
@@ -133,12 +158,22 @@ public class MyCollect implements Serializable {
             setContent(object.getString("content"));
             setTitle(object.getString("title"));
             setPicture_url(object.getString("picture"));
-            setDescribe(object.getString("describe"));
             setComment(object.getString("comment_number"));
             setCreated_at(object.getString("created_at"));
             setViews(object.getString("views"));
             setLike(object.getString("like"));
             setComment(object.getString("comment"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+    public MyCollect getauthorInfo(String nickname,String picture_son,String signature,String describe_son) {
+        try {
+            setNickname(nickname);
+            setPicture_son(picture_son);
+            setSignature(signature);
+            setDescribe_son(describe_son);
         } catch (Exception e) {
             e.printStackTrace();
         }

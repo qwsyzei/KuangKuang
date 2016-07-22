@@ -36,7 +36,6 @@ public final static String host123="http://192.168.31.167:3000";
     public final static String picture8Api = baseApiPath + "/microposts/picture8";//发图片8
     public final static String picture9Api = baseApiPath + "/microposts/picture9";//发图片9
 
-
     // phone_number common
     public final static String getAuthCodeApi = baseApiPath + "/registers/code";
     //send a verify code for a logined member .
@@ -70,7 +69,8 @@ public final static String host123="http://192.168.31.167:3000";
             articlesListApi,
             articlesCommentaryApi,
             articlesTopApi,
-            articlesLikeApi
+            articlesLikeApi,
+            micropostsListApi
     };
 
     public final static String MONIT_PUBLIC_TRADES_PUSHER = "monit_public_trades_pusher";

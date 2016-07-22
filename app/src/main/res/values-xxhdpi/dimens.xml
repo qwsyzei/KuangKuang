@@ -105,7 +105,7 @@
     <dimen name="article_author_m_t">35dp</dimen>
     <dimen name="article_author_m_b">30dp</dimen>
     <dimen name="article_author_layout_height">245dp</dimen>
-    <dimen name="article_author_name_m_t">35dp</dimen>
+    <dimen name="article_author_name_m_t">20dp</dimen>
     <dimen name="article_author_title_m_t">26dp</dimen>
     <dimen name="article_layout_m_t">25dp</dimen>
 
@@ -113,4 +113,10 @@
     <dimen name="release_word_edit_height">140dp</dimen>
 
     <dimen name="head_pic_size">60dp</dimen>
+    <dimen name="togglebutton_width">52dp</dimen>
+    <dimen name="togglebutton_height">27dp</dimen>
+    <dimen name="article_author_head_size">48dp</dimen>
+    <dimen name="subject_author_head_size">38dp</dimen>
+    <dimen name="myword_pic_size">70dp</dimen>
+    <dimen name="circle_text_height">50dp</dimen>
 </resources>
