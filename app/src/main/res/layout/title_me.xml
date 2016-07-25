@@ -24,7 +24,8 @@
             android:layout_height="fill_parent"
             android:id="@+id/im_title_set"
             android:src="@mipmap/setup"
-            android:layout_marginRight="@dimen/base_margin"
+            android:padding="@dimen/base_margin"
+            android:layout_marginRight="@dimen/login_p_l_r"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />

@@ -13,6 +13,7 @@ public class ErrorCodes {
     static {
         CODES.put("2017", R.string.e2017);
         CODES.put("2038", R.string.e2038);
+        CODES.put("2041", R.string.e2041);
 
 
     }

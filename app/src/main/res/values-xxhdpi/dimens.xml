@@ -119,4 +119,13 @@
     <dimen name="subject_author_head_size">38dp</dimen>
     <dimen name="myword_pic_size">70dp</dimen>
     <dimen name="circle_text_height">50dp</dimen>
+
+    <dimen name="me_head_small_size">100dp</dimen>
+    <dimen name="me_head_big_height">190dp</dimen>
+
+    <dimen name="item_gridview_size">70dp</dimen>
+    <dimen name="layout_menu_m_t">50dp</dimen>
+    <dimen name="layout_menu_m_b">24dp</dimen>
+
+    <dimen name="login_layout_p">13dp</dimen>
 </resources>

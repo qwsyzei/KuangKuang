@@ -104,7 +104,6 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             bitmapUtils.display(im_author_head,Consts.host+"/"+picture_head);
         }
 
-
         listView = (ListView) findViewById(R.id.listview_article_comment3);
         listView.setFocusable(false);//因为还有个scrollview，会影响显示位置
         layout_like = (LinearLayout) findViewById(R.id.layout_s_artile_like);
@@ -203,11 +202,11 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
 
     private void gotoLike() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("article_id", article_id);
-        params.addQueryStringParameter("side", "like");
-        params = KelaParams.generateSignParam("GET", Consts.articlesLikeApi, params);
+        params.addQueryStringParameter("object_id", article_id);
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
+        params.addQueryStringParameter("species", "article");
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
-        http.baseRequest(Consts.articlesLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
+        http.baseRequest(Consts.addLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
                 params, getHandler());
 
     }

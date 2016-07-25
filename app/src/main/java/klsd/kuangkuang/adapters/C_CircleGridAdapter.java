@@ -54,7 +54,7 @@ public class C_CircleGridAdapter extends ArrayAdapter<CircleGridViewEntity> {
             ret.setTag(holder);
         }
         ViewHolder holder = (ViewHolder) ret.getTag();
-
+//
         BitmapUtils bitmapUtils=new BitmapUtils(context);
         bitmapUtils.display(holder.bgIcon,list.get(position).getPicture_url());
 

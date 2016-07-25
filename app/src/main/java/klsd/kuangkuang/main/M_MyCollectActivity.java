@@ -101,10 +101,7 @@ M_MyCollectAdapter myCollectAdapter;
             }
             page += 1;
             UIutils.cancelLoading();
-        }else if (jtype.equals(JSONHandler.JTYPE_COLLECT_DESTROY)) {
-             exitDialog.dismiss();
-             ToastUtil.show(M_MyCollectActivity.this, "已取消收藏");
-         }
+        }
     }
     public void addTrades(String from, List<MyCollect> ess) {
         List<String> ids = new ArrayList<String>();

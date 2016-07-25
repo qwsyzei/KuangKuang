@@ -5,11 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.lidroid.xutils.BitmapUtils;
+
 import java.util.List;
+
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.models.AllComment;
+import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.MyDate;
+import klsd.kuangkuang.views.CircleImageView;
 
 
 /**
@@ -34,28 +42,26 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_s_allcomment, null);
             viewHolder.body = (TextView) convertView.findViewById(R.id.item_allcomment_body);
             viewHolder.created_at = (TextView) convertView.findViewById(R.id.item_allcomment_time);
+            viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.item_allcomment_nickname);
+            viewHolder.im_head = (CircleImageView) convertView.findViewById(R.id.item_allcomment_head_pic);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         viewHolder.body.setText(ac.getBody());
-        viewHolder.created_at.setText(ac.getCreated_at());
-
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//        Intent intent=new Intent(ctx, S_ArticleActivity.class);
-//        intent.putExtra("content_html",circle.getContent());
-//        ctx.startActivity(intent);
-            }
-        });
+        String time = MyDate.timeLogic(ac.getCreated_at().substring(0, 19).replace("T", " "));
+        viewHolder.created_at.setText(time);
+        viewHolder.tv_nickname.setText(ac.getNickname());
+        BitmapUtils bitmapUtils = new BitmapUtils(ctx);
+        bitmapUtils.display(viewHolder.im_head, Consts.host+"/"+ac.getPicture_son());
 
         return convertView;
     }
 
     public final class ViewHolder {
         public TextView body, created_at;
-
+        TextView tv_nickname;
+        CircleImageView im_head;
     }
 }

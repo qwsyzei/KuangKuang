@@ -23,7 +23,6 @@
         android:id="@+id/listview_msubject"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-
         android:layout_weight="1"
         android:divider="@color/lightgray"
         android:dividerHeight="@dimen/login_p_l_r"></ListView>

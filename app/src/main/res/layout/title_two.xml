@@ -12,8 +12,9 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:clickable="true"
+            android:padding="@dimen/base_margin"
             android:onClick="back"
-            android:layout_marginLeft="@dimen/base_margin"
+            android:layout_marginLeft="@dimen/login_p_l_r"
             android:src="@mipmap/im_back" />
 
         <TextView

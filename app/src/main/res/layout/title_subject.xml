@@ -9,7 +9,8 @@
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="@dimen/base_margin"
+        android:padding="@dimen/base_margin"
+        android:layout_marginLeft="@dimen/login_p_l_r"
         android:src="@mipmap/heng3" />
 
     <TextView
@@ -29,7 +30,8 @@
         android:layout_height="fill_parent"
         android:id="@+id/tv_title_right"
         android:text="Top10"
-        android:layout_marginRight="@dimen/base_margin"
+        android:padding="@dimen/base_margin"
+        android:layout_marginRight="@dimen/login_p_l_r"
         android:textSize="@dimen/middle_text_size"
         android:gravity="center"
         android:textColor="@color/kuangkuang_yellow"

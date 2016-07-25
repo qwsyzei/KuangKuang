@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:text="@string/release_word"
-        android:layout_marginRight="@dimen/base_margin"
+        android:layout_marginRight="@dimen/login_p_l_r"
         android:textSize="@dimen/middle_text_size"
         android:textColor="@color/kuangkuang_yellow"
         android:gravity="center"

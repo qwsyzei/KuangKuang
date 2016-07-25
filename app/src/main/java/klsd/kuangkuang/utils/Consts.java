@@ -14,7 +14,7 @@ public final static String host123="http://192.168.31.167:3000";
     // HTML
     public final static String articlesListApi = baseApiPath + "/articles/articles_list";
     public final static String articlesTopApi = baseApiPath + "/articles/Top10";
-    public final static String articlesLikeApi = baseApiPath + "/articles/numbers";//点赞
+    public final static String articlesViewApi = baseApiPath + "/articles/numbers";//观看
     public final static String articlesCommentApi = baseApiPath + "/articles/comment";//评论
     public final static String articlesCommentaryApi = baseApiPath + "/articles/commentary";//文章所有评论
     public final static String articlesCollectArticleApi = baseApiPath + "/collect/collect_article";//收藏
@@ -24,6 +24,7 @@ public final static String host123="http://192.168.31.167:3000";
     public final static String memberUpdateDocumentsApi = baseApiPath + "/update/member_documents";//更新个人资料
     public final static String memberUpdateHeadApi = baseApiPath + "/update/member_head_portrait";//上传头像
     public final static String micropostsMemberListApi = baseApiPath + "/microposts/microposts_member_list";//我的说说
+    public final static String deleteMywordApi = baseApiPath + "/microposts/destroy_microposts";//删除我的说说
     public final static String createMicropostsApi = baseApiPath + "/microposts/create_microposts";//发表说说
     public final static String micropostsListApi = baseApiPath + "/microposts/microposts_list";//朋友圈列表
     public final static String picture1Api = baseApiPath + "/microposts/picture1";//发图片1
@@ -35,6 +36,9 @@ public final static String host123="http://192.168.31.167:3000";
     public final static String picture7Api = baseApiPath + "/microposts/picture7";//发图片7
     public final static String picture8Api = baseApiPath + "/microposts/picture8";//发图片8
     public final static String picture9Api = baseApiPath + "/microposts/picture9";//发图片9
+    public final static String addLikeApi = baseApiPath + "/like/add_like";//点赞
+    public final static String cancelLikeApi = baseApiPath + "/like/destroy_like";//取消赞
+    public final static String commenCircleApi = baseApiPath + "/microposts/comment_list";//给圈子评论
 
     // phone_number common
     public final static String getAuthCodeApi = baseApiPath + "/registers/code";
@@ -69,7 +73,7 @@ public final static String host123="http://192.168.31.167:3000";
             articlesListApi,
             articlesCommentaryApi,
             articlesTopApi,
-            articlesLikeApi,
+            articlesViewApi,
             micropostsListApi
     };
 

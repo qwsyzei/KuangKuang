@@ -1,5 +1,6 @@
 package klsd.kuangkuang.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.w3c.dom.Text;
 
@@ -38,6 +40,8 @@ import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.SelectPicDialog;
 
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
+
 /**
  * 大头像
  */
@@ -55,38 +59,32 @@ public class M_BigHeadActivity extends BaseActivity implements View.OnClickListe
     public static final int PHOTORESULT = 3;// 结果
 
     public static final String IMAGE_UNSPECIFIED = "image/*";
-    TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.m__big_head);
         setTitle(getString(R.string.head_pic));
-
+        Context context = getApplicationContext();
+        initImageLoader(context);
         initView();
     }
 
     private void initView() {
-        tv = (TextView) findViewById(R.id.tv);
-        tv.setOnClickListener(this);
         Intent intent = getIntent();
         pic_url = intent.getStringExtra("pic");
         im_bighead = (ImageView) findViewById(R.id.im_bighead);
         tv_right = (TextView) findViewById(R.id.tv_title_right);
         tv_right.setText(getString(R.string.change_head_pic));
         tv_right.setOnClickListener(this);
-        BitmapUtils bitmapUtils = new BitmapUtils(M_BigHeadActivity.this);
-        bitmapUtils.display(im_bighead, pic_url);
+        ImageLoader.getInstance().displayImage(pic_url, im_bighead);
         PhotoViewAttacher mAttacher = new PhotoViewAttacher(im_bighead);
-        mAttacher.setScaleType(ImageView.ScaleType.CENTER);
+//        mAttacher.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv:
-                updateHead();
-                break;
             case R.id.tv_title_right:
                 initDialog();
                 break;
@@ -190,6 +188,7 @@ public class M_BigHeadActivity extends BaseActivity implements View.OnClickListe
                 byte[] bt = stream.toByteArray();//为了转成16进制
                 photoStr = byte2hex(bt);//
                 im_bighead.setImageBitmap(photo);
+                updateHead();
             }
 //            String dir = Environment.getExternalStorageDirectory()
 //                    .getAbsolutePath() + "/MedicalApplication/Camera/userImage/";

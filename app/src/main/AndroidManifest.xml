@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -22,10 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".main.EnterActivity" >
-
         </activity>
         <activity android:name=".main.LoginActivity" >
-
         </activity>
         <activity android:name=".main.SignupActivity" >
         </activity>
@@ -58,7 +56,6 @@
         <activity android:name=".main.LogoActivity" >
         </activity>
         <activity android:name=".main.M_BigHeadActivity" >
-
         </activity>
         <activity android:name=".main.S_AllCommentActivity" >
         </activity>
@@ -66,16 +63,17 @@
         </activity>
         <activity android:name=".main.S_TopTenActivity" >
         </activity>
-        <activity android:name=".main.C_ReleaseWordActivity"
-            android:launchMode="singleTask">
-
+        <activity
+            android:name=".main.C_ReleaseWordActivity"
+            android:launchMode="singleTask" >
         </activity>
-        <activity android:name=".testpic.TestPicActivity">
-
+        <activity android:name=".testpic.TestPicActivity" >
         </activity>
-        <activity android:name=".testpic.ImageGridActivity"></activity>
-
-        <activity android:name=".testpic.PhotoActivity"></activity>
+        <activity android:name=".testpic.ImageGridActivity" />
+        <activity android:name=".testpic.PhotoActivity" />
+        <activity android:name=".main.ImagePagerActivity" />
+        <activity android:name=".main.C_CircleDetailActivity" >
+        </activity>
     </application>
 
 </manifest>

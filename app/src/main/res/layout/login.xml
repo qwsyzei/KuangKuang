@@ -33,9 +33,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/base_margin"
+                android:paddingBottom="@dimen/login_layout_p"
 
-                android:paddingTop="@dimen/base_margin">
+                android:paddingTop="@dimen/login_layout_p">
 
             <ImageView
                 android:layout_width="0dp"
@@ -81,9 +81,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/base_margin"
-
-                android:paddingTop="@dimen/base_margin">
+                android:paddingBottom="@dimen/login_layout_p"
+                android:paddingTop="@dimen/login_layout_p">
 
                 <ImageView
                     android:layout_width="0dp"
@@ -160,7 +159,7 @@
                 <ImageView
                     android:id="@+id/sign_in"
                     android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/button_height"
                     android:layout_marginBottom="@dimen/base_margin"
                     android:layout_marginTop="@dimen/base_margin"
                     android:layout_marginLeft="@dimen/login_m_l"

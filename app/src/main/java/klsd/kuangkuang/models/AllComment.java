@@ -11,17 +11,32 @@ import java.io.Serializable;
  */
 public class AllComment implements Serializable {
     private String id;
-    private String commenter;//用户号
     private String body;//内容
     private String article_id;//文章编号
     private String created_at;
     private String updated_at;
-
+private String nickname,picture_son;
 
     private Context context;
 
     public AllComment(Context context) {
         this.context = context;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getPicture_son() {
+        return picture_son;
+    }
+
+    public void setPicture_son(String picture_son) {
+        this.picture_son = picture_son;
     }
 
     public String getId() {
@@ -30,14 +45,6 @@ public class AllComment implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getCommenter() {
-        return commenter;
-    }
-
-    public void setCommenter(String commenter) {
-        this.commenter = commenter;
     }
 
     public String getBody() {
@@ -75,11 +82,20 @@ public class AllComment implements Serializable {
     public AllComment getFromJSONObjectItem(JSONObject object) {
         try {
             setId(object.getString("id"));
-            setCommenter(object.getString("commenter"));
             setBody(object.getString("body"));
             setArticle_id(object.getString("article_id"));
             setCreated_at(object.getString("created_at"));
             setUpdated_at(object.getString("updated_at"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+    public AllComment getAuthorInfo(String nickname,String picture_son) {
+        try {
+            setPicture_son(picture_son);
+            setNickname(nickname);
 
         } catch (Exception e) {
             e.printStackTrace();

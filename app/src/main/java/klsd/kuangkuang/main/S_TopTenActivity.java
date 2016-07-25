@@ -58,7 +58,7 @@ public class S_TopTenActivity extends BaseActivity {
                 return;
             }
             Log.d("这个评论是什么呢", "updateData() returned: " + tlist.get(0).getCreated_at());
-            sAdapter = new S_TopAdapter(S_TopTenActivity.this, tlist);
+            sAdapter = new S_TopAdapter(S_TopTenActivity.this, tlist,getHandler());
             listView.setAdapter(sAdapter);
 
         }

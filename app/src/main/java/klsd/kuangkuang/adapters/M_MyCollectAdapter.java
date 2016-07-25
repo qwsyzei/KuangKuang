@@ -1,6 +1,5 @@
 package klsd.kuangkuang.adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +25,7 @@ import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.ErrorCodes;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.ExitDialog;
@@ -86,6 +86,13 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("article_id", ac.getId());
+                params = KelaParams.generateSignParam("GET", Consts.articlesViewApi, params);
+                if (http == null) http = new MyHTTP(ctx);
+                http.baseRequest(Consts.articlesViewApi, JSONHandler.JTYPE_ARTICLES_VIEWS, HttpRequest.HttpMethod.GET,
+                        params, handler);
+
                 Intent intent = new Intent(ctx, S_ArticleActivity.class);
                 intent.putExtra("article_id", ac.getId());
                 intent.putExtra("content_html", ac.getContent());
@@ -99,6 +106,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
                 intent.putExtra("picture_son", ac.getPicture_son());
                 intent.putExtra("signature", ac.getSignature());
                 ctx.startActivity(intent);
+
             }
         });
         convertView.setOnLongClickListener(longClickListener);
@@ -150,6 +158,9 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
         if (jtype.equals(JSONHandler.JTYPE_COLLECT_DESTROY)) {
             ToastUtil.show(ctx, "取消收藏成功");
             exitDialog.dismiss();
+        }else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_VIEWS)) {
+            ToastUtil.show(ctx, "观看了");
+
         }
     }
 

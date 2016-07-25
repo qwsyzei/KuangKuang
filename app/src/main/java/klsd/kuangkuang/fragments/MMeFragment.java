@@ -2,10 +2,13 @@ package klsd.kuangkuang.fragments;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,8 @@ import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,7 @@ import klsd.kuangkuang.main.C_ReleaseWordActivity;
 import klsd.kuangkuang.main.LoginActivity;
 import klsd.kuangkuang.main.M_MyCollectActivity;
 import klsd.kuangkuang.main.M_SetActivity;
+import klsd.kuangkuang.models.Documents;
 import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
@@ -37,6 +43,8 @@ import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
 import klsd.kuangkuang.views.SelfListView;
+
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 我
@@ -52,8 +60,10 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
     private static Activity a;
     private int limit = 10;
     private int page = 1;
-
+    MyHTTP http;
     private LinearLayout layout_release;
+    private Documents documents;
+    private ImageView im_head_big, im_head_small;
 
     public MMeFragment() {
         // Required empty public constructor
@@ -64,11 +74,13 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
                              Bundle savedInstanceState) {
         a = this.getActivity();
         view = inflater.inflate(R.layout.fragment_me, container, false);
+        Context context = getActivity().getApplicationContext();
+        initImageLoader(context);
         setTitle(getString(R.string.main_me));
-        if (DataCenter.isSigned()){
+        if (DataCenter.isSigned()) {
             initView();
-        }else {
-            myStartActivity(new Intent(a,LoginActivity.class));
+        } else {
+            myStartActivity(new Intent(a, LoginActivity.class));
         }
         return view;
     }
@@ -86,59 +98,46 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
      */
     private List<MyWord> getSubjectList() {
         cirList = new ArrayList<MyWord>();
-//        for (int i = 0; i < 5; i++) {
         MyWord sub = new MyWord(a);
         sub.setDay("10");
 //        sub.setContent("    四月生日石。 地球上最坚硬的天然物质。 已有十亿年以上的历史。此种风靡全球的宝石，不仅……");
         sub.setMonth("7");
-        sub.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m31));
+//        sub.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m31));
         cirList.add(sub);
 
-        MyWord sub2 = new MyWord(a);
-        sub2.setDay("12");
-//        sub2.setContent("    昨天老公给买了个大大的钻戒，但他不让我晒");
-        sub2.setMonth("6");
-        sub2.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m53));
-        cirList.add(sub2);
-        MyWord sub3 = new MyWord(a);
-        sub3.setDay("01");
-//        sub3.setContent("   谁说我自己不会鉴赏珠宝，我今天就要让你们都看看");
-        sub3.setMonth("6");
-        sub3.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m32));
-        cirList.add(sub3);
-        MyWord sub4 = new MyWord(a);
-        sub4.setDay("26");
-//        sub4.setContent(" 今天过生日，让我最想不到的是，我的好弟弟给我买了个金项链");
-        sub4.setMonth("5");
-        sub4.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m51));
-        cirList.add(sub4);
-        MyWord sub5 = new MyWord(a);
-        sub5.setDay("30");
-//        sub5.setContent(" 好吧，我觉得我还是得相信我自己的感觉，毕竟这是自己的爱好");
-        sub5.setMonth("4");
-        sub5.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m21));
-        cirList.add(sub5);
-//        }
         return cirList;
     }
+
     private void initView() {
+        documents = new Documents();
+        getData();
         sList = new ArrayList<>();
+        im_head_big = (ImageView) view.findViewById(R.id.me_head_big);
+        im_head_small = (ImageView) view.findViewById(R.id.me_head_small);
         im_set = (ImageView) view.findViewById(R.id.im_title_set);
         layout_collect = (RelativeLayout) view.findViewById(R.id.me_collect_layout);
         layout_release = (LinearLayout) view.findViewById(R.id.layout_me_release_word_now);
         listView = (SelfListView) view.findViewById(R.id.listview_me_myword);
         listView.setOnScrollListener(this);
+        listView.setFocusable(false);
         layout_release.setOnClickListener(this);
         layout_collect.setOnClickListener(this);
         im_set.setOnClickListener(this);
-        getMyWordList();
-        mywordAdapter = new M_MywordAdapter(a, sList);
-//        getSubjectList();
-//        mywordAdapter = new M_MywordAdapter(a, cirList);
+//        getMyWordList();
+        mywordAdapter = new M_MywordAdapter(a, sList, handler);
         listView.setAdapter(mywordAdapter);
     }
 
-    MyHTTP http;
+    /**
+     * 获取个人资料
+     */
+    private void getData() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
+        if (http == null) http = new MyHTTP(a);
+        http.baseRequest(Consts.memberDocumentsApi, JSONHandler.JTYPE_MEMBER_DOCUMENTS, HttpRequest.HttpMethod.GET,
+                params, handler);
+    }
 
     private void getMyWordList() {
         RequestParams params = new RequestParams();
@@ -154,8 +153,10 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
         @SuppressWarnings("unchecked")
         public void handleMessage(android.os.Message msg) {
             Bundle bundle = msg.getData();
+            Bitmap bitmap = bundle.getParcelable("bitmap");
             String res = bundle.getString("result");
             String jtype = bundle.getString("jtype");
+
             if (res == null) {
 //				ToastUtil.show(a, "交易完成数据网络请求失败");
                 a.startActivity(new Intent(a, LoginActivity.class));
@@ -169,24 +170,52 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
                         ToastUtil.show(a, a.getString(R.string.no_more_data));
                         return;
                     }
-                    addTrades("bottom",os);
+                    addTrades("bottom", os);
                     if (curTradesSize == 0) {
                         sList = os;
-                        mywordAdapter = new M_MywordAdapter(a, sList);
+                        mywordAdapter = new M_MywordAdapter(a, sList, handler);
                         listView.setAdapter(mywordAdapter);
-
                     } else {
-
                         mywordAdapter.notifyDataSetChanged();
                     }
                     page += 1;
                     UIutils.cancelLoading();
+                } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
+                    documents = (Documents) bundle.getSerializable("documents");
+                    ToastUtil.show(a, "已获取到个人资料");
+                    getbitmap123();
+                    getMyWordList();
+                }
+            } else if (res.equals("123")) {
+                if (!documents.getPicture().equals("null")) {
+                    ImageLoader.getInstance().displayImage(Consts.host + "/" + documents.getPicture(), im_head_small);
+                    Bitmap bitmap1 = fastblur(a, bitmap, 5, false);
+                    im_head_big.setImageBitmap(bitmap1);
                 }
             } else {
                 ToastUtil.show(a, res);
             }
         }
     };
+
+    /**
+     * 开启子线程来获取网络图片
+     */
+    private void getbitmap123() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap1 = ImageLoader.getInstance().loadImageSync(Consts.host + "/" + documents.getPicture());
+                Message message = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putString("result", "123");
+                bundle.putParcelable("bitmap", bitmap1);
+                message.setData(bundle);
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
+
     public void addTrades(String from, List<MyWord> ess) {
         List<String> ids = new ArrayList<String>();
         for (MyWord o : sList)
@@ -202,6 +231,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
             mywordAdapter.notifyDataSetChanged();
         }
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -249,4 +279,220 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
     public void loadDataFrom() {
         getMyWordList();
     }
+
+    /**
+     * 模糊效果
+     *
+     * @param context
+     * @param sentBitmap       需要的图片
+     * @param radius           模糊效果大小
+     * @param canReuseInBitmap 位图是否可以重复使用
+     * @return
+     */
+    public static Bitmap fastblur(Context context, Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
+        Bitmap bitmap;
+        if (canReuseInBitmap) {
+            bitmap = sentBitmap;
+        } else {
+            bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
+        }
+        if (radius < 1) {
+            return (null);
+        }
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        int[] pix = new int[w * h];
+
+        bitmap.getPixels(pix, 0, w, 0, 0, w, h);
+
+        int wm = w - 1;
+        int hm = h - 1;
+        int wh = w * h;
+        int div = radius + radius + 1;
+
+        int r[] = new int[wh];
+        int g[] = new int[wh];
+        int b[] = new int[wh];
+        int rsum, gsum, bsum, x, y, i, p, yp, yi, yw;
+        int vmin[] = new int[Math.max(w, h)];
+
+        int divsum = (div + 1) >> 1;
+        divsum *= divsum;
+        int temp = 256 * divsum;
+        int dv[] = new int[temp];
+        for (i = 0; i < temp; i++) {
+            dv[i] = (i / divsum);
+        }
+
+        yw = yi = 0;
+
+        int[][] stack = new int[div][3];
+        int stackpointer;
+        int stackstart;
+        int[] sir;
+        int rbs;
+        int r1 = radius + 1;
+        int routsum, goutsum, boutsum;
+        int rinsum, ginsum, binsum;
+
+        for (y = 0; y < h; y++) {
+            rinsum = ginsum = binsum = routsum = goutsum = boutsum = rsum = gsum = bsum = 0;
+            for (i = -radius; i <= radius; i++) {
+                p = pix[yi + Math.min(wm, Math.max(i, 0))];
+                sir = stack[i + radius];
+                sir[0] = (p & 0xff0000) >> 16;
+                sir[1] = (p & 0x00ff00) >> 8;
+                sir[2] = (p & 0x0000ff);
+                rbs = r1 - Math.abs(i);
+                rsum += sir[0] * rbs;
+                gsum += sir[1] * rbs;
+                bsum += sir[2] * rbs;
+                if (i > 0) {
+                    rinsum += sir[0];
+                    ginsum += sir[1];
+                    binsum += sir[2];
+                } else {
+                    routsum += sir[0];
+                    goutsum += sir[1];
+                    boutsum += sir[2];
+                }
+            }
+            stackpointer = radius;
+
+            for (x = 0; x < w; x++) {
+
+                r[yi] = dv[rsum];
+                g[yi] = dv[gsum];
+                b[yi] = dv[bsum];
+
+                rsum -= routsum;
+                gsum -= goutsum;
+                bsum -= boutsum;
+
+                stackstart = stackpointer - radius + div;
+                sir = stack[stackstart % div];
+
+                routsum -= sir[0];
+                goutsum -= sir[1];
+                boutsum -= sir[2];
+
+                if (y == 0) {
+                    vmin[x] = Math.min(x + radius + 1, wm);
+                }
+                p = pix[yw + vmin[x]];
+
+                sir[0] = (p & 0xff0000) >> 16;
+                sir[1] = (p & 0x00ff00) >> 8;
+                sir[2] = (p & 0x0000ff);
+
+                rinsum += sir[0];
+                ginsum += sir[1];
+                binsum += sir[2];
+
+                rsum += rinsum;
+                gsum += ginsum;
+                bsum += binsum;
+
+                stackpointer = (stackpointer + 1) % div;
+                sir = stack[(stackpointer) % div];
+
+                routsum += sir[0];
+                goutsum += sir[1];
+                boutsum += sir[2];
+
+                rinsum -= sir[0];
+                ginsum -= sir[1];
+                binsum -= sir[2];
+
+                yi++;
+            }
+            yw += w;
+        }
+        for (x = 0; x < w; x++) {
+            rinsum = ginsum = binsum = routsum = goutsum = boutsum = rsum = gsum = bsum = 0;
+            yp = -radius * w;
+            for (i = -radius; i <= radius; i++) {
+                yi = Math.max(0, yp) + x;
+
+                sir = stack[i + radius];
+
+                sir[0] = r[yi];
+                sir[1] = g[yi];
+                sir[2] = b[yi];
+
+                rbs = r1 - Math.abs(i);
+
+                rsum += r[yi] * rbs;
+                gsum += g[yi] * rbs;
+                bsum += b[yi] * rbs;
+
+                if (i > 0) {
+                    rinsum += sir[0];
+                    ginsum += sir[1];
+                    binsum += sir[2];
+                } else {
+                    routsum += sir[0];
+                    goutsum += sir[1];
+                    boutsum += sir[2];
+                }
+
+                if (i < hm) {
+                    yp += w;
+                }
+            }
+            yi = x;
+            stackpointer = radius;
+            for (y = 0; y < h; y++) {
+                // Preserve alpha channel: ( 0xff000000 & pix[yi] )
+                pix[yi] = (0xff000000 & pix[yi]) | (dv[rsum] << 16)
+                        | (dv[gsum] << 8) | dv[bsum];
+
+                rsum -= routsum;
+                gsum -= goutsum;
+                bsum -= boutsum;
+
+                stackstart = stackpointer - radius + div;
+                sir = stack[stackstart % div];
+
+                routsum -= sir[0];
+                goutsum -= sir[1];
+                boutsum -= sir[2];
+
+                if (x == 0) {
+                    vmin[y] = Math.min(y + r1, hm) * w;
+                }
+                p = x + vmin[y];
+
+                sir[0] = r[p];
+                sir[1] = g[p];
+                sir[2] = b[p];
+
+                rinsum += sir[0];
+                ginsum += sir[1];
+                binsum += sir[2];
+
+                rsum += rinsum;
+                gsum += ginsum;
+                bsum += binsum;
+
+                stackpointer = (stackpointer + 1) % div;
+                sir = stack[stackpointer];
+
+                routsum += sir[0];
+                goutsum += sir[1];
+                boutsum += sir[2];
+
+                rinsum -= sir[0];
+                ginsum -= sir[1];
+                binsum -= sir[2];
+
+                yi += w;
+            }
+        }
+
+        Log.d("pix", w + " " + h + " " + pix.length);
+        bitmap.setPixels(pix, 0, w, 0, 0, w, h);
+        return (bitmap);
+    }
+
 }

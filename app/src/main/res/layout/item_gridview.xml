@@ -4,8 +4,10 @@
     android:layout_height="match_parent">
 <ImageView
     android:id="@+id/im_item_girdvie"
-    android:layout_width="70dp"
+    android:layout_width="@dimen/item_gridview_size"
     android:layout_gravity="center"
+    android:scaleType="fitXY"
+    android:layout_margin="2dp"
     android:src="@mipmap/ic_launcher"
-    android:layout_height="70dp" />
+    android:layout_height="@dimen/item_gridview_size" />
 </LinearLayout>

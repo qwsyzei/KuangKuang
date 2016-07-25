@@ -1,6 +1,10 @@
 package klsd.kuangkuang.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +14,56 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
 import klsd.kuangkuang.R;
+import klsd.kuangkuang.main.C_CircleDetailActivity;
 import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.DataCenter;
+import klsd.kuangkuang.utils.ErrorCodes;
+import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.MyHTTP;
+import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.views.ExitDialog;
+
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 我的说说adapter
  * Created by qiwei on 2016/7/14.
  */
 public class M_MywordAdapter extends ArrayAdapter<MyWord> {
-
+    MyHTTP http;
     private Context ctx;
+    private ExitDialog exitDialog;
+    private TextView tv_delete;
+    private Handler handler;
+    String jtype, responseJson;
+    String error_code;
+    Bundle handlerBundler;
 
-    public M_MywordAdapter(Context context, List<MyWord> objects) {
+    public M_MywordAdapter(Context context, List<MyWord> objects, Handler h) {
         super(context, R.layout.item_myword, objects);
         this.ctx = context;
+        this.handler = h;
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                handlerBundler = msg.getData();
+                responseJson = handlerBundler.getString("result");
+                error_code = handlerBundler.getString("error_code");
+                jtype = handlerBundler.getString("jtype");
+                if (responseJson.equals("OK")) {
+                    updateData();
+                } else {
+                    toastError();
+                }
+            }
+        };
     }
 
     @Override
@@ -47,23 +83,70 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         }
 
         viewHolder.content_son.setText(ac.getContent_son());
+        Context context = ctx.getApplicationContext();
+        initImageLoader(context);
+        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
 
-                    BitmapUtils bitmapUtils = new BitmapUtils(ctx);
-        bitmapUtils.display(viewHolder.pic_url1, Consts.host + "/" +ac.getUrl1());
-
-//        viewHolder.pic_url1.setImageBitmap(ac.getUrl1());
         viewHolder.day.setText(ac.getDay());
         viewHolder.month.setText(ac.getMonth());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//        Intent intent=new Intent(ctx, S_ArticleActivity.class);
-//        intent.putExtra("content_html",circle.getContent());
-//        ctx.startActivity(intent);
+                Intent intent = new Intent(ctx, C_CircleDetailActivity.class);
+                intent.putExtra("head_pic", ac.getPicture_son());
+                intent.putExtra("created_at", ac.getCreated_at());
+                intent.putExtra("nickname", ac.getNickname());
+                intent.putExtra("content", ac.getContent_son());
+                intent.putExtra("url1", ac.getUrl1());
+                intent.putExtra("url2", ac.getUrl2());
+                intent.putExtra("url3", ac.getUrl3());
+                intent.putExtra("url4", ac.getUrl4());
+                intent.putExtra("url5", ac.getUrl5());
+                intent.putExtra("url6", ac.getUrl6());
+                intent.putExtra("url7", ac.getUrl7());
+                intent.putExtra("url8", ac.getUrl8());
+                intent.putExtra("url9", ac.getUrl9());
+                ctx.startActivity(intent);
             }
         });
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_delete);
+                exitDialog.setCanceledOnTouchOutside(true);
+                exitDialog.show();
 
+                tv_delete = (TextView) exitDialog.findViewById(R.id.dialog_tv_delete_myword);
+                tv_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        RequestParams params = new RequestParams();
+                        params.addQueryStringParameter("id", ac.getId());
+
+                        if (http == null) http = new MyHTTP(ctx);
+                        http.baseRequest(Consts.deleteMywordApi, JSONHandler.JTYPE_DELETE_MYWORD, HttpRequest.HttpMethod.GET,
+                                params, handler);
+                    }
+                });
+                return true;
+            }
+        });
         return convertView;
+    }
+
+    public void updateData() {
+        if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
+            ToastUtil.show(ctx, "删除成功");
+            exitDialog.dismiss();
+        }
+    }
+
+    public void toastError() {
+        try {
+            ToastUtil.show(ctx, ErrorCodes.CODES.get(error_code));
+        } catch (Exception e) {
+            ToastUtil.show(ctx, responseJson);
+        }
     }
 
     public final class ViewHolder {

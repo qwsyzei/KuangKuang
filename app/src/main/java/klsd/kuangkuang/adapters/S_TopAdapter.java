@@ -2,6 +2,8 @@ package klsd.kuangkuang.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,21 +14,47 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.client.HttpRequest;
+
 import java.util.List;
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.main.S_ArticleActivity;
 import klsd.kuangkuang.models.Top;
+import klsd.kuangkuang.utils.Consts;
+import klsd.kuangkuang.utils.ErrorCodes;
+import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.KelaParams;
+import klsd.kuangkuang.utils.MyHTTP;
+import klsd.kuangkuang.utils.ToastUtil;
 
 /**
  * Created by qiwei on 2016/7/12.
  */
 public class S_TopAdapter extends ArrayAdapter<Top> {
-
+    MyHTTP http;
     private Context ctx;
-
-    public S_TopAdapter(Context context, List<Top> list) {
+    private Handler handler;
+    String jtype, responseJson;
+    String error_code;
+    Bundle handlerBundler;
+    public S_TopAdapter(Context context, List<Top> list,Handler h) {
         super(context, R.layout.item_top_ten, list);
         this.ctx = context;
+        this.handler = h;
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                handlerBundler = msg.getData();
+                responseJson = handlerBundler.getString("result");
+                error_code = handlerBundler.getString("error_code");
+                jtype = handlerBundler.getString("jtype");
+                if (responseJson.equals("OK")) {
+                    updateData();
+                } else {
+                    toastError();
+                }
+            }
+        };
     }
 
     @Override
@@ -53,6 +81,14 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("article_id", ac.getId());
+                params = KelaParams.generateSignParam("GET", Consts.articlesViewApi, params);
+                if (http == null) http = new MyHTTP(ctx);
+                http.baseRequest(Consts.articlesViewApi, JSONHandler.JTYPE_ARTICLES_VIEWS, HttpRequest.HttpMethod.GET,
+                        params, handler);
+
                 Intent intent = new Intent(ctx, S_ArticleActivity.class);
                 intent.putExtra("article_id", ac.getId());
                 intent.putExtra("content_html", ac.getContent());
@@ -71,12 +107,22 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
 
         return convertView;
     }
+    public void updateData() {
+       if (jtype.equals(JSONHandler.JTYPE_ARTICLES_VIEWS)) {
+            ToastUtil.show(ctx, "观看了");
+        }
+    }
 
+    public void toastError() {
+        try {
+            ToastUtil.show(ctx, ErrorCodes.CODES.get(error_code));
+        } catch (Exception e) {
+            ToastUtil.show(ctx, responseJson);
+        }
+    }
     public final class ViewHolder {
         TextView title, tag,top;
         ImageView im_pic;
-
-
     }
 }
 

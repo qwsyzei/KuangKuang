@@ -170,7 +170,6 @@ public class MyWord implements Serializable {
     public MyWord getFromJSONObjectItem(JSONObject object) {
         try {
             setId(object.getString("id"));
-
             setMember_id(object.getString("member_id"));
             setCreated_at(object.getString("created_at"));
             setContent_son(object.getString("content"));

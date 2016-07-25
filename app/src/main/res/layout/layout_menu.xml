@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
-    android:paddingBottom="60dp"
-    android:paddingTop="50dp"
+    android:paddingBottom="@dimen/layout_menu_m_b"
+    android:paddingTop="@dimen/layout_menu_m_t"
     android:orientation="vertical" >
 
     <TextView
@@ -160,5 +160,17 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:background="@mipmap/biz_pc_account_line" />
-	
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+	<TextView
+        android:id="@+id/tv_feedback"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/button_height"
+        android:background="@drawable/box"
+        android:text="@string/feedback"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/kuangkuang_yellow"/>
 </LinearLayout>

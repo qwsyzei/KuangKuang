@@ -115,10 +115,9 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
             public void onClick(View view) {
                 RequestParams params = new RequestParams();
                 params.addQueryStringParameter("article_id", subject.getId());
-                params.addQueryStringParameter("side", "views");
-                params = KelaParams.generateSignParam("GET", Consts.articlesLikeApi, params);
+                params = KelaParams.generateSignParam("GET", Consts.articlesViewApi, params);
                 if (http == null) http = new MyHTTP(ctx);
-                http.baseRequest(Consts.articlesLikeApi, JSONHandler.JTYPE_ARTICLES_VIEWS, HttpRequest.HttpMethod.GET,
+                http.baseRequest(Consts.articlesViewApi, JSONHandler.JTYPE_ARTICLES_VIEWS, HttpRequest.HttpMethod.GET,
                         params, handler);
 
                 Intent intent = new Intent(ctx, S_ArticleActivity.class);
@@ -142,7 +141,7 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
     }
 
     public void updateData() {
-        if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
+        if (jtype.equals(JSONHandler.JTYPE_ARTICLES_VIEWS)) {
             ToastUtil.show(ctx, "观看了");
 
         }

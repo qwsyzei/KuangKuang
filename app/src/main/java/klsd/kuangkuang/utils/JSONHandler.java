@@ -82,6 +82,7 @@ public class JSONHandler {
     public final static String JTYPE_MEMBER_UPDATE_DOCUMENTS = "update_member_documents";
     public final static String JTYPE_MEMBER_UPDATE_HEAD = "update_member_head";
     public final static String JTYPE_MYWORD_LIST = "myword_list";
+    public final static String JTYPE_DELETE_MYWORD = "deletemyword";
     public final static String JTYPE_CREATE_WORDS = "create_words";
     public final static String JTYPE_CIRCLE_LIST = "circle_list";
     public final static String JTYPE_PICTURE1 = "picture1";
@@ -246,8 +247,12 @@ public class JSONHandler {
                 ArrayList<AllComment> ac = new ArrayList<AllComment>();
                 for (int i = 0; i < olistArrays.size(); i++) {
                     JSONObject object = olistArrays.get(i);
+                    JSONObject object11=object.getJSONObject("commenter");
+                    String nickname=object11.getString("nickname");
+                    String picture_son=object11.getString("picture");
                     AllComment sub = new AllComment(ctx);
                     sub.getFromJSONObjectItem(object);
+                    sub.getAuthorInfo(nickname, picture_son);
                     ac.add(sub);
                 }
                 bundle.putSerializable("all_comment", ac);
@@ -337,6 +342,7 @@ public class JSONHandler {
         osStrings.add(JTYPE_ARTICLES_LIKE);
         osStrings.add(JTYPE_COLLECT);
         osStrings.add(JTYPE_COLLECT_DESTROY);
+        osStrings.add(JTYPE_DELETE_MYWORD);
         osStrings.add(JTYPE_ARTICLES_VIEWS);
         osStrings.add(JTYPE_ARTICLES_COMMENT);
 
