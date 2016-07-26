@@ -315,6 +315,14 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 params, getHandler());
     }
 
+    /**
+     * 发表成功后跳转到MAIN的“我”界面
+     */
+private void Intentstyle(){
+    Intent intent=new Intent(C_ReleaseWordActivity.this,MainActivity.class);
+    intent.putExtra("release","123");
+    startActivity(intent);
+}
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_CREATE_WORDS)) {
@@ -328,6 +336,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                     dialog.dismiss();
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
             }

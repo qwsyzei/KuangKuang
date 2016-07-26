@@ -72,7 +72,9 @@
         <activity android:name=".testpic.ImageGridActivity" />
         <activity android:name=".testpic.PhotoActivity" />
         <activity android:name=".main.ImagePagerActivity" />
-        <activity android:name=".main.C_CircleDetailActivity" >
+        <activity android:name=".main.M_CircleDetailActivity" >
+        </activity>
+        <activity android:name=".main.C_CircleAllCommentActivity" >
         </activity>
     </application>
 

@@ -79,7 +79,7 @@ public class M_BigHeadActivity extends BaseActivity implements View.OnClickListe
         tv_right.setOnClickListener(this);
         ImageLoader.getInstance().displayImage(pic_url, im_bighead);
         PhotoViewAttacher mAttacher = new PhotoViewAttacher(im_bighead);
-//        mAttacher.setScaleType(ImageView.ScaleType.FIT_XY);
+        mAttacher.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 
     @Override

@@ -15,12 +15,29 @@ public class MyWord implements Serializable {
     String id, member_id, created_at;
     private String url1, url2, url3, url4, url5, url6, url7, url8, url9;
     private String content_son, nickname, picture_son;
+    private String like_number,comment_number;
     private Context context;
     String day, month;//假的
     private Bitmap bitmip;//假的
 
     public MyWord(Context context) {
         this.context = context;
+    }
+
+    public String getLike_number() {
+        return like_number;
+    }
+
+    public void setLike_number(String like_number) {
+        this.like_number = like_number;
+    }
+
+    public String getComment_number() {
+        return comment_number;
+    }
+
+    public void setComment_number(String comment_number) {
+        this.comment_number = comment_number;
     }
 
     public String getPicture_son() {
@@ -172,7 +189,8 @@ public class MyWord implements Serializable {
             setId(object.getString("id"));
             setMember_id(object.getString("member_id"));
             setCreated_at(object.getString("created_at"));
-            setContent_son(object.getString("content"));
+            setLike_number(object.getString("like_number"));
+            setComment_number(object.getString("comment_number"));
             setUrl1(object.getString("url1"));
             setUrl2(object.getString("url2"));
             setUrl3(object.getString("url3"));
@@ -189,9 +207,11 @@ public class MyWord implements Serializable {
         return this;
     }
 
-    public MyWord getcontentfrom(String content) {
+    public MyWord getcontentfrom(String content,String picture_son,String nickname) {
         try {
             setContent_son(content);
+            setPicture_son(picture_son);
+            setNickname(nickname);
         } catch (Exception e) {
             e.printStackTrace();
         }

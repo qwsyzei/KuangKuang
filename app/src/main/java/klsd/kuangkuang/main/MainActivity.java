@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -31,7 +32,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
     RadioGroup radioGroup;
     private FragmentManager fm;
     private FragmentTransaction ft;
-    private   RadioButton rbA,rbB;
+    private   RadioButton rbA,rbD;
     private MSubjectFragment mSubjectFragment;
     private MCircleFragment mCircleFragment;
     private MToolFragment mToolFragment;
@@ -58,15 +59,15 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         /**
          * 应用进入后，默认选择点击Fragment01
          */
-//        if (str.equals("10")){
-//            ft.replace(R.id.just_subject_layout, new MCircleFragment());//news_every_content是为fragment留出的空间，用fragment替换
-//            rbB= (RadioButton) findViewById(R.id.main_rb2);
-//            rbB.setChecked(true);
-//        }else{
+        if (str!=null&&str.equals("123")){
+            ft.replace(R.id.just_subject_layout, new MMeFragment());
+            rbD= (RadioButton) findViewById(R.id.main_rb4);
+            rbD.setChecked(true);
+        }else{
             ft.replace(R.id.just_subject_layout, new MSubjectFragment());//news_every_content是为fragment留出的空间，用fragment替换
             rbA= (RadioButton) findViewById(R.id.main_rb1);
             rbA.setChecked(true);
-//        }
+        }
         ft.commit();
         radioGroup = (RadioGroup) findViewById(R.id.main_radiogroup);
         radioGroup.setOnCheckedChangeListener(this);
@@ -145,6 +146,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
 
                 break;
             case R.id.main_rb4:
+                Log.d("现在是登录状态吗", "onCheckedChanged() returned: " + DataCenter.isSigned());
                 if ( DataCenter.isSigned()){
                     im_title_left.setVisibility(View.GONE);
                     ft.replace(R.id.just_subject_layout, new MMeFragment());

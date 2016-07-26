@@ -38,7 +38,9 @@ public final static String host123="http://192.168.31.167:3000";
     public final static String picture9Api = baseApiPath + "/microposts/picture9";//发图片9
     public final static String addLikeApi = baseApiPath + "/like/add_like";//点赞
     public final static String cancelLikeApi = baseApiPath + "/like/destroy_like";//取消赞
-    public final static String commenCircleApi = baseApiPath + "/microposts/comment_list";//给圈子评论
+    public final static String commentCircleApi = baseApiPath + "/microposts/create_comment";//给圈子评论
+    public final static String circlelikeListApi = baseApiPath + "/like/like_list";//赞列表
+    public final static String circlecommentListApi = baseApiPath + "/microposts/comment_list";//朋友圈评论列表
 
     // phone_number common
     public final static String getAuthCodeApi = baseApiPath + "/registers/code";
@@ -74,7 +76,8 @@ public final static String host123="http://192.168.31.167:3000";
             articlesCommentaryApi,
             articlesTopApi,
             articlesViewApi,
-            micropostsListApi
+            micropostsListApi,
+            circlecommentListApi
     };
 
     public final static String MONIT_PUBLIC_TRADES_PUSHER = "monit_public_trades_pusher";

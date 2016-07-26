@@ -121,7 +121,8 @@
     <dimen name="me_head_small_size">99dp</dimen>
     <dimen name="me_head_big_height">189dp</dimen>
 
-    <dimen name="item_gridview_size">69dp</dimen>
+    <dimen name="item_gridview_size">101dp</dimen>
+    <dimen name="item_gridview_like_size">30dp</dimen>
     <dimen name="layout_menu_m_t">49dp</dimen>
     <dimen name="layout_menu_m_b">24dp</dimen>
     <dimen name="login_layout_p">13dp</dimen>

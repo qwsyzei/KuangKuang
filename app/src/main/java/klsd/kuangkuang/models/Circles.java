@@ -185,8 +185,8 @@ private Bitmap head;//这个是假的，回头删了
             setMember_id(object.getString("member_id"));
             setCreated_at(object.getString("created_at"));
             setUpdated_at(object.getString("updated_at"));
-//            setLike(object.getString("like"));
-//            setComment(object.getString("comment_number"));
+            setLike(object.getString("like_number"));
+            setComment(object.getString("comment_number"));
             setUrl1(object.getString("url1"));
             setUrl2(object.getString("url2"));
             setUrl3(object.getString("url3"));

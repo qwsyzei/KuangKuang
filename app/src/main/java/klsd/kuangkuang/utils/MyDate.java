@@ -78,6 +78,16 @@ public class MyDate {
 	public static String formatCreatedAt(String time) {
 		return time.replace("T", " ").replace("Z", "").replace("+08:00", "");
 	}
+
+	/**
+	 * 时间2016-07-25T16:34:36.000+08:00转成07-25 16：34
+	 * @param time
+	 * @return
+	 */
+	public static String monthDay(String time) {
+
+		return time.substring(5, 16).replace("T", " ");
+	}
 	//下面是把时间加8小时
 	public static String formatTimeEight(String time) throws Exception {
 		Date d = null;

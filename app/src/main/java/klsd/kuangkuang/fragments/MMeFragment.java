@@ -64,7 +64,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
     private LinearLayout layout_release;
     private Documents documents;
     private ImageView im_head_big, im_head_small;
-
+private TextView tv_name,tv_signature;
     public MMeFragment() {
         // Required empty public constructor
     }
@@ -118,6 +118,8 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
         layout_collect = (RelativeLayout) view.findViewById(R.id.me_collect_layout);
         layout_release = (LinearLayout) view.findViewById(R.id.layout_me_release_word_now);
         listView = (SelfListView) view.findViewById(R.id.listview_me_myword);
+        tv_name= (TextView) view.findViewById(R.id.me_nickname);
+        tv_signature= (TextView) view.findViewById(R.id.me_signature);
         listView.setOnScrollListener(this);
         listView.setFocusable(false);
         layout_release.setOnClickListener(this);
@@ -182,6 +184,8 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
                     UIutils.cancelLoading();
                 } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
                     documents = (Documents) bundle.getSerializable("documents");
+                    tv_name.setText(documents.getName());
+                    tv_signature.setText(documents.getSignature());
                     ToastUtil.show(a, "已获取到个人资料");
                     getbitmap123();
                     getMyWordList();

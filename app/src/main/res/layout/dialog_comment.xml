@@ -32,6 +32,7 @@
             android:layout_gravity="center"
             android:padding="@dimen/base_margin"
             android:background="@drawable/box"
+            android:textColor="@color/kuangkuang_yellow"
             android:text="@string/send"/>
     </LinearLayout>
 

@@ -16,6 +16,8 @@ import java.util.List;
 
 import klsd.kuangkuang.models.AccountVersion;
 import klsd.kuangkuang.models.AllComment;
+import klsd.kuangkuang.models.CircleAllComment;
+import klsd.kuangkuang.models.CircleLike;
 import klsd.kuangkuang.models.Circles;
 import klsd.kuangkuang.models.Deposits;
 import klsd.kuangkuang.models.Documents;
@@ -74,6 +76,7 @@ public class JSONHandler {
     public final static String JTYPE_ARTICLES_VIEWS = "articles_views";
     public final static String JTYPE_ARTICLES_COMMENT = "articles_comment";
     public final static String JTYPE_ARTICLES_ALL_COMMENT = "articles_all_comment";
+    public final static String JTYPE_CIRCLE_ALL_COMMENT = "circle_all_comment";
     public final static String JTYPE_COLLECT_SHOW = "collect_show";
     public final static String JTYPE_COLLECT = "collect_article";
     public final static String JTYPE_COLLECT_DESTROY = "collect_destroy";
@@ -85,6 +88,7 @@ public class JSONHandler {
     public final static String JTYPE_DELETE_MYWORD = "deletemyword";
     public final static String JTYPE_CREATE_WORDS = "create_words";
     public final static String JTYPE_CIRCLE_LIST = "circle_list";
+    public final static String JTYPE_CIRCLE_LIKE_LIST = "circle_like_list";
     public final static String JTYPE_PICTURE1 = "picture1";
     public final static String JTYPE_PICTURE2 = "picture2";
     public final static String JTYPE_PICTURE3 = "picture3";
@@ -224,8 +228,10 @@ public class JSONHandler {
                     MyWord sub = new MyWord(ctx);
                     JSONObject object1=object.getJSONObject("content");
                     String content=object1.getString("mic_content");//content就是上面的12345
+                    String picture=object1.getString("picture");
+                    String nickname=object1.getString("nickname");
                     sub.getFromJSONObjectItem(object);
-                    sub.getcontentfrom(content);
+                    sub.getcontentfrom(content,picture,nickname);
                     as.add(sub);
                 }
                 bundle.putSerializable("myword_list", as);
@@ -256,7 +262,31 @@ public class JSONHandler {
                     ac.add(sub);
                 }
                 bundle.putSerializable("all_comment", ac);
-            } else if (jtype2.equals(JTYPE_COLLECT_SHOW)) {
+            }
+            else if (jtype2.equals(JTYPE_CIRCLE_ALL_COMMENT)) {
+                ArrayList<CircleAllComment> ac = new ArrayList<CircleAllComment>();
+                for (int i = 0; i < olistArrays.size(); i++) {
+                    JSONObject object = olistArrays.get(i);
+                    JSONObject object11=object.getJSONObject("content");
+                    String nickname=object11.getString("nickname");
+                    String picture_son=object11.getString("picture");
+                    String content_text=object11.getString("content_text");
+                    CircleAllComment sub = new CircleAllComment(ctx);
+                    sub.getFromJSONObjectItem(object);
+                    sub.getAuthorInfo(nickname, picture_son,content_text);
+                    ac.add(sub);
+                }
+                bundle.putSerializable("circle_all_comment", ac);
+            }else if (jtype2.equals(JTYPE_CIRCLE_LIKE_LIST)) {
+                ArrayList<CircleLike> ac = new ArrayList<CircleLike>();
+                for (int i = 0; i < olistArrays.size(); i++) {
+                    JSONObject object = olistArrays.get(i);
+                    CircleLike sub = new CircleLike(ctx);
+                    sub.getFromJSONObjectItem(object);
+                    ac.add(sub);
+                }
+                bundle.putSerializable("circle_like_list", ac);
+            }else if (jtype2.equals(JTYPE_COLLECT_SHOW)) {
                 ArrayList<MyCollect> mc = new ArrayList<MyCollect>();
                 for (int i = 0; i < olistArrays.size(); i++) {
                     JSONObject object = olistArrays.get(i);
@@ -376,6 +406,7 @@ public class JSONHandler {
         osStrings.add(JTYPE_GET_ORDERS_ITEM);
         osStrings.add(JTYPE_ARTICLES_LIST);
         osStrings.add(JTYPE_ARTICLES_ALL_COMMENT);
+        osStrings.add(JTYPE_CIRCLE_ALL_COMMENT);
         osStrings.add(JTYPE_COLLECT_SHOW);
         osStrings.add(JTYPE_ARTICLES_TOP);
         osStrings.add(JTYPE_GET_FUND_SOURCES);
@@ -384,6 +415,7 @@ public class JSONHandler {
         osStrings.add(JTYPE_WITHDRAWS);
         osStrings.add(JTYPE_MYWORD_LIST);
         osStrings.add(JTYPE_CIRCLE_LIST);
+        osStrings.add(JTYPE_CIRCLE_LIKE_LIST);
         return osStrings.contains(jtype2);
     }
 
@@ -445,8 +477,6 @@ public class JSONHandler {
                 if (object.getBoolean("result")) {
                     bundle.putBoolean("success", true);
                 }
-
-            } else if (jtype.equals(JTYPE_ARTICLES_LIKE)) {
 
             } else if (jtype.equals(JTYPE_PUSHER_PRIVATE_ORDER)) {
                 Order order = new Order(ctx);

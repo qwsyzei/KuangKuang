@@ -44,7 +44,7 @@
         android:layout_marginTop="@dimen/login_p_l_r"
         android:layout_marginLeft="@dimen/signup__text_m_l_r"
         android:layout_marginRight="@dimen/signup__text_m_l_r"
-        android:layout_marginBottom="@dimen/login_p_l_r"
+        android:layout_marginBottom="2dp"
         android:text="123"
         android:textSize="@dimen/middle_text_size" />
 <klsd.kuangkuang.views.SelfGridView
@@ -53,6 +53,8 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/base_margin"
     android:layout_marginRight="@dimen/base_margin"
+    android:paddingLeft="@dimen/login_p_l_r"
+    android:paddingRight="@dimen/login_p_l_r"
     android:numColumns="3"
     android:smoothScrollbar="true"
     android:soundEffectsEnabled="true"
@@ -74,36 +76,50 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+<LinearLayout
+    android:id="@+id/layout_item_circle_like"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_margin"
+        android:layout_gravity="center_vertical"
+        android:src="@mipmap/small_like" />
 
-        <ImageView
+    <TextView
+        android:id="@+id/item_circle_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/login_p_l_r"
+        android:layout_gravity="center"
+        android:text="10" />
+</LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_item_circle_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/base_margin"
-            android:layout_gravity="center_vertical"
-            android:src="@mipmap/small_like" />
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/small_comment" />
 
-        <TextView
-            android:id="@+id/item_circle_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/login_p_l_r"
-            android:layout_gravity="center"
-            android:text="10" />
+            <TextView
+                android:id="@+id/item_circle_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/login_p_l_r"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/login_p_l_r"
+                android:text="3" />
+        </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/base_margin"
-            android:layout_gravity="center_vertical"
-            android:src="@mipmap/small_comment" />
 
-        <TextView
-            android:id="@+id/item_circle_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/login_p_l_r"
-            android:layout_gravity="center"
-            android:layout_marginRight="@dimen/login_p_l_r"
-            android:text="3" />
+
     </LinearLayout>
 </LinearLayout>

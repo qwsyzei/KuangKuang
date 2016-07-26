@@ -118,6 +118,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_time.setText(common_time);
         im_share.setOnClickListener(this);
 
+
         if (views.equals("null")) {
             tv_views.setText("0");
         } else if (views.contains(".0")) {

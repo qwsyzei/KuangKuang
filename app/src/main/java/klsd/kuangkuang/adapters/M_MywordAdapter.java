@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -21,10 +19,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.main.C_CircleDetailActivity;
+import klsd.kuangkuang.main.M_CircleDetailActivity;
 import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.utils.Consts;
-import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.ErrorCodes;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
@@ -92,11 +89,14 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ctx, C_CircleDetailActivity.class);
+                Intent intent = new Intent(ctx, M_CircleDetailActivity.class);
+                intent.putExtra("id",ac.getId());
                 intent.putExtra("head_pic", ac.getPicture_son());
                 intent.putExtra("created_at", ac.getCreated_at());
                 intent.putExtra("nickname", ac.getNickname());
                 intent.putExtra("content", ac.getContent_son());
+                intent.putExtra("like", ac.getLike_number());
+                intent.putExtra("comment", ac.getComment_number());
                 intent.putExtra("url1", ac.getUrl1());
                 intent.putExtra("url2", ac.getUrl2());
                 intent.putExtra("url3", ac.getUrl3());

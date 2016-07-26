@@ -133,7 +133,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
                     addTrades("bottom",os);
                     if (curTradesSize == 0) {
                         cirList = os;
-                        cAdapter = new C_CircleAdapter(a, cirList);
+                        cAdapter = new C_CircleAdapter(a, cirList,handler);
                         listView.setAdapter(cAdapter);
 
                     } else {

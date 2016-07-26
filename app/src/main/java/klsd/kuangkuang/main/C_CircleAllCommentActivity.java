@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.adapters.S_AllCommentAdapter;
-import klsd.kuangkuang.models.AllComment;
+import klsd.kuangkuang.adapters.C_CircleCommentAdapter;
+import klsd.kuangkuang.models.CircleAllComment;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
@@ -31,28 +31,27 @@ import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
 
 /**
- * 全部评论
+ * 圈子的全部评论
  */
-public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, AbsListView.OnScrollListener {
+public class C_CircleAllCommentActivity extends BaseActivity implements View.OnClickListener, AbsListView.OnScrollListener {
     private TextView tv_send;
     private EditText edit_comment;
-    String article_id;
-    ArrayList<AllComment> mylist;
-    private S_AllCommentAdapter allAdapter;
+    String micropost_id;
+    ArrayList<CircleAllComment> mylist;
+    private C_CircleCommentAdapter allAdapter;
     private SwipeRefreshLayout swipeView;
     private ListView listView;
     String direction = "bottom";
     private int page = 1;
     private LinearLayout layout_send;
-
+    MyHTTP http;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.s_all_comment);
+        setContentView(R.layout.c_circle_all_comment);
         setTitle(getString(R.string.all_comment));
         initView();
     }
-
     private void initView() {
         layout_send = (LinearLayout) findViewById(R.id.all_comment_send);
         if (isSigned()) {
@@ -62,12 +61,12 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         }
         mylist = new ArrayList<>();
         Intent intent = getIntent();
-        article_id = intent.getStringExtra("a_id");
-        listView = (ListView) findViewById(R.id.listview_allcomment);
+        micropost_id = intent.getStringExtra("micropost_id");
+        listView = (ListView) findViewById(R.id.listview_circle_allcomment);
         listView.setOnScrollListener(this);
-        UIutils.showLoading(S_AllCommentActivity.this);
+        UIutils.showLoading(C_CircleAllCommentActivity.this);
         swipt();
-        getAllComment();
+        getCommentList();
 
         tv_send = (TextView) findViewById(R.id.all_comment_send_send);
         edit_comment = (EditText) findViewById(R.id.all_comment_send_edit);
@@ -82,63 +81,57 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
                 break;
         }
     }
-
     /**
-     * 评论
+     * 给圈子评论
      */
-    MyHTTP http;
-
     private void gotoComment() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("article_id", article_id);
-        params.addQueryStringParameter("comment", edit_comment.getText().toString());
-        params.addQueryStringParameter("commenter", DataCenter.getMember_id());
-//        params.addQueryStringParameter("commenter", null);
+        params.addQueryStringParameter("micropost_id", micropost_id);
+        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
+        params.addQueryStringParameter("content", edit_comment.getText().toString());
+//        params.addQueryStringParameter("object", "");
 
-
-        if (http == null) http = new MyHTTP(S_AllCommentActivity.this);
-        http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
+        if (http == null) http = new MyHTTP(C_CircleAllCommentActivity.this);
+        http.baseRequest(Consts.commentCircleApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
                 params, getHandler());
-
     }
 
     /**
-     * 获取所有评论
+     * 评论列表
      */
-    private void getAllComment() {
+    private void getCommentList() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("article_id", article_id);
-        params.addQueryStringParameter("page", page + "");
+        params.addQueryStringParameter("micropost_id", micropost_id);
+        params.addQueryStringParameter("page", page+"");
         params.addQueryStringParameter("limit", "8");
-        params = KelaParams.generateSignParam("GET", Consts.articlesCommentaryApi, params);
-        if (http == null) http = new MyHTTP(S_AllCommentActivity.this);
-        http.baseRequest(Consts.articlesCommentaryApi, JSONHandler.JTYPE_ARTICLES_ALL_COMMENT, HttpRequest.HttpMethod.GET,
+        params = KelaParams.generateSignParam("GET", Consts.circlecommentListApi, params);
+        if (http == null) http = new MyHTTP(C_CircleAllCommentActivity.this);
+        http.baseRequest(Consts.circlecommentListApi, JSONHandler.JTYPE_CIRCLE_ALL_COMMENT, HttpRequest.HttpMethod.GET,
                 params, getHandler());
-
     }
 
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
-            ToastUtil.show(S_AllCommentActivity.this, "评论成功，刷新可见");
+            ToastUtil.show(C_CircleAllCommentActivity.this, "评论成功，刷新可见");
             edit_comment.setText("");
             edit_comment.setCursorVisible(false);
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(edit_comment.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
-        } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_ALL_COMMENT)) {
+        } else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_ALL_COMMENT)) {
             if (swipeView != null) swipeView.setRefreshing(false);//当获取到了就把下拉动画关了
             int curTradesSize = mylist.size();
-            ArrayList<AllComment> os = (ArrayList<AllComment>) handlerBundler.getSerializable("all_comment");
+            ArrayList<CircleAllComment> os = (ArrayList<CircleAllComment>) handlerBundler.getSerializable("circle_all_comment");
             Log.d("OS的长度", "handleMessage() returned: " + os.size());
             if (os.size() == 0) {
                 UIutils.cancelLoading();
-                ToastUtil.show(S_AllCommentActivity.this, getString(R.string.no_more_data));
+                ToastUtil.show(C_CircleAllCommentActivity.this, getString(R.string.no_more_data));
                 return;
             }
             addTrades("bottom", os);//用于添加数据
             if (curTradesSize == 0) {
                 mylist = os;
-                allAdapter = new S_AllCommentAdapter(S_AllCommentActivity.this, mylist);
+                allAdapter = new C_CircleCommentAdapter(C_CircleAllCommentActivity.this, mylist);
                 listView.setAdapter(allAdapter);
 
             } else {
@@ -150,12 +143,12 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    public void addTrades(String from, List<AllComment> ess) {
+    public void addTrades(String from, List<CircleAllComment> ess) {
         List<String> ids = new ArrayList<String>();
-        for (AllComment o : mylist)
+        for (CircleAllComment o : mylist)
             ids.add(o.getId());
 
-        for (AllComment e : ess) {
+        for (CircleAllComment e : ess) {
             if (!ids.contains(e.getId())) {     //因为后台返回的会有的与前面的id重复，所以把不重复的添加了
                 int i = from.equals("top") ? 0 : mylist.size();
                 mylist.add(i, e);
@@ -170,7 +163,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
     public void onScrollStateChanged(AbsListView absListView, int i) {
         int pos = absListView.getLastVisiblePosition();
         try {
-            AllComment e = mylist.get(pos);
+            CircleAllComment e = mylist.get(pos);
             if (e == mylist.get(mylist.size() - 1)) {
                 loadDataFrom("bottom");
 
@@ -185,7 +178,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void swipt() {
-        swipeView = (SwipeRefreshLayout) findViewById(R.id.swip_s_all_comment);
+        swipeView = (SwipeRefreshLayout) findViewById(R.id.swip_s_circle_all_comment);
         swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -201,13 +194,13 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
     public void loadDataFrom(String from) {
         direction = from;
         if (direction.equals("bottom")) {
-            getAllComment();
+            getCommentList();
 
         } else {
 
-            mylist = new ArrayList<AllComment>();
+            mylist = new ArrayList<CircleAllComment>();
             page = 1;
-            getAllComment();
+            getCommentList();
         }
     }
 }

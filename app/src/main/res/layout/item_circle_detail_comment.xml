@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/white"
     android:padding="@dimen/size_eight">
 
     <LinearLayout
@@ -11,13 +12,13 @@
         android:orientation="horizontal">
 
         <klsd.kuangkuang.views.CircleImageView
-            android:id="@+id/item_allcomment_head_pic"
+            android:id="@+id/item_circle_detail_head_pic"
             android:layout_width="@dimen/subject_author_head_size"
             android:layout_height="@dimen/subject_author_head_size"
             android:src="@mipmap/touxiang05" />
 
         <TextView
-            android:id="@+id/item_allcomment_nickname"
+            android:id="@+id/item_circle_detail_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -26,7 +27,7 @@
             android:text="我爱谁" />
 
         <TextView
-            android:id="@+id/item_allcomment_time"
+            android:id="@+id/item_circle_detail_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -37,7 +38,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/item_allcomment_body"
+        android:id="@+id/item_circle_detail_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/base_margin"

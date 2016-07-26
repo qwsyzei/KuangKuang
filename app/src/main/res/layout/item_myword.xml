@@ -25,7 +25,7 @@
         android:layout_height="@dimen/myword_pic_size"
         android:layout_marginLeft="@dimen/login_p_l_r"
         android:scaleType="fitXY"
-        android:src="@mipmap/touxiang03"/>
+   />
     <TextView
         android:id="@+id/item_myword_content"
         android:background="@color/lightgray"
