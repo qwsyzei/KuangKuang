@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,7 +20,6 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +38,7 @@ import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
-import klsd.kuangkuang.utils.UIutils;
+import klsd.kuangkuang.views.PullToRefresh123View;
 import klsd.kuangkuang.views.SelfListView;
 
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
@@ -49,7 +46,7 @@ import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 /**
  * 我
  */
-public class MMeFragment extends MyBaseFragment implements View.OnClickListener, AbsListView.OnScrollListener {
+public class MMeFragment extends MyBaseFragment implements View.OnClickListener,PullToRefresh123View.OnFooterRefreshListener {
     View view;
     private List<MyWord> cirList;
     private M_MywordAdapter mywordAdapter;
@@ -65,6 +62,8 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
     private Documents documents;
     private ImageView im_head_big, im_head_small;
 private TextView tv_name,tv_signature;
+    // 自定义的listview的上下拉动刷新
+    private PullToRefresh123View mPullToRefreshView;
     public MMeFragment() {
         // Required empty public constructor
     }
@@ -83,12 +82,6 @@ private TextView tv_name,tv_signature;
             myStartActivity(new Intent(a, LoginActivity.class));
         }
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
     }
 
     /**
@@ -120,12 +113,12 @@ private TextView tv_name,tv_signature;
         listView = (SelfListView) view.findViewById(R.id.listview_me_myword);
         tv_name= (TextView) view.findViewById(R.id.me_nickname);
         tv_signature= (TextView) view.findViewById(R.id.me_signature);
-        listView.setOnScrollListener(this);
         listView.setFocusable(false);
         layout_release.setOnClickListener(this);
         layout_collect.setOnClickListener(this);
         im_set.setOnClickListener(this);
-//        getMyWordList();
+        mPullToRefreshView= (PullToRefresh123View)view.findViewById(R.id.pull_refresh_view_me);
+        mPullToRefreshView.setOnFooterRefreshListener(this);
         mywordAdapter = new M_MywordAdapter(a, sList, handler);
         listView.setAdapter(mywordAdapter);
     }
@@ -181,14 +174,13 @@ private TextView tv_name,tv_signature;
                         mywordAdapter.notifyDataSetChanged();
                     }
                     page += 1;
-                    UIutils.cancelLoading();
                 } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
                     documents = (Documents) bundle.getSerializable("documents");
                     tv_name.setText(documents.getName());
                     tv_signature.setText(documents.getSignature());
                     ToastUtil.show(a, "已获取到个人资料");
                     getbitmap123();
-                    getMyWordList();
+                loadDataFrom();
                 }
             } else if (res.equals("123")) {
                 if (!documents.getPicture().equals("null")) {
@@ -261,27 +253,17 @@ private TextView tv_name,tv_signature;
         if (textView != null) textView.setText(tv_right);
     }
 
-    @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-        int pos = absListView.getLastVisiblePosition();
-        try {
-            MyWord e = sList.get(pos);
-            if (e == sList.get(sList.size() - 1)) {
-                loadDataFrom();
 
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-    }
 
     //刷新数据的方法
     public void loadDataFrom() {
-        getMyWordList();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getMyWordList();
+            }
+        }).start();
+
     }
 
     /**
@@ -417,15 +399,11 @@ private TextView tv_name,tv_signature;
             yp = -radius * w;
             for (i = -radius; i <= radius; i++) {
                 yi = Math.max(0, yp) + x;
-
                 sir = stack[i + radius];
-
                 sir[0] = r[yi];
                 sir[1] = g[yi];
                 sir[2] = b[yi];
-
                 rbs = r1 - Math.abs(i);
-
                 rsum += r[yi] * rbs;
                 gsum += g[yi] * rbs;
                 bsum += b[yi] * rbs;
@@ -457,11 +435,9 @@ private TextView tv_name,tv_signature;
 
                 stackstart = stackpointer - radius + div;
                 sir = stack[stackstart % div];
-
                 routsum -= sir[0];
                 goutsum -= sir[1];
                 boutsum -= sir[2];
-
                 if (x == 0) {
                     vmin[y] = Math.min(y + r1, hm) * w;
                 }
@@ -497,6 +473,19 @@ private TextView tv_name,tv_signature;
         Log.d("pix", w + " " + h + " " + pix.length);
         bitmap.setPixels(pix, 0, w, 0, 0, w, h);
         return (bitmap);
+    }
+
+    @Override
+    public void onFooterRefresh(PullToRefresh123View view) {
+        mPullToRefreshView.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                mPullToRefreshView.onFooterRefreshComplete();
+                loadDataFrom();
+                ToastUtil.show(a, "加载更多数据!");
+            }
+        }, 3000);
     }
 
 }

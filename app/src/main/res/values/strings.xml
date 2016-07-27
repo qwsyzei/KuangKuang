@@ -127,6 +127,8 @@
 
     <string name="about_us">关于我们</string>
     <string name="feedback">意见反馈</string>
+    <string name="blank_content">您还未填写任何内容</string>
+    <string name="feedback_success">意见反馈成功</string>
     <string name="give_mark">给我们评分</string>
     <string name="clean_cache">清理缓存</string>
     <string name="start_push">启动推送</string>

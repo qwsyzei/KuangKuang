@@ -3,15 +3,13 @@ package klsd.kuangkuang.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
@@ -28,23 +26,24 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
-import klsd.kuangkuang.utils.UIutils;
+import klsd.kuangkuang.views.PullToRefreshView;
+import klsd.kuangkuang.views.SelfListView;
 
 /**
  * 全部评论
  */
-public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, AbsListView.OnScrollListener {
+public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener{
     private TextView tv_send;
     private EditText edit_comment;
     String article_id;
     ArrayList<AllComment> mylist;
     private S_AllCommentAdapter allAdapter;
-    private SwipeRefreshLayout swipeView;
-    private ListView listView;
+    private SelfListView listView;
     String direction = "bottom";
     private int page = 1;
     private LinearLayout layout_send;
-
+    // 自定义的listview的上下拉动刷新
+    private PullToRefreshView mPullToRefreshView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,15 +62,15 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         mylist = new ArrayList<>();
         Intent intent = getIntent();
         article_id = intent.getStringExtra("a_id");
-        listView = (ListView) findViewById(R.id.listview_allcomment);
-        listView.setOnScrollListener(this);
-        UIutils.showLoading(S_AllCommentActivity.this);
-        swipt();
+        listView = (SelfListView) findViewById(R.id.listview_allcomment);
+        mPullToRefreshView= (PullToRefreshView) findViewById(R.id.pull_refresh_view_allcomment);
         getAllComment();
 
         tv_send = (TextView) findViewById(R.id.all_comment_send_send);
         edit_comment = (EditText) findViewById(R.id.all_comment_send_edit);
         tv_send.setOnClickListener(this);
+        mPullToRefreshView.setOnHeaderRefreshListener(this);
+        mPullToRefreshView.setOnFooterRefreshListener(this);
     }
 
     @Override
@@ -95,11 +94,9 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         params.addQueryStringParameter("commenter", DataCenter.getMember_id());
 //        params.addQueryStringParameter("commenter", null);
 
-
         if (http == null) http = new MyHTTP(S_AllCommentActivity.this);
         http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
                 params, getHandler());
-
     }
 
     /**
@@ -126,12 +123,10 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(edit_comment.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_ALL_COMMENT)) {
-            if (swipeView != null) swipeView.setRefreshing(false);//当获取到了就把下拉动画关了
             int curTradesSize = mylist.size();
             ArrayList<AllComment> os = (ArrayList<AllComment>) handlerBundler.getSerializable("all_comment");
             Log.d("OS的长度", "handleMessage() returned: " + os.size());
             if (os.size() == 0) {
-                UIutils.cancelLoading();
                 ToastUtil.show(S_AllCommentActivity.this, getString(R.string.no_more_data));
                 return;
             }
@@ -140,13 +135,11 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
                 mylist = os;
                 allAdapter = new S_AllCommentAdapter(S_AllCommentActivity.this, mylist);
                 listView.setAdapter(allAdapter);
-
             } else {
 
                 allAdapter.notifyDataSetChanged();
             }
             page += 1;
-            UIutils.cancelLoading();
         }
     }
 
@@ -166,48 +159,33 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-        int pos = absListView.getLastVisiblePosition();
-        try {
-            AllComment e = mylist.get(pos);
-            if (e == mylist.get(mylist.size() - 1)) {
-                loadDataFrom("bottom");
-
-            }
-        } catch (Exception e) {
-        }
-    }
 
     @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+    public void onFooterRefresh(PullToRefreshView view) {
+        mPullToRefreshView.postDelayed(new Runnable() {
 
-    }
-
-    private void swipt() {
-        swipeView = (SwipeRefreshLayout) findViewById(R.id.swip_s_all_comment);
-        swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
-        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {                 //此方法是刷新
-
-                swipeView.setRefreshing(true);
-                loadDataFrom("top");
+            public void run() {
+                mPullToRefreshView.onFooterRefreshComplete();
+                getAllComment();
+                ToastUtil.show(S_AllCommentActivity.this, "加载更多数据!");
             }
-        });
+
+        }, 2200);
     }
 
-    //刷新数据的方法
-    public void loadDataFrom(String from) {
-        direction = from;
-        if (direction.equals("bottom")) {
-            getAllComment();
+    @Override
+    public void onHeaderRefresh(PullToRefreshView view) {
+        mPullToRefreshView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPullToRefreshView.onHeaderRefreshComplete();
+                mylist = new ArrayList<AllComment>();
+                page = 1;
+                getAllComment();
+                ToastUtil.show(S_AllCommentActivity.this, "数据刷新完成!");
+            }
 
-        } else {
-
-            mylist = new ArrayList<AllComment>();
-            page = 1;
-            getAllComment();
-        }
+        }, 2200);
     }
 }

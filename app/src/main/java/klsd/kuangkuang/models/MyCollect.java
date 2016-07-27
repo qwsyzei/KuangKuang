@@ -158,11 +158,14 @@ public class MyCollect implements Serializable {
             setContent(object.getString("content"));
             setTitle(object.getString("title"));
             setPicture_url(object.getString("picture"));
-            setComment(object.getString("comment_number"));
+            setMember_id(object.getString("member_id"));
             setCreated_at(object.getString("created_at"));
+            setUpdated_at(object.getString("updated_at"));
+            setTag(object.getString("tag"));
+            setDisplay(object.getString("display"));
             setViews(object.getString("views"));
             setLike(object.getString("like"));
-            setComment(object.getString("comment"));
+            setComment(object.getString("comment_number"));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ import klsd.kuangkuang.models.AllComment;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.views.CircleImageView;
+
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 
 /**
@@ -53,8 +56,10 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
         String time = MyDate.timeLogic(ac.getCreated_at().substring(0, 19).replace("T", " "));
         viewHolder.created_at.setText(time);
         viewHolder.tv_nickname.setText(ac.getNickname());
-        BitmapUtils bitmapUtils = new BitmapUtils(ctx);
-        bitmapUtils.display(viewHolder.im_head, Consts.host+"/"+ac.getPicture_son());
+        Context context = ctx.getApplicationContext();
+        initImageLoader(context);
+        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_head);
+
 
         return convertView;
     }

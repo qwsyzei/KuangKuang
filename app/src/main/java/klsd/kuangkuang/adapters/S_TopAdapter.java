@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 import klsd.kuangkuang.R;
@@ -27,6 +28,8 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * Created by qiwei on 2016/7/12.
@@ -75,8 +78,10 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
        viewHolder.top.setText("Top"+(position+1)+"");
         viewHolder.title.setText(ac.getTitle());
         viewHolder.tag.setText(ac.getTag());
-        BitmapUtils bitmapUtils=new BitmapUtils(ctx);
-        bitmapUtils.display(viewHolder.im_pic,ac.getPicture_url());
+
+        Context context = ctx.getApplicationContext();
+        initImageLoader(context);
+        ImageLoader.getInstance().displayImage(ac.getPicture_url(), viewHolder.im_pic);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

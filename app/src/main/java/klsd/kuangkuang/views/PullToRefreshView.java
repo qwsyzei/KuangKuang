@@ -460,7 +460,7 @@ public class PullToRefreshView extends LinearLayout {
 		} else if (Math.abs(newTopMargin) < (mHeaderViewHeight + mFooterViewHeight)) {
 			mFooterImageView.clearAnimation();
 			mFooterImageView.startAnimation(mFlipAnimation);
-			mFooterTextView.setText("上拉加载更多");
+			mFooterTextView.setText("上滑加载更多");
 			mFooterState = PULL_TO_REFRESH;
 		}
 	}
@@ -570,7 +570,7 @@ public class PullToRefreshView extends LinearLayout {
 		setHeaderTopMargin(-mHeaderViewHeight);
 		mFooterImageView.setVisibility(View.VISIBLE);
 		mFooterImageView.setImageResource(R.mipmap.ic_pulltorefresh_arrow_up);
-		mFooterTextView.setText("上拉加载更多");
+		mFooterTextView.setText("上滑加载更多");
 		mFooterProgressBar.setVisibility(View.GONE);
 		// mHeaderUpdateTextView.setText("");
 		mFooterState = PULL_TO_REFRESH;

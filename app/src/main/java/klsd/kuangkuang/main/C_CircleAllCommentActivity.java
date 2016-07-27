@@ -12,11 +12,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import klsd.kuangkuang.R;
@@ -29,22 +32,24 @@ import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
+import klsd.kuangkuang.views.PullToRefreshView;
+import klsd.kuangkuang.views.SelfListView;
 
 /**
  * 圈子的全部评论
  */
-public class C_CircleAllCommentActivity extends BaseActivity implements View.OnClickListener, AbsListView.OnScrollListener {
+public class C_CircleAllCommentActivity extends BaseActivity implements View.OnClickListener, PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener {
     private TextView tv_send;
     private EditText edit_comment;
     String micropost_id;
     ArrayList<CircleAllComment> mylist;
     private C_CircleCommentAdapter allAdapter;
-    private SwipeRefreshLayout swipeView;
-    private ListView listView;
-    String direction = "bottom";
+    private SelfListView listView;
     private int page = 1;
     private LinearLayout layout_send;
     MyHTTP http;
+    // 自定义的listview的上下拉动刷新
+    private PullToRefreshView mPullToRefreshView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,15 +67,14 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
         mylist = new ArrayList<>();
         Intent intent = getIntent();
         micropost_id = intent.getStringExtra("micropost_id");
-        listView = (ListView) findViewById(R.id.listview_circle_allcomment);
-        listView.setOnScrollListener(this);
-        UIutils.showLoading(C_CircleAllCommentActivity.this);
-        swipt();
+        listView = (SelfListView) findViewById(R.id.listview_circle_allcomment);
         getCommentList();
-
+        mPullToRefreshView= (PullToRefreshView) findViewById(R.id.pull_refresh_view_circle_allcomment);
         tv_send = (TextView) findViewById(R.id.all_comment_send_send);
         edit_comment = (EditText) findViewById(R.id.all_comment_send_edit);
         tv_send.setOnClickListener(this);
+        mPullToRefreshView.setOnHeaderRefreshListener(this);
+        mPullToRefreshView.setOnFooterRefreshListener(this);
     }
 
     @Override
@@ -103,7 +107,7 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("micropost_id", micropost_id);
         params.addQueryStringParameter("page", page+"");
-        params.addQueryStringParameter("limit", "8");
+        params.addQueryStringParameter("limit", "10");
         params = KelaParams.generateSignParam("GET", Consts.circlecommentListApi, params);
         if (http == null) http = new MyHTTP(C_CircleAllCommentActivity.this);
         http.baseRequest(Consts.circlecommentListApi, JSONHandler.JTYPE_CIRCLE_ALL_COMMENT, HttpRequest.HttpMethod.GET,
@@ -119,12 +123,11 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(edit_comment.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
         } else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_ALL_COMMENT)) {
-            if (swipeView != null) swipeView.setRefreshing(false);//当获取到了就把下拉动画关了
             int curTradesSize = mylist.size();
             ArrayList<CircleAllComment> os = (ArrayList<CircleAllComment>) handlerBundler.getSerializable("circle_all_comment");
             Log.d("OS的长度", "handleMessage() returned: " + os.size());
             if (os.size() == 0) {
-                UIutils.cancelLoading();
+
                 ToastUtil.show(C_CircleAllCommentActivity.this, getString(R.string.no_more_data));
                 return;
             }
@@ -139,7 +142,6 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
                 allAdapter.notifyDataSetChanged();
             }
             page += 1;
-            UIutils.cancelLoading();
         }
     }
 
@@ -160,47 +162,34 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
     }
 
     @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-        int pos = absListView.getLastVisiblePosition();
-        try {
-            CircleAllComment e = mylist.get(pos);
-            if (e == mylist.get(mylist.size() - 1)) {
-                loadDataFrom("bottom");
+    public void onFooterRefresh(PullToRefreshView view) {
+        mPullToRefreshView.postDelayed(new Runnable() {
 
+            @Override
+            public void run() {
+                mPullToRefreshView.onFooterRefreshComplete();
+
+                getCommentList();
+                ToastUtil.show(C_CircleAllCommentActivity.this, "加载更多数据!");
             }
-        } catch (Exception e) {
-        }
+
+        }, 2200);
     }
 
     @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-    }
-
-    private void swipt() {
-        swipeView = (SwipeRefreshLayout) findViewById(R.id.swip_s_circle_all_comment);
-        swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
-        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    public void onHeaderRefresh(PullToRefreshView view) {
+        mPullToRefreshView.postDelayed(new Runnable() {
             @Override
-            public void onRefresh() {                 //此方法是刷新
+            public void run() {
 
-                swipeView.setRefreshing(true);
-                loadDataFrom("top");
+                mPullToRefreshView.onHeaderRefreshComplete();
+
+                mylist = new ArrayList<CircleAllComment>();
+                page = 1;
+                getCommentList();
+                ToastUtil.show(C_CircleAllCommentActivity.this, "数据刷新完成!");
             }
-        });
-    }
 
-    //刷新数据的方法
-    public void loadDataFrom(String from) {
-        direction = from;
-        if (direction.equals("bottom")) {
-            getCommentList();
-
-        } else {
-
-            mylist = new ArrayList<CircleAllComment>();
-            page = 1;
-            getCommentList();
-        }
+        }, 2200);
     }
 }

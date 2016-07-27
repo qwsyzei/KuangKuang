@@ -267,7 +267,7 @@ public class BaseActivity extends FragmentActivity {
             if (responseJson == null || responseJson.equals(getString(R.string.checkup_network))) {
                 if (flag==false){
                     ToastUtil.show(BaseActivity.this, responseJson);
-                    myStartActivity(new Intent(BaseActivity.this, LoginActivity.class));
+//                    myStartActivity(new Intent(BaseActivity.this, LoginActivity.class));
                     flag=true;
                 }
                 return;
@@ -277,7 +277,8 @@ public class BaseActivity extends FragmentActivity {
                 toastError();
             }
             } else {
-                myStartActivity(new Intent(BaseActivity.this, LoginActivity.class));
+//                myStartActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                Toast.makeText(BaseActivity.this, getString(R.string.network_problem), Toast.LENGTH_SHORT).show();
             }
 
         }

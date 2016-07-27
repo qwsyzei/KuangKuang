@@ -2,206 +2,257 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/login_p_l_r"
-    android:background="@color/lightgray"
-    android:orientation="vertical">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:background="@color/white"
-    android:layout_marginLeft="@dimen/login_p_l_r"
-    android:layout_marginRight="@dimen/login_p_l_r"
-    android:paddingLeft="@dimen/login_p_l_r"
-    android:paddingRight="@dimen/login_p_l_r"
-    android:paddingTop="@dimen/login_p_l_r"
-    android:paddingBottom="@dimen/signup__text_m_l_r"
     android:orientation="vertical">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/login_p_l_r"
-   >
 
-        <klsd.kuangkuang.views.CircleImageView
-            android:id="@+id/circle_detail_head_pic"
-            android:layout_width="@dimen/article_author_head_size"
-            android:layout_height="@dimen/article_author_head_size"
-            android:src="@mipmap/head_pic" />
-
-        <TextView
-            android:id="@+id/circle_detail_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="@dimen/login_p_l_r"
-            android:layout_toRightOf="@+id/circle_detail_head_pic"
-            android:text="刘关张" />
-
-        <TextView
-            android:id="@+id/circle_detail_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:text="5月20日 09：56" />
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/circle_detail_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/login_p_l_r"
-        android:layout_marginLeft="@dimen/signup__text_m_l_r"
-        android:layout_marginRight="@dimen/signup__text_m_l_r"
-        android:layout_marginBottom="@dimen/login_p_l_r"
-        android:text="123"
-        android:textSize="@dimen/middle_text_size" />
-    <klsd.kuangkuang.views.SelfGridView
-        android:id="@+id/gridview_circle_detail"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/base_margin"
-        android:layout_marginRight="@dimen/base_margin"
-        android:numColumns="3"
-        android:smoothScrollbar="true"
-        android:soundEffectsEnabled="true"
-        ></klsd.kuangkuang.views.SelfGridView>
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/title_two"></include>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="@dimen/base_margin"
-        android:background="@color/edit_hint" />
+        android:layout_height="@dimen/size_eight"
+        android:background="@color/lightgray"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/login_p_l_r">
-        <LinearLayout
-            android:id="@+id/layout_circle_detail_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:src="@drawable/back_comment"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:text="@string/delete"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-        <LinearLayout
-            android:id="@+id/layout_circle_detail_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/base_margin"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/small_like" />
-
-            <TextView
-                android:id="@+id/circle_detail_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/login_p_l_r"
-                android:layout_gravity="center"
-                android:text="10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_circle_detail_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/base_margin"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/base_margin"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/small_comment" />
-
-            <TextView
-                android:id="@+id/circle_detail_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/login_p_l_r"
-                android:layout_gravity="center"
-                android:layout_marginRight="@dimen/login_p_l_r"
-                android:text="3" />
-        </LinearLayout>
-
-    </LinearLayout>
-</LinearLayout>
-   <LinearLayout
-       android:background="@color/white"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_marginLeft="@dimen/login_p_l_r"
-       android:layout_marginRight="@dimen/login_p_l_r"
-       android:paddingLeft="@dimen/base_margin"
-       android:paddingRight="@dimen/base_margin"
-       android:paddingTop="@dimen/size_eight"
-       android:paddingBottom="@dimen/size_eight"
-       android:orientation="horizontal">
-       <ImageView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_gravity="center_vertical"
-           android:src="@mipmap/like01"/>
-       <klsd.kuangkuang.views.SelfGridView
-           android:id="@+id/gridview_circle_detail_like"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginLeft="@dimen/base_margin"
-           android:layout_marginRight="@dimen/base_margin"
-           android:numColumns="8"
-           android:smoothScrollbar="true"
-           android:soundEffectsEnabled="true"
-           ></klsd.kuangkuang.views.SelfGridView>
-   </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="@dimen/login_p_l_r"
-        android:layout_marginLeft="@dimen/login_p_l_r"
-        android:layout_marginRight="@dimen/login_p_l_r"
-        android:paddingLeft="@dimen/base_margin"
-        android:paddingRight="@dimen/login_p_l_r"
+        android:layout_height="fill_parent"
         android:orientation="horizontal">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/signup__text_m_l_r"
-            android:src="@mipmap/comment01"/>
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swip_s_circle_detail_comment"
+
+        <View
+            android:layout_width="@dimen/size_eight"
+            android:layout_height="fill_parent"
+            android:background="@color/lightgray"></View>
+
+        <klsd.kuangkuang.views.PullToRefresh123View
+            android:id="@+id/pull_refresh_view_circle_detail"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="@color/white">
-        <ListView
-            android:id="@+id/listview_circle_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@color/lightgray"
-            android:dividerHeight="@dimen/login_p_l_r"
-            android:layout_marginLeft="@dimen/login_p_l_r"
-            ></ListView>
-        </android.support.v4.widget.SwipeRefreshLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="@dimen/login_p_l_r">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/login_p_l_r">
+
+                            <klsd.kuangkuang.views.CircleImageView
+                                android:id="@+id/circle_detail_head_pic"
+                                android:layout_width="@dimen/article_author_head_size"
+                                android:layout_height="@dimen/article_author_head_size"
+                                android:src="@mipmap/touxiang03" />
+
+                            <TextView
+                                android:id="@+id/circle_detail_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginTop="@dimen/login_p_l_r"
+                                android:layout_toRightOf="@+id/circle_detail_head_pic"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/circle_detail_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:text="5月20日 09：56" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/circle_detail_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/login_p_l_r"
+                            android:layout_marginLeft="@dimen/signup__text_m_l_r"
+                            android:layout_marginRight="@dimen/signup__text_m_l_r"
+                            android:layout_marginTop="@dimen/login_p_l_r"
+                            android:text="123"
+                            android:textSize="@dimen/middle_text_size" />
+
+                        <klsd.kuangkuang.views.SelfGridView
+                            android:id="@+id/gridview_circle_detail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/base_margin"
+                            android:layout_marginLeft="@dimen/base_margin"
+                            android:layout_marginRight="@dimen/base_margin"
+                            android:numColumns="3"
+                            android:smoothScrollbar="true"
+                            android:soundEffectsEnabled="true"></klsd.kuangkuang.views.SelfGridView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/login_p_l_r">
+
+                            <LinearLayout
+                                android:id="@+id/layout_circle_detail_delete"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/login_p_l_r"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/back_comment" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dp"
+                                    android:text="@string/delete" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <LinearLayout
+                                android:id="@+id/layout_circle_detail_like"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="@dimen/base_margin"
+                                    android:src="@mipmap/small_like" />
+
+                                <TextView
+                                    android:id="@+id/circle_detail_like"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/login_p_l_r"
+                                    android:text="10" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_circle_detail_comment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/base_margin"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="@dimen/base_margin"
+                                    android:src="@mipmap/small_comment" />
+
+                                <TextView
+                                    android:id="@+id/circle_detail_comment"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/login_p_l_r"
+                                    android:layout_marginRight="@dimen/login_p_l_r"
+                                    android:text="3" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_eight"
+                        android:background="@color/lightgray"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/login_p_l_r"
+
+                        android:layout_marginRight="@dimen/login_p_l_r"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/size_eight"
+                        android:paddingLeft="@dimen/base_margin"
+                        android:paddingRight="@dimen/base_margin"
+                        android:paddingTop="@dimen/size_eight">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/like01" />
+
+                        <klsd.kuangkuang.views.SelfGridView
+                            android:id="@+id/gridview_circle_detail_like"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/base_margin"
+                            android:layout_marginRight="@dimen/base_margin"
+                            android:numColumns="8"
+                            android:smoothScrollbar="true"
+                            android:soundEffectsEnabled="true"></klsd.kuangkuang.views.SelfGridView>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/login_p_l_r"
+                        android:background="@color/lightgray"></View>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/login_p_l_r"
+                        android:layout_marginRight="@dimen/login_p_l_r"
+                        android:background="@color/white"
+                        android:paddingBottom="@dimen/size_eight"
+                        android:paddingLeft="@dimen/base_margin"
+                        android:paddingRight="@dimen/base_margin"
+                        android:paddingTop="20dp"
+                        android:src="@mipmap/comment01" />
+
+                    <klsd.kuangkuang.views.SelfListView
+                        android:id="@+id/listview_circle_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="35dp"
+                        android:layout_marginTop="-41dp"
+                        android:divider="@color/lightgray"
+                        android:dividerHeight="2dp"></klsd.kuangkuang.views.SelfListView>
+                </LinearLayout>
+            </ScrollView>
+        </klsd.kuangkuang.views.PullToRefresh123View>
+
+        <View
+            android:layout_width="@dimen/size_eight"
+            android:layout_height="fill_parent"
+            android:background="@color/lightgray"></View>
     </LinearLayout>
 
 </LinearLayout>

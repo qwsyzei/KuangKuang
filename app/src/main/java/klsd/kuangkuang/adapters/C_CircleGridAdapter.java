@@ -9,24 +9,28 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.models.CircleGridViewEntity;
+import klsd.kuangkuang.utils.Consts;
+
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 圈子9宫格adapter
  * Created by qiwei on 2016/7/8.
  */
 public class C_CircleGridAdapter extends ArrayAdapter<CircleGridViewEntity> {
-    private Context context ;
+    private Context ctx ;
     private List<CircleGridViewEntity> list;
 
     public C_CircleGridAdapter(Context context, List<CircleGridViewEntity> list) {
         super(context,R.layout.item_gridview,list);
-        this.context = context;
+        this.ctx = context;
         this.list = list;
     }
 
@@ -47,16 +51,17 @@ public class C_CircleGridAdapter extends ArrayAdapter<CircleGridViewEntity> {
             ret= convertView;
         }else{
             ViewHolder holder = null;
-            ret = LayoutInflater.from(context).inflate(R.layout.item_gridview,parent,false);
+            ret = LayoutInflater.from(ctx).inflate(R.layout.item_gridview,parent,false);
             holder = new ViewHolder();
             holder.bgIcon = (ImageView) ret.findViewById(R.id.im_item_girdvie);
 
             ret.setTag(holder);
         }
         ViewHolder holder = (ViewHolder) ret.getTag();
-//
-        BitmapUtils bitmapUtils=new BitmapUtils(context);
-        bitmapUtils.display(holder.bgIcon,list.get(position).getPicture_url());
+        Context context = ctx.getApplicationContext();
+        initImageLoader(context);
+        ImageLoader.getInstance().displayImage(list.get(position).getPicture_url(),holder.bgIcon);
+
 
         return ret;
     }

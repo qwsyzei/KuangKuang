@@ -4,19 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -25,6 +22,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import klsd.kuangkuang.R;
@@ -41,15 +39,16 @@ import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
-import klsd.kuangkuang.views.PullToRefreshView;
+import klsd.kuangkuang.views.PullToRefresh123View;
 import klsd.kuangkuang.views.SelfGridView;
+import klsd.kuangkuang.views.SelfListView;
 
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 朋友圈详情页
  */
-public class M_CircleDetailActivity extends BaseActivity implements View.OnClickListener, AbsListView.OnScrollListener {
+public class M_CircleDetailActivity extends BaseActivity implements View.OnClickListener,PullToRefresh123View.OnFooterRefreshListener{
     private String id, head_pic, time, nickname, content, like_number, comment_number;
     private String url1, url2, url3, url4, url5, url6, url7, url8, url9;
 
@@ -64,18 +63,17 @@ private M_DetailLikeAdapter mdAdapter;
     ArrayList<CircleAllComment> mylist;
     private C_CircleCommentAdapter allAdapter;
     private int page = 1;
-    private ListView listView;
-    private SwipeRefreshLayout swipeView;
-    String direction = "bottom";
+    private SelfListView listView;
     private PopupWindow cPopwindow;
     private TextView tv_dialog_send;
     private EditText edit_dialog_comment;
     // 自定义的listview的上下拉动刷新
-    private PullToRefreshView mPullToRefreshView;
+    private PullToRefresh123View mPullToRefreshView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.c_circle_detail);
+        setTitle(getString(R.string.details));
         Context context = getApplicationContext();
         initImageLoader(context);
         initView();
@@ -83,7 +81,6 @@ private M_DetailLikeAdapter mdAdapter;
     }
 
     private void initView() {
-
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         head_pic = intent.getStringExtra("head_pic");
@@ -124,8 +121,9 @@ private M_DetailLikeAdapter mdAdapter;
             number = 9;
         }
         mylist = new ArrayList<>();
-        listView = (ListView) findViewById(R.id.listview_circle_detail);
-        listView.setOnScrollListener(this);
+        mPullToRefreshView= (PullToRefresh123View) findViewById(R.id.pull_refresh_view_circle_detail);
+        listView = (SelfListView) findViewById(R.id.listview_circle_detail);
+//        listView.setOnScrollListener(this);
         gridview = (SelfGridView) findViewById(R.id.gridview_circle_detail);
         gridview_like= (SelfGridView) findViewById(R.id.gridview_circle_detail_like);
         im_head = (ImageView) findViewById(R.id.circle_detail_head_pic);
@@ -140,6 +138,8 @@ private M_DetailLikeAdapter mdAdapter;
         layout_like.setOnClickListener(this);
         layout_comment.setOnClickListener(this);
         layout_delete.setOnClickListener(this);
+        mPullToRefreshView.setOnFooterRefreshListener(this);
+        mPullToRefreshView.setLastUpdated(new Date().toLocaleString());
 
         if (!head_pic.equals("null")) {
             ImageLoader.getInstance().displayImage(Consts.host + "/" + head_pic, im_head);
@@ -289,7 +289,6 @@ private M_DetailLikeAdapter mdAdapter;
             ToastUtil.show(M_CircleDetailActivity.this, "评论成功");
         }
         else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_LIKE_LIST)) {
-            swipt();
             commentList();
             ArrayList<CircleLike> os = (ArrayList<CircleLike>) handlerBundler.getSerializable("circle_like_list");
             if (os.size() == 0) {
@@ -300,7 +299,6 @@ private M_DetailLikeAdapter mdAdapter;
             gridview_like.setAdapter(mdAdapter);
 
         }else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_ALL_COMMENT)) {
-            if (swipeView != null) swipeView.setRefreshing(false);//当获取到了就把下拉动画关了
             int curTradesSize = mylist.size();
             ArrayList<CircleAllComment> os = (ArrayList<CircleAllComment>) handlerBundler.getSerializable("circle_all_comment");
             Log.d("OS的长度", "handleMessage() returned: " + os.size());
@@ -322,18 +320,7 @@ private M_DetailLikeAdapter mdAdapter;
         }
 
     }
-    private void swipt() {
-        swipeView = (SwipeRefreshLayout) findViewById(R.id.swip_s_circle_detail_comment);
-        swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
-        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {                 //此方法是刷新
 
-                swipeView.setRefreshing(true);
-                loadDataFrom("top");
-            }
-        });
-    }
     public void addTrades(String from, List<CircleAllComment> ess) {
         List<String> ids = new ArrayList<String>();
         for (CircleAllComment o : mylist)
@@ -347,37 +334,6 @@ private M_DetailLikeAdapter mdAdapter;
         }
         if (allAdapter != null) {
             allAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-        int pos = absListView.getLastVisiblePosition();
-        try {
-            CircleAllComment e = mylist.get(pos);
-            if (e == mylist.get(mylist.size() - 1)) {
-                loadDataFrom("bottom");
-
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-    }
-    //刷新数据的方法
-    public void loadDataFrom(String from) {
-        direction = from;
-        if (direction.equals("bottom")) {
-            commentList();
-
-        } else {
-
-            mylist = new ArrayList<CircleAllComment>();
-            page = 1;
-            commentList();
         }
     }
 
@@ -409,4 +365,20 @@ private M_DetailLikeAdapter mdAdapter;
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
+
+    @Override
+    public void onFooterRefresh(PullToRefresh123View view) {
+        mPullToRefreshView.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                mPullToRefreshView.onFooterRefreshComplete();
+
+                commentList();
+                ToastUtil.show(M_CircleDetailActivity.this, "加载更多数据!");
+            }
+
+        }, 2200);
+    }
+
 }

@@ -17,27 +17,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.photoview.PhotoViewAttacher;
-import klsd.kuangkuang.testpic.TestPicActivity;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
-import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.SelectPicDialog;
 
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
@@ -79,7 +71,7 @@ public class M_BigHeadActivity extends BaseActivity implements View.OnClickListe
         tv_right.setOnClickListener(this);
         ImageLoader.getInstance().displayImage(pic_url, im_bighead);
         PhotoViewAttacher mAttacher = new PhotoViewAttacher(im_bighead);
-        mAttacher.setScaleType(ImageView.ScaleType.FIT_XY);
+        mAttacher.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
     @Override
@@ -226,8 +218,8 @@ public class M_BigHeadActivity extends BaseActivity implements View.OnClickListe
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
         // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 200);
-        intent.putExtra("outputY", 200);
+        intent.putExtra("outputX", 500);
+        intent.putExtra("outputY", 500);
         intent.putExtra("return-data", true);
         startActivityForResult(intent, PHOTORESULT);
     }

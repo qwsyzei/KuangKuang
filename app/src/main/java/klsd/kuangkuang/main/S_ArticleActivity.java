@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,8 @@ import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.CircleImageView;
+
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 
 /**
@@ -68,6 +71,8 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.s__article);
+        Context context =getApplicationContext();
+        initImageLoader(context);
         initView();
     }
 
@@ -100,8 +105,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_author_name.setText(nickname);
         tv_author_signature.setText(author_signature);
         if (!picture_head.equals("null")){
-            BitmapUtils bitmapUtils=new BitmapUtils(S_ArticleActivity.this);
-            bitmapUtils.display(im_author_head,Consts.host+"/"+picture_head);
+            ImageLoader.getInstance().displayImage(Consts.host+"/"+picture_head, im_author_head);
         }
 
         listView = (ListView) findViewById(R.id.listview_article_comment3);

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -29,6 +30,8 @@ import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.ExitDialog;
+
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 我的收藏列表的adapter
@@ -80,8 +83,10 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
         aid = ac.getId();
         viewHolder.title.setText(ac.getTitle());
         viewHolder.describe_son.setText(ac.getDescribe_son());
-        BitmapUtils bitmapUtils = new BitmapUtils(ctx);
-        bitmapUtils.display(viewHolder.im_pic, ac.getPicture_url());
+        Context context = ctx.getApplicationContext();
+        initImageLoader(context);
+        ImageLoader.getInstance().displayImage(ac.getPicture_url(), viewHolder.im_pic);
+
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

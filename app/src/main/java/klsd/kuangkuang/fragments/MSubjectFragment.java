@@ -6,21 +6,15 @@ import android.content.Intent;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.TextView;
-
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.S_SubjectAdapter;
 import klsd.kuangkuang.main.BaseActivity;
@@ -28,33 +22,30 @@ import klsd.kuangkuang.main.LoginActivity;
 import klsd.kuangkuang.main.S_TopTenActivity;
 import klsd.kuangkuang.models.Subject;
 import klsd.kuangkuang.utils.Consts;
-import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
-import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
-import klsd.kuangkuang.utils.UIutils;
+import klsd.kuangkuang.views.PullToRefreshView;
+import klsd.kuangkuang.views.SelfListView;
 
 /**
  * 专题
  */
-public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnScrollListener,View.OnClickListener {
+public class MSubjectFragment extends MyBaseFragment implements View.OnClickListener,PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener {
     View view;
     private S_SubjectAdapter sAdapter;
-    private ListView listView;
+    private SelfListView listView;
     private ArrayList<Subject> sList;
     private static Activity a;
-    private SwipeRefreshLayout swipeView;
    private int limit = 5;
     private int page = 1;
-    String direction = "bottom";
     private TextView tv_top;
+    // 自定义的listview的上下拉动刷新
+    private PullToRefreshView mPullToRefreshView;
     public MSubjectFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,12 +63,11 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
         Log.d("去获取了", "initView() returned: " + "");
         tv_top= (TextView) view.findViewById(R.id.tv_title_right);
         tv_top.setOnClickListener(this);
-        listView = (ListView) view.findViewById(R.id.listview_msubject);
-        listView.setOnScrollListener(this);
-        UIutils.showLoading(a);
-        swipt();
+        listView = (SelfListView) view.findViewById(R.id.listview_msubject);
+        mPullToRefreshView= (PullToRefreshView)view.findViewById(R.id.pull_refresh_view_subject);
         getArticlesList();
-
+        mPullToRefreshView.setOnHeaderRefreshListener(this);
+        mPullToRefreshView.setOnFooterRefreshListener(this);
 //        listView.setAdapter(sAdapter);
     }
 
@@ -102,8 +92,6 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
                 params, handler);
     }
 
-
-
     private Handler handler = new BaseActivity.KelaHandler(a){
         @SuppressWarnings("unchecked")
         public void handleMessage(android.os.Message msg) {
@@ -115,13 +103,11 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
                 a.startActivity(new Intent(a, LoginActivity.class));
                 a.finish();
             } else if (res.equals("OK")) {
-                if (swipeView != null) swipeView.setRefreshing(false);
                 if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIST)) {
                     int curTradesSize = sList.size();
                     ArrayList<Subject> os = (ArrayList<Subject>) bundle.getSerializable("subject_article");
                     Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
-                        UIutils.cancelLoading();
                         ToastUtil.show(a, a.getString(R.string.no_more_data));
                         return;
                     }
@@ -136,7 +122,6 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
                         sAdapter.notifyDataSetChanged();
                     }
                     page += 1;
-                    UIutils.cancelLoading();
                 }
             } else {
                 ToastUtil.show(a, res);
@@ -158,50 +143,7 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
             sAdapter.notifyDataSetChanged();
         }
     }
-    @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-        int pos = absListView.getLastVisiblePosition();
-        try {
-            Subject e = sList.get(pos);
-            if (e == sList.get(sList.size() - 1)) {
-                loadDataFrom("bottom");
 
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-    }
-    public void swipt() {
-        swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swip_msubject);
-        swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
-        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {                 //此方法是刷新
-
-                swipeView.setRefreshing(true);
-                loadDataFrom("top");
-            }
-        });
-    }
-
-
-    //刷新数据的方法
-    public void loadDataFrom(String from) {
-        direction = from;
-        if (from.equals("bottom")) {
-            getArticlesList();
-
-        }else {
-
-            sList = new ArrayList<Subject>();
-            page = 1;
-            getArticlesList();
-        }
-    }
 
     @Override
     public void onClick(View view) {
@@ -210,5 +152,32 @@ public class MSubjectFragment extends MyBaseFragment implements AbsListView.OnSc
                 myStartActivity(new Intent(a, S_TopTenActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public void onFooterRefresh(PullToRefreshView view) {
+        mPullToRefreshView.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                mPullToRefreshView.onFooterRefreshComplete();
+                getArticlesList();
+                ToastUtil.show(a, "加载更多数据!");
+            }
+        }, 2200);
+    }
+
+    @Override
+    public void onHeaderRefresh(PullToRefreshView view) {
+        mPullToRefreshView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPullToRefreshView.onHeaderRefreshComplete();
+                sList = new ArrayList<Subject>();
+                page = 1;
+                getArticlesList();
+                ToastUtil.show(a, "数据刷新完成!");
+            }
+        }, 2200);
     }
 }

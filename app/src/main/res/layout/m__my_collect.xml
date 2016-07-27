@@ -11,29 +11,30 @@
         android:layout_height="wrap_content">
         <include layout="@layout/title_two"/>
     </LinearLayout>
-<TextView
-    android:id="@+id/my_collect_tv_top"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/base_margin"
-    android:visibility="gone"
-    android:text="我的收藏：8"/>
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swip_my_collect"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/size_eight"
-        android:layout_marginRight="@dimen/size_eight"
-        android:layout_marginTop="@dimen/login_p_l_r"
-  >
-        <ListView
+
+    <klsd.kuangkuang.views.PullToRefreshView
+        android:id="@+id/pull_refresh_view_my_collect"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+ >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent">
+        <klsd.kuangkuang.views.SelfListView
             android:id="@+id/listview_my_collect"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/size_eight"
             android:layout_height="wrap_content"
             android:dividerHeight="@dimen/login_p_l_r"
             android:divider="@color/lightgray"
-       ></ListView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+       ></klsd.kuangkuang.views.SelfListView>
+            </LinearLayout>
+        </ScrollView>
+
+    </klsd.kuangkuang.views.PullToRefreshView>
 
 </LinearLayout>

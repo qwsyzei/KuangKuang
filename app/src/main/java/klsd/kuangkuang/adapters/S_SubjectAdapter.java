@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -28,6 +29,8 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 专题文章列表的adapter
@@ -106,9 +109,12 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
             viewHolder.comment.setText(subject.getComment());
         }
         viewHolder.tv_author_name.setText(subject.getNickname());
-        BitmapUtils bitmapUtils = new BitmapUtils(ctx);
-        bitmapUtils.display(viewHolder.im_picture, subject.getPicture());
-        bitmapUtils.display(viewHolder.im_head_pic, Consts.host+"/"+subject.getPicture_son());
+
+        Context context = ctx.getApplicationContext();
+        initImageLoader(context);
+        ImageLoader.getInstance().displayImage(subject.getPicture(), viewHolder.im_picture);
+        ImageLoader.getInstance().displayImage(Consts.host+"/"+subject.getPicture_son(), viewHolder.im_head_pic);
+
 
         viewHolder.layout_item.setOnClickListener(new View.OnClickListener() {
             @Override

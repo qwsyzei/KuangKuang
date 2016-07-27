@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,6 +31,8 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.CircleImageView;
+
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 个人资料
@@ -49,6 +53,8 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.m_personal_data);
         setTitle(getString(R.string.personal_data));
         setTitleRight(getString(R.string.save));
+        Context context =getApplicationContext();
+        initImageLoader(context);
         initView();
     }
 
@@ -147,8 +153,9 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
             if (head_url.equals("null")) {
                 im_head.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.touxiang03));
             } else {
-                BitmapUtils bitmapUtils = new BitmapUtils(M_PersonalDataActivity.this);
-                bitmapUtils.display(im_head,  head_url);
+
+                ImageLoader.getInstance().displayImage(head_url, im_head);
+
             }
 
             ToastUtil.show(M_PersonalDataActivity.this, "已获取到个人资料");

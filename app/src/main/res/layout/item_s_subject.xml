@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/item_subject_picture"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/item_subject_height"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:layout_marginBottom="@dimen/s_subject_back_m_b"
@@ -38,7 +38,7 @@
                 android:id="@+id/item_subject_head_pic"
                 android:layout_width="@dimen/subject_author_head_size"
                 android:layout_height="@dimen/subject_author_head_size"
-                android:src="@mipmap/touxiang03"/>
+                />
         </LinearLayout>
     </FrameLayout>
         <TextView

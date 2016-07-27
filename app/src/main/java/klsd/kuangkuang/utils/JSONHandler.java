@@ -98,6 +98,7 @@ public class JSONHandler {
     public final static String JTYPE_PICTURE7 = "picture7";
     public final static String JTYPE_PICTURE8 = "picture8";
     public final static String JTYPE_PICTURE9 = "picture9";
+    public final static String JTYPE_GIVE_SUGGEST = "give_suggest";//意见反馈
 
     public JSONHandler() {
 
@@ -389,6 +390,7 @@ public class JSONHandler {
         osStrings.add(JTYPE_PICTURE7);
         osStrings.add(JTYPE_PICTURE8);
         osStrings.add(JTYPE_PICTURE9);
+        osStrings.add(JTYPE_GIVE_SUGGEST);
         return osStrings.contains(jtype2);
     }
 
