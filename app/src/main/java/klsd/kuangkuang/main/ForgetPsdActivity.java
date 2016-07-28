@@ -20,6 +20,7 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 
 /**
  * 忘记密码
@@ -27,7 +28,8 @@ import klsd.kuangkuang.utils.ToastUtil;
  */
 public class ForgetPsdActivity extends BaseActivity {
 
-    private EditText edit_phonenumber, edit_phoneyan, edit_newpsd, edit_newpsd_confirm;
+    private EditText edit_phonenumber, edit_phoneyan;
+    private ContainsEmojiEditText edit_newpsd, edit_newpsd_confirm;
     private ImageView im_inputcancel;//email输入时删除全部的图标，即“叉”
     private TextView tv_getcode;
     private ImageView im_set;
@@ -48,8 +50,8 @@ public class ForgetPsdActivity extends BaseActivity {
         im_inputcancel = (ImageView) findViewById(R.id.getback_im_cancel);
         edit_phonenumber = (EditText) findViewById(R.id.getback_phone_edit_number);
         edit_phoneyan = (EditText) findViewById(R.id.getback_phone_yan);
-        edit_newpsd = (EditText) findViewById(R.id.edit_newpassword);
-        edit_newpsd_confirm = (EditText) findViewById(R.id.edit_confirm_newpassword);
+        edit_newpsd = (ContainsEmojiEditText) findViewById(R.id.edit_newpassword);
+        edit_newpsd_confirm = (ContainsEmojiEditText) findViewById(R.id.edit_confirm_newpassword);
         tv_getcode = (TextView) findViewById(R.id.getback_code_phone);
         im_set = (ImageView) findViewById(R.id.forget_im_done);
 

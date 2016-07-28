@@ -27,6 +27,7 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 
 /**
  * 手机注册界面
@@ -36,7 +37,8 @@ import klsd.kuangkuang.utils.ToastUtil;
 public class SignupActivity extends BaseActivity {
 
     private TextView tv_email_signup;//email注册
-    private EditText edit_phonenumber, edit_phoneyan, edit_password, edit_password_confirm;
+    private EditText edit_phonenumber, edit_phoneyan;
+    private ContainsEmojiEditText edit_password, edit_password_confirm;
     private ImageView im_signup;
     private TextView tv_get;
 
@@ -65,8 +67,8 @@ public class SignupActivity extends BaseActivity {
         tv_email_signup = (TextView) findViewById(R.id.tv_email_signup);
         edit_phonenumber = (EditText) findViewById(R.id.signup_phone_number);
         edit_phoneyan = (EditText) findViewById(R.id.signup_phone_yan);
-        edit_password = (EditText) findViewById(R.id.signup_phone_edit_password);
-        edit_password_confirm = (EditText) findViewById(R.id.signup_phone_edit_password_again);
+        edit_password = (ContainsEmojiEditText) findViewById(R.id.signup_phone_edit_password);
+        edit_password_confirm = (ContainsEmojiEditText) findViewById(R.id.signup_phone_edit_password_again);
         tv_get = (TextView) findViewById(R.id.signup_phone_getyan);
        im_signup = (ImageView) findViewById(R.id.im_signup_phone);
         im_eye1 = (ImageView) findViewById(R.id.sign_up_im_change1);

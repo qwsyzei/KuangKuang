@@ -1,5 +1,6 @@
 package klsd.kuangkuang.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import klsd.kuangkuang.R;
+import klsd.kuangkuang.main.M_MyCollectActivity;
 import klsd.kuangkuang.main.S_ArticleActivity;
 import klsd.kuangkuang.models.MyCollect;
 import klsd.kuangkuang.utils.Consts;
@@ -163,6 +165,9 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
         if (jtype.equals(JSONHandler.JTYPE_COLLECT_DESTROY)) {
             ToastUtil.show(ctx, "取消收藏成功");
             exitDialog.dismiss();
+            Intent intent=new Intent(ctx, M_MyCollectActivity.class);
+            ctx.startActivity(intent);
+            ((Activity)ctx).finish();
         }else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_VIEWS)) {
             ToastUtil.show(ctx, "观看了");
 

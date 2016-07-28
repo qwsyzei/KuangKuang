@@ -19,7 +19,7 @@
         android:layout_margin="@dimen/base_margin">
 
 
-        <EditText
+        <klsd.kuangkuang.views.ContainsEmojiEditText
             android:id="@+id/release_edit"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/release_word_edit_height"
@@ -27,7 +27,7 @@
             android:padding="@dimen/login_p_l_r"
             android:layout_marginBottom="@dimen/size_eight"
             android:background="@color/white" >
-        </EditText>
+        </klsd.kuangkuang.views.ContainsEmojiEditText>
 <RelativeLayout
     android:id="@+id/layout_release_word_open_pop"
     android:layout_width="match_parent"

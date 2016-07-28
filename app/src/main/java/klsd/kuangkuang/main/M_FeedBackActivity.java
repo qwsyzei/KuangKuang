@@ -17,12 +17,13 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 
 /**
  * 意见反馈
  */
 public class M_FeedBackActivity extends BaseActivity {
-    private EditText edit;
+    private ContainsEmojiEditText edit;
     private Button btn;
     private MyHTTP http;
 
@@ -35,7 +36,7 @@ public class M_FeedBackActivity extends BaseActivity {
     }
 
     private void initView() {
-        edit = (EditText) findViewById(R.id.feedback_edit);
+        edit = (ContainsEmojiEditText) findViewById(R.id.feedback_edit);
         btn = (Button) findViewById(R.id.feedback_button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

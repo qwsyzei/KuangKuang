@@ -21,7 +21,7 @@
         android:layout_margin="@dimen/base_margin"
         android:background="@color/white">
 
-        <EditText
+        <klsd.kuangkuang.views.ContainsEmojiEditText
             android:id="@+id/feedback_edit"
             android:layout_width="match_parent"
             android:layout_height="@dimen/big_edit_height"

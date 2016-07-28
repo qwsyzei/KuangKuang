@@ -25,6 +25,7 @@ import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 import klsd.kuangkuang.views.PullToRefreshView;
 import klsd.kuangkuang.views.SelfListView;
 
@@ -33,7 +34,7 @@ import klsd.kuangkuang.views.SelfListView;
  */
 public class C_CircleAllCommentActivity extends BaseActivity implements View.OnClickListener, PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener {
     private TextView tv_send;
-    private EditText edit_comment;
+    private ContainsEmojiEditText edit_comment;
     String micropost_id;
     ArrayList<CircleAllComment> mylist;
     private C_CircleCommentAdapter allAdapter;
@@ -65,7 +66,7 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
         getCommentList();
         mPullToRefreshView= (PullToRefreshView) findViewById(R.id.pull_refresh_view_circle_allcomment);
         tv_send = (TextView) findViewById(R.id.all_comment_send_send);
-        edit_comment = (EditText) findViewById(R.id.all_comment_send_edit);
+        edit_comment = (ContainsEmojiEditText) findViewById(R.id.all_comment_send_edit);
         tv_send.setOnClickListener(this);
         mPullToRefreshView.setOnHeaderRefreshListener(this);
         mPullToRefreshView.setOnFooterRefreshListener(this);

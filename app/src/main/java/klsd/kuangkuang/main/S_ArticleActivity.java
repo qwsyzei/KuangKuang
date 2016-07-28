@@ -37,6 +37,7 @@ import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.CircleImageView;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
@@ -55,7 +56,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private int page = 1;
     private ListView listView;
     private TextView tv_dialog_send;
-    private EditText edit_dialog_comment;
+    private ContainsEmojiEditText edit_dialog_comment;
     private ImageView im_collect, im_share;
     private PopupWindow cPopwindow;
     private PopupWindow sharePopwindow;
@@ -301,7 +302,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
-        edit_dialog_comment = (EditText) pop_view.findViewById(R.id.dialog_comment_edit);
+        edit_dialog_comment = (ContainsEmojiEditText) pop_view.findViewById(R.id.dialog_comment_edit);
         tv_dialog_send = (TextView) pop_view.findViewById(R.id.dialog_comment_send_send);
         tv_dialog_send.setOnClickListener(this);
         edit_dialog_comment.requestFocus();

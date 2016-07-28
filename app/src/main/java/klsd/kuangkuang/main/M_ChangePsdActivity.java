@@ -20,13 +20,14 @@ import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 
 /**
  * 修改密码
  * Created by qiwei.
  */
 public class M_ChangePsdActivity extends BaseActivity {
-    private EditText edit_psd, edit_newpsd, edit_newpsd_confirm;
+    private ContainsEmojiEditText edit_psd, edit_newpsd, edit_newpsd_confirm;
     private Button btn_change;
     private TextView tv_title;
     private ImageView im1, im2, im3;
@@ -51,9 +52,9 @@ public class M_ChangePsdActivity extends BaseActivity {
     private void initView() {
 
 
-        edit_psd = (EditText) findViewById(R.id.change_login_password);
-        edit_newpsd = (EditText) findViewById(R.id.change_login_newpassword);
-        edit_newpsd_confirm = (EditText) findViewById(R.id.change_login_newpassword_confirm);
+        edit_psd = (ContainsEmojiEditText) findViewById(R.id.change_login_password);
+        edit_newpsd = (ContainsEmojiEditText) findViewById(R.id.change_login_newpassword);
+        edit_newpsd_confirm = (ContainsEmojiEditText) findViewById(R.id.change_login_newpassword_confirm);
         btn_change = (Button) findViewById(R.id.change_login_psd_button);
         im1 = (ImageView) findViewById(R.id.change_login_im1);
         im2 = (ImageView) findViewById(R.id.change_login_im2);

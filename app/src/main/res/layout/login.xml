@@ -92,7 +92,7 @@
                     android:layout_marginLeft="@dimen/login_m_l"
                     android:src="@mipmap/password"/>
 
-                <EditText
+                <klsd.kuangkuang.views.ContainsEmojiEditText
                     android:id="@+id/editTPassword"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
                     android:inputType="textPassword"
                     android:maxLength="14"
                     android:maxLines="1"
-                    android:textSize="@dimen/middle_text_size"></EditText>
+                    android:textSize="@dimen/middle_text_size"></klsd.kuangkuang.views.ContainsEmojiEditText>
 
                 <ImageView
                     android:id="@+id/sign_change_eye"

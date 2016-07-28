@@ -27,6 +27,7 @@ import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 import klsd.kuangkuang.views.PullToRefreshView;
 import klsd.kuangkuang.views.SelfListView;
 
@@ -35,7 +36,7 @@ import klsd.kuangkuang.views.SelfListView;
  */
 public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener{
     private TextView tv_send;
-    private EditText edit_comment;
+    private ContainsEmojiEditText edit_comment;
     String article_id;
     ArrayList<AllComment> mylist;
     private S_AllCommentAdapter allAdapter;
@@ -68,7 +69,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         getAllComment();
 UIutils.showLoading(S_AllCommentActivity.this);
         tv_send = (TextView) findViewById(R.id.all_comment_send_send);
-        edit_comment = (EditText) findViewById(R.id.all_comment_send_edit);
+        edit_comment = (ContainsEmojiEditText) findViewById(R.id.all_comment_send_edit);
         tv_send.setOnClickListener(this);
         mPullToRefreshView.setOnHeaderRefreshListener(this);
         mPullToRefreshView.setOnFooterRefreshListener(this);

@@ -53,6 +53,7 @@ import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 import klsd.kuangkuang.views.UploadDialog;
 
 /**
@@ -64,7 +65,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     private GridAdapter adapter;
     private TextView tv_release;
     private RelativeLayout layout;
-    private EditText edit;
+    private ContainsEmojiEditText edit;
     String photostr[] = new String[]{"", "", "", "", "", "", "", "", ""};
     String id, url;
     private Dialog dialog;
@@ -80,7 +81,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     private void initView() {
         dialog = new UploadDialog(this, R.style.UploadDialog, R.string.upload_dialog_textView);
         dialog.setCanceledOnTouchOutside(false);
-        edit = (EditText) findViewById(R.id.release_edit);
+        edit = (ContainsEmojiEditText) findViewById(R.id.release_edit);
         layout = (RelativeLayout) findViewById(R.id.layout_release_word_open_pop);
         layout.setOnClickListener(this);
         tv_release = (TextView) findViewById(R.id.tv_title_right);

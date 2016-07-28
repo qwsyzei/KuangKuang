@@ -46,6 +46,7 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.CircleImageView;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 import klsd.kuangkuang.views.SelectPicDialog;
 
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
@@ -56,7 +57,7 @@ import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 public class M_PersonalDataActivity extends BaseActivity implements View.OnClickListener, View.OnFocusChangeListener {
     private TextView tv_birthday, tv_city;
     private Spinner spinner_sex;
-    private EditText edit_per_nickname, edit_per_signature;
+    private ContainsEmojiEditText edit_per_nickname, edit_per_signature;
     private CircleImageView im_head;
     private TextView tv_save, tv_change_head;
     String sex;
@@ -91,8 +92,8 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         tv_save = (TextView) findViewById(R.id.tv_title_right);
         im_head = (CircleImageView) findViewById(R.id.im_head_pic);
         tv_change_head = (TextView) findViewById(R.id.tv_personal_data_change_head);
-        edit_per_nickname = (EditText) findViewById(R.id.per_nickname);
-        edit_per_signature = (EditText) findViewById(R.id.per_edit_signature);
+        edit_per_nickname = (ContainsEmojiEditText) findViewById(R.id.per_nickname);
+        edit_per_signature = (ContainsEmojiEditText) findViewById(R.id.per_edit_signature);
         edit_per_nickname.setOnFocusChangeListener(this);//用于判断焦点
         edit_per_signature.setOnFocusChangeListener(this);
         spinner_sex = (Spinner) findViewById(R.id.per_spinner_sex);

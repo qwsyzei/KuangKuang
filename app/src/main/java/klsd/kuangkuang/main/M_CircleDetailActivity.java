@@ -39,6 +39,7 @@ import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 import klsd.kuangkuang.views.PullToRefresh123View;
 import klsd.kuangkuang.views.SelfGridView;
 import klsd.kuangkuang.views.SelfListView;
@@ -66,7 +67,7 @@ private M_DetailLikeAdapter mdAdapter;
     private SelfListView listView;
     private PopupWindow cPopwindow;
     private TextView tv_dialog_send;
-    private EditText edit_dialog_comment;
+    private ContainsEmojiEditText edit_dialog_comment;
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
     @Override
@@ -361,7 +362,7 @@ private M_DetailLikeAdapter mdAdapter;
             }
         });
 
-        edit_dialog_comment = (EditText) pop_view.findViewById(R.id.dialog_comment_edit);
+        edit_dialog_comment = (ContainsEmojiEditText) pop_view.findViewById(R.id.dialog_comment_edit);
         tv_dialog_send = (TextView) pop_view.findViewById(R.id.dialog_comment_send_send);
         tv_dialog_send.setOnClickListener(this);
         edit_dialog_comment.requestFocus();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import klsd.kuangkuang.R;
+import klsd.kuangkuang.fragments.MMeFragment;
 import klsd.kuangkuang.main.M_CircleDetailActivity;
+import klsd.kuangkuang.main.MainActivity;
 import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.ErrorCodes;
@@ -43,6 +46,7 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
     String jtype, responseJson;
     String error_code;
     Bundle handlerBundler;
+    private Fragment fragment;
 
     public M_MywordAdapter(Context context, List<MyWord> objects, Handler h) {
         super(context, R.layout.item_myword, objects);
@@ -138,6 +142,10 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
             ToastUtil.show(ctx, "删除成功");
             exitDialog.dismiss();
+            fragment=new MMeFragment();
+            if (fragment != null) {
+                switchFragment(fragment);
+            }
         }
     }
 
@@ -148,7 +156,20 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
             ToastUtil.show(ctx, responseJson);
         }
     }
-
+    /**
+     * 切换fragment
+     *
+     * @param fragment
+     */
+    private void switchFragment(Fragment fragment) {
+        if (ctx== null) {
+            return;
+        }
+        if (ctx instanceof MainActivity) {
+            MainActivity fca = (MainActivity) ctx;
+            fca.switchConent(fragment);
+        }
+    }
     public final class ViewHolder {
         TextView content_son, day, month;
         ImageView pic_url1;

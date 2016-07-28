@@ -18,13 +18,15 @@ import klsd.kuangkuang.main.common.EncrypAES;
 import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.views.ContainsEmojiEditText;
 
 /**
  * 登录界面
  */
 public class LoginActivity extends BaseActivity {
     private TextView tv_signup, tv_forget;//忘记密码
-    private EditText edit_admin, editTPassword;
+    private EditText edit_admin;
+    private ContainsEmojiEditText editTPassword;
     private ImageView im_inputcancel, im_eye;//email输入时删除全部的图标，即“叉”,密码可见状态的图标
     private  int flag = 0;
 
@@ -80,7 +82,7 @@ public class LoginActivity extends BaseActivity {
     private void initViews() {
 
         edit_admin = (EditText) findViewById(R.id.editTPhone);
-        editTPassword = (EditText) findViewById(R.id.editTPassword);
+        editTPassword = (ContainsEmojiEditText) findViewById(R.id.editTPassword);
         tv_signup = (TextView) findViewById(R.id.tv_signup);
         tv_forget = (TextView) findViewById(R.id.tv_forgetpassword);
         im_inputcancel = (ImageView) findViewById(R.id.getback_im_cancel);

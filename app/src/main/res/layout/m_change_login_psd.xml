@@ -42,7 +42,7 @@
                 android:textSize="@dimen/middle_text_size"
                 android:textColor="@color/black"
                 android:text="@string/old_password" />
-            <EditText
+            <klsd.kuangkuang.views.ContainsEmojiEditText
                 android:id="@+id/change_login_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@ android:layout_marginTop="@dimen/size_eight"
                 android:textSize="@dimen/middle_text_size"
                 android:textColor="@color/black"
                 android:text="@string/newpassword" />
-            <EditText
+            <klsd.kuangkuang.views.ContainsEmojiEditText
                 android:id="@+id/change_login_newpassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -130,7 +130,7 @@ android:layout_marginTop="@dimen/size_eight"
                 android:textSize="@dimen/middle_text_size"
                 android:textColor="@color/black"
                 android:text="@string/newpassword_confirm" />
-            <EditText
+            <klsd.kuangkuang.views.ContainsEmojiEditText
                 android:id="@+id/change_login_newpassword_confirm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
