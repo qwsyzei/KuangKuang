@@ -60,7 +60,7 @@
                                 android:id="@+id/circle_detail_head_pic"
                                 android:layout_width="@dimen/article_author_head_size"
                                 android:layout_height="@dimen/article_author_head_size"
-                                android:src="@mipmap/touxiang03" />
+                                android:src="@mipmap/zhan_circle_head" />
 
                             <TextView
                                 android:id="@+id/circle_detail_name"
@@ -98,9 +98,10 @@
                             android:id="@+id/gridview_circle_detail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/base_margin"
+                            android:layout_marginBottom="@dimen/circle_margin"
                             android:layout_marginLeft="@dimen/base_margin"
                             android:layout_marginRight="@dimen/base_margin"
+                         android:layout_marginTop="2dp"
                             android:numColumns="3"
                             android:smoothScrollbar="true"
                             android:soundEffectsEnabled="true"></klsd.kuangkuang.views.SelfGridView>
@@ -122,7 +123,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:src="@drawable/back_comment" />
+                                    android:src="@mipmap/dustbin" />
 
                                 <TextView
                                     android:layout_width="wrap_content"

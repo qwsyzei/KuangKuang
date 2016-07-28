@@ -7,7 +7,11 @@
     <attr name="tabView" format="reference"/>
     <attr name="iconWidth" format="dimension"/>
     <attr name="iconHeight" format="dimension"/>
+    <declare-styleable name="Emoji">
 
+    <attr name="emojiSize" format="dimension"/>
+
+</declare-styleable>
     <declare-styleable name="TabView">
         <attr name="tabView"/>
         <attr name="iconWidth"/>

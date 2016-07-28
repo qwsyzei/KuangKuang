@@ -2,11 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightgray"
     tools:context="klsd.kuangkuang.main.M_AboutUsActivity">
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/user_title_layout"
@@ -19,23 +20,67 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:layout_marginTop="@dimen/base_margin"
-        android:src="@mipmap/abc"
+        android:src="@mipmap/about_us_top"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="我们一直在你身边"
+        android:text="@string/about_us_text_title"
         android:layout_marginTop="@dimen/base_margin"
         android:paddingTop="@dimen/base_margin"
-        android:textSize="@dimen/new_title_size"
+        android:textSize="@dimen/middle_text_size"
+        android:textColor="@color/black"
         android:gravity="center"
         android:id="@+id/about_us_text_title"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_margin"
-        android:text="    “山不转，水转;境不转，心转”，渐渐地明白，“事事无法全部看透，人人没法个个看懂”。慢慢地懂得，“穷则变，变则通，通则顺，顺则达”。 “生命无限潜能，人生无限可能”。“看不透，看不懂”才是人生曼妙，“看不明，读不懂”才是生活情怀。"
-        android:id="@+id/about_us_text"/>
+        android:layout_marginTop="@dimen/base_margin"
+        android:layout_marginLeft="@dimen/base_margin"
+        android:layout_marginRight="@dimen/base_margin"
+        android:textSize="@dimen/small_text_size"
+        android:text="@string/about_us_text1"
+        android:id="@+id/about_us_text1"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/base_margin"
+        android:layout_marginLeft="@dimen/base_margin"
+        android:layout_marginRight="@dimen/base_margin"
+        android:textSize="@dimen/small_text_size"
+        android:text="@string/about_us_text2"
+        android:id="@+id/about_us_text2"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/base_margin"
+        android:layout_marginLeft="@dimen/base_margin"
+        android:layout_marginRight="@dimen/base_margin"
+        android:textSize="@dimen/small_text_size"
+        android:text="@string/about_us_text3"
+        android:id="@+id/about_us_text3"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/about_us_wechat"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/login_p_l_r"
+        android:text="@string/about_us_phone"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_us_mail"
+        android:layout_marginTop="@dimen/login_p_l_r"
+        android:layout_marginBottom="@dimen/about_us_bottom"
+        android:gravity="center"/>
 </LinearLayout>
 </RelativeLayout>

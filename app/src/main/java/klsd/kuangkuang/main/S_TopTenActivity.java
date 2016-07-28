@@ -17,6 +17,7 @@ import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
+import klsd.kuangkuang.utils.UIutils;
 
 /**
  * Top10
@@ -37,6 +38,7 @@ public class S_TopTenActivity extends BaseActivity {
     private void initView() {
         tlist = new ArrayList<>();
         listView = (ListView) findViewById(R.id.listview_top_ten);
+        UIutils.showLoading(S_TopTenActivity.this);
         getTop10();
     }
     /**
@@ -51,9 +53,10 @@ public class S_TopTenActivity extends BaseActivity {
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_TOP)) {
-
+            UIutils.cancelLoading();
             tlist = (ArrayList<Top>) handlerBundler.getSerializable("top");
             if (tlist.size() == 0) {
+
                 Log.d("Top10是没有数据的", "updateData() returned: " + "");
                 return;
             }

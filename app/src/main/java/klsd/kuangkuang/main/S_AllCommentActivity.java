@@ -26,6 +26,7 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.utils.UIutils;
 import klsd.kuangkuang.views.PullToRefreshView;
 import klsd.kuangkuang.views.SelfListView;
 
@@ -65,7 +66,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         listView = (SelfListView) findViewById(R.id.listview_allcomment);
         mPullToRefreshView= (PullToRefreshView) findViewById(R.id.pull_refresh_view_allcomment);
         getAllComment();
-
+UIutils.showLoading(S_AllCommentActivity.this);
         tv_send = (TextView) findViewById(R.id.all_comment_send_send);
         edit_comment = (EditText) findViewById(R.id.all_comment_send_edit);
         tv_send.setOnClickListener(this);
@@ -127,6 +128,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
             ArrayList<AllComment> os = (ArrayList<AllComment>) handlerBundler.getSerializable("all_comment");
             Log.d("OS的长度", "handleMessage() returned: " + os.size());
             if (os.size() == 0) {
+                UIutils.cancelLoading();
                 ToastUtil.show(S_AllCommentActivity.this, getString(R.string.no_more_data));
                 return;
             }
@@ -140,6 +142,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
                 allAdapter.notifyDataSetChanged();
             }
             page += 1;
+            UIutils.cancelLoading();
         }
     }
 

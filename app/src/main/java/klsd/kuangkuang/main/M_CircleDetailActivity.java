@@ -258,6 +258,7 @@ private M_DetailLikeAdapter mdAdapter;
      * 赞列表
      */
     private void likeList() {
+
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("micropost_id", id);
         if (http == null) http = new MyHTTP(M_CircleDetailActivity.this);
@@ -287,6 +288,10 @@ private M_DetailLikeAdapter mdAdapter;
             ToastUtil.show(M_CircleDetailActivity.this, "删除成功");
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
             ToastUtil.show(M_CircleDetailActivity.this, "评论成功");
+            cPopwindow.dismiss();
+            edit_dialog_comment.setText("");
+//            myStartActivity(new Intent(M_CircleDetailActivity.this,M_CircleDetailActivity.class));
+//            finish();
         }
         else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_LIKE_LIST)) {
             commentList();

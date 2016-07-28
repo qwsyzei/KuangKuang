@@ -189,140 +189,200 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
      * 发表说说
      */
     private void release_word() {
-
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
-        params.addQueryStringParameter("content", edit.getText().toString());
-        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.createMicropostsApi, JSONHandler.JTYPE_CREATE_WORDS, HttpRequest.HttpMethod.POST,
-                params, getHandler());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("member_id", DataCenter.getMember_id());
+                params.addQueryStringParameter("content", edit.getText().toString());
+                if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+                http.baseRequest(Consts.createMicropostsApi, JSONHandler.JTYPE_CREATE_WORDS, HttpRequest.HttpMethod.POST,
+                        params, getHandler());
+            }
+        }).start();
     }
 
     /**
      * Picture1
      */
     private void picture1() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("url", url);
-        params.addQueryStringParameter("picture", photostr[0]);
-        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.picture1Api, JSONHandler.JTYPE_PICTURE1, HttpRequest.HttpMethod.POST,
-                params, getHandler());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("id", id);
+                params.addQueryStringParameter("url", url);
+                params.addQueryStringParameter("picture", photostr[0]);
+                if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+                http.baseRequest(Consts.picture1Api, JSONHandler.JTYPE_PICTURE1, HttpRequest.HttpMethod.POST,
+                        params, getHandler());
+            }
+        }).start();
+
     }
 
     /**
      * Picture2
      */
     private void picture2() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("url", url);
-        params.addQueryStringParameter("picture", photostr[1]);
-        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.picture2Api, JSONHandler.JTYPE_PICTURE2, HttpRequest.HttpMethod.POST,
-                params, getHandler());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("id", id);
+                params.addQueryStringParameter("url", url);
+                params.addQueryStringParameter("picture", photostr[1]);
+                if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+                http.baseRequest(Consts.picture2Api, JSONHandler.JTYPE_PICTURE2, HttpRequest.HttpMethod.POST,
+                        params, getHandler());
+            }
+        }).start();
+
     }
 
     /**
      * Picture3
      */
     private void picture3() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("url", url);
-        params.addQueryStringParameter("picture", photostr[2]);
-        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.picture3Api, JSONHandler.JTYPE_PICTURE3, HttpRequest.HttpMethod.POST,
-                params, getHandler());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("id", id);
+                params.addQueryStringParameter("url", url);
+                params.addQueryStringParameter("picture", photostr[2]);
+                if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+                http.baseRequest(Consts.picture3Api, JSONHandler.JTYPE_PICTURE3, HttpRequest.HttpMethod.POST,
+                        params, getHandler());
+            }
+        }).start();
+
     }
 
     /**
      * Picture4
      */
     private void picture4() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("url", url);
-        params.addQueryStringParameter("picture", photostr[3]);
-        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.picture4Api, JSONHandler.JTYPE_PICTURE4, HttpRequest.HttpMethod.POST,
-                params, getHandler());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("id", id);
+                params.addQueryStringParameter("url", url);
+                params.addQueryStringParameter("picture", photostr[3]);
+                if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+                http.baseRequest(Consts.picture4Api, JSONHandler.JTYPE_PICTURE4, HttpRequest.HttpMethod.POST,
+                        params, getHandler());
+            }
+        }).start();
+
     }
 
     /**
      * Picture5
      */
     private void picture5() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("url", url);
-        params.addQueryStringParameter("picture", photostr[4]);
-        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.picture5Api, JSONHandler.JTYPE_PICTURE5, HttpRequest.HttpMethod.POST,
-                params, getHandler());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("id", id);
+                params.addQueryStringParameter("url", url);
+                params.addQueryStringParameter("picture", photostr[4]);
+                if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+                http.baseRequest(Consts.picture5Api, JSONHandler.JTYPE_PICTURE5, HttpRequest.HttpMethod.POST,
+                        params, getHandler());
+            }
+        }).start();
+
     }
 
     /**
      * Picture6
      */
     private void picture6() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("url", url);
-        params.addQueryStringParameter("picture", photostr[5]);
-        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.picture6Api, JSONHandler.JTYPE_PICTURE6, HttpRequest.HttpMethod.POST,
-                params, getHandler());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("id", id);
+                params.addQueryStringParameter("url", url);
+                params.addQueryStringParameter("picture", photostr[5]);
+                if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+                http.baseRequest(Consts.picture6Api, JSONHandler.JTYPE_PICTURE6, HttpRequest.HttpMethod.POST,
+                        params, getHandler());
+            }
+        }).start();
+
     }
 
     /**
      * Picture7
      */
     private void picture7() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("url", url);
-        params.addQueryStringParameter("picture", photostr[6]);
-        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.picture7Api, JSONHandler.JTYPE_PICTURE7, HttpRequest.HttpMethod.POST,
-                params, getHandler());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("id", id);
+                params.addQueryStringParameter("url", url);
+                params.addQueryStringParameter("picture", photostr[6]);
+                if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+                http.baseRequest(Consts.picture7Api, JSONHandler.JTYPE_PICTURE7, HttpRequest.HttpMethod.POST,
+                        params, getHandler());
+            }
+        }).start();
+
     }
 
     /**
      * Picture8
      */
     private void picture8() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("url", url);
-        params.addQueryStringParameter("picture", photostr[7]);
-        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.picture8Api, JSONHandler.JTYPE_PICTURE8, HttpRequest.HttpMethod.POST,
-                params, getHandler());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("id", id);
+                params.addQueryStringParameter("url", url);
+                params.addQueryStringParameter("picture", photostr[7]);
+                if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+                http.baseRequest(Consts.picture8Api, JSONHandler.JTYPE_PICTURE8, HttpRequest.HttpMethod.POST,
+                        params, getHandler());
+            }
+        }).start();
+
     }
 
     /**
      * Picture9
      */
     private void picture9() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("id", id);
-        params.addQueryStringParameter("url", url);
-        params.addQueryStringParameter("picture", photostr[8]);
-        if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
-        http.baseRequest(Consts.picture9Api, JSONHandler.JTYPE_PICTURE9, HttpRequest.HttpMethod.POST,
-                params, getHandler());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestParams params = new RequestParams();
+                params.addQueryStringParameter("id", id);
+                params.addQueryStringParameter("url", url);
+                params.addQueryStringParameter("picture", photostr[8]);
+                if (http == null) http = new MyHTTP(C_ReleaseWordActivity.this);
+                http.baseRequest(Consts.picture9Api, JSONHandler.JTYPE_PICTURE9, HttpRequest.HttpMethod.POST,
+                        params, getHandler());
+            }
+        }).start();
+
     }
 
     /**
      * 发表成功后跳转到MAIN的“我”界面
      */
-private void Intentstyle(){
-    Intent intent=new Intent(C_ReleaseWordActivity.this,MainActivity.class);
-    intent.putExtra("release","123");
-    startActivity(intent);
-}
+    private void Intentstyle() {
+        Intent intent = new Intent(C_ReleaseWordActivity.this, MainActivity.class);
+        intent.putExtra("release", "123");
+        startActivity(intent);
+        finish();
+    }
+
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_CREATE_WORDS)) {
@@ -336,7 +396,7 @@ private void Intentstyle(){
                     dialog.dismiss();
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
-
+                Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
             }
@@ -350,6 +410,7 @@ private void Intentstyle(){
                     dialog.dismiss();
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
             }
@@ -362,6 +423,7 @@ private void Intentstyle(){
                     dialog.dismiss();
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
             }
@@ -374,6 +436,7 @@ private void Intentstyle(){
                     dialog.dismiss();
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
             }
@@ -387,6 +450,7 @@ private void Intentstyle(){
                     dialog.dismiss();
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
             }
@@ -400,6 +464,7 @@ private void Intentstyle(){
                     dialog.dismiss();
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
             }
@@ -424,6 +489,7 @@ private void Intentstyle(){
                     dialog.dismiss();
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
             }
@@ -436,6 +502,7 @@ private void Intentstyle(){
                     dialog.dismiss();
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
             }
@@ -445,6 +512,7 @@ private void Intentstyle(){
                 dialog.dismiss();
             }
             ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+            Intentstyle();
             // 完成上传服务器后 .........
             FileUtils.deleteDir();
         }

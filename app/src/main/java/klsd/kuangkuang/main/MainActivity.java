@@ -64,7 +64,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
             rbD= (RadioButton) findViewById(R.id.main_rb4);
             rbD.setChecked(true);
         }else{
-            ft.replace(R.id.just_subject_layout, new MSubjectFragment());//news_every_content是为fragment留出的空间，用fragment替换
+            ft.replace(R.id.just_subject_layout, new MSubjectFragment("0"));//news_every_content是为fragment留出的空间，用fragment替换
             rbA= (RadioButton) findViewById(R.id.main_rb1);
             rbA.setChecked(true);
         }
@@ -78,7 +78,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
     private void initSlidingMenu() {
 
         if (mContent == null) {
-            mContent = new MSubjectFragment();
+            mContent = new MSubjectFragment("0");
         }
         // 设置左侧滑动菜单
         setBehindContentView(R.layout.menu_frame_left);
@@ -132,7 +132,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         switch (checkedId) {
             case R.id.main_rb1:
                 im_title_left.setVisibility(View.VISIBLE);
-                ft.replace(R.id.just_subject_layout, new MSubjectFragment());
+                ft.replace(R.id.just_subject_layout, new MSubjectFragment("0"));
 
                 break;
             case R.id.main_rb2:
@@ -166,5 +166,11 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
                 toggle();
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("现在是登录状态吗", "onCheckedChanged() returned: " + DataCenter.isSigned());
     }
 }

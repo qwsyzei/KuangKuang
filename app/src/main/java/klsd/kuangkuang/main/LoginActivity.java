@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,6 +55,7 @@ public class LoginActivity extends BaseActivity {
         if (jtype.equals(JSONHandler.JTYPE_LOGIN)) {
             if (handlerBundler.getBoolean("signed")) {
                 DataCenter.setSigned();
+                Log.d("刚刚设置好是什么样", "updateData() returned: " + DataCenter.isSigned());
                 getMemberData();
 
                 //保存登录信息

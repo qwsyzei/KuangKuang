@@ -40,11 +40,10 @@
                 android:id="@+id/fragment_user_fuwudizhi_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:src="@mipmap/clickable" />
-
 
         </RelativeLayout>
 
@@ -73,11 +72,10 @@
                 android:id="@+id/fragment_user_more_ideas_imageview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:src="@mipmap/clickable" />
-
 
         </RelativeLayout>
 
@@ -106,11 +104,10 @@
                 android:id="@+id/fragment_user_system_message_imageview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:src="@mipmap/clickable" />
-
 
         </RelativeLayout>
 
@@ -139,10 +136,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:src="@mipmap/clickable" />
-
 
         </RelativeLayout>
 
@@ -171,13 +167,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:src="@mipmap/clickable" />
 
-
         </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/set_clean_cache"
@@ -195,15 +189,23 @@
                 style="@style/common_text_style"
                 android:text="@string/clean_cache" />
 
+            <TextView
+                android:id="@+id/set_tv_cache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/base_margin"
+                android:layout_toLeftOf="@+id/freview"
+                android:gravity="center_vertical"
+                android:text="0.00MB" />
+
             <ImageView
                 android:id="@+id/freview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/login_p_l_r"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/login_p_l_r"
                 android:src="@mipmap/clickable" />
-
 
         </RelativeLayout>
 

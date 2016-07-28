@@ -17,6 +17,7 @@ import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.utils.UIutils;
 import klsd.kuangkuang.views.PullToRefreshView;
 import klsd.kuangkuang.views.SelfListView;
 
@@ -42,15 +43,25 @@ M_MyCollectAdapter myCollectAdapter;
         myList=new ArrayList<>();
         listView= (SelfListView) findViewById(R.id.listview_my_collect);
         mPullToRefreshView= (PullToRefreshView) findViewById(R.id.pull_refresh_view_my_collect);
+        UIutils.showLoading(M_MyCollectActivity.this);
         getCollectShowList();
         mPullToRefreshView.setOnHeaderRefreshListener(this);
         mPullToRefreshView.setOnFooterRefreshListener(this);
     }
     MyHTTP http;
+
+    private void getCollectShowList(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getCollectShowList123();
+            }
+        }).start();
+    }
     /**
      * 获取收藏列表
      */
-    private void getCollectShowList() {
+    private void getCollectShowList123() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("page", page + "");
@@ -69,6 +80,7 @@ M_MyCollectAdapter myCollectAdapter;
             ArrayList<MyCollect> os = (ArrayList<MyCollect>) handlerBundler.getSerializable("collect_show");
             Log.d("OS的长度", "handleMessage() returned: " + os.size());
             if (os.size() == 0) {
+                UIutils.cancelLoading();
                 ToastUtil.show(M_MyCollectActivity.this, getString(R.string.no_more_data));
                 return;
             }
@@ -83,6 +95,7 @@ M_MyCollectAdapter myCollectAdapter;
                 myCollectAdapter.notifyDataSetChanged();
             }
             page += 1;
+             UIutils.cancelLoading();
         }
     }
     public void addTrades(String from, List<MyCollect> ess) {

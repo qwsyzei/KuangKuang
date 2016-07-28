@@ -117,7 +117,6 @@ public class M_NewPhoneActivity extends BaseActivity {
         params.addQueryStringParameter("phone_number", phone);
         params.addQueryStringParameter("code", code);
         new MyHTTP(this).baseRequest(Consts.upDatePhoneApi, JSONHandler.JTYPE_BIND_PHONE, HttpRequest.HttpMethod.POST, params, handler);
-        Log.d("手机号是：", "getbackcode() returned: " + phone + "验证码是：" + code);
 
     }
 

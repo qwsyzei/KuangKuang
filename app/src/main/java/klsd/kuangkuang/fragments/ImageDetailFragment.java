@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class ImageDetailFragment extends Fragment {
 		initImageLoader(context);
 
 		mImageUrl = getArguments() != null ? getArguments().getString("url") : null;
+		Log.d("FRAG里的url是", "onCreate() returned: " + mImageUrl);
 	}
 
 	@Override

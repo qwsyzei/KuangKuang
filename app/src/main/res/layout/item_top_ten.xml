@@ -6,7 +6,7 @@
     android:id="@+id/item_top_im"
     android:layout_width="match_parent"
     android:layout_height="@dimen/s_top_item_height"
-
+android:src="@mipmap/zhan_top10"
     android:scaleType="fitXY"/>
     <LinearLayout
         android:layout_width="match_parent"

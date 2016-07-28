@@ -103,7 +103,7 @@
     <string name="missingImage">图片加载失败</string>
     <string name="confirm_password">确认密码</string>
     <string name="agreement">请同意用户协议</string>
-    <string name="network_problem">网络连接问题</string>
+    <string name="network_problem">网络连接错误</string>
     <string name="checkup_network">请检查网络连接</string>
     <string name="no_input_psd">未填写密码</string>
     <string name="confirm_new_psd">确认新密码</string>
@@ -193,4 +193,12 @@
 
 
     <string name="viewpager_indicator">%1$d/%2$d</string>
+    <!-- 关于我们 -->
+    <string name="about_us_text_title">— 硄硄 —</string>
+    <string name="about_us_text1">\t\t\t硄硄希望给所有喜欢珠宝和收藏珠宝的用户，带来的不仅只是珠宝的鉴赏。</string>
+    <string name="about_us_text2">\t\t\t更希望你能通过对珠宝的认识使你的生活不再枯、乏味，让你生活更加斑斓多彩。</string>
+    <string name="about_us_text3">\t\t\t无论你的生活是幸福、温馨和浪漫的，我们旨在让你在这找到属于自己的一刻时光。</string>
+    <string name="about_us_wechat">微信公众号：kuang_2017</string>
+    <string name="about_us_phone">服务电话：010-57133977</string>
+    <string name="about_us_mail">邮箱：kuangkuang2016@126.com</string>
 </resources>

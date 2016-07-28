@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp"
-        android:background="@color/white" >
+        android:background="@color/lightgray" >
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="fill_parent">
@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/size_eight"
         android:layout_height="match_parent"
+        android:background="@color/white"
     ></klsd.kuangkuang.views.SelfListView>
             </LinearLayout>
         </ScrollView>

@@ -7,7 +7,7 @@
     android:layout_width="@dimen/item_gridview_size"
     android:layout_gravity="center"
     android:scaleType="fitXY"
-    android:layout_margin="2dp"
-    android:src="@mipmap/ic_launcher"
+    android:layout_margin="1dp"
+    android:src="@mipmap/zhan_circle_pic"
     android:layout_height="@dimen/item_gridview_size" />
 </LinearLayout>

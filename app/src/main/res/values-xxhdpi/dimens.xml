@@ -131,4 +131,6 @@
 
     <dimen name="item_subject_height">150dp</dimen>
     <dimen name="item_collect_height">130dp</dimen>
+    <dimen name="about_us_bottom">25dp</dimen>
+    <dimen name="circle_margin">12dp</dimen>
 </resources>

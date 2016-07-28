@@ -3,23 +3,16 @@ package klsd.kuangkuang.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import klsd.kuangkuang.R;
@@ -68,6 +61,7 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
         Intent intent = getIntent();
         micropost_id = intent.getStringExtra("micropost_id");
         listView = (SelfListView) findViewById(R.id.listview_circle_allcomment);
+        UIutils.showLoading(C_CircleAllCommentActivity.this);
         getCommentList();
         mPullToRefreshView= (PullToRefreshView) findViewById(R.id.pull_refresh_view_circle_allcomment);
         tv_send = (TextView) findViewById(R.id.all_comment_send_send);
@@ -127,7 +121,7 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
             ArrayList<CircleAllComment> os = (ArrayList<CircleAllComment>) handlerBundler.getSerializable("circle_all_comment");
             Log.d("OS的长度", "handleMessage() returned: " + os.size());
             if (os.size() == 0) {
-
+                UIutils.cancelLoading();
                 ToastUtil.show(C_CircleAllCommentActivity.this, getString(R.string.no_more_data));
                 return;
             }
@@ -142,6 +136,7 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
                 allAdapter.notifyDataSetChanged();
             }
             page += 1;
+            UIutils.cancelLoading();
         }
     }
 

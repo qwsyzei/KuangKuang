@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_collect_height"
         android:scaleType="fitXY"
-        android:src="@mipmap/abcd" />
+        android:src="@mipmap/zhan_subject" />
 
     <TextView
         android:id="@+id/item_my_collect_tv_title"

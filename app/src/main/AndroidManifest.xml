@@ -15,13 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity android:name=".main.MainActivity" >
+
+        </activity>
+        <activity android:name=".main.EnterActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".main.EnterActivity" >
         </activity>
         <activity android:name=".main.LoginActivity" >
         </activity>
@@ -55,8 +56,6 @@
         </activity>
         <activity android:name=".main.LogoActivity" >
         </activity>
-        <activity android:name=".main.M_BigHeadActivity" >
-        </activity>
         <activity android:name=".main.S_AllCommentActivity" >
         </activity>
         <activity android:name=".main.M_MyCollectActivity" >
@@ -75,6 +74,8 @@
         <activity android:name=".main.M_CircleDetailActivity" >
         </activity>
         <activity android:name=".main.C_CircleAllCommentActivity" >
+        </activity>
+        <activity android:name=".main.ImagePager123Activity" >
         </activity>
     </application>
 

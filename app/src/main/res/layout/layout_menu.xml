@@ -7,8 +7,9 @@
     android:paddingTop="@dimen/layout_menu_m_t"
     android:orientation="vertical" >
 
+
     <TextView
-         android:id="@+id/tvmingxing"
+         android:id="@+id/all_total"
         android:layout_width="match_parent"
         android:layout_height="40.0dip"
         android:clickable="true"
@@ -16,84 +17,7 @@
         android:gravity="center"
         android:paddingLeft="15.0dip"
         android:paddingRight="10.0dip"
-        android:text="明星珠宝"
-        android:textColor="@color/black"
-        android:textSize="16.0sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2.0dip"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:background="@mipmap/biz_pc_account_line" />
-
-    <TextView
-         android:id="@+id/tvhunlian"
-        android:layout_width="match_parent"
-        android:layout_height="40.0dip"
-        android:clickable="true"
-        android:drawablePadding="1.0dip"
-        android:gravity="center"
-        android:paddingLeft="15.0dip"
-        android:paddingRight="10.0dip"
-        android:text="婚恋珠宝"
-        android:textColor="@color/black"
-        android:textSize="16.0sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2.0dip"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:background="@mipmap/biz_pc_account_line" />
-    <TextView
-         android:id="@+id/tvzuanshi"
-        android:layout_width="match_parent"
-        android:layout_height="40.0dip"
-        android:clickable="true"
-        android:drawablePadding="1.0dip"
-        android:gravity="center"
-        android:paddingLeft="15.0dip"
-        android:paddingRight="10.0dip"
-        android:text="钻石推荐"
-        android:textColor="@color/black"
-        android:textSize="16.0sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2.0dip"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:background="@mipmap/biz_pc_account_line" />
-    <TextView
-        android:id="@+id/tvmizuan"
-        android:layout_width="match_parent"
-        android:layout_height="40.0dip"
-        android:clickable="true"
-        android:drawablePadding="1.0dip"
-        android:gravity="center"
-        android:paddingLeft="15.0dip"
-        android:paddingRight="10.0dip"
-        android:text="米钻专栏"
-        android:textColor="@color/black"
-        android:textSize="16.0sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2.0dip"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:background="@mipmap/biz_pc_account_line" />
-    <TextView
-         android:id="@+id/tvzhuanjia"
-        android:layout_width="match_parent"
-        android:layout_height="40.0dip"
-        android:clickable="true"
-        android:drawablePadding="1.0dip"
-        android:gravity="center"
-        android:paddingLeft="15.0dip"
-        android:paddingRight="10.0dip"
-        android:text="专家讲解"
+        android:text="全部"
         android:textColor="@color/black"
         android:textSize="16.0sp" />
 
@@ -131,7 +55,7 @@
         android:gravity="center"
         android:paddingLeft="15.0dip"
         android:paddingRight="10.0dip"
-        android:text="珠宝攻略"
+        android:text="首饰攻略"
         android:textColor="@color/black"
         android:textSize="16.0sp" />
 

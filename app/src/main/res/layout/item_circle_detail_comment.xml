@@ -15,7 +15,7 @@
             android:id="@+id/item_circle_detail_head_pic"
             android:layout_width="@dimen/subject_author_head_size"
             android:layout_height="@dimen/subject_author_head_size"
-            android:src="@mipmap/touxiang05" />
+            android:src="@mipmap/zhan_head_comment" />
 
         <TextView
             android:id="@+id/item_circle_detail_nickname"

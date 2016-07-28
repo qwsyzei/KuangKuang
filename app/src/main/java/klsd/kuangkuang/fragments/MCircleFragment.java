@@ -46,7 +46,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
     private C_CircleAdapter cAdapter;
     private ListView listView;
     private TextView tv_release;
-    private int limit = 5;
+    private int limit = 8;
     private int page = 1;
     // 自定义的listview的上下拉动刷新
     private PullToRefreshView mPullToRefreshView;
@@ -76,6 +76,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         tv_release.setOnClickListener(this);
         listView = (ListView) view.findViewById(R.id.listview_circle);
         getcircleList();
+        UIutils.showLoading(a);
         mPullToRefreshView = (PullToRefreshView) view.findViewById(R.id.pull_refresh_view_circle);
         mPullToRefreshView.setOnHeaderRefreshListener(this);
         mPullToRefreshView.setOnFooterRefreshListener(this);
@@ -123,15 +124,16 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
             String res = bundle.getString("result");
             String jtype = bundle.getString("jtype");
             if (res == null) {
-//				ToastUtil.show(a, "交易完成数据网络请求失败");
-                a.startActivity(new Intent(a, LoginActivity.class));
-                a.finish();
+                ToastUtil.show(a, getString(R.string.network_problem));
+//                a.startActivity(new Intent(a, LoginActivity.class));
+//                a.finish();
             } else if (res.equals("OK")) {
                 if (jtype.equals(JSONHandler.JTYPE_CIRCLE_LIST)) {
                     int curTradesSize = cirList.size();
                     ArrayList<Circles> os = (ArrayList<Circles>) bundle.getSerializable("circle_list");
                     Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
+                        UIutils.cancelLoading();
                         ToastUtil.show(a, a.getString(R.string.no_more_data));
                         return;
                     }

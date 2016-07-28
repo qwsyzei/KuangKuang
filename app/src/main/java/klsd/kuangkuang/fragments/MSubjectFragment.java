@@ -18,7 +18,6 @@ import java.util.List;
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.S_SubjectAdapter;
 import klsd.kuangkuang.main.BaseActivity;
-import klsd.kuangkuang.main.LoginActivity;
 import klsd.kuangkuang.main.S_TopTenActivity;
 import klsd.kuangkuang.models.Subject;
 import klsd.kuangkuang.utils.Consts;
@@ -26,6 +25,7 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.utils.UIutils;
 import klsd.kuangkuang.views.PullToRefreshView;
 import klsd.kuangkuang.views.SelfListView;
 
@@ -38,12 +38,14 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
     private SelfListView listView;
     private ArrayList<Subject> sList;
     private static Activity a;
-   private int limit = 5;
+   private int limit = 8;
     private int page = 1;
     private TextView tv_top;
     // 自定义的listview的上下拉动刷新
     private PullToRefreshView mPullToRefreshView;
-    public MSubjectFragment() {
+    private String tagtag="0";
+    public MSubjectFragment(String tag) {
+        this.tagtag=tag;
         // Required empty public constructor
     }
     @Override
@@ -65,10 +67,11 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
         tv_top.setOnClickListener(this);
         listView = (SelfListView) view.findViewById(R.id.listview_msubject);
         mPullToRefreshView= (PullToRefreshView)view.findViewById(R.id.pull_refresh_view_subject);
+        UIutils.showLoading(a);
         getArticlesList();
         mPullToRefreshView.setOnHeaderRefreshListener(this);
         mPullToRefreshView.setOnFooterRefreshListener(this);
-//        listView.setAdapter(sAdapter);
+
     }
 
     public void setTitle(String title) {
@@ -85,8 +88,9 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("limit", limit+"");
         params.addQueryStringParameter("page", page+"");
+        params.addQueryStringParameter("tag", tagtag);
         params = KelaParams.generateSignParam("GET", Consts.articlesListApi, params);
-        Log.d("你觉得page是什么", "getArticlesList() returned: " + page);
+        Log.d("你觉得tag是什么", "getArticlesList() returned: " + tagtag);
         if (http == null) http = new MyHTTP(a);
         http.baseRequest(Consts.articlesListApi, JSONHandler.JTYPE_ARTICLES_LIST, HttpRequest.HttpMethod.GET,
                 params, handler);
@@ -99,15 +103,16 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
             String res = bundle.getString("result");
             String jtype = bundle.getString("jtype");
             if (res == null) {
-//				ToastUtil.show(a, "交易完成数据网络请求失败");
-                a.startActivity(new Intent(a, LoginActivity.class));
-                a.finish();
+				ToastUtil.show(a, getString(R.string.network_problem));
+//                a.startActivity(new Intent(a, LoginActivity.class));
+//                a.finish();
             } else if (res.equals("OK")) {
                 if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIST)) {
                     int curTradesSize = sList.size();
                     ArrayList<Subject> os = (ArrayList<Subject>) bundle.getSerializable("subject_article");
                     Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
+                        UIutils.cancelLoading();
                         ToastUtil.show(a, a.getString(R.string.no_more_data));
                         return;
                     }
@@ -121,6 +126,7 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
 
                         sAdapter.notifyDataSetChanged();
                     }
+                    UIutils.cancelLoading();
                     page += 1;
                 }
             } else {

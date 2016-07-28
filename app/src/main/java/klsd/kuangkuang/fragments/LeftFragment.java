@@ -13,15 +13,12 @@ import android.widget.TextView;
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.main.M_FeedBackActivity;
 import klsd.kuangkuang.main.MainActivity;
+import klsd.kuangkuang.utils.ToastUtil;
 
 /**
  * @description 侧边栏菜单
  */
 public class LeftFragment extends Fragment implements OnClickListener {
-    private View lastListView;
-    private View discussView;
-    private View favoritesView;
-    private View commentsView;
     private View settingsView;
     private View favoritesView1;
     private View commentsView1;
@@ -50,20 +47,14 @@ public class LeftFragment extends Fragment implements OnClickListener {
 
     public void findViews(View view) {
         tv_feedback = (TextView) view.findViewById(R.id.tv_feedback);
-        lastListView = view.findViewById(R.id.tvmingxing);
-        discussView = view.findViewById(R.id.tvhunlian);
-        favoritesView = view.findViewById(R.id.tvzuanshi);
-        commentsView = view.findViewById(R.id.tvmizuan);
-        settingsView = view.findViewById(R.id.tvzhuanjia);
+
+        settingsView = view.findViewById(R.id.all_total);
         favoritesView1 = view.findViewById(R.id.tvzhubao);
         commentsView1 = view.findViewById(R.id.tvzhubaogonglue);
         settingsView1 = view.findViewById(R.id.tvkuangkuang);
 
         tv_feedback.setOnClickListener(this);
-        lastListView.setOnClickListener(this);
-        discussView.setOnClickListener(this);
-        favoritesView.setOnClickListener(this);
-        commentsView.setOnClickListener(this);
+
         settingsView.setOnClickListener(this);
         favoritesView1.setOnClickListener(this);
         commentsView1.setOnClickListener(this);
@@ -88,31 +79,18 @@ public class LeftFragment extends Fragment implements OnClickListener {
                 Intent intent = new Intent(getActivity(), M_FeedBackActivity.class);
                 getActivity().startActivity(intent);
                 break;
-            case R.id.tvmingxing:// 明星珠宝
-                newContent = new MSubjectFragment();
-                break;
-            case R.id.tvhunlian: // 婚恋珠宝
-                newContent = new MSubjectFragment();
-                break;
-            case R.id.tvzuanshi: // 钻石推荐
-                newContent = new MSubjectFragment();
-                break;
-            case R.id.tvmizuan: // 米钻专栏
-                newContent = new MSubjectFragment();
 
-                break;
-            case R.id.tvzhuanjia: // 专家讲解
-                newContent = new MSubjectFragment();
+            case R.id.all_total: // 全部
+                newContent = new MSubjectFragment("0");
                 break;
             case R.id.tvzhubao: // 珠宝故事
-                newContent = new MSubjectFragment();
+                newContent = new MSubjectFragment("1");
                 break;
-            case R.id.tvzhubaogonglue: // 珠宝攻略
-                newContent = new MSubjectFragment();
+            case R.id.tvzhubaogonglue: // 首饰攻略
+                newContent = new MSubjectFragment("2");
                 break;
             case R.id.tvkuangkuang: // 硄硄说
-                newContent = new MSubjectFragment();
-                break;
+                ToastUtil.show(getActivity(),getString(R.string.please_wait));
             default:
                 break;
         }

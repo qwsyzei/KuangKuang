@@ -153,9 +153,9 @@ private TextView tv_name,tv_signature;
             String jtype = bundle.getString("jtype");
 
             if (res == null) {
-//				ToastUtil.show(a, "交易完成数据网络请求失败");
-                a.startActivity(new Intent(a, LoginActivity.class));
-                a.finish();
+                ToastUtil.show(a, getString(R.string.network_problem));
+//                a.startActivity(new Intent(a, LoginActivity.class));
+//                a.finish();
             } else if (res.equals("OK")) {
                 if (jtype.equals(JSONHandler.JTYPE_MYWORD_LIST)) {
                     int curTradesSize = sList.size();
