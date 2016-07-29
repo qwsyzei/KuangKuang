@@ -36,6 +36,7 @@ import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.PullToRefresh123View;
@@ -58,7 +59,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
     private int limit = 10;
     private int page = 1;
     MyHTTP http;
-    private LinearLayout layout_release;
+    private LinearLayout layout_release,layout_today;
     private Documents documents;
     private ImageView im_head_big, im_head_small;
 private TextView tv_name,tv_signature;
@@ -110,6 +111,7 @@ private TextView tv_name,tv_signature;
         im_set = (ImageView) view.findViewById(R.id.im_title_set);
         layout_collect = (RelativeLayout) view.findViewById(R.id.me_collect_layout);
         layout_release = (LinearLayout) view.findViewById(R.id.layout_me_release_word_now);
+        layout_today= (LinearLayout) view.findViewById(R.id.layout_me_myword_today);
         listView = (SelfListView) view.findViewById(R.id.listview_me_myword);
         tv_name= (TextView) view.findViewById(R.id.me_nickname);
         tv_signature= (TextView) view.findViewById(R.id.me_signature);
@@ -160,6 +162,13 @@ private TextView tv_name,tv_signature;
                 if (jtype.equals(JSONHandler.JTYPE_MYWORD_LIST)) {
                     int curTradesSize = sList.size();
                     ArrayList<MyWord> os = (ArrayList<MyWord>) bundle.getSerializable("myword_list");
+                    for (int i=0;i<os.size();i++){
+                        if (os.get(i).get_the_time().equals(MyDate.todayDate())){
+                            layout_today.setVisibility(View.GONE);
+                            break;
+                        }
+                    }
+
                     Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
                         ToastUtil.show(a, a.getString(R.string.no_more_data));

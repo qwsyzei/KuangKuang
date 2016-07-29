@@ -36,6 +36,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +54,7 @@ import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.utils.UsedTools;
 import klsd.kuangkuang.views.ContainsEmojiEditText;
 import klsd.kuangkuang.views.UploadDialog;
 
@@ -90,7 +92,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
         noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
         noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
         adapter = new GridAdapter(this);
-        adapter.update();
+//        adapter.update();  先注释了，看看再说
         noScrollgridview.setAdapter(adapter);
         noScrollgridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -135,32 +137,26 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
         if (dialog != null) {
             dialog.show();
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
 
-                List<String> list = new ArrayList<String>();
-                for (int i = 0; i < Bimp.drr.size(); i++) {
-                    String Str = Bimp.drr.get(i).substring(
-                            Bimp.drr.get(i).lastIndexOf("/") + 1,
-                            Bimp.drr.get(i).lastIndexOf("."));
-                    list.add(FileUtils.SDPATH + Str + ".JPEG");
-                    Log.d("地址是", "onClick() returned: " + FileUtils.SDPATH + Str + ".JPEG");
-                }
+//                List<String> list = new ArrayList<String>();
+//                for (int i = 0; i < Bimp.drr.size(); i++) {
+//                    String Str = Bimp.drr.get(i).substring(
+//                            Bimp.drr.get(i).lastIndexOf("/") + 1,
+//                            Bimp.drr.get(i).lastIndexOf("."));
+//                    list.add(FileUtils.SDPATH + Str + ".JPEG");
+//                    Log.d("地址是", "onClick() returned: " + FileUtils.SDPATH + Str + ".JPEG");
+//                }
                 // 高清的压缩图片全部就在  list 路径里面了
-
+                Log.d("进来这个方法了吗", "run() returned: " + "");
                 // 高清的压缩过的 bmp 对象  都在 Bimp.bmp里面
 
-                for (int i = 0; i < Bimp.bmp.size(); i++) {
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();//这句话必须写在循环里面
-                    Bimp.bmp.get(i).compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 -
-                    // 100)压缩文件
-                    byte[] bt = stream.toByteArray();//为了转成16进制
-                    photostr[i] = byte2hex(bt);//
-                }
+
                 release_word();
-            }
-        }).start();
+//            }
+//        }).start();
 
     }
 
@@ -478,6 +474,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                     dialog.dismiss();
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
             }
@@ -623,6 +620,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                             try {
                                 String path = Bimp.drr.get(Bimp.max);
                                 Bitmap bm = Bimp.revitionImageSize(path);
+//                                Bitmap bm=Bimp.getBitmapFormUri(C_ReleaseWordActivity.this,path);
                                 Bimp.bmp.add(bm);
                                 String newStr = path.substring(
                                         path.lastIndexOf("/") + 1,
@@ -637,6 +635,13 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                                 e.printStackTrace();
                             }
                         }
+                    }
+                    for (int i = 0; i < Bimp.bmp.size(); i++) {
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();//这句话必须写在循环里面
+                        Bimp.bmp.get(i).compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 -
+//                    // 100)压缩文件
+                        byte[] bt = stream.toByteArray();//为了转成16进制
+                        photostr[i] = byte2hex(bt);//
                     }
                 }
             }).start();
@@ -663,11 +668,11 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
         public PopupWindows(Context mContext, View parent) {
 
             View view = View
-                    .inflate(mContext, R.layout.item_popupwindows, null);
+                    .inflate(mContext, R.layout.dialog_circle_select, null);
             view.startAnimation(AnimationUtils.loadAnimation(mContext,
                     R.anim.fade_ins));
             LinearLayout ll_popup = (LinearLayout) view
-                    .findViewById(R.id.ll_popup);
+                    .findViewById(R.id.dialog_select_layout);
             ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
                     R.anim.push_bottom_in_2));
 
@@ -680,19 +685,13 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
             showAtLocation(parent, Gravity.BOTTOM, 0, 0);
             update();
 
-            Button bt1 = (Button) view
-                    .findViewById(R.id.item_popupwindows_camera);
-            Button bt2 = (Button) view
-                    .findViewById(R.id.item_popupwindows_Photo);
-            Button bt3 = (Button) view
-                    .findViewById(R.id.item_popupwindows_cancel);
-            bt1.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    photo();
-                    dismiss();
-                }
-            });
-            bt2.setOnClickListener(new View.OnClickListener() {
+            TextView tv1 = (TextView) view
+                    .findViewById(R.id.tv_dialog_by_album);
+            TextView tv2 = (TextView) view
+                    .findViewById(R.id.tv_dialog_by_take_photo);
+            TextView tv3 = (TextView) view
+                    .findViewById(R.id.tv_dialog_cancel);
+            tv1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent intent = new Intent(C_ReleaseWordActivity.this,
                             TestPicActivity.class);
@@ -700,7 +699,13 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                     dismiss();
                 }
             });
-            bt3.setOnClickListener(new View.OnClickListener() {
+            tv2.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    photo();
+                    dismiss();
+                }
+            });
+            tv3.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     dismiss();
                 }

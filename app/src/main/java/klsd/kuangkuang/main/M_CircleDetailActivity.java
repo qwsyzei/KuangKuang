@@ -140,7 +140,6 @@ private M_DetailLikeAdapter mdAdapter;
         layout_comment.setOnClickListener(this);
         layout_delete.setOnClickListener(this);
         mPullToRefreshView.setOnFooterRefreshListener(this);
-        mPullToRefreshView.setLastUpdated(new Date().toLocaleString());
 
         if (!head_pic.equals("null")) {
             ImageLoader.getInstance().displayImage(Consts.host + "/" + head_pic, im_head);
@@ -287,6 +286,7 @@ private M_DetailLikeAdapter mdAdapter;
             ToastUtil.show(M_CircleDetailActivity.this, "已赞");
         } else if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
             ToastUtil.show(M_CircleDetailActivity.this, "删除成功");
+            finish();
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
             ToastUtil.show(M_CircleDetailActivity.this, "评论成功");
             cPopwindow.dismiss();

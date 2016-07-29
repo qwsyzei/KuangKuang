@@ -8,16 +8,16 @@
     android:layout_height="wrap_content"
     android:textSize="@dimen/large_text_size"
     android:textStyle="bold"
-    android:layout_marginLeft="@dimen/base_margin"
-    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/size_eight"
     android:textColor="@color/black"
-    android:text="10"/>
+    android:text="25"/>
     <TextView
         android:id="@+id/item_myword_month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+      android:layout_marginTop="@dimen/login_p_l_r"
         android:textColor="@color/black"
+        android:textSize="@dimen/middle_text_size"
         android:text="7月"/>
     <ImageView
         android:id="@+id/item_myword_pic"
@@ -35,7 +35,8 @@
         android:paddingTop="@dimen/login_p_l_r"
         android:paddingBottom="@dimen/login_p_l_r"
   android:paddingLeft="@dimen/login_p_l_r"
-        android:layout_marginRight="@dimen/base_margin"
+        android:layout_marginLeft="@dimen/login_p_l_r"
+        android:layout_marginRight="@dimen/size_eight"
         android:layout_gravity="center"
         android:gravity="center_vertical"
         android:textColor="@color/black"

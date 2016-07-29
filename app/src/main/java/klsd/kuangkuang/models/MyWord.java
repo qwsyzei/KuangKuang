@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
+import klsd.kuangkuang.utils.MyDate;
+
 /**
  * 我的说说实体类
  * Created by qiwei on 2016/7/14.
@@ -17,7 +19,7 @@ public class MyWord implements Serializable {
     private String content_son, nickname, picture_son;
     private String like_number,comment_number;
     private Context context;
-    String day, month;//假的
+    String day, month;
     private Bitmap bitmip;//假的
 
     public MyWord(Context context) {
@@ -145,7 +147,7 @@ public class MyWord implements Serializable {
     }
 
     public String getDay() {
-        return day;
+        return MyDate.Day(created_at);
     }
 
     public void setDay(String day) {
@@ -153,7 +155,7 @@ public class MyWord implements Serializable {
     }
 
     public String getMonth() {
-        return month;
+        return MyDate.month(created_at);
     }
 
     public void setMonth(String month) {
@@ -178,6 +180,10 @@ public class MyWord implements Serializable {
 
     public String getCreated_at() {
         return created_at;
+    }
+
+    public String get_the_time() {    //日期
+        return MyDate.yearmonthDay(created_at) ;
     }
 
     public void setCreated_at(String created_at) {

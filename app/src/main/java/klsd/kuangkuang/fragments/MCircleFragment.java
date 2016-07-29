@@ -142,7 +142,6 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
                         cirList = os;
                         cAdapter = new C_CircleAdapter(a, cirList, handler);
                         listView.setAdapter(cAdapter);
-
                     } else {
 
                         cAdapter.notifyDataSetChanged();

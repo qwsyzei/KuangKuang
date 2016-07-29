@@ -143,7 +143,6 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
             }
         });
 
-
     }
 
     MyHTTP http;

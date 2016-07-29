@@ -195,6 +195,7 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
             ToastUtil.show(M_PersonalDataActivity.this, "保存成功");
             Log.d("个人资料上传成功", "updateData() returned: " + "");
         } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_HEAD)) {
+            ToastUtil.show(M_PersonalDataActivity.this, "头像上传成功");
             Log.d("头像上传成功", "updateData() returned: " + "");
                    //清理头像的缓存
 //            DiskCacheUtils.removeFromCache(head_url, imageLoader.getDiskCache());
@@ -364,7 +365,7 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
             if (extras != null) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 -
+                photo.compress(Bitmap.CompressFormat.JPEG, 50, stream);// (0 -
                 // 100)压缩文件
                 byte[] bt = stream.toByteArray();//为了转成16进制
                 photoStr = byte2hex(bt);//

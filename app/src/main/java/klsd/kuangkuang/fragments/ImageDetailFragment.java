@@ -1,8 +1,12 @@
 package klsd.kuangkuang.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -19,6 +24,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.photoview.PhotoViewAttacher;
 import klsd.kuangkuang.photoview.PhotoViewAttacher.OnPhotoTapListener;
+import klsd.kuangkuang.views.ExitDialog;
 
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
@@ -30,7 +36,10 @@ public class ImageDetailFragment extends Fragment {
 	private ImageView mImageView;
 	private ProgressBar progressBar;
 	private PhotoViewAttacher mAttacher;
-
+	private ExitDialog exitDialog;
+	private TextView tv_save;
+	private Context ctx;
+	Bitmap bitmap1;
 	public static ImageDetailFragment newInstance(String imageUrl) {
 		final ImageDetailFragment f = new ImageDetailFragment();
 
@@ -55,6 +64,9 @@ public class ImageDetailFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View v = inflater.inflate(R.layout.image_detail_fragment, container, false);
 		mImageView = (ImageView) v.findViewById(R.id.image);
+		 bitmap1 = ImageLoader.getInstance().loadImageSync(mImageUrl);//根据url得到bitmap对象
+		mImageView.setOnLongClickListener(longClickListener);
+		Log.d("", "onCreateView() returned: " + "走了这一步没");
 		mAttacher = new PhotoViewAttacher(mImageView);
 
 		mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
@@ -68,7 +80,34 @@ public class ImageDetailFragment extends Fragment {
 		progressBar = (ProgressBar) v.findViewById(R.id.loading);
 		return v;
 	}
+	private View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
+		@Override
+		public boolean onLongClick(View view) {
+			Log.d("", "onCreateView() returned: " + "进来了吗");
+			Cancel_Dialog();
+			return true;
+		}
+	};
+	//窗口
+	private void Cancel_Dialog() {
+		exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+		exitDialog.setCanceledOnTouchOutside(true);
+		exitDialog.show();
 
+
+		tv_save = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+		tv_save.setText(R.string.save);
+
+		tv_save.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				MediaStore.Images.Media.insertImage(ctx.getContentResolver(), bitmap1, "title", "description");
+
+				ctx.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+			}
+		});
+
+	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);

@@ -6,12 +6,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.fragments.ImageDetailFragment;
+import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.HackyViewPager;
 
 /**

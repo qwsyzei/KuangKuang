@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.ErrorCodes;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.ExitDialog;
@@ -83,13 +85,22 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.content_son.setText(ac.getContent_son());
-        Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
+//        if (!ac.getUrl1().equals("null")) {
+//            viewHolder.pic_url1.setVisibility(View.VISIBLE);
+            Context context = ctx.getApplicationContext();
+            initImageLoader(context);
+            ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
+//        }
+        String today=MyDate.todayDate();
 
-        viewHolder.day.setText(ac.getDay());
-        viewHolder.month.setText(ac.getMonth());
+        if (today.equals(ac.get_the_time())){
+            viewHolder.month.setVisibility(View.GONE);
+            viewHolder.day.setText("今天");
+        }else{
+            viewHolder.day.setText(ac.getDay());
+            viewHolder.month.setText(ac.getMonth()+"月");
+        }
+        viewHolder.content_son.setText(ac.getContent_son());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,6 +184,5 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
     public final class ViewHolder {
         TextView content_son, day, month;
         ImageView pic_url1;
-
     }
 }

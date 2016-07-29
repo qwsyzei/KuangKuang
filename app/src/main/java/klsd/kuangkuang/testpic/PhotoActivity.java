@@ -122,7 +122,7 @@ public class PhotoActivity extends BaseActivity {
 		img.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.FILL_PARENT));
 		PhotoViewAttacher mAttacher = new PhotoViewAttacher(img);
-		mAttacher.setScaleType(ImageView.ScaleType.CENTER_CROP);
+		mAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
 		listViews.add(img);// 添加view
 	}
 

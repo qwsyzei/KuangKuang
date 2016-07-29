@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/size_eight"
-            android:text="开心就好"
+            android:text="硄硄"
             android:textColor="@color/white" />
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="我是一个有理想的人，我愿意为之奋斗"
+            android:text="祝您心想事成"
             android:textColor="@color/white" />
     </LinearLayout>
 </FrameLayout>

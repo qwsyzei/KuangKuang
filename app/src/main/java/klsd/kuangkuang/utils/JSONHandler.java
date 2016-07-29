@@ -14,19 +14,16 @@ import org.json.JSONTokener;
 import java.util.ArrayList;
 import java.util.List;
 
-import klsd.kuangkuang.models.AccountVersion;
 import klsd.kuangkuang.models.AllComment;
 import klsd.kuangkuang.models.CircleAllComment;
 import klsd.kuangkuang.models.CircleLike;
 import klsd.kuangkuang.models.Circles;
-import klsd.kuangkuang.models.Deposits;
 import klsd.kuangkuang.models.Documents;
 import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.models.MyCollect;
 import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.models.OHLCEntity;
 import klsd.kuangkuang.models.Order;
-import klsd.kuangkuang.models.OrderId;
 import klsd.kuangkuang.models.Subject;
 import klsd.kuangkuang.models.Top;
 
@@ -101,9 +98,7 @@ public class JSONHandler {
     public final static String JTYPE_GIVE_SUGGEST = "give_suggest";//意见反馈
 
     public JSONHandler() {
-
     }
-
     public JSONHandler(Context ctx) {
         this.ctx = ctx;
     }
