@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -29,6 +30,7 @@ import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.C_CircleCommentAdapter;
 import klsd.kuangkuang.adapters.C_CircleGridAdapter;
 import klsd.kuangkuang.adapters.M_DetailLikeAdapter;
+import klsd.kuangkuang.fragments.MMeFragment;
 import klsd.kuangkuang.models.CircleAllComment;
 import klsd.kuangkuang.models.CircleGridViewEntity;
 import klsd.kuangkuang.models.CircleLike;
@@ -40,27 +42,29 @@ import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.ContainsEmojiEditText;
+import klsd.kuangkuang.views.ExitDialog;
 import klsd.kuangkuang.views.PullToRefresh123View;
 import klsd.kuangkuang.views.SelfGridView;
 import klsd.kuangkuang.views.SelfListView;
 
+import static klsd.kuangkuang.R.id.dialog_exit_title;
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 朋友圈详情页
  */
-public class M_CircleDetailActivity extends BaseActivity implements View.OnClickListener,PullToRefresh123View.OnFooterRefreshListener{
+public class M_CircleDetailActivity extends BaseActivity implements View.OnClickListener, PullToRefresh123View.OnFooterRefreshListener {
     private String id, head_pic, time, nickname, content, like_number, comment_number;
     private String url1, url2, url3, url4, url5, url6, url7, url8, url9;
 
     private ImageView im_head;
     private TextView tv_time, tv_nickname, tv_content, tv_like, tv_comment;
     private LinearLayout layout_like, layout_comment, layout_delete;
-    private SelfGridView gridview,gridview_like;
+    private SelfGridView gridview, gridview_like;
     private int number;//9宫格图片的个数
     private List<CircleGridViewEntity> headerEntitiesList;
     private C_CircleGridAdapter cGridAdapter;
-private M_DetailLikeAdapter mdAdapter;
+    private M_DetailLikeAdapter mdAdapter;
     ArrayList<CircleAllComment> mylist;
     private C_CircleCommentAdapter allAdapter;
     private int page = 1;
@@ -70,6 +74,7 @@ private M_DetailLikeAdapter mdAdapter;
     private ContainsEmojiEditText edit_dialog_comment;
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
+    private TextView tv_dialog_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,11 +127,11 @@ private M_DetailLikeAdapter mdAdapter;
             number = 9;
         }
         mylist = new ArrayList<>();
-        mPullToRefreshView= (PullToRefresh123View) findViewById(R.id.pull_refresh_view_circle_detail);
+        mPullToRefreshView = (PullToRefresh123View) findViewById(R.id.pull_refresh_view_circle_detail);
         listView = (SelfListView) findViewById(R.id.listview_circle_detail);
 //        listView.setOnScrollListener(this);
         gridview = (SelfGridView) findViewById(R.id.gridview_circle_detail);
-        gridview_like= (SelfGridView) findViewById(R.id.gridview_circle_detail_like);
+        gridview_like = (SelfGridView) findViewById(R.id.gridview_circle_detail_like);
         im_head = (ImageView) findViewById(R.id.circle_detail_head_pic);
         tv_time = (TextView) findViewById(R.id.circle_detail_time);
         tv_nickname = (TextView) findViewById(R.id.circle_detail_name);
@@ -182,14 +187,9 @@ private M_DetailLikeAdapter mdAdapter;
         });
     }
 
-    /**
-     * 打开图片查看器
-     * @param position
-     * @param urls2
-     */
+
     protected void imageBrower(int position, ArrayList<String> urls2) {
         Intent intent = new Intent(M_CircleDetailActivity.this, ImagePagerActivity.class);
-        // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
         startActivity(intent);
@@ -208,14 +208,18 @@ private M_DetailLikeAdapter mdAdapter;
                 gotoComment();
                 break;
             case R.id.layout_circle_detail_delete:
+              Delete_Dialog();
+                break;
+            case R.id.exit_yes:
                 delete();
+                exitDialog.dismiss();
+                break;
+            case R.id.exit_no:
+                exitDialog.dismiss();
                 break;
         }
     }
 
-    /**
-     * 赞
-     */
     MyHTTP http;
 
     private void gotoLike() {
@@ -228,9 +232,6 @@ private M_DetailLikeAdapter mdAdapter;
                 params, getHandler());
     }
 
-    /**
-     * 给圈子评论
-     */
     private void gotoComment() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("micropost_id", id);
@@ -243,9 +244,7 @@ private M_DetailLikeAdapter mdAdapter;
                 params, getHandler());
     }
 
-    /**
-     * 删除
-     */
+
     private void delete() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("id", id);
@@ -254,9 +253,6 @@ private M_DetailLikeAdapter mdAdapter;
                 params, getHandler());
     }
 
-    /**
-     * 赞列表
-     */
     private void likeList() {
 
         RequestParams params = new RequestParams();
@@ -266,13 +262,10 @@ private M_DetailLikeAdapter mdAdapter;
                 params, getHandler());
     }
 
-    /**
-     * 评论列表
-     */
     private void commentList() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("micropost_id", id);
-        params.addQueryStringParameter("page", page+"");
+        params.addQueryStringParameter("page", page + "");
         params.addQueryStringParameter("limit", "8");
         params = KelaParams.generateSignParam("GET", Consts.circlecommentListApi, params);
         if (http == null) http = new MyHTTP(M_CircleDetailActivity.this);
@@ -286,28 +279,28 @@ private M_DetailLikeAdapter mdAdapter;
             ToastUtil.show(M_CircleDetailActivity.this, "已赞");
         } else if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
             ToastUtil.show(M_CircleDetailActivity.this, "删除成功");
+            Intent intent = new Intent(M_CircleDetailActivity.this, MainActivity.class);
+            intent.putExtra("release", "123");
+            startActivity(intent);
             finish();
+
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
             ToastUtil.show(M_CircleDetailActivity.this, "评论成功");
             cPopwindow.dismiss();
             edit_dialog_comment.setText("");
-//            myStartActivity(new Intent(M_CircleDetailActivity.this,M_CircleDetailActivity.class));
-//            finish();
-        }
-        else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_LIKE_LIST)) {
+
+        } else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_LIKE_LIST)) {
             commentList();
             ArrayList<CircleLike> os = (ArrayList<CircleLike>) handlerBundler.getSerializable("circle_like_list");
             if (os.size() == 0) {
-                ToastUtil.show(M_CircleDetailActivity.this, "朋友圈的赞为空");
                 return;
             }
-            mdAdapter=new M_DetailLikeAdapter(M_CircleDetailActivity.this,os);
+            mdAdapter = new M_DetailLikeAdapter(M_CircleDetailActivity.this, os);
             gridview_like.setAdapter(mdAdapter);
 
-        }else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_ALL_COMMENT)) {
+        } else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_ALL_COMMENT)) {
             int curTradesSize = mylist.size();
             ArrayList<CircleAllComment> os = (ArrayList<CircleAllComment>) handlerBundler.getSerializable("circle_all_comment");
-            Log.d("OS的长度", "handleMessage() returned: " + os.size());
             if (os.size() == 0) {
                 ToastUtil.show(M_CircleDetailActivity.this, getString(R.string.no_more_data));
                 return;
@@ -333,7 +326,7 @@ private M_DetailLikeAdapter mdAdapter;
             ids.add(o.getId());
 
         for (CircleAllComment e : ess) {
-            if (!ids.contains(e.getId())) {     //因为后台返回的会有的与前面的id重复，所以把不重复的添加了
+            if (!ids.contains(e.getId())) {
                 int i = from.equals("top") ? 0 : mylist.size();
                 mylist.add(i, e);
             }
@@ -343,15 +336,12 @@ private M_DetailLikeAdapter mdAdapter;
         }
     }
 
-    //评论窗口
     private void Comment_Dialog(View v) {
         View pop_view = getLayoutInflater().inflate(R.layout.dialog_comment, null, false);
         cPopwindow = new PopupWindow(pop_view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, true);
-        // 设置动画效果
         cPopwindow.setAnimationStyle(R.style.mystyle);
-        cPopwindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//可解决被软键盘遮住的问题
+        cPopwindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         cPopwindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-        //实例化一个ColorDrawable颜色为半透明
         ColorDrawable dw = new ColorDrawable(0xb01b1b1b);
         pop_view.setBackgroundDrawable(dw);
         pop_view.setOnTouchListener(new View.OnTouchListener() {
@@ -366,7 +356,6 @@ private M_DetailLikeAdapter mdAdapter;
         tv_dialog_send = (TextView) pop_view.findViewById(R.id.dialog_comment_send_send);
         tv_dialog_send.setOnClickListener(this);
         edit_dialog_comment.requestFocus();
-        //调用系统输入法
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 
@@ -381,10 +370,21 @@ private M_DetailLikeAdapter mdAdapter;
                 mPullToRefreshView.onFooterRefreshComplete();
 
                 commentList();
-                ToastUtil.show(M_CircleDetailActivity.this, "加载更多数据!");
+                ToastUtil.show(M_CircleDetailActivity.this, "加载更多数据");
             }
 
         }, 2200);
     }
+    private void Delete_Dialog() {
+        exitDialog = new ExitDialog(M_CircleDetailActivity.this, R.style.MyDialogStyle, R.layout.dialog_exit);
 
+        exitDialog.show();
+        tv_dialog_title= (TextView) exitDialog.findViewById(dialog_exit_title);
+        tv_dialog_title.setText(getString(R.string.if_delete));
+        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
+        tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
+        tv_yes.setOnClickListener(this);
+        tv_no.setOnClickListener(this);
+
+    }
 }

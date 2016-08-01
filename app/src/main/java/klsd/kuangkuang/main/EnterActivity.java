@@ -99,7 +99,7 @@ public static String secret;
         } else {
             if (isFirstUse) {
 
-                startActivity(new Intent(EnterActivity.this, LogoActivity.class));//引导界面
+                startActivity(new Intent(EnterActivity.this, MainActivity.class));//引导界面（先让它进入主页）
             } else {
                 startActivity(new Intent(EnterActivity.this, MainActivity.class));//主界面
             }

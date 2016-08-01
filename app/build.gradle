@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "qiwei.kuangkuang"
+        applicationId "klsd.kuangkuang"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

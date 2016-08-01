@@ -187,7 +187,6 @@ private TextView tv_name,tv_signature;
                     documents = (Documents) bundle.getSerializable("documents");
                     tv_name.setText(documents.getName());
                     tv_signature.setText(documents.getSignature());
-                    ToastUtil.show(a, "已获取到个人资料");
                     getbitmap123();
                 loadDataFrom();
                 }

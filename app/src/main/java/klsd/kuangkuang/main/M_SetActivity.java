@@ -20,20 +20,21 @@ import klsd.kuangkuang.views.CleanCacheDialog;
 import klsd.kuangkuang.views.ExitDialog;
 import klsd.kuangkuang.views.ToggleButton;
 
-/**
- * 设置界面
- */
+import static klsd.kuangkuang.R.id.dialog_exit_title;
+
+
 public class M_SetActivity extends BaseActivity implements View.OnClickListener{
 private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedback,layout_give_mark,layout_clean_cache,layout_start_push;
     private CleanCacheDialog cleanDialog;
     private ExitDialog exitDialog;
+
     private Button btn;
     private TextView tv_clean_yes,tv_clean_no;
     private ToggleButton toggleButton;
     private TextView tv_cache;
     private String cacheSize;
     private static String dir = Environment.getExternalStorageDirectory()
-            .getAbsolutePath() + "/Android/data/qiwei.kuangkuang/cache/";
+            .getAbsolutePath() + "/Android/data/klsd.kuangkuang/cache/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,6 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
         layout_clean_cache= (RelativeLayout) findViewById(R.id.set_clean_cache);
         layout_start_push= (RelativeLayout) findViewById(R.id.set_start_push);
         btn= (Button) findViewById(R.id.btn_exit);
-        Log.d("缓存路径是", "initView() returned: " + dir);
         tv_cache= (TextView) findViewById(R.id.set_tv_cache);
         try {
             cacheSize = DataCleanManager.getCacheSize(new File(dir));
@@ -86,14 +86,12 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
                 myStartActivity(new Intent(M_SetActivity.this,M_FeedBackActivity.class));
                 break;
             case R.id.set_give_mark:
-                myStartActivity(new Intent(M_SetActivity.this,M_GiveMarkActivity.class));
+//                myStartActivity(new Intent(M_SetActivity.this,M_GiveMarkActivity.class));
                 break;
             case R.id.set_clean_cache:
-                //弹出窗口
                 Clean_Dialog();
                 break;
             case R.id.dialog_clean_yes:
-                //开始清理缓存
                 cleanDialog.dismiss();
                 DataCleanManager.deleteFolderFile(dir, false);
                 tv_cache.setText("0.00MB");
@@ -112,19 +110,17 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
                 break;
         }
     }
-    /**
-     * 退出
-     */
+
     private void signOut() {
         setMember(null);
         DataCenter.setSignedOut();
         SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
-        editor.clear();       //清除登录信息
+        editor.clear();
         editor.commit();
         myStartActivity(new Intent(this, LoginActivity.class));
         finish();
     }
-    //清理窗口
+
     private void Clean_Dialog() {
         cleanDialog = new CleanCacheDialog(M_SetActivity.this, R.style.MyDialogStyle, R.layout.dialog_clean_cache);
         cleanDialog.show();
@@ -134,7 +130,7 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
         tv_clean_no.setOnClickListener(this);
 
     }
-    //退出窗口
+
     private void Exit_Dialog() {
         exitDialog = new ExitDialog(M_SetActivity.this, R.style.MyDialogStyle, R.layout.dialog_exit);
 
