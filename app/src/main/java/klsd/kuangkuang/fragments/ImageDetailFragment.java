@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,9 +23,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.photoview.PhotoViewAttacher;
 import klsd.kuangkuang.photoview.PhotoViewAttacher.OnPhotoTapListener;
+import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.ExitDialog;
 
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
@@ -38,8 +45,8 @@ public class ImageDetailFragment extends Fragment {
 	private PhotoViewAttacher mAttacher;
 	private ExitDialog exitDialog;
 	private TextView tv_save;
-	private Context ctx;
 	Bitmap bitmap1;
+	private TextView btn;
 	public static ImageDetailFragment newInstance(String imageUrl) {
 		final ImageDetailFragment f = new ImageDetailFragment();
 
@@ -63,9 +70,10 @@ public class ImageDetailFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View v = inflater.inflate(R.layout.image_detail_fragment, container, false);
+		btn= (TextView) v.findViewById(R.id.btn_btn);
+		btn.setOnLongClickListener(longClickListener);
 		mImageView = (ImageView) v.findViewById(R.id.image);
 		 bitmap1 = ImageLoader.getInstance().loadImageSync(mImageUrl);//根据url得到bitmap对象
-		mImageView.setOnLongClickListener(longClickListener);
 		Log.d("", "onCreateView() returned: " + "走了这一步没");
 		mAttacher = new PhotoViewAttacher(mImageView);
 
@@ -90,10 +98,9 @@ public class ImageDetailFragment extends Fragment {
 	};
 	//窗口
 	private void Cancel_Dialog() {
-		exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+		exitDialog = new ExitDialog(getContext(), R.style.MyDialogStyle, R.layout.dialog_cancel);
 		exitDialog.setCanceledOnTouchOutside(true);
 		exitDialog.show();
-
 
 		tv_save = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
 		tv_save.setText(R.string.save);
@@ -101,12 +108,33 @@ public class ImageDetailFragment extends Fragment {
 		tv_save.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				MediaStore.Images.Media.insertImage(ctx.getContentResolver(), bitmap1, "title", "description");
-
-				ctx.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+				savePicture();
+				exitDialog.dismiss();
+				ToastUtil.show(getActivity(),getString(R.string.save_success));
 			}
 		});
 
+	}
+
+	/**
+	 * 把图片存到相册的方法
+	 */
+	private void savePicture(){
+		MediaStore.Images.Media.insertImage(getContext().getContentResolver(), bitmap1, "title", "description");
+		File mPhotoFile=new File("file://"
+				+ Environment.getExternalStorageDirectory());
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {  //判断安卓版本是否为高版本
+			Intent mediaScanIntent = new Intent(
+					Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+			Uri contentUri = Uri.fromFile(mPhotoFile); //out is your output file
+			mediaScanIntent.setData(contentUri);
+			getContext().sendBroadcast(mediaScanIntent);
+		} else {
+			getContext().sendBroadcast(new Intent(
+					Intent.ACTION_MEDIA_MOUNTED,
+					Uri.parse("file://"
+							+ Environment.getExternalStorageDirectory())));
+		}
 	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {

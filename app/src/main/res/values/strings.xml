@@ -136,6 +136,7 @@
     <string name="clean_success">清理成功</string>
     <!-- 以下是个人资料 -->
     <string name="save">保存</string>
+    <string name="save_success">保存成功</string>
     <string name="change_head_pic">更换头像</string>
     <string name="nick_name">昵称</string>
     <string name="sex">性别</string>

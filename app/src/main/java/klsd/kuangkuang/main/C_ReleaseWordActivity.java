@@ -54,7 +54,6 @@ import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
-import klsd.kuangkuang.utils.UsedTools;
 import klsd.kuangkuang.views.ContainsEmojiEditText;
 import klsd.kuangkuang.views.UploadDialog;
 
