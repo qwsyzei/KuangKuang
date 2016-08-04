@@ -118,8 +118,14 @@
                 android:layout_marginRight="@dimen/login_p_l_r"
                 android:text="3" />
         </LinearLayout>
-
-
+        <ImageView
+            android:id="@+id/item_circle_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+      android:padding="@dimen/size_eight"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:src="@mipmap/allcomment_more" />
 
     </LinearLayout>
 </LinearLayout>

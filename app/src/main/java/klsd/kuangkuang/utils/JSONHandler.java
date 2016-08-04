@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import klsd.kuangkuang.models.AllComment;
+import klsd.kuangkuang.models.Blacklist;
 import klsd.kuangkuang.models.CircleAllComment;
 import klsd.kuangkuang.models.CircleLike;
 import klsd.kuangkuang.models.Circles;
@@ -69,6 +70,7 @@ public class JSONHandler {
 
     public final static String JTYPE_ARTICLES_LIST = "articles_list";
     public final static String JTYPE_ARTICLES_TOP = "articles_top";
+
     public final static String JTYPE_ARTICLES_LIKE = "articles_like";
     public final static String JTYPE_ARTICLES_VIEWS = "articles_views";
     public final static String JTYPE_ARTICLES_COMMENT = "articles_comment";
@@ -96,6 +98,9 @@ public class JSONHandler {
     public final static String JTYPE_PICTURE8 = "picture8";
     public final static String JTYPE_PICTURE9 = "picture9";
     public final static String JTYPE_GIVE_SUGGEST = "give_suggest";//意见反馈
+    public final static String JTYPE_ADD_BLACK= "add_black_list";//加入黑名单
+    public final static String JTYPE_DELETE_BLACK= "delete_black_list";//从黑名单移除
+    public final static String JTYPE_BLACK_LIST= "black_list";//黑名单列表
 
     public JSONHandler() {
     }
@@ -312,6 +317,20 @@ public class JSONHandler {
                     mc.add(top);
                 }
                 bundle.putSerializable("top", mc);
+            }else if (jtype2.equals(JTYPE_BLACK_LIST)) {
+                ArrayList<Blacklist> mc = new ArrayList<Blacklist>();
+                for (int i = 0; i < olistArrays.size(); i++) {
+                    JSONObject object = olistArrays.get(i);
+                    JSONObject object11=object.getJSONObject("object");
+                    String nickname=object11.getString("nickname");
+                    String picture_son=object11.getString("picture");
+                    String object_id=object11.getString("object_id");
+                    Blacklist top = new Blacklist(ctx);
+                    top.getFromJSONObjectItem(object);
+                    top.getauthorInfo(nickname, picture_son,object_id);
+                    mc.add(top);
+                }
+                bundle.putSerializable("blacklist", mc);
             }
         } catch (Exception e) {
         }
@@ -386,6 +405,8 @@ public class JSONHandler {
         osStrings.add(JTYPE_PICTURE8);
         osStrings.add(JTYPE_PICTURE9);
         osStrings.add(JTYPE_GIVE_SUGGEST);
+        osStrings.add(JTYPE_ADD_BLACK);
+        osStrings.add(JTYPE_DELETE_BLACK);
         return osStrings.contains(jtype2);
     }
 
@@ -406,6 +427,7 @@ public class JSONHandler {
         osStrings.add(JTYPE_CIRCLE_ALL_COMMENT);
         osStrings.add(JTYPE_COLLECT_SHOW);
         osStrings.add(JTYPE_ARTICLES_TOP);
+        osStrings.add(JTYPE_BLACK_LIST);
         osStrings.add(JTYPE_GET_FUND_SOURCES);
         osStrings.add(JTYPE_GET_ACCOUNT_VERSIONS);
         osStrings.add(JTYPE_DEPOSITS);

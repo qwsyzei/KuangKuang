@@ -56,6 +56,14 @@ public class KelaParams {
                 String sig = getSignature(mString, url, paramsToHashMap(params), DataCenter.getSecretKey());
                 params.addQueryStringParameter("signature", sig);
             }
+        }else{
+            //由于接口特殊，未登录情况下也要用私有key，先这么写
+            params.addQueryStringParameter("access_key", DataCenter.LOGIN_ACCESSKEY);
+            params.addQueryStringParameter("tonce", MyDate.getTonceInt() + "");
+            String mString = method.equals(HttpMethod.GET) ? "GET" : "POST";
+            HashMap<String, String> hashMap = paramsToHashMap(params);
+            String sig = getSignature(mString, url, hashMap, DataCenter.LOGIN_SECRET);
+            params.addQueryStringParameter("signature", sig);
         }
         return params;
     }

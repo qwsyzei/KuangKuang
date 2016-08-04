@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
-    android:layout_marginTop="@dimen/size_eight"
-
+    android:layout_width="match_parent"
     android:background="@color/white"
-    android:id="@+id/me_collect_layout"
+    android:layout_marginTop="@dimen/login_p_l_r"
+    android:layout_marginBottom="@dimen/base_margin"
+    android:id="@+id/me_black_layout"
     android:layout_height="wrap_content">
-<ImageView
-    android:id="@+id/me_four_im"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-   android:layout_centerVertical="true"
-    android:layout_marginLeft="@dimen/signup__text_m_l_r"
-    android:src="@mipmap/collect_star"/>
+    <ImageView
+        android:id="@+id/me_four_im"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2dp"
+        android:paddingLeft="1dp"
+        android:layout_centerVertical="true"
+        android:paddingRight="2dp"
+        android:layout_marginLeft="@dimen/signup__text_m_l_r"
+        android:src="@mipmap/blacklist"/>
     <TextView
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/my_collect"
+        android:text="@string/black_list"
         android:padding="@dimen/base_margin"
         android:layout_toRightOf="@+id/me_four_im"
         android:layout_marginLeft="@dimen/login_p_l_r"
         android:textSize="@dimen/middle_text_size"
-     android:layout_centerVertical="true" />
+        android:layout_centerVertical="true" />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

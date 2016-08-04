@@ -169,7 +169,6 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
     }
     /**
      * 切换fragment
-     *
      * @param fragment
      */
     private void switchFragment(Fragment fragment) {

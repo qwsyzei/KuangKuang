@@ -58,6 +58,8 @@ public class M_FeedBackActivity extends BaseActivity {
     private void gotoSuggest() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("content", edit.getText().toString());
+        params.addQueryStringParameter("species", "app");
+
 //        params.addQueryStringParameter("picture", "");
         params = KelaParams.generateSignParam("POST", Consts.givesuggestApi, params);
         if (http == null) http = new MyHTTP(M_FeedBackActivity.this);

@@ -111,10 +111,9 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("page", page + "");
         params.addQueryStringParameter("limit", limit + "");
-        params = KelaParams.generateSignParam("GET", Consts.micropostsListApi, params);
-        if (http == null) http = new MyHTTP(a);
-        http.baseRequest(Consts.micropostsListApi, JSONHandler.JTYPE_CIRCLE_LIST, HttpRequest.HttpMethod.GET,
-                params, handler);
+            if (http == null) http = new MyHTTP(a);
+            http.baseRequest(Consts.micropostsListApi, JSONHandler.JTYPE_CIRCLE_LIST, HttpRequest.HttpMethod.GET,
+                    params, handler);
     }
 
     private Handler handler = new BaseActivity.KelaHandler(a) {

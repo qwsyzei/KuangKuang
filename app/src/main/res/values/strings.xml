@@ -151,6 +151,9 @@
     <string name="my_message">我的消息</string>
     <string name="everyday_sign">每日签到</string>
     <string name="my_collect">我的收藏</string>
+    <string name="black_list">黑名单</string>
+    <string name="cannot_add_self_black_list">不可将自己加入黑名单</string>
+    <string name="delete_black_list">移除黑名单</string>
     <string name="cancel_collect">取消收藏</string>
     <string name="success_cancel_collect">取消收藏成功</string>
     <string name="today">今天</string>
@@ -187,6 +190,10 @@
     <string name="delete">删除</string>
     <string name="add_pic_way">添加图片方式</string>
     <string name="if_delete">是否要删除</string>
+    <string name="if_add_black">是否要将该用户加入黑名单</string>
+    <string name="add_black">加入黑名单</string>
+    <string name="tip_off_the_word">举报该说说</string>
+    <string name="if_tip_off">是否要举报该说说</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- 返回错误信息 -->

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/login_p_l_r"
+    android:paddingLeft="@dimen/base_margin"
+    android:paddingRight="@dimen/base_margin"
+    android:paddingTop="@dimen/login_p_l_r">
+
+    <klsd.kuangkuang.views.CircleImageView
+        android:id="@+id/item_blacklist_im_head"
+        android:layout_width="@dimen/article_author_head_size"
+        android:layout_height="@dimen/article_author_head_size"
+        android:src="@mipmap/zhan_circle_head" />
+
+    <TextView
+        android:id="@+id/item_blacklist_tv_name"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/signup__text_m_l_r"
+        android:paddingLeft="@dimen/base_margin"
+        android:gravity="center_vertical"
+        android:text="" />
+</LinearLayout>

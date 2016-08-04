@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,8 +23,6 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.photoview.PhotoViewAttacher;
@@ -74,7 +71,6 @@ public class ImageDetailFragment extends Fragment {
 		btn.setOnLongClickListener(longClickListener);
 		mImageView = (ImageView) v.findViewById(R.id.image);
 		 bitmap1 = ImageLoader.getInstance().loadImageSync(mImageUrl);//根据url得到bitmap对象
-		Log.d("", "onCreateView() returned: " + "走了这一步没");
 		mAttacher = new PhotoViewAttacher(mImageView);
 
 		mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
@@ -91,7 +87,6 @@ public class ImageDetailFragment extends Fragment {
 	private View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
 		@Override
 		public boolean onLongClick(View view) {
-			Log.d("", "onCreateView() returned: " + "进来了吗");
 			Cancel_Dialog();
 			return true;
 		}
@@ -120,7 +115,7 @@ public class ImageDetailFragment extends Fragment {
 	 * 把图片存到相册的方法
 	 */
 	private void savePicture(){
-		MediaStore.Images.Media.insertImage(getContext().getContentResolver(), bitmap1, "title", "description");
+		MediaStore.Images.Media.insertImage(getContext().getContentResolver(), bitmap1, "circle_pic", "description");
 		File mPhotoFile=new File("file://"
 				+ Environment.getExternalStorageDirectory());
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {  //判断安卓版本是否为高版本
@@ -134,6 +129,7 @@ public class ImageDetailFragment extends Fragment {
 					Intent.ACTION_MEDIA_MOUNTED,
 					Uri.parse("file://"
 							+ Environment.getExternalStorageDirectory())));
+
 		}
 	}
 	@Override

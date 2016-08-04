@@ -8,10 +8,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -32,19 +36,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import klsd.kuangkuang.R;
+import klsd.kuangkuang.fragments.MCircleFragment;
 import klsd.kuangkuang.main.C_CircleAllCommentActivity;
 import klsd.kuangkuang.main.ImagePagerActivity;
+import klsd.kuangkuang.main.MainActivity;
 import klsd.kuangkuang.models.Circles;
 import klsd.kuangkuang.models.CircleGridViewEntity;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.ErrorCodes;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.CircleImageView;
 import klsd.kuangkuang.views.ExitDialog;
+import klsd.kuangkuang.views.MoreDialog;
 import klsd.kuangkuang.views.SelfGridView;
 
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
@@ -61,10 +69,14 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
     String jtype, responseJson;
     String error_code;
     Bundle handlerBundler;
-
-
+    private ExitDialog exitDialog;
+    private MoreDialog moreDialog;
+    private TextView tv_yes,tv_no,tv_title;
+    private TextView tv_dialog_cancel;
+private LinearLayout layout_black,layout_tip_off;
     private List<CircleGridViewEntity> headerEntitiesList;
     private C_CircleGridAdapter cGridAdapter;
+    private Fragment fragment;
 
     public C_CircleAdapter(Context context, List<Circles> objects, Handler h) {
         super(context, R.layout.item_circle, objects);
@@ -101,6 +113,7 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
             viewHolder.time = (TextView) convertView.findViewById(R.id.item_circle_time);
             viewHolder.layout_like = (LinearLayout) convertView.findViewById(R.id.layout_item_circle_like);
             viewHolder.layout_comment = (LinearLayout) convertView.findViewById(R.id.layout_item_circle_comment);
+            viewHolder.im_black= (ImageView) convertView.findViewById(R.id.item_circle_black);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -157,6 +170,102 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
 
             }
         });
+        viewHolder.im_black.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moreDialog = new MoreDialog(ctx, R.style.dialog123);//创建Dialog并设置样式主题
+                Window window = moreDialog.getWindow();
+                window.setGravity(Gravity.BOTTOM);  //此处可以设置dialog显示的位置
+                window.setWindowAnimations(R.style.mystyle);  //添加动画
+                moreDialog.setCanceledOnTouchOutside(true);//设置点击Dialog外部任意区域关闭Dialog
+                window.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+                moreDialog.show();
+
+                layout_black = (LinearLayout) moreDialog.findViewById(R.id.layout_more_black);
+                layout_tip_off = (LinearLayout) moreDialog.findViewById(R.id.layout_more_tip_off);
+                tv_dialog_cancel = (TextView) moreDialog.findViewById(R.id.tv_dialog_cancel);
+                layout_black.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        moreDialog.dismiss();
+                        if (DataCenter.isSigned()){
+                            exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_exit);
+                            exitDialog.show();
+                            tv_title= (TextView) exitDialog.findViewById(R.id.dialog_exit_title);
+                            tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
+                            tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
+                            tv_title.setText(R.string.if_add_black);
+                            tv_yes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    exitDialog.dismiss();
+                                    if (DataCenter.getMember_id().equals(circles.getMember_id())){
+                                        ToastUtil.show(ctx,R.string.cannot_add_self_black_list);
+                                    }else{
+                                        //加入黑名单
+                                        RequestParams params = new RequestParams();
+                                        params.addQueryStringParameter("object_id", circles.getMember_id());
+                                        if (http == null) http = new MyHTTP(ctx);
+                                        http.baseRequest(Consts.addblacklistApi, JSONHandler.JTYPE_ADD_BLACK, HttpRequest.HttpMethod.GET,
+                                                params, handler);
+                                    }
+
+                                }
+                            });
+                            tv_no.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    exitDialog.dismiss();
+                                }
+                            });
+                        }else{
+                            //提示未登录   或弹窗登录
+                            ToastUtil.show(ctx,R.string.not_login);
+                        }
+
+                    }
+                });
+                layout_tip_off.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        moreDialog.dismiss();
+                        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_exit);
+                        exitDialog.show();
+                        tv_title= (TextView) exitDialog.findViewById(R.id.dialog_exit_title);
+                        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
+                        tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
+                        tv_title.setText(R.string.if_tip_off);
+                        tv_yes.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                exitDialog.dismiss();
+                                //举报
+                                RequestParams params = new RequestParams();
+                                params.addQueryStringParameter("object_id", circles.getId());
+                                params.addQueryStringParameter("species", "micropost");
+                                params = KelaParams.generateSignParam("POST", Consts.givesuggestApi, params);
+                                if (http == null) http = new MyHTTP(ctx);
+                                http.baseRequest(Consts.givesuggestApi, JSONHandler.JTYPE_GIVE_SUGGEST, HttpRequest.HttpMethod.POST,
+                                        params, handler);
+                            }
+                        });
+                        tv_no.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                exitDialog.dismiss();
+                            }
+                        });
+                    }
+                });
+                tv_dialog_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        moreDialog.dismiss();
+                    }
+                });
+
+            }
+        });
         viewHolder.layout_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,7 +311,6 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
 
         return convertView;
     }
-
     /**
      * 打开图片查看器
      *
@@ -220,7 +328,14 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
             ToastUtil.show(ctx, "点赞成功");
-
+        }else if (jtype.equals(JSONHandler.JTYPE_ADD_BLACK)) {
+            ToastUtil.show(ctx, "加入黑名单成功");
+            fragment=new MCircleFragment();
+            if (fragment != null) {
+                switchFragment(fragment);
+            }
+        }else if (jtype.equals(JSONHandler.JTYPE_GIVE_SUGGEST)) {
+            ToastUtil.show(ctx, "举报成功");
         }
     }
 
@@ -231,12 +346,25 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
             ToastUtil.show(ctx, responseJson);
         }
     }
-
+    /**
+     * 切换fragment
+     * @param fragment
+     */
+    private void switchFragment(Fragment fragment) {
+        if (ctx== null) {
+            return;
+        }
+        if (ctx instanceof MainActivity) {
+            MainActivity fca = (MainActivity) ctx;
+            fca.switchConent(fragment);
+        }
+    }
     public final class ViewHolder {
         public TextView describe, like, comment;
         public CircleImageView im_head_pic;
         public SelfGridView selfGridView;
         TextView author, time;
         LinearLayout layout_like, layout_comment;
+        ImageView im_black;
     }
 }

@@ -29,6 +29,7 @@ import klsd.kuangkuang.adapters.M_MywordAdapter;
 import klsd.kuangkuang.main.BaseActivity;
 import klsd.kuangkuang.main.C_ReleaseWordActivity;
 import klsd.kuangkuang.main.LoginActivity;
+import klsd.kuangkuang.main.M_BlackListActivity;
 import klsd.kuangkuang.main.M_MyCollectActivity;
 import klsd.kuangkuang.main.M_SetActivity;
 import klsd.kuangkuang.models.Documents;
@@ -52,7 +53,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
     private List<MyWord> cirList;
     private M_MywordAdapter mywordAdapter;
     private ImageView im_set;
-    private RelativeLayout layout_collect;
+    private RelativeLayout layout_collect,layout_blacklist;
     private ArrayList<MyWord> sList;
     private SelfListView listView;
     private static Activity a;
@@ -110,6 +111,7 @@ private TextView tv_name,tv_signature;
         im_head_small = (ImageView) view.findViewById(R.id.me_head_small);
         im_set = (ImageView) view.findViewById(R.id.im_title_set);
         layout_collect = (RelativeLayout) view.findViewById(R.id.me_collect_layout);
+        layout_blacklist= (RelativeLayout) view.findViewById(R.id.me_black_layout);
         layout_release = (LinearLayout) view.findViewById(R.id.layout_me_release_word_now);
         layout_today= (LinearLayout) view.findViewById(R.id.layout_me_myword_today);
         listView = (SelfListView) view.findViewById(R.id.listview_me_myword);
@@ -118,13 +120,30 @@ private TextView tv_name,tv_signature;
         listView.setFocusable(false);
         layout_release.setOnClickListener(this);
         layout_collect.setOnClickListener(this);
+        layout_blacklist.setOnClickListener(this);
         im_set.setOnClickListener(this);
         mPullToRefreshView= (PullToRefresh123View)view.findViewById(R.id.pull_refresh_view_me);
         mPullToRefreshView.setOnFooterRefreshListener(this);
         mywordAdapter = new M_MywordAdapter(a, sList, handler);
         listView.setAdapter(mywordAdapter);
     }
-
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.im_title_set:
+                myStartActivity(new Intent(getActivity(), M_SetActivity.class));
+                break;
+            case R.id.me_collect_layout:
+                myStartActivity(new Intent(getActivity(), M_MyCollectActivity.class));
+                break;
+            case R.id.me_black_layout:
+                myStartActivity(new Intent(getActivity(), M_BlackListActivity.class));
+                break;
+            case R.id.layout_me_release_word_now:
+                myStartActivity(new Intent(getActivity(), C_ReleaseWordActivity.class));
+                break;
+        }
+    }
     /**
      * 获取个人资料
      */
@@ -168,7 +187,6 @@ private TextView tv_name,tv_signature;
                             break;
                         }
                     }
-
                     Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
                         ToastUtil.show(a, a.getString(R.string.no_more_data));
@@ -236,20 +254,7 @@ private TextView tv_name,tv_signature;
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.im_title_set:
-                myStartActivity(new Intent(getActivity(), M_SetActivity.class));
-                break;
-            case R.id.me_collect_layout:
-                myStartActivity(new Intent(getActivity(), M_MyCollectActivity.class));
-                break;
-            case R.id.layout_me_release_word_now:
-                myStartActivity(new Intent(getActivity(), C_ReleaseWordActivity.class));
-                break;
-        }
-    }
+
 
     public void setTitle(String title) {
         TextView textView = (TextView) view.findViewById(R.id.tv_title);

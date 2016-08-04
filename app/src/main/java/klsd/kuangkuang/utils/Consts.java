@@ -42,6 +42,9 @@ public final static String host123="http://192.168.31.167:3000";
     public final static String circlelikeListApi = baseApiPath + "/like/like_list";//赞列表
     public final static String circlecommentListApi = baseApiPath + "/microposts/comment_list";//朋友圈评论列表
     public final static String givesuggestApi = baseApiPath + "/suggest/give_suggest";//意见反馈
+    public final static String addblacklistApi = baseApiPath + "/blacklist/add_blacklist";//加入黑名单
+    public final static String deleteblacklistApi = baseApiPath + "/blacklist/delete_blacklist";//删除黑名单
+    public final static String blacklistApi = baseApiPath + "/blacklist/blacklist_list";//黑名单列表
 
     // phone_number common
     public final static String getAuthCodeApi = baseApiPath + "/registers/code";
@@ -77,7 +80,7 @@ public final static String host123="http://192.168.31.167:3000";
             articlesCommentaryApi,
             articlesTopApi,
             articlesViewApi,
-            micropostsListApi,
+//            micropostsListApi,
             circlecommentListApi,
             givesuggestApi
     };
