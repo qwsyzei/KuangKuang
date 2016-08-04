@@ -62,7 +62,6 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
 
     private void initView() {
         sList = new ArrayList<Subject>();
-        Log.d("去获取了", "initView() returned: " + "");
         tv_top= (TextView) view.findViewById(R.id.tv_title_right);
         tv_top.setOnClickListener(this);
         listView = (SelfListView) view.findViewById(R.id.listview_msubject);
@@ -90,7 +89,6 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
         params.addQueryStringParameter("page", page+"");
         params.addQueryStringParameter("tag", tagtag);
         params = KelaParams.generateSignParam("GET", Consts.articlesListApi, params);
-        Log.d("你觉得tag是什么", "getArticlesList() returned: " + tagtag);
         if (http == null) http = new MyHTTP(a);
         http.baseRequest(Consts.articlesListApi, JSONHandler.JTYPE_ARTICLES_LIST, HttpRequest.HttpMethod.GET,
                 params, handler);
@@ -168,7 +166,7 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
             public void run() {
                 mPullToRefreshView.onFooterRefreshComplete();
                 getArticlesList();
-                ToastUtil.show(a, "加载更多数据!");
+                ToastUtil.show(a, getString(R.string.load_more));
             }
         }, 2200);
     }
@@ -182,7 +180,7 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
                 sList = new ArrayList<Subject>();
                 page = 1;
                 getArticlesList();
-                ToastUtil.show(a, "数据刷新完成!");
+                ToastUtil.show(a, getString(R.string.refresh_done));
             }
         }, 2200);
     }

@@ -496,7 +496,7 @@ private TextView tv_name,tv_signature;
             public void run() {
                 mPullToRefreshView.onFooterRefreshComplete();
                 loadDataFrom();
-                ToastUtil.show(a, "加载更多数据!");
+                ToastUtil.show(a, getString(R.string.load_more));
             }
         }, 3000);
     }

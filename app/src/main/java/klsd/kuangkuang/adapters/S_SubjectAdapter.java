@@ -148,7 +148,6 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
 
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_VIEWS)) {
-            ToastUtil.show(ctx, "观看了");
 
         }
     }

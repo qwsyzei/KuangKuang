@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -162,13 +161,12 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
 
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_COLLECT_DESTROY)) {
-            ToastUtil.show(ctx, "取消收藏成功");
+            ToastUtil.show(ctx, R.string.success_cancel_collect);
             exitDialog.dismiss();
             Intent intent=new Intent(ctx, M_MyCollectActivity.class);
             ctx.startActivity(intent);
             ((Activity)ctx).finish();
         }else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_VIEWS)) {
-            ToastUtil.show(ctx, "观看了");
 
         }
     }

@@ -165,7 +165,7 @@ private LinearLayout layout_black,layout_tip_off;
                     http.baseRequest(Consts.addLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
                             params, handler);
                 } else {
-                    ToastUtil.show(ctx, "您未登录");
+                    ToastUtil.show(ctx, R.string.not_login);
                 }
 
             }
@@ -327,15 +327,15 @@ private LinearLayout layout_black,layout_tip_off;
 
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
-            ToastUtil.show(ctx, "点赞成功");
+            ToastUtil.show(ctx, R.string.praise_success);
         }else if (jtype.equals(JSONHandler.JTYPE_ADD_BLACK)) {
-            ToastUtil.show(ctx, "加入黑名单成功");
+            ToastUtil.show(ctx, R.string.add_black_success);
             fragment=new MCircleFragment();
             if (fragment != null) {
                 switchFragment(fragment);
             }
         }else if (jtype.equals(JSONHandler.JTYPE_GIVE_SUGGEST)) {
-            ToastUtil.show(ctx, "举报成功");
+            ToastUtil.show(ctx, R.string.tip_off_success);
         }
     }
 

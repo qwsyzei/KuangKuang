@@ -1,13 +1,11 @@
 package klsd.kuangkuang.main;
 
-
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
-
 import java.util.ArrayList;
 
 import klsd.kuangkuang.R;
@@ -56,11 +54,9 @@ public class S_TopTenActivity extends BaseActivity {
             UIutils.cancelLoading();
             tlist = (ArrayList<Top>) handlerBundler.getSerializable("top");
             if (tlist.size() == 0) {
-
                 Log.d("Top10是没有数据的", "updateData() returned: " + "");
                 return;
             }
-            Log.d("这个评论是什么呢", "updateData() returned: " + tlist.get(0).getCreated_at());
             sAdapter = new S_TopAdapter(S_TopTenActivity.this, tlist,getHandler());
             listView.setAdapter(sAdapter);
 

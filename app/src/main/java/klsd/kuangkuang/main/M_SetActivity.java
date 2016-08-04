@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -19,8 +18,6 @@ import klsd.kuangkuang.utils.DataCleanManager;
 import klsd.kuangkuang.views.CleanCacheDialog;
 import klsd.kuangkuang.views.ExitDialog;
 import klsd.kuangkuang.views.ToggleButton;
-
-import static klsd.kuangkuang.R.id.dialog_exit_title;
 
 
 public class M_SetActivity extends BaseActivity implements View.OnClickListener{

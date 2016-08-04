@@ -15,18 +15,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.utils.DiskCacheUtils;
-import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -130,7 +125,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
      * 更新个人资料
      */
     private void updateInfo() {
-        Log.d("性别", "updateInfo() returned: " + spinner_sex.getSelectedItemId());
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("nickname", edit_per_nickname.getText().toString());
@@ -150,13 +144,13 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
             documents = (Documents) handlerBundler.getSerializable("documents");
             if (documents.getBirthday().equals("null")) {
-                tv_birthday.setText("未选择");
+                tv_birthday.setText(getString(R.string.not_choose));
             } else {
                 tv_birthday.setText(documents.getBirthday());
             }
 
             if (documents.getCity().equals("null")) {
-                tv_city.setText("未设置");
+                tv_city.setText(getString(R.string.not_set));
             } else {
                 tv_city.setText(documents.getCity());
 
@@ -190,12 +184,11 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
             } else {
                 ImageLoader.getInstance().displayImage(head_url, im_head);
             }
-            ToastUtil.show(M_PersonalDataActivity.this, "已获取到个人资料");
         } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_DOCUMENTS)) {
-            ToastUtil.show(M_PersonalDataActivity.this, "保存成功");
+            ToastUtil.show(M_PersonalDataActivity.this, getString(R.string.save_success));
             Log.d("个人资料上传成功", "updateData() returned: " + "");
         } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_HEAD)) {
-            ToastUtil.show(M_PersonalDataActivity.this, "头像上传成功");
+            ToastUtil.show(M_PersonalDataActivity.this, getString(R.string.head_pic_upload_success));
             Log.d("头像上传成功", "updateData() returned: " + "");
                    //清理头像的缓存
 //            DiskCacheUtils.removeFromCache(head_url, imageLoader.getDiskCache());
@@ -219,7 +212,7 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 int i = result.compareTo(new Date());
                 if (i > 0) {
-                    ToastUtil.show(M_PersonalDataActivity.this, "您选择的日期大于当前日期，请重新选择");
+                    ToastUtil.show(M_PersonalDataActivity.this, getString(R.string.date_wrong));
                 } else {
                     tv_birthday.setText(format.format(result));
                 }
@@ -311,7 +304,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("picture", photoStr);
-        Log.d("头像的16进制", "updateData() returned: " + photoStr);
         if (http == null) http = new MyHTTP(M_PersonalDataActivity.this);
         http.baseRequest(Consts.memberUpdateHeadApi, JSONHandler.JTYPE_MEMBER_UPDATE_HEAD, HttpRequest.HttpMethod.POST,
                 params, getHandler());

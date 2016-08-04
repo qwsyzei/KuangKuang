@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +25,6 @@ import klsd.kuangkuang.models.Blacklist;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.ErrorCodes;
 import klsd.kuangkuang.utils.JSONHandler;
-import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.ExitDialog;
@@ -112,7 +110,7 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
 
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_DELETE_BLACK)) {
-            ToastUtil.show(ctx, "移除成功");
+            ToastUtil.show(ctx, R.string.delete_black_list_success);
             Intent intent=new Intent(ctx, M_BlackListActivity.class);
             ctx.startActivity(intent);
             ((Activity)ctx).finish();

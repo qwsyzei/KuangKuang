@@ -200,7 +200,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
                 if (isSigned()) {
                     myStartActivity(new Intent(getActivity(), C_ReleaseWordActivity.class));
                 } else {
-                    ToastUtil.show(a, "您未登录");
+                    ToastUtil.show(a, getString(R.string.not_login));
                 }
                 break;
         }
@@ -214,7 +214,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
             public void run() {
                 mPullToRefreshView.onFooterRefreshComplete();
                 getcircleList();
-                ToastUtil.show(a, "加载更多数据!");
+                ToastUtil.show(a, getString(R.string.load_more));
             }
         }, 3000);
     }
@@ -228,7 +228,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
                 cirList = new ArrayList<Circles>();
                 page = 1;
                 getcircleList();
-                ToastUtil.show(a, "数据刷新完成!");
+                ToastUtil.show(a, getString(R.string.refresh_done));
             }
         }, 3000);
     }

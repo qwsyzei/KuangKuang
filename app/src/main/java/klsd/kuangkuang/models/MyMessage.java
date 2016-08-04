@@ -9,11 +9,11 @@ import java.io.Serializable;
 /**
  * Created by qiwei on 2016/7/3.
  */
-public class My_message implements Serializable {
+public class MyMessage implements Serializable {
     String title,time,content;
     private Context context;
 
-    public My_message(Context context) {
+    public MyMessage(Context context) {
         this.context = context;
     }
 
@@ -41,7 +41,7 @@ public class My_message implements Serializable {
         this.content = content;
     }
 
-    public My_message getFromJSONObjectItem(JSONObject object) {
+    public MyMessage getFromJSONObjectItem(JSONObject object) {
         try {
             setTitle(object.getString("title"));
             setTime(object.getString("time"));

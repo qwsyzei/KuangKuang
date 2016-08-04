@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.M_MyMessageAdapter;
-import klsd.kuangkuang.models.My_message;
+import klsd.kuangkuang.models.MyMessage;
 
 /**
  * 我的消息
@@ -15,7 +15,7 @@ import klsd.kuangkuang.models.My_message;
 public class M_MyMessageActivity extends BaseActivity {
 private ListView listView;
     M_MyMessageAdapter m_myMessageAdapter;
-    private ArrayList<My_message> my_messageList;
+    private ArrayList<MyMessage> my_messageList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +30,10 @@ private ListView listView;
         m_myMessageAdapter=new M_MyMessageAdapter(M_MyMessageActivity.this,my_messageList);
         listView.setAdapter(m_myMessageAdapter);
     }
-    private ArrayList<My_message> getsysList(){
-        my_messageList=new ArrayList<My_message>();
+    private ArrayList<MyMessage> getsysList(){
+        my_messageList=new ArrayList<MyMessage>();
         for (int i = 0; i <10 ; i++) {
-            My_message sys=new My_message(M_MyMessageActivity.this);
+            MyMessage sys=new MyMessage(M_MyMessageActivity.this);
             sys.setTitle("标题" + i);
             sys.setContent("内容" + i);
             sys.setTime("时间" + i);

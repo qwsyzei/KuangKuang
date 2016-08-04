@@ -1,6 +1,5 @@
 package klsd.kuangkuang.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -72,8 +71,6 @@ public class LogoActivity extends BaseActivity {
         imEntry = (ImageView) findViewById(R.id.im_right_now);
 
         imEntry.setOnClickListener(listener);
-
-
     }
 
     private View.OnClickListener listener = new View.OnClickListener() {

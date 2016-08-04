@@ -121,6 +121,8 @@
     <string name="main_circle">圈子</string>
     <string name="main_tool">工具</string>
     <string name="main_me">我</string>
+    <string name="load_more">加载更多数据</string>
+    <string name="refresh_done">数据刷新完成</string>
     <!-- 以下是设置名称 -->
     <string name="personal_data">个人资料</string>
     <string name="admin_manager">账号管理</string>
@@ -147,6 +149,9 @@
     <string name="select_from_album">从相册中选择</string>
     <string name="take_photo">拍照</string>
     <string name="head_pic">头像</string>
+    <string name="head_pic_upload_success">头像上传成功</string>
+    <string name="not_choose">未选择</string>
+    <string name="date_wrong">您选择的日期大于当前日期，请重新选择</string>
     <!-- 我的 -->
     <string name="my_message">我的消息</string>
     <string name="everyday_sign">每日签到</string>
@@ -154,6 +159,7 @@
     <string name="black_list">黑名单</string>
     <string name="cannot_add_self_black_list">不可将自己加入黑名单</string>
     <string name="delete_black_list">移除黑名单</string>
+    <string name="delete_black_list_success">移除成功</string>
     <string name="cancel_collect">取消收藏</string>
     <string name="success_cancel_collect">取消收藏成功</string>
     <string name="today">今天</string>
@@ -170,20 +176,25 @@
 
     <!-- 文章用的 -->
     <string name="praise">赞</string>
+    <string name="praise_done">已赞</string>
     <string name="comment">评论</string>
+    <string name="comment_success">评论成功</string>
     <string name="send">发送</string>
     <string name="collect">收藏</string>
+    <string name="collect_done">已收藏</string>
     <string name="recent_comment">最新评论</string>
     <string name="all_comment">查看全部评论</string>
+    <string name="comment_and_refresh">评论成功，刷新可见</string>
     <string name="qq">QQ</string>
     <string name="weibo">微博</string>
     <string name="wechat">微信</string>
     <string name="friend_circle">朋友圈</string>
-
+    <string name="praise_success">点赞成功</string>
 
     <!-- 圈子 -->
     <string name="top10">Top10</string>
     <string name="release_word">发布说说</string>
+    <string name="release_success">发布成功</string>
     <string name="photo_album">相册</string>
     <string name="week_hot">本周红人</string>
     <string name="how_get_on_the_list">如何上榜</string>
@@ -192,8 +203,11 @@
     <string name="if_delete">是否要删除</string>
     <string name="if_add_black">是否要将该用户加入黑名单</string>
     <string name="add_black">加入黑名单</string>
+    <string name="add_black_success">加入黑名单成功</string>
     <string name="tip_off_the_word">举报该说说</string>
     <string name="if_tip_off">是否要举报该说说</string>
+    <string name="tip_off_success">举报成功</string>
+    <string name="no_word">您还未输入文字</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- 返回错误信息 -->

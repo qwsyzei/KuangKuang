@@ -112,7 +112,7 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
-            ToastUtil.show(C_CircleAllCommentActivity.this, "评论成功，刷新可见");
+            ToastUtil.show(C_CircleAllCommentActivity.this, getString(R.string.comment_and_refresh));
             edit_comment.setText("");
             edit_comment.setCursorVisible(false);
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -166,7 +166,7 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
                 mPullToRefreshView.onFooterRefreshComplete();
 
                 getCommentList();
-                ToastUtil.show(C_CircleAllCommentActivity.this, "加载更多数据!");
+                ToastUtil.show(C_CircleAllCommentActivity.this, getString(R.string.load_more));
             }
 
         }, 2200);
@@ -183,7 +183,7 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
                 mylist = new ArrayList<CircleAllComment>();
                 page = 1;
                 getCommentList();
-                ToastUtil.show(C_CircleAllCommentActivity.this, "数据刷新完成!");
+                ToastUtil.show(C_CircleAllCommentActivity.this, getString(R.string.refresh_done));
             }
 
         }, 2200);

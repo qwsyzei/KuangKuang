@@ -57,7 +57,6 @@ public class LoginActivity extends BaseActivity {
         if (jtype.equals(JSONHandler.JTYPE_LOGIN)) {
             if (handlerBundler.getBoolean("signed")) {
                 DataCenter.setSigned();
-                Log.d("刚刚设置好是什么样", "updateData() returned: " + DataCenter.isSigned());
                 getMemberData();
 
                 //保存登录信息

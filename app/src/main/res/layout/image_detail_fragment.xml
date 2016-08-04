@@ -3,11 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black" >
-    <TextView
-        android:id="@+id/btn_btn"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text=""/>
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"

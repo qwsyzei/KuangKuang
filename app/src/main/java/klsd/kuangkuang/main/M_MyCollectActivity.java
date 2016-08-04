@@ -124,7 +124,7 @@ M_MyCollectAdapter myCollectAdapter;
                 mPullToRefreshView.onFooterRefreshComplete();
 
                 getCollectShowList();
-                ToastUtil.show(M_MyCollectActivity.this, "加载更多数据!");
+                ToastUtil.show(M_MyCollectActivity.this, getString(R.string.load_more));
             }
 
         }, 2200);
@@ -141,7 +141,7 @@ M_MyCollectAdapter myCollectAdapter;
                 myList = new ArrayList<MyCollect>();
                 page = 1;
                 getCollectShowList();
-                ToastUtil.show(M_MyCollectActivity.this, "数据刷新完成!");
+                ToastUtil.show(M_MyCollectActivity.this,getString(R.string.refresh_done));
             }
 
         }, 2200);

@@ -146,7 +146,6 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
 
                 break;
             case R.id.main_rb4:
-                Log.d("现在是登录状态吗", "onCheckedChanged() returned: " + DataCenter.isSigned());
                 if ( DataCenter.isSigned()){
                     im_title_left.setVisibility(View.GONE);
                     ft.replace(R.id.just_subject_layout, new MMeFragment());
@@ -171,6 +170,5 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("现在是登录状态吗", "onCheckedChanged() returned: " + DataCenter.isSigned());
     }
 }

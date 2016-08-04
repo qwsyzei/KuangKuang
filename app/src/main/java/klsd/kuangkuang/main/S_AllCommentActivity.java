@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
@@ -34,18 +32,18 @@ import klsd.kuangkuang.views.SelfListView;
 /**
  * 全部评论
  */
-public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, PullToRefreshView.OnHeaderRefreshListener,PullToRefreshView.OnFooterRefreshListener{
+public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener {
     private TextView tv_send;
     private ContainsEmojiEditText edit_comment;
     String article_id;
     ArrayList<AllComment> mylist;
     private S_AllCommentAdapter allAdapter;
     private SelfListView listView;
-    String direction = "bottom";
     private int page = 1;
     private LinearLayout layout_send;
     // 自定义的listview的上下拉动刷新
     private PullToRefreshView mPullToRefreshView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +63,9 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         Intent intent = getIntent();
         article_id = intent.getStringExtra("a_id");
         listView = (SelfListView) findViewById(R.id.listview_allcomment);
-        mPullToRefreshView= (PullToRefreshView) findViewById(R.id.pull_refresh_view_allcomment);
+        mPullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_refresh_view_allcomment);
         getAllComment();
-UIutils.showLoading(S_AllCommentActivity.this);
+        UIutils.showLoading(S_AllCommentActivity.this);
         tv_send = (TextView) findViewById(R.id.all_comment_send_send);
         edit_comment = (ContainsEmojiEditText) findViewById(R.id.all_comment_send_edit);
         tv_send.setOnClickListener(this);
@@ -119,7 +117,7 @@ UIutils.showLoading(S_AllCommentActivity.this);
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
-            ToastUtil.show(S_AllCommentActivity.this, "评论成功，刷新可见");
+            ToastUtil.show(S_AllCommentActivity.this, getString(R.string.comment_and_refresh));
             edit_comment.setText("");
             edit_comment.setCursorVisible(false);
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -172,7 +170,7 @@ UIutils.showLoading(S_AllCommentActivity.this);
             public void run() {
                 mPullToRefreshView.onFooterRefreshComplete();
                 getAllComment();
-                ToastUtil.show(S_AllCommentActivity.this, "加载更多数据!");
+                ToastUtil.show(S_AllCommentActivity.this, getString(R.string.load_more));
             }
 
         }, 2200);
@@ -187,7 +185,7 @@ UIutils.showLoading(S_AllCommentActivity.this);
                 mylist = new ArrayList<AllComment>();
                 page = 1;
                 getAllComment();
-                ToastUtil.show(S_AllCommentActivity.this, "数据刷新完成!");
+                ToastUtil.show(S_AllCommentActivity.this, getString(R.string.refresh_done));
             }
 
         }, 2200);

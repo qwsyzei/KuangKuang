@@ -12,23 +12,23 @@ import android.widget.TextView;
 import java.util.List;
 
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.models.My_message;
+import klsd.kuangkuang.models.MyMessage;
 
 /**
  * 我的消息listView的adapter
  */
-public class M_MyMessageAdapter extends ArrayAdapter<My_message> {
+public class M_MyMessageAdapter extends ArrayAdapter<MyMessage> {
 
     private Context ctx;
 
-    public M_MyMessageAdapter(Context context, List<My_message> objects) {
+    public M_MyMessageAdapter(Context context, List<MyMessage> objects) {
         super(context, R.layout.item_my_message, objects);
         this.ctx = context;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final My_message mm = getItem(position);
+        final MyMessage mm = getItem(position);
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();

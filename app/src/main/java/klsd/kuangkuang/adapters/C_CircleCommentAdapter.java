@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;

@@ -6,19 +6,16 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -91,11 +88,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         picture_head=intent.getStringExtra("picture_son");
         author_signature=intent.getStringExtra("signature");
 //        common_time = MyDate.timeLogic("2014-01-18 12:22:10");
-        Log.d("我算的时间是", "initView() returned: " +created_at.substring(0, 19).replace("T", " "));
         common_time = MyDate.timeLogic(created_at.substring(0, 19).replace("T", " "));
-        Log.d("VIEW是", "initView() returned: " + views);
-        Log.d("LIKE是", "initView() returned: " + like_number);
-        Log.d("COMMENT是", "initView() returned: " + comment_number);
 
         tv_content = (TextView) findViewById(R.id.tv_article_content);
         RichText.from(testString).into(tv_content);
@@ -146,8 +139,6 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             tv_comment.setText(comment_number);
         }
 
-
-        Log.d("我能得到的ID是", "initView() returned: " + DataCenter.getMember_id());
         tv_title = (TextView) findViewById(R.id.article_author_title);
         tv_title.setText(title);
         tv_tag = (TextView) findViewById(R.id.article_author_title_tag);
@@ -262,7 +253,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
-            ToastUtil.show(S_ArticleActivity.this, "已赞");
+            ToastUtil.show(S_ArticleActivity.this, getString(R.string.praise_done));
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_ALL_COMMENT)) {
 
             os = (ArrayList<AllComment>) handlerBundler.getSerializable("all_comment");
@@ -274,10 +265,10 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             listView.setAdapter(allAdapter);
 
         } else if (jtype.equals(JSONHandler.JTYPE_COLLECT)) {
-            ToastUtil.show(S_ArticleActivity.this, "已收藏");
+            ToastUtil.show(S_ArticleActivity.this, getString(R.string.collect_done));
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
             cPopwindow.dismiss();
-            ToastUtil.show(S_ArticleActivity.this, "评论成功");
+            ToastUtil.show(S_ArticleActivity.this, getString(R.string.comment_success));
         }
 
     }

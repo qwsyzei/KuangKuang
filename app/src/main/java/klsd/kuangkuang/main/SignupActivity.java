@@ -9,11 +9,8 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
@@ -31,7 +28,6 @@ import klsd.kuangkuang.views.ContainsEmojiEditText;
 
 /**
  * 手机注册界面
- *
  * @author qiwei
  */
 public class SignupActivity extends BaseActivity {
@@ -116,15 +112,12 @@ public class SignupActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
-
             switch (v.getId()) {
-
                 case R.id.signup_phone_getyan:
                     toPhoneCode();
                     break;
                 case R.id.im_signup_phone:
                     toPhoneSignup();
-
                     break;
                 case R.id.im_signup_delete:
                     edit_phonenumber.setText("");
@@ -181,7 +174,6 @@ public class SignupActivity extends BaseActivity {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_SIGN)) {
                 member_id=handlerBundler.getString("signup");
-                Log.d("这个ID是", "updateData() returned: " + member_id);
                DataCenter.setMember_id(member_id);
                 ToastUtil.show(SignupActivity.this, R.string.signup_success);
                 //保存登录信息

@@ -24,8 +24,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,12 +35,9 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.testpic.Bimp;
@@ -121,7 +117,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_title_right:
                 if (edit.getText().toString().equals("")) {
-                    ToastUtil.show(C_ReleaseWordActivity.this, "您还未输入文字");
+                    ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.no_word));
                 } else {
                     send_pro();
                 }
@@ -151,8 +147,6 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 // 高清的压缩图片全部就在  list 路径里面了
                 Log.d("进来这个方法了吗", "run() returned: " + "");
                 // 高清的压缩过的 bmp 对象  都在 Bimp.bmp里面
-
-
                 release_word();
 //            }
 //        }).start();
@@ -384,14 +378,13 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
         if (jtype.equals(JSONHandler.JTYPE_CREATE_WORDS)) {
             id = (String) handlerBundler.getString("id");
             url = handlerBundler.getString("url");
-            Log.d("文字发表成功了哟", "updateData() returned: " + "");
             if (Bimp.drr.size() > 0) {
                 picture1();
             } else {
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
@@ -405,7 +398,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
@@ -418,7 +411,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
@@ -431,7 +424,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
@@ -445,7 +438,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
@@ -459,7 +452,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
@@ -472,7 +465,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
@@ -485,7 +478,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
@@ -498,7 +491,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+                ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
                 FileUtils.deleteDir();
@@ -508,7 +501,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
-            ToastUtil.show(C_ReleaseWordActivity.this, "发表成功！");
+            ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
             Intentstyle();
             // 完成上传服务器后 .........
             FileUtils.deleteDir();

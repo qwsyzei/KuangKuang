@@ -16,8 +16,8 @@ import java.io.Serializable;
 public class Circles implements Serializable {
     private String id, member_id, created_at, updated_at;//标题，内容描述
     private String content_son, nickname, picture_son;//内容，作者名字，作者头像
-    private String  like, comment;
-private Bitmap head;//这个是假的，回头删了
+    private String like, comment;
+    private Bitmap head;//这个是假的，回头删了
     private String url1, url2, url3, url4, url5, url6, url7, url8, url9;
     private Context context;
 
@@ -201,7 +201,8 @@ private Bitmap head;//这个是假的，回头删了
         }
         return this;
     }
-    public Circles getcontentfrom(String content,String nickname,String picture_son) {
+
+    public Circles getcontentfrom(String content, String nickname, String picture_son) {
         try {
             setContent_son(content);
             setNickname(nickname);

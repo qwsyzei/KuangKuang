@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
+
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -23,14 +21,12 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.adapters.C_CircleCommentAdapter;
 import klsd.kuangkuang.adapters.C_CircleGridAdapter;
 import klsd.kuangkuang.adapters.M_DetailLikeAdapter;
-import klsd.kuangkuang.fragments.MMeFragment;
 import klsd.kuangkuang.models.CircleAllComment;
 import klsd.kuangkuang.models.CircleGridViewEntity;
 import klsd.kuangkuang.models.CircleLike;

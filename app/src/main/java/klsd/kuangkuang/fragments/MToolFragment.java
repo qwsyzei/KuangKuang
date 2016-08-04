@@ -2,7 +2,6 @@ package klsd.kuangkuang.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import klsd.kuangkuang.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 工具
  */
 public class MToolFragment extends MyBaseFragment {
 View view;
