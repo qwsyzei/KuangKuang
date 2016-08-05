@@ -20,6 +20,7 @@
     android:id="@+id/listview_circle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:cacheColorHint="@color/transparent"
     android:divider="@color/lightgray"
     android:dividerHeight="@dimen/login_p_l_r"></klsd.kuangkuang.views.SelfListView>
     </LinearLayout>

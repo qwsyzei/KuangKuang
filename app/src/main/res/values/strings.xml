@@ -136,6 +136,7 @@
     <string name="start_push">启动推送</string>
     <string name="if_clean">是否要清理缓存</string>
     <string name="clean_success">清理成功</string>
+    <string name="no_market">您手机没有应用市场</string>
     <!-- 以下是个人资料 -->
     <string name="save">保存</string>
     <string name="save_success">保存成功</string>

@@ -1,8 +1,10 @@
 package klsd.kuangkuang.main;
 
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -11,27 +13,30 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
+
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.DataCleanManager;
 
+import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.CleanCacheDialog;
 import klsd.kuangkuang.views.ExitDialog;
 import klsd.kuangkuang.views.ToggleButton;
 
 
-public class M_SetActivity extends BaseActivity implements View.OnClickListener{
-private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedback,layout_give_mark,layout_clean_cache,layout_start_push;
+public class M_SetActivity extends BaseActivity implements View.OnClickListener {
+    private RelativeLayout layout_personal, layout_admin, layout_about_us, layout_feedback, layout_give_mark, layout_clean_cache, layout_start_push;
     private CleanCacheDialog cleanDialog;
     private ExitDialog exitDialog;
 
     private Button btn;
-    private TextView tv_clean_yes,tv_clean_no;
+    private TextView tv_clean_yes, tv_clean_no;
     private ToggleButton toggleButton;
     private TextView tv_cache;
     private String cacheSize;
     private static String dir = Environment.getExternalStorageDirectory()
             .getAbsolutePath() + "/Android/data/klsd.kuangkuang/cache/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,16 +46,16 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
     }
 
     private void initView() {
-        toggleButton= (ToggleButton) findViewById(R.id.set_toggle);
-        layout_personal= (RelativeLayout) findViewById(R.id.set_personal_data);
-        layout_admin= (RelativeLayout) findViewById(R.id.set_admin_manager);
-        layout_about_us= (RelativeLayout) findViewById(R.id.set_about_us);
-        layout_feedback= (RelativeLayout) findViewById(R.id.set_feedback);
-        layout_give_mark= (RelativeLayout) findViewById(R.id.set_give_mark);
-        layout_clean_cache= (RelativeLayout) findViewById(R.id.set_clean_cache);
-        layout_start_push= (RelativeLayout) findViewById(R.id.set_start_push);
-        btn= (Button) findViewById(R.id.btn_exit);
-        tv_cache= (TextView) findViewById(R.id.set_tv_cache);
+        toggleButton = (ToggleButton) findViewById(R.id.set_toggle);
+        layout_personal = (RelativeLayout) findViewById(R.id.set_personal_data);
+        layout_admin = (RelativeLayout) findViewById(R.id.set_admin_manager);
+        layout_about_us = (RelativeLayout) findViewById(R.id.set_about_us);
+        layout_feedback = (RelativeLayout) findViewById(R.id.set_feedback);
+        layout_give_mark = (RelativeLayout) findViewById(R.id.set_give_mark);
+        layout_clean_cache = (RelativeLayout) findViewById(R.id.set_clean_cache);
+        layout_start_push = (RelativeLayout) findViewById(R.id.set_start_push);
+        btn = (Button) findViewById(R.id.btn_exit);
+        tv_cache = (TextView) findViewById(R.id.set_tv_cache);
         try {
             cacheSize = DataCleanManager.getCacheSize(new File(dir));
         } catch (Exception e) {
@@ -69,21 +74,28 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.set_personal_data:
-                myStartActivity(new Intent(M_SetActivity.this,M_PersonalDataActivity.class));
+                myStartActivity(new Intent(M_SetActivity.this, M_PersonalDataActivity.class));
                 break;
             case R.id.set_admin_manager:
-                myStartActivity(new Intent(M_SetActivity.this,M_AdminManagerActivity.class));
+                myStartActivity(new Intent(M_SetActivity.this, M_AdminManagerActivity.class));
                 break;
             case R.id.set_about_us:
-                myStartActivity(new Intent(M_SetActivity.this,M_AboutUsActivity.class));
+                myStartActivity(new Intent(M_SetActivity.this, M_AboutUsActivity.class));
                 break;
             case R.id.set_feedback:
-                myStartActivity(new Intent(M_SetActivity.this,M_FeedBackActivity.class));
+                myStartActivity(new Intent(M_SetActivity.this, M_FeedBackActivity.class));
                 break;
             case R.id.set_give_mark:
-//                myStartActivity(new Intent(M_SetActivity.this,M_GiveMarkActivity.class));
+                try {
+                    Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    ToastUtil.show(M_SetActivity.this, getString(R.string.no_market));
+                }
                 break;
             case R.id.set_clean_cache:
                 Clean_Dialog();
@@ -94,7 +106,7 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
                 tv_cache.setText("0.00MB");
                 break;
             case R.id.dialog_clean_no:
-               cleanDialog.dismiss();
+                cleanDialog.dismiss();
                 break;
             case R.id.exit_yes:
                 signOut();
@@ -130,7 +142,6 @@ private RelativeLayout layout_personal,layout_admin,layout_about_us,layout_feedb
 
     private void Exit_Dialog() {
         exitDialog = new ExitDialog(M_SetActivity.this, R.style.MyDialogStyle, R.layout.dialog_exit);
-
         exitDialog.show();
 
         tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);

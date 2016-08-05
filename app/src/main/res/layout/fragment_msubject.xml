@@ -27,6 +27,7 @@
         android:id="@+id/listview_msubject"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
+        android:cacheColorHint="@color/transparent"
         android:divider="@color/lightgray"
         android:dividerHeight="@dimen/login_p_l_r"></klsd.kuangkuang.views.SelfListView>
     </LinearLayout>
