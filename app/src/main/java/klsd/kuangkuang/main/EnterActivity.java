@@ -47,7 +47,8 @@ public static String secret;
         Log.d("连接状态", "run() returned: " + isNetWork);
         if (isNetWork == false) {
             Toast.makeText(EnterActivity.this, getString(R.string.network_problem), Toast.LENGTH_SHORT).show();
-            finish();
+//            finish();
+            startActivity(new Intent(EnterActivity.this, MainActivity.class));//主界面        没有网也要能让用户进入app，只不过看到什么内容罢了
         } else {
             /**
              * 启动一个延迟线程
@@ -125,7 +126,7 @@ public static String secret;
         } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_ME)) {
             setMember((Member) handlerBundler.getSerializable("member"));
 
-            startActivity(new Intent(EnterActivity.this, MainActivity.class));//交易界面
+            startActivity(new Intent(EnterActivity.this, MainActivity.class));//主界面
             finish();
         } else if (jtype.equals(JSONHandler.JTYPE_GET_TIME)) {
             long server_time = (Long) handlerBundler.getSerializable("get_time");

@@ -223,7 +223,7 @@
                 <ImageView
                     android:id="@+id/im_signup_phone"
                     android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/pic3_size"
 
                     android:layout_marginTop="@dimen/base_margin"
                     android:layout_marginLeft="@dimen/login_m_l"

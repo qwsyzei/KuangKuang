@@ -159,7 +159,7 @@
                 <ImageView
                     android:id="@+id/sign_in"
                     android:layout_width="fill_parent"
-                    android:layout_height="@dimen/button_height"
+                    android:layout_height="@dimen/pic3_size"
                     android:layout_marginBottom="@dimen/base_margin"
                     android:layout_marginTop="@dimen/base_margin"
                     android:layout_marginLeft="@dimen/login_m_l"

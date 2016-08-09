@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -630,8 +631,8 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                     }
                     for (int i = 0; i < Bimp.bmp.size(); i++) {
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();//这句话必须写在循环里面
-                        Bimp.bmp.get(i).compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 -
-//                    // 100)压缩文件
+                        Bimp.bmp.get(i).compress(Bitmap.CompressFormat.JPEG, 70, stream);// (0 -
+//                     100)压缩文件
                         byte[] bt = stream.toByteArray();//为了转成16进制
                         photostr[i] = byte2hex(bt);//
                     }

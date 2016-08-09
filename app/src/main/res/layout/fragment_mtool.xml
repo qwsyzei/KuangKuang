@@ -7,6 +7,7 @@
     tools:context="klsd.kuangkuang.main.T_ToolActivity">
     <include layout="@layout/title_one"></include>
 <ImageView
+    android:id="@+id/im_mytool01"
 android:layout_marginTop="@dimen/size_eight"
     android:layout_width="match_parent"
     android:layout_height="0dp"
@@ -14,6 +15,7 @@ android:layout_marginTop="@dimen/size_eight"
     android:layout_weight="1"
     android:src="@mipmap/tool001"/>
     <ImageView
+        android:id="@+id/im_mytool02"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scaleType="fitXY"
@@ -21,6 +23,7 @@ android:layout_marginTop="@dimen/size_eight"
         android:layout_marginTop="@dimen/size_eight"
         android:src="@mipmap/tool002"/>
     <ImageView
+        android:id="@+id/im_mytool03"
         android:layout_marginTop="@dimen/size_eight"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -28,6 +31,7 @@ android:layout_marginTop="@dimen/size_eight"
         android:layout_weight="1"
         android:src="@mipmap/tool003"/>
     <ImageView
+        android:id="@+id/im_mytool04"
         android:layout_marginTop="@dimen/size_eight"
         android:layout_width="match_parent"
         android:layout_height="0dp"

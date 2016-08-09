@@ -10,9 +10,9 @@
     <TextView
         android:id="@+id/dialog_tv_delete_myword"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/size_eight"
-        android:layout_marginTop="@dimen/size_eight"
+        android:layout_height="fill_parent"
+        android:paddingTop="@dimen/size_eight"
+        android:paddingBottom="@dimen/size_eight"
         android:gravity="center"
         android:text="@string/delete_myword"
         android:textColor="@color/kuangkuang_yellow"

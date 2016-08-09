@@ -130,4 +130,5 @@
 
     <dimen name="about_us_bottom">23dp</dimen>
     <dimen name="circle_margin">12dp</dimen>
+    <dimen name="pic3_size">36dp</dimen>
 </resources>

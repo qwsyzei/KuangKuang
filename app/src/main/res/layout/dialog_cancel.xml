@@ -7,18 +7,16 @@
     android:background="@drawable/box"
     android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/dialog_tv_cancel_collect"
-           android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size_eight"
-            android:layout_marginTop="@dimen/size_eight"
-            android:gravity="center"
-            android:text="@string/cancel_collect"
-            android:textColor="@color/kuangkuang_yellow"
-            android:textSize="@dimen/middle_text_size"
-           />
-
+    <TextView
+        android:id="@+id/dialog_tv_cancel_collect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/size_eight"
+        android:paddingTop="@dimen/size_eight"
+        android:text="@string/cancel_collect"
+        android:textColor="@color/kuangkuang_yellow"
+        android:textSize="@dimen/middle_text_size" />
 
 
 </LinearLayout>
