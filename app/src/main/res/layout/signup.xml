@@ -9,7 +9,7 @@
     android:orientation="vertical">
     <include
         android:id="@+id/signup_title"
-        layout="@layout/title_login" />
+        layout="@layout/title_login123" />
 
     <ImageView
         android:layout_width="match_parent"

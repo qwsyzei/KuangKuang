@@ -42,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:padding="@dimen/base_margin"
                 android:layout_marginLeft="@dimen/signup__text_m_l_r"
                 android:layout_toRightOf="@+id/im_head_pic"
                 android:text="@string/change_head_pic" />

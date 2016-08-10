@@ -12,9 +12,9 @@
         android:padding="@dimen/base_margin"
         android:layout_marginLeft="@dimen/base_margin"
         android:clickable="true"
-        android:onClick="gotomain"
+        android:onClick="back"
         android:src="@drawable/background_back"
-       />
+        />
 
 
     <ImageView

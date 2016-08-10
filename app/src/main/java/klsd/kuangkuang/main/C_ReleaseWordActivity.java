@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -67,7 +69,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     String photostr[] = new String[]{"", "", "", "", "", "", "", "", ""};
     String id, url;
     private Dialog dialog;
-
+    int degree;//角度
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,25 +135,10 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
         if (dialog != null) {
             dialog.show();
         }
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-
-//                List<String> list = new ArrayList<String>();
-//                for (int i = 0; i < Bimp.drr.size(); i++) {
-//                    String Str = Bimp.drr.get(i).substring(
-//                            Bimp.drr.get(i).lastIndexOf("/") + 1,
-//                            Bimp.drr.get(i).lastIndexOf("."));
-//                    list.add(FileUtils.SDPATH + Str + ".JPEG");
-//                    Log.d("地址是", "onClick() returned: " + FileUtils.SDPATH + Str + ".JPEG");
-//                }
                 // 高清的压缩图片全部就在  list 路径里面了
                 Log.d("进来这个方法了吗", "run() returned: " + "");
                 // 高清的压缩过的 bmp 对象  都在 Bimp.bmp里面
                 release_word();
-//            }
-//        }).start();
-
     }
 
     /**
@@ -388,6 +375,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
+                Bimp.bmp.clear();
+                Bimp.drr.clear();
+                Bimp.max = 0;
                 FileUtils.deleteDir();
             }
 
@@ -402,6 +392,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
+                Bimp.bmp.clear();
+                Bimp.drr.clear();
+                Bimp.max = 0;
                 FileUtils.deleteDir();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE2)) {
@@ -415,6 +408,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
+                Bimp.bmp.clear();
+                Bimp.drr.clear();
+                Bimp.max = 0;
                 FileUtils.deleteDir();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE3)) {
@@ -428,6 +424,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
+                Bimp.bmp.clear();
+                Bimp.drr.clear();
+                Bimp.max = 0;
                 FileUtils.deleteDir();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE4)) {
@@ -442,6 +441,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
+                Bimp.bmp.clear();
+                Bimp.drr.clear();
+                Bimp.max = 0;
                 FileUtils.deleteDir();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE5)) {
@@ -456,6 +458,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
+                Bimp.bmp.clear();
+                Bimp.drr.clear();
+                Bimp.max = 0;
                 FileUtils.deleteDir();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE6)) {
@@ -469,6 +474,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
+                Bimp.bmp.clear();
+                Bimp.drr.clear();
+                Bimp.max = 0;
                 FileUtils.deleteDir();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE7)) {
@@ -482,6 +490,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
+                Bimp.bmp.clear();
+                Bimp.drr.clear();
+                Bimp.max = 0;
                 FileUtils.deleteDir();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE8)) {
@@ -495,6 +506,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
                 // 完成上传服务器后 .........
+                Bimp.bmp.clear();
+                Bimp.drr.clear();
+                Bimp.max = 0;
                 FileUtils.deleteDir();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE9)) {
@@ -505,6 +519,9 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
             ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
             Intentstyle();
             // 完成上传服务器后 .........
+            Bimp.bmp.clear();
+            Bimp.drr.clear();
+            Bimp.max = 0;
             FileUtils.deleteDir();
         }
 
@@ -613,12 +630,14 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                             try {
                                 String path = Bimp.drr.get(Bimp.max);
                                 Bitmap bm = Bimp.revitionImageSize(path);
-//                                Bitmap bm=Bimp.getBitmapFormUri(C_ReleaseWordActivity.this,path);
-                                Bimp.bmp.add(bm);
+                                degree=getBitmapDegree(path);
+                                Log.d("角度是", "onActivityResult() returned: " + degree+"");
+                                Bitmap new_bm=rotateBitmapByDegree(bm, degree);
+                                Bimp.bmp.add(new_bm);
                                 String newStr = path.substring(
                                         path.lastIndexOf("/") + 1,
                                         path.lastIndexOf("."));
-                                FileUtils.saveBitmap(bm, "" + newStr);
+                                FileUtils.saveBitmap(new_bm, "" + newStr);
                                 Bimp.max += 1;
                                 Message message = new Message();
                                 message.what = 1;
@@ -754,6 +773,60 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 break;
         }
     }
+    /**
+     * 读取图片的旋转的角度
+     * @param path 图片绝对路径
+     * @return 图片的旋转角度
+     */
+    public static int getBitmapDegree(String path) {
+        int degree = 0;
+        try {
+            // 从指定路径下读取图片，并获取其EXIF信息
+            ExifInterface exifInterface = new ExifInterface(path);
+            // 获取图片的旋转信息
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
+    }
+    /**
+     * 将图片按照某个角度进行旋转
+     *
+     * @param bm     需要旋转的图片
+     * @param degree 旋转角度
+     * @return 旋转后的图片
+     */
+    public static Bitmap rotateBitmapByDegree(Bitmap bm, int degree) {
+        Bitmap returnBm = null;
 
+        // 根据旋转角度，生成旋转矩阵
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        try {
+            // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
+            returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+        } catch (OutOfMemoryError e) {
+        }
+        if (returnBm == null) {
+            returnBm = bm;
+        }
+        if (bm != returnBm) {
+            bm.recycle();
+        }
+        return returnBm;
+    }
 }
 

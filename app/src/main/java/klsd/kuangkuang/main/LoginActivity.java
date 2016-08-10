@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -150,6 +151,16 @@ public class LoginActivity extends BaseActivity {
             }
         }
     };
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+          // 是否触发按键为back键
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            myStartActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+            return true;
+        }else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
 }
 

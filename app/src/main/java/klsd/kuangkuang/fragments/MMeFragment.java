@@ -78,12 +78,19 @@ private TextView tv_name,tv_signature;
         Context context = getActivity().getApplicationContext();
         initImageLoader(context);
         setTitle(getString(R.string.main_me));
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (DataCenter.isSigned()) {
             initView();
         } else {
             myStartActivity(new Intent(a, LoginActivity.class));
+            a.finish();
         }
-        return view;
     }
 
     /**

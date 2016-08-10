@@ -357,7 +357,7 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
             if (extras != null) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG, 50, stream);// (0 -
+                photo.compress(Bitmap.CompressFormat.JPEG, 70, stream);// (0 -
                 // 100)压缩文件
                 byte[] bt = stream.toByteArray();//为了转成16进制
                 photoStr = byte2hex(bt);//
