@@ -120,15 +120,7 @@ public class M_SetActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private void signOut() {
-        setMember(null);
-        DataCenter.setSignedOut();
-        SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
-        editor.clear();
-        editor.commit();
-        myStartActivity(new Intent(this, LoginActivity.class));
-        finish();
-    }
+
 
     private void Clean_Dialog() {
         cleanDialog = new CleanCacheDialog(M_SetActivity.this, R.style.MyDialogStyle, R.layout.dialog_clean_cache);

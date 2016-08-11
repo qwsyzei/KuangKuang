@@ -108,7 +108,12 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         } else {
             viewHolder.comment.setText(subject.getComment());
         }
-        viewHolder.tv_author_name.setText(subject.getNickname());
+        if (subject.getNickname().equals("null")){
+            viewHolder.tv_author_name.setText("硄硄用户");
+        }else{
+            viewHolder.tv_author_name.setText(subject.getNickname());
+        }
+
 
         Context context = ctx.getApplicationContext();
         initImageLoader(context);

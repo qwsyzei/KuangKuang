@@ -78,7 +78,11 @@ public class ForgetPsdActivity extends BaseActivity {
                     edit_phonenumber.setText("");
                     break;
                 case R.id.getback_code_phone:
-                    toPhoneCode();
+                    if (edit_phonenumber.getText().length()==11){
+                        toPhoneCode();
+                    }else{
+                        ToastUtil.show(ForgetPsdActivity.this,getString(R.string.wrong_admin_name));
+                    }
                     break;
                 case R.id.forget_im_done:
                     toGetbackPhone();

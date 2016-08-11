@@ -78,20 +78,15 @@ private TextView tv_name,tv_signature;
         Context context = getActivity().getApplicationContext();
         initImageLoader(context);
         setTitle(getString(R.string.main_me));
-
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         if (DataCenter.isSigned()) {
             initView();
         } else {
             myStartActivity(new Intent(a, LoginActivity.class));
             a.finish();
         }
+        return view;
     }
+
 
     /**
      * 假数据
@@ -211,12 +206,16 @@ private TextView tv_name,tv_signature;
                 } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
                     documents = (Documents) bundle.getSerializable("documents");
                     tv_name.setText(documents.getName());
-                    tv_signature.setText(documents.getSignature());
+                    if (documents.getSignature().equals("null")){
+                        tv_signature.setText("");
+                    }else{
+                        tv_signature.setText(documents.getSignature());
+                    }
                     getbitmap123();
                 loadDataFrom();
                 }
             } else if (res.equals("123")) {
-                if (!documents.getPicture().equals("null")) {
+                if (!documents.getPicture().equals("null")&&!documents.getPicture().equals("uploads/head_portrait")) {
                     ImageLoader.getInstance().displayImage(Consts.host + "/" + documents.getPicture(), im_head_small);
                     Bitmap bitmap1 = fastblur(a, bitmap, 5, false);
                     im_head_big.setImageBitmap(bitmap1);

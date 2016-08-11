@@ -119,9 +119,7 @@ public static String secret;
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_LOGIN)) {
             if (handlerBundler.getBoolean("signed")) {
-
                 getMemberData();
-
             }
         } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_ME)) {
             setMember((Member) handlerBundler.getSerializable("member"));

@@ -20,6 +20,7 @@
     <string name="set">设置</string>
     <string name="update_password">更改密码</string>
     <string name="admin_name">用户名</string>
+    <string name="wrong_admin_name">用户名格式有误</string>
     <string name="login">登录</string>
     <string name="forget_password">忘记密码</string>
     <string name="sign_up">注册</string>
@@ -226,9 +227,7 @@
     <string name="about_us_wechat">微信公众号：kuang_2017</string>
     <string name="about_us_phone">服务电话：010-57133977</string>
     <string name="about_us_mail">邮箱：kuangkuang2016@126.com</string>
-    <string name="error2002">订单建立失败</string>
-    <string name="error2003">订单取消失败</string>
-    <string name="error2004">订单不存在</string>
+
     <string name="error2006">时间戳已被使用</string>
     <string name="error2007">当前手机时间与网络时间不一致，请重启应用</string>
     <string name="error2013">用户已注册过</string>
@@ -243,17 +242,8 @@
     <string name="error2022">用户名和密码不匹配 </string>
     <string name="error2023">密码错误超过5次</string>
     <string name="error2024">手机和邮箱不能同时解绑,至少要绑定其中一个</string>
-    <string name="error2025">fund source id 错误</string>
-    <string name="error2026">fund source 存储失败</string>
-    <string name="error2027">找不到相应的account version</string>
-    <string name="error2028">需要先设置一个交易密码</string>
-    <string name="error2029">无法找到fund source</string>
-    <string name="error2030">无法找到该deposit</string>
-    <string name="error2031">无法找到该withdraw</string>
     <string name="error2032">未绑定手机号码</string>
     <string name="error2033">2033号错误</string>
-    <string name="error2034">帐户余额不足</string>
-    <string name="error2035">交易密码错误</string>
     <string name="error2036">登录密码错误</string>
 
 </resources>

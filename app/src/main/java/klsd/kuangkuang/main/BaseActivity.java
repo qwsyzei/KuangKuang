@@ -24,6 +24,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
 
 import klsd.kuangkuang.R;
@@ -43,6 +45,7 @@ import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.ErrorCodes;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
+import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.ExitDialog;
@@ -59,39 +62,23 @@ public class BaseActivity extends FragmentActivity {
     String error_code;
     Bundle handlerBundler;
 
-    boolean flag=false;
+    boolean flag = false;
     ExitDialog exitDialog;
     TextView tv_yes, tv_no;
-    TextView tv_title;
-
-    private IntentFilter intentFilter;
-    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-//        intentFilter = new IntentFilter();
-//        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-//        networkChangeReceiver = new NetworkChangeReceiver();
-//        registerReceiver(networkChangeReceiver, intentFilter);
         app = getApplication();
-
-
     }
-
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        unregisterReceiver(networkChangeReceiver);
-//    }
-
 
     public void setTitle(String title) {
         TextView textView = (TextView) findViewById(R.id.tv_title);
         if (textView != null) textView.setText(title);
     }
+
     public void setTitleRight(String tv_right) {
         TextView textView = (TextView) findViewById(R.id.tv_title_right);
         if (textView != null) textView.setText(tv_right);
@@ -122,11 +109,13 @@ public class BaseActivity extends FragmentActivity {
     public void back(View view) {
         back();
     }
+
     public void gotomain(View view) {
-       myStartActivity(new Intent(BaseActivity.this,MainActivity.class));
+        myStartActivity(new Intent(BaseActivity.this, MainActivity.class));
         finish();
         aniStart();
     }
+
     public void back() {
         finish();
         aniBack();
@@ -160,7 +149,10 @@ public class BaseActivity extends FragmentActivity {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("user_name", uname);
         params.addQueryStringParameter("login_password", psd);
+
         params = KelaParams.generateSignParam("GET", Consts.signInApi, params);
+        Log.d("这个东西是啥", "sendSignIn() returned: " + params.getQueryStringParams().toString());
+
         new MyHTTP(this).baseRequest(Consts.signInApi, JSONHandler.JTYPE_LOGIN, HttpRequest.HttpMethod.GET, params, handler);
     }
 
@@ -173,9 +165,16 @@ public class BaseActivity extends FragmentActivity {
         editor.commit();
         myStartActivity(new Intent(this, LoginActivity.class));
         finish();
-
     }
-
+    public void signOut() {
+        setMember(null);
+        DataCenter.setSignedOut();
+        SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
+        editor.clear();
+        editor.commit();
+        myStartActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
     public void signUp(View v) {
         toSignView("signUp");
     }
@@ -262,20 +261,21 @@ public class BaseActivity extends FragmentActivity {
             if (handlerBundler.getString("unavailable") == "1") {
                 ava = "1";
             } else {
-                ava ="0";}
-            if (ava.equals("0")) {
-            if (responseJson == null || responseJson.equals(getString(R.string.checkup_network))) {
-                if (flag==false){
-                    ToastUtil.show(BaseActivity.this, responseJson);
-//                    myStartActivity(new Intent(BaseActivity.this, LoginActivity.class));
-                    flag=true;
-                }
-                return;
-            } else if (responseJson.equals("OK")) {
-                updateData();
-            } else {
-                toastError();
+                ava = "0";
             }
+            if (ava.equals("0")) {
+                if (responseJson == null || responseJson.equals(getString(R.string.checkup_network))) {
+                    if (flag == false) {
+                        ToastUtil.show(BaseActivity.this, responseJson);
+//                    myStartActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                        flag = true;
+                    }
+                    return;
+                } else if (responseJson.equals("OK")) {
+                    updateData();
+                } else {
+                    toastError();
+                }
             } else {
 //                myStartActivity(new Intent(BaseActivity.this, LoginActivity.class));
                 Toast.makeText(BaseActivity.this, getString(R.string.network_problem), Toast.LENGTH_SHORT).show();
@@ -284,10 +284,10 @@ public class BaseActivity extends FragmentActivity {
         }
     };
 
-    private View.OnClickListener listener=new OnClickListener() {
+    private View.OnClickListener listener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.exit_yes:
 
                     exitDialog.dismiss();
@@ -298,18 +298,19 @@ public class BaseActivity extends FragmentActivity {
             }
         }
     };
+
     public void toastError() {
         try {
-            if (error_code.equals("2028")){
-//                trade_Dialog();
-            }else if(error_code.equals("2007")){
+            if (error_code.equals("2021")) {//发现用户名未注册就进入登录界面
+                ToastUtil.show(BaseActivity.this, getString(ErrorCodes.CODES.get(error_code)));
+                signOut();
+            } else if (error_code.equals("2007")) {
                 Toast.makeText(BaseActivity.this, getString(ErrorCodes.CODES.get(error_code)), Toast.LENGTH_LONG).show();
                 finish();
-            }else{
+            } else {
                 ToastUtil.show(BaseActivity.this, getString(ErrorCodes.CODES.get(error_code)));
             }
         } catch (Exception e) {
-            Log.i("ERROR", "need set code message");
             ToastUtil.show(BaseActivity.this, responseJson);
         }
     }
@@ -348,6 +349,7 @@ public class BaseActivity extends FragmentActivity {
             }
         }
     }
+
     //EditText的监听，用来规范它的格式，如小数点后面只能有两位，不能再有点
     public static void setPricePoint(final EditText editText) {
         editText.addTextChangedListener(new TextWatcher() {

@@ -69,7 +69,11 @@ public class M_NewPhoneActivity extends BaseActivity {
                     edit_phonenumber.setText("");
                     break;
                 case R.id.new_phone_tv_getcode:
-                    toBindPhoneCode();
+                    if (edit_phonenumber.getText().length()==11){
+                        toBindPhoneCode();
+                    }else{
+                        ToastUtil.show(M_NewPhoneActivity.this,getString(R.string.wrong_admin_name));
+                    }
                     break;
                 case R.id.new_phone_btn_bind:
                     toBindPhone();

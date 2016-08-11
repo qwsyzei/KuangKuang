@@ -352,6 +352,15 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
     }
 
     /**
+     *  完成上传服务器后 ，清除gridview.........
+     */
+private void afterRelease(){
+    Bimp.bmp.clear();
+    Bimp.drr.clear();
+    Bimp.max = 0;
+    FileUtils.deleteDir();
+}
+    /**
      * 发表成功后跳转到MAIN的“我”界面
      */
     private void Intentstyle() {
@@ -374,11 +383,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
-                // 完成上传服务器后 .........
-                Bimp.bmp.clear();
-                Bimp.drr.clear();
-                Bimp.max = 0;
-                FileUtils.deleteDir();
+                afterRelease();
             }
 
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE1)) {
@@ -391,11 +396,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
-                // 完成上传服务器后 .........
-                Bimp.bmp.clear();
-                Bimp.drr.clear();
-                Bimp.max = 0;
-                FileUtils.deleteDir();
+                afterRelease();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE2)) {
             Log.d("图片222成功", "updateData() returned: " + "");
@@ -407,11 +408,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
-                // 完成上传服务器后 .........
-                Bimp.bmp.clear();
-                Bimp.drr.clear();
-                Bimp.max = 0;
-                FileUtils.deleteDir();
+                afterRelease();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE3)) {
             Log.d("图片333成功", "updateData() returned: " + "");
@@ -423,11 +420,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
-                // 完成上传服务器后 .........
-                Bimp.bmp.clear();
-                Bimp.drr.clear();
-                Bimp.max = 0;
-                FileUtils.deleteDir();
+                afterRelease();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE4)) {
 
@@ -440,11 +433,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
-                // 完成上传服务器后 .........
-                Bimp.bmp.clear();
-                Bimp.drr.clear();
-                Bimp.max = 0;
-                FileUtils.deleteDir();
+                afterRelease();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE5)) {
 
@@ -457,11 +446,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
-                // 完成上传服务器后 .........
-                Bimp.bmp.clear();
-                Bimp.drr.clear();
-                Bimp.max = 0;
-                FileUtils.deleteDir();
+                afterRelease();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE6)) {
             Log.d("图片666成功", "updateData() returned: " + "");
@@ -473,11 +458,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
-                // 完成上传服务器后 .........
-                Bimp.bmp.clear();
-                Bimp.drr.clear();
-                Bimp.max = 0;
-                FileUtils.deleteDir();
+                afterRelease();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE7)) {
             Log.d("图片777成功", "updateData() returned: " + "");
@@ -489,11 +470,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
-                // 完成上传服务器后 .........
-                Bimp.bmp.clear();
-                Bimp.drr.clear();
-                Bimp.max = 0;
-                FileUtils.deleteDir();
+                afterRelease();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE8)) {
             Log.d("图片888成功", "updateData() returned: " + "");
@@ -505,11 +482,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
                 }
                 ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
                 Intentstyle();
-                // 完成上传服务器后 .........
-                Bimp.bmp.clear();
-                Bimp.drr.clear();
-                Bimp.max = 0;
-                FileUtils.deleteDir();
+                afterRelease();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_PICTURE9)) {
             Log.d("图片888成功", "updateData() returned: " + "");
@@ -518,11 +491,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
             }
             ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.release_success));
             Intentstyle();
-            // 完成上传服务器后 .........
-            Bimp.bmp.clear();
-            Bimp.drr.clear();
-            Bimp.max = 0;
-            FileUtils.deleteDir();
+            afterRelease();
         }
 
     }

@@ -57,7 +57,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/personal_data_height"
             android:background="@color/white"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -88,7 +88,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/market_bottom_line_height"
+            android:layout_height="@dimen/personal_data_height"
 
             android:background="@color/white"
             android:padding="@dimen/size_eight">
@@ -124,7 +124,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/personal_data_height"
             android:background="@color/white"
             android:padding="@dimen/size_eight">
 
@@ -149,7 +149,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/personal_data_height"
             android:background="@color/white"
             android:padding="@dimen/size_eight">
 

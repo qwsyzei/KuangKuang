@@ -18,6 +18,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.main.common.EncrypAES;
+import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
@@ -114,7 +115,11 @@ public class SignupActivity extends BaseActivity {
             // TODO Auto-generated method stub
             switch (v.getId()) {
                 case R.id.signup_phone_getyan:
-                    toPhoneCode();
+                    if (edit_phonenumber.getText().length()==11){
+                        toPhoneCode();
+                    }else{
+                        ToastUtil.show(SignupActivity.this,getString(R.string.wrong_admin_name));
+                    }
                     break;
                 case R.id.im_signup_phone:
                     toPhoneSignup();
@@ -182,15 +187,24 @@ public class SignupActivity extends BaseActivity {
                 String admin= mAes.EncryptorString(edit_phonenumber.getText().toString());//加密用户名
                 String password=mAes.EncryptorString(edit_password.getText().toString());//加密密码
 
-                editor.putBoolean("isLogin",true);
+                editor.putBoolean("isLogin", true);
                 editor.putString("admin", admin);
                 editor.putString("password", password);
                 editor.commit();
-                myStartActivity(new Intent(SignupActivity.this, MainActivity.class));
-                finish();
+            sendSignIn(edit_phonenumber.getText().toString(), edit_password.getText().toString(), getHandler());//注册成功就自动登录
 
+        }else if (jtype.equals(JSONHandler.JTYPE_LOGIN)) {
+            if (handlerBundler.getBoolean("signed")) {
+                DataCenter.setSigned();
+                getMemberData();
+            }
+        } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_ME)) {
+            setMember((Member) handlerBundler.getSerializable("member"));
+            startActivity(new Intent(SignupActivity.this, MainActivity.class));//主界面
+            finish();
         }
     }
+
     private TextWatcher watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

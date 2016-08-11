@@ -19,6 +19,7 @@ import klsd.kuangkuang.main.common.EncrypAES;
 import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
+import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.ContainsEmojiEditText;
 
 /**
@@ -41,16 +42,20 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         setTitle(getString(R.string.login));
-        Intent intent = getIntent();
         initViews();
     }
 
 
     @Override
     public void signIn(View v) {
-        String phone = edit_admin.getText().toString();
-        String psd = editTPassword.getText().toString();
-        sendSignIn(phone, psd, getHandler());
+        if (edit_admin.getText().length()==11){
+            String phone = edit_admin.getText().toString();
+            String psd = editTPassword.getText().toString();
+            sendSignIn(phone, psd, getHandler());
+        }else{
+            ToastUtil.show(LoginActivity.this,getString(R.string.wrong_admin_name));
+        }
+
     }
 
     public void updateData() {
