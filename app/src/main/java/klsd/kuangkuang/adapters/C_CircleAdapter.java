@@ -290,14 +290,11 @@ private LinearLayout layout_black,layout_tip_off;
         } else {
             viewHolder.comment.setText(circles.getComment());
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+
                 Context context = ctx.getApplicationContext();
                 initImageLoader(context);
                 ImageLoader.getInstance().displayImage(Consts.host + "/" + circles.getPicture_son(), viewHolder.im_head_pic);
-            }
-        }).start();
+
         String common_time = MyDate.timeLogic(circles.getCreated_at().substring(0, 19).replace("T", " "));
         viewHolder.time.setText(common_time);
         cGridAdapter = new C_CircleGridAdapter(ctx, headerEntitiesList);

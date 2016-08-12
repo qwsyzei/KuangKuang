@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -55,7 +53,9 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
                 responseJson = handlerBundler.getString("result");
                 error_code = handlerBundler.getString("error_code");
                 jtype = handlerBundler.getString("jtype");
-                if (responseJson.equals("OK")) {
+                if (responseJson==null){
+                    //用于当用户在专题列表界面忽然断网也能进入文章
+                }else if (responseJson.equals("OK")) {
                     updateData();
                 } else {
                     toastError();

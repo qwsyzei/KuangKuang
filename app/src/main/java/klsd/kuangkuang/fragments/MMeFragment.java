@@ -31,6 +31,7 @@ import klsd.kuangkuang.main.C_ReleaseWordActivity;
 import klsd.kuangkuang.main.LoginActivity;
 import klsd.kuangkuang.main.M_BlackListActivity;
 import klsd.kuangkuang.main.M_MyCollectActivity;
+import klsd.kuangkuang.main.M_PersonalDataActivity;
 import klsd.kuangkuang.main.M_SetActivity;
 import klsd.kuangkuang.models.Documents;
 import klsd.kuangkuang.models.MyWord;
@@ -123,6 +124,7 @@ private TextView tv_name,tv_signature;
         layout_release.setOnClickListener(this);
         layout_collect.setOnClickListener(this);
         layout_blacklist.setOnClickListener(this);
+        im_head_small.setOnClickListener(this);
         im_set.setOnClickListener(this);
         mPullToRefreshView= (PullToRefresh123View)view.findViewById(R.id.pull_refresh_view_me);
         mPullToRefreshView.setOnFooterRefreshListener(this);
@@ -143,6 +145,9 @@ private TextView tv_name,tv_signature;
                 break;
             case R.id.layout_me_release_word_now:
                 myStartActivity(new Intent(getActivity(), C_ReleaseWordActivity.class));
+                break;
+            case R.id.me_head_small:
+                myStartActivity(new Intent(getActivity(), M_PersonalDataActivity.class));
                 break;
         }
     }
