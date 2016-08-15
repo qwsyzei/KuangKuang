@@ -24,20 +24,15 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.List;
-
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.utils.Consts;
@@ -45,7 +40,6 @@ import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.ErrorCodes;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
-import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.ExitDialog;
@@ -53,10 +47,7 @@ import klsd.kuangkuang.views.ExitDialog;
 public class BaseActivity extends FragmentActivity {
 
     private Application app;
-    public static int SELECT_IMAGES_TAG = 1;
-
-    ImageView backBtn;
-
+    public static final String action = "signout.broadcast.action";
     public Handler privatEventHandler;
     String jtype, responseJson;
     String error_code;
@@ -65,15 +56,23 @@ public class BaseActivity extends FragmentActivity {
     boolean flag = false;
     ExitDialog exitDialog;
     TextView tv_yes, tv_no;
-
+    private IntentFilter intentFilter;
+    private NetworkChangeReceiver networkChangeReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        networkChangeReceiver = new NetworkChangeReceiver();
+        registerReceiver(networkChangeReceiver, intentFilter);
         app = getApplication();
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(networkChangeReceiver);
+    }
     public void setTitle(String title) {
         TextView textView = (TextView) findViewById(R.id.tv_title);
         if (textView != null) textView.setText(title);
@@ -104,7 +103,6 @@ public class BaseActivity extends FragmentActivity {
         }
         return false;
     }
-
 
     public void back(View view) {
         back();
@@ -149,32 +147,22 @@ public class BaseActivity extends FragmentActivity {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("user_name", uname);
         params.addQueryStringParameter("login_password", psd);
-
         params = KelaParams.generateSignParam("GET", Consts.signInApi, params);
-        Log.d("这个东西是啥", "sendSignIn() returned: " + params.getQueryStringParams().toString());
-
         new MyHTTP(this).baseRequest(Consts.signInApi, JSONHandler.JTYPE_LOGIN, HttpRequest.HttpMethod.GET, params, handler);
     }
 
-    public void signOut(View v) {
-        setMember(null);
-        DataCenter.setSignedOut();
-        SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
-
-        editor.clear();       //清除登录信息
-        editor.commit();
-        myStartActivity(new Intent(this, LoginActivity.class));
-        finish();
-    }
     public void signOut() {
         setMember(null);
         DataCenter.setSignedOut();
         SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
         editor.clear();
         editor.commit();
+        Intent intent = new Intent(action);
+        sendBroadcast(intent);
         myStartActivity(new Intent(this, LoginActivity.class));
         finish();
     }
+
     public void signUp(View v) {
         toSignView("signUp");
     }
@@ -349,7 +337,6 @@ public class BaseActivity extends FragmentActivity {
             }
         }
     }
-
     //EditText的监听，用来规范它的格式，如小数点后面只能有两位，不能再有点
     public static void setPricePoint(final EditText editText) {
         editText.addTextChangedListener(new TextWatcher() {
@@ -394,15 +381,11 @@ public class BaseActivity extends FragmentActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-
             }
-
         });
 
     }

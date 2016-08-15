@@ -35,6 +35,7 @@ public class MyApplication extends Application {
 				.build();//
 		ImageLoader.getInstance().init(config);
 	}
+
 	public static void initImageLoader(Context context) {
 		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
 //				.showImageForEmptyUri(R.mipmap.touxiang05) //

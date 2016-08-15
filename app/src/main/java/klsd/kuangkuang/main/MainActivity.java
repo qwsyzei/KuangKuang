@@ -1,17 +1,22 @@
 package klsd.kuangkuang.main;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -27,19 +32,22 @@ import klsd.kuangkuang.utils.DataCenter;
 /**
  * 主界面
  */
-public class MainActivity extends SlidingFragmentActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener {
+public class MainActivity extends SlidingFragmentActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
     private ImageView im_title_left;//标题左上方的图标
     RadioGroup radioGroup;
     private FragmentManager fm;
     private FragmentTransaction ft;
-    private   RadioButton rbA,rbD;
+    private RadioButton rbA, rbD;
     private MSubjectFragment mSubjectFragment;
     private MCircleFragment mCircleFragment;
     private MToolFragment mToolFragment;
     private MMeFragment mMeFragment;
     private Fragment mContent;
     private LinearLayout layout_main_layout;
-    String str="0";
+    String str = "0";
+    private IntentFilter intentFilter;
+    private NetworkChangeReceiver networkChangeReceiver;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,31 +55,39 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         setContentView(R.layout.main);
         initView();
         initSlidingMenu();
-}
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        networkChangeReceiver = new NetworkChangeReceiver();
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
     private void initView() {
-        Intent intent=getIntent();
-        str=intent.getStringExtra("release");
-        im_title_left= (ImageView) findViewById(R.id.im_more_subject);
-       im_title_left.setOnClickListener(this);
-        layout_main_layout= (LinearLayout) findViewById(R.id.layout_main_layout);
+        IntentFilter filter = new IntentFilter(BaseActivity.action);
+        registerReceiver(broadcastReceiver, filter);
+        Intent intent = getIntent();
+        str = intent.getStringExtra("release");
+        im_title_left = (ImageView) findViewById(R.id.im_more_subject);
+        im_title_left.setOnClickListener(this);
+        layout_main_layout = (LinearLayout) findViewById(R.id.layout_main_layout);
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         /**
          * 应用进入后，默认选择点击Fragment01
          */
-        if (str!=null&&str.equals("123")){
+        if (str != null && str.equals("123")) {
             ft.replace(R.id.just_subject_layout, new MMeFragment());
-            rbD= (RadioButton) findViewById(R.id.main_rb4);
+            rbD = (RadioButton) findViewById(R.id.main_rb4);
             rbD.setChecked(true);
-        }else{
+        } else {
             ft.replace(R.id.just_subject_layout, new MSubjectFragment("0"));//news_every_content是为fragment留出的空间，用fragment替换
-            rbA= (RadioButton) findViewById(R.id.main_rb1);
+            rbA = (RadioButton) findViewById(R.id.main_rb1);
             rbA.setChecked(true);
         }
         ft.commit();
         radioGroup = (RadioGroup) findViewById(R.id.main_radiogroup);
         radioGroup.setOnCheckedChangeListener(this);
     }
+
     /**
      * 初始化侧边栏
      */
@@ -122,6 +138,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
     /**
      * radiobutton 改变选中状态
      * 进行切换fragment
+     *
      * @param group
      * @param checkedId
      */
@@ -146,12 +163,14 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
 
                 break;
             case R.id.main_rb4:
-                if ( DataCenter.isSigned()){
+                if (DataCenter.isSigned()) {
                     im_title_left.setVisibility(View.GONE);
                     ft.replace(R.id.just_subject_layout, new MMeFragment());
-                }else{
-                    Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+
+                } else {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 break;
         }
@@ -160,15 +179,41 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.im_more_subject:
                 toggle();
                 break;
         }
     }
 
+
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
+
+    class NetworkChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isAvailable()) {
+
+            } else {
+                Toast.makeText(context, getString(R.string.network_problem), Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+        unregisterReceiver(networkChangeReceiver);
     }
 }
+
