@@ -12,6 +12,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import klsd.kuangkuang.main.EnterActivity;
 
 
 /**
@@ -35,7 +36,7 @@ public class EncrypAES {
 	/**
 	 * 用于生产密钥
 	 */
-	private static final String SECRETKET="qiwei";
+	private static final String SECRETKET= EnterActivity.secret;
 	private SecretKeySpec deskey;
 
 	public EncrypAES(){

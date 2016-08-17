@@ -38,14 +38,31 @@
             android:text="6-27  11:00" />
 
     </LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/item_circle_detail_comment_m_t"
+    android:paddingLeft="@dimen/item_circle_detail_comment_m_l"
+  >
+    <TextView
+        android:id="@+id/item_circle_detail_replytext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+     android:layout_centerVertical="true"
+      android:layout_alignParentLeft="true"
+android:layout_toLeftOf="@+id/item_circle_detail_reply"
+        android:text="@string/reply" />
 
     <TextView
-        android:id="@+id/item_circle_detail_content"
-        android:layout_width="match_parent"
+        android:id="@+id/item_circle_detail_reply"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/item_circle_detail_comment_m_l"
         android:layout_marginRight="@dimen/base_margin"
-        android:layout_marginTop="@dimen/item_circle_detail_comment_m_t"
-        android:text="这是什么" />
+      android:layout_alignParentRight="true"
+        android:padding="@dimen/login_p_l_r"
+
+        android:textColor="@color/kuangkuang_yellow"
+        android:text="@string/reply"/>
+</RelativeLayout>
 
 </LinearLayout>

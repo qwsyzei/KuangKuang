@@ -53,9 +53,9 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
                 responseJson = handlerBundler.getString("result");
                 error_code = handlerBundler.getString("error_code");
                 jtype = handlerBundler.getString("jtype");
-                if (responseJson==null){
+                if (responseJson == null) {
                     //用于当用户在专题列表界面忽然断网也能进入文章
-                }else if (responseJson.equals("OK")) {
+                } else if (responseJson.equals("OK")) {
                     updateData();
                 } else {
                     toastError();
@@ -80,7 +80,7 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
             viewHolder.im_picture = (ImageView) convertView.findViewById(R.id.item_subject_picture);
             viewHolder.layout_item = (LinearLayout) convertView.findViewById(R.id.layout_item_subject);
             viewHolder.im_head_pic = (ImageView) convertView.findViewById(R.id.item_subject_head_pic);
-
+            viewHolder.tv_tag = (TextView) convertView.findViewById(R.id.item_subject_tag);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -108,17 +108,17 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         } else {
             viewHolder.comment.setText(subject.getComment());
         }
-        if (subject.getNickname().equals("null")){
+        if (subject.getNickname().equals("null")) {
             viewHolder.tv_author_name.setText("硄硄用户");
-        }else{
+        } else {
             viewHolder.tv_author_name.setText(subject.getNickname());
         }
-
+        viewHolder.tv_tag.setText("["+subject.getTag()+"]");
 
         Context context = ctx.getApplicationContext();
         initImageLoader(context);
         ImageLoader.getInstance().displayImage(subject.getPicture(), viewHolder.im_picture);
-        ImageLoader.getInstance().displayImage(Consts.host+"/"+subject.getPicture_son(), viewHolder.im_head_pic);
+        ImageLoader.getInstance().displayImage(Consts.host + "/" + subject.getPicture_son(), viewHolder.im_head_pic);
 
 
         viewHolder.layout_item.setOnClickListener(new View.OnClickListener() {
@@ -171,5 +171,6 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         LinearLayout layout_item;
         ImageView im_head_pic;
         TextView tv_author_name;
+        TextView tv_tag;
     }
 }

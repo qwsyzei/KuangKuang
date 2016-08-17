@@ -16,11 +16,36 @@ public class AllComment implements Serializable {
     private String created_at;
     private String updated_at;
 private String nickname,picture_son;
-
+    private String member_id;
+private String object_id,object_nickname;
     private Context context;
 
     public AllComment(Context context) {
         this.context = context;
+    }
+
+    public String getObject_id() {
+        return object_id;
+    }
+
+    public void setObject_id(String object_id) {
+        this.object_id = object_id;
+    }
+
+    public String getObject_nickname() {
+        return object_nickname;
+    }
+
+    public void setObject_nickname(String object_nickname) {
+        this.object_nickname = object_nickname;
+    }
+
+    public String getMember_id() {
+        return member_id;
+    }
+
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
     }
 
     public String getNickname() {
@@ -86,7 +111,7 @@ private String nickname,picture_son;
             setArticle_id(object.getString("article_id"));
             setCreated_at(object.getString("created_at"));
             setUpdated_at(object.getString("updated_at"));
-
+            setMember_id(object.getString("member_id"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,6 +121,16 @@ private String nickname,picture_son;
         try {
             setPicture_son(picture_son);
             setNickname(nickname);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+    public AllComment getObjectInfo(String object_id,String object_nickname) {
+        try {
+            setObject_id(object_id);
+            setObject_nickname(object_nickname);
 
         } catch (Exception e) {
             e.printStackTrace();

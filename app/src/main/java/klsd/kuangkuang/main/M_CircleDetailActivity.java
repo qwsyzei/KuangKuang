@@ -304,7 +304,7 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
             addTrades("bottom", os);//用于添加数据
             if (curTradesSize == 0) {
                 mylist = os;
-                allAdapter = new C_CircleCommentAdapter(M_CircleDetailActivity.this, mylist);
+                allAdapter = new C_CircleCommentAdapter(M_CircleDetailActivity.this, mylist,getHandler());
                 listView.setAdapter(allAdapter);
 
             } else {

@@ -24,8 +24,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@drawable/box"
-        android:padding="@dimen/base_margin"
+        android:background="@drawable/round_box"
+        android:paddingLeft="@dimen/base_margin"
+        android:paddingRight="@dimen/base_margin"
+        android:paddingTop="@dimen/size_eight"
+        android:paddingBottom="@dimen/size_eight"
+        android:layout_marginRight="@dimen/login_p_l_r"
         android:textColor="@color/kuangkuang_yellow"
         android:text="@string/send"/>
 </LinearLayout>

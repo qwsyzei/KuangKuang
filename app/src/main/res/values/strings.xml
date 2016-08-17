@@ -187,11 +187,13 @@
     <string name="recent_comment">最新评论</string>
     <string name="all_comment">查看全部评论</string>
     <string name="comment_and_refresh">评论成功，刷新可见</string>
+    <string name="reply_and_refresh">回复成功，刷新可见</string>
     <string name="qq">QQ</string>
     <string name="weibo">微博</string>
     <string name="wechat">微信</string>
     <string name="friend_circle">朋友圈</string>
     <string name="praise_success">点赞成功</string>
+    <string name="reply">回复</string>
 
     <!-- 圈子 -->
     <string name="top10">Top10</string>
@@ -216,6 +218,7 @@
     <string name="e2017">此号码未获取验证码</string>
     <string name="e2038">您已收藏过此文章</string>
     <string name="e2041">您已赞过此文章</string>
+    <string name="e2044">您已关注过此用户</string>
 
 
     <string name="viewpager_indicator">%1$d/%2$d</string>

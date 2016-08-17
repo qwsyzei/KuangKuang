@@ -254,12 +254,24 @@ public class JSONHandler {
                 ArrayList<AllComment> ac = new ArrayList<AllComment>();
                 for (int i = 0; i < olistArrays.size(); i++) {
                     JSONObject object = olistArrays.get(i);
+                    String object123=object.getString("object");
                     JSONObject object11=object.getJSONObject("commenter");
                     String nickname=object11.getString("nickname");
                     String picture_son=object11.getString("picture");
+                    String object_id,object_nickname;
+                    if (object123.equals("null")){//判断object字段是否是null
+                        object_id="0";
+                        object_nickname="0";
+                    }else{
+                        JSONObject object22=object.getJSONObject("object");
+                        object_id=object22.getString("object_id");
+                        object_nickname=object22.getString("nickname");
+
+                    }
                     AllComment sub = new AllComment(ctx);
                     sub.getFromJSONObjectItem(object);
                     sub.getAuthorInfo(nickname, picture_son);
+                    sub.getObjectInfo(object_id, object_nickname);
                     ac.add(sub);
                 }
                 bundle.putSerializable("all_comment", ac);
@@ -268,13 +280,26 @@ public class JSONHandler {
                 ArrayList<CircleAllComment> ac = new ArrayList<CircleAllComment>();
                 for (int i = 0; i < olistArrays.size(); i++) {
                     JSONObject object = olistArrays.get(i);
+                    String object123=object.getString("object");
                     JSONObject object11=object.getJSONObject("content");
                     String nickname=object11.getString("nickname");
                     String picture_son=object11.getString("picture");
                     String content_text=object11.getString("content_text");
+
+                    String object_id,object_nickname;
+                    if (object123.equals("null")){//判断object字段是否是null
+                         object_id="0";
+                         object_nickname="0";
+                    }else{
+                        JSONObject object22=object.getJSONObject("object");
+                    object_id=object22.getString("object_id");
+                     object_nickname=object22.getString("nickname");
+
+                    }
                     CircleAllComment sub = new CircleAllComment(ctx);
                     sub.getFromJSONObjectItem(object);
-                    sub.getAuthorInfo(nickname, picture_son,content_text);
+                    sub.getAuthorInfo(nickname, picture_son, content_text);
+                    sub.getObjectInfo(object_id, object_nickname);
                     ac.add(sub);
                 }
                 bundle.putSerializable("circle_all_comment", ac);

@@ -129,7 +129,7 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
             addTrades("bottom", os);//用于添加数据
             if (curTradesSize == 0) {
                 mylist = os;
-                allAdapter = new C_CircleCommentAdapter(C_CircleAllCommentActivity.this, mylist);
+                allAdapter = new C_CircleCommentAdapter(C_CircleAllCommentActivity.this, mylist,getHandler());
                 listView.setAdapter(allAdapter);
 
             } else {

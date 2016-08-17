@@ -228,7 +228,6 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("article_id", article_id);
         params.addQueryStringParameter("comment", edit_dialog_comment.getText().toString());
-        params.addQueryStringParameter("commenter", DataCenter.getMember_id());
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
                 params, getHandler());
@@ -261,7 +260,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
                 Log.d("评论是没有数据的", "updateData() returned: " + "");
                 return;
             }
-            allAdapter = new S_AllCommentAdapter(S_ArticleActivity.this, os);
+            allAdapter = new S_AllCommentAdapter(S_ArticleActivity.this, os,getHandler());
             listView.setAdapter(allAdapter);
 
         } else if (jtype.equals(JSONHandler.JTYPE_COLLECT)) {

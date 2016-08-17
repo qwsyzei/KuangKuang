@@ -42,6 +42,7 @@
 
     <dimen name="big_text_size">20sp</dimen>
     <dimen name="base_text_size">17sp</dimen>
+    <dimen name="big_middle_text_size">16sp</dimen>
     <dimen name="middle_text_size">15sp</dimen>
     <dimen name="small_middle_text_size">14sp</dimen>
     <dimen name="small_text_size">13sp</dimen>
@@ -89,7 +90,7 @@
     <dimen name="learn_now_m_t">94dp</dimen>
 
     <dimen name="s_subject_back_m_b">30dp</dimen>
-    <dimen name="s_subject_title_m">-5dp</dimen>
+    <dimen name="s_subject_title_m">-10dp</dimen>
     <dimen name="s_all_comment_height">43dp</dimen>
 
     <dimen name="s_top_item_height">175dp</dimen>

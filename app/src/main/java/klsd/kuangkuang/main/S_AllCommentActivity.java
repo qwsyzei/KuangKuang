@@ -91,8 +91,6 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("article_id", article_id);
         params.addQueryStringParameter("comment", edit_comment.getText().toString());
-        params.addQueryStringParameter("commenter", DataCenter.getMember_id());
-//        params.addQueryStringParameter("commenter", null);
 
         if (http == null) http = new MyHTTP(S_AllCommentActivity.this);
         http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
@@ -134,7 +132,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
             addTrades("bottom", os);//用于添加数据
             if (curTradesSize == 0) {
                 mylist = os;
-                allAdapter = new S_AllCommentAdapter(S_AllCommentActivity.this, mylist);
+                allAdapter = new S_AllCommentAdapter(S_AllCommentActivity.this, mylist,getHandler());
                 listView.setAdapter(allAdapter);
             } else {
 

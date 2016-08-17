@@ -15,8 +15,8 @@ public class CircleAllComment implements Serializable {
     private String updated_at;
     private String micropost_id;
     private String member_id;
-    private String object;//对某条评论进行评论
     private String content_text, nickname, picture_son;
+    private String object_id,object_nickname;
 
     private Context context;
 
@@ -64,14 +64,6 @@ public class CircleAllComment implements Serializable {
         this.member_id = member_id;
     }
 
-    public String getObject() {
-        return object;
-    }
-
-    public void setObject(String object) {
-        this.object = object;
-    }
-
     public String getContent_text() {
         return content_text;
     }
@@ -96,12 +88,27 @@ public class CircleAllComment implements Serializable {
         this.updated_at = updated_at;
     }
 
+    public String getObject_id() {
+        return object_id;
+    }
+
+    public void setObject_id(String object_id) {
+        this.object_id = object_id;
+    }
+
+    public String getObject_nickname() {
+        return object_nickname;
+    }
+
+    public void setObject_nickname(String object_nickname) {
+        this.object_nickname = object_nickname;
+    }
+
     public CircleAllComment getFromJSONObjectItem(JSONObject object) {
         try {
             setId(object.getString("id"));
             setCreated_at(object.getString("created_at"));
             setUpdated_at(object.getString("updated_at"));
-            setObject(object.getString("object"));
             setMember_id(object.getString("member_id"));
             setMicropost_id(object.getString("micropost_id"));
         } catch (Exception e) {
@@ -115,6 +122,16 @@ public class CircleAllComment implements Serializable {
             setPicture_son(picture_son);
             setNickname(nickname);
             setContent_text(content_text);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+    public CircleAllComment getObjectInfo(String object_id,String object_nickname) {
+        try {
+            setObject_id(object_id);
+            setObject_nickname(object_nickname);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
