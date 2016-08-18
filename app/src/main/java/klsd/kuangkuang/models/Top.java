@@ -22,6 +22,7 @@ public class Top implements Serializable {
     public Top(Context context) {
         this.context = context;
     }
+
     public String getTitle() {
         return title;
     }
@@ -161,7 +162,7 @@ public class Top implements Serializable {
             setCreated_at(object.getString("created_at"));
             setViews(object.getString("views"));
             setLike(object.getString("like"));
-            setComment(object.getString("comment"));
+            setMember_id(object.getString("member_id"));
         } catch (Exception e) {
             e.printStackTrace();
         }

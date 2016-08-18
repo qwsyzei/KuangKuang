@@ -72,7 +72,11 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
         mPullToRefreshView.setOnFooterRefreshListener(this);
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        ToastUtil.show(a, "我是专题");
+    }
     public void setTitle(String title) {
         TextView textView = (TextView) view.findViewById(R.id.tv_title);
         if (textView != null) textView.setText(title);
@@ -88,7 +92,7 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
         params.addQueryStringParameter("limit", limit+"");
         params.addQueryStringParameter("page", page+"");
         params.addQueryStringParameter("tag", tagtag);
-        params = KelaParams.generateSignParam("GET", Consts.articlesListApi, params);
+//        params = KelaParams.generateSignParam("GET", Consts.articlesListApi, params);
         if (http == null) http = new MyHTTP(a);
         http.baseRequest(Consts.articlesListApi, JSONHandler.JTYPE_ARTICLES_LIST, HttpRequest.HttpMethod.GET,
                 params, handler);

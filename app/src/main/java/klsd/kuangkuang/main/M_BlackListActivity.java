@@ -10,6 +10,7 @@ import klsd.kuangkuang.models.Blacklist;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
+import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
 
 /**
@@ -47,6 +48,7 @@ public class M_BlackListActivity extends BaseActivity {
             UIutils.cancelLoading();
             tlist = (ArrayList<Blacklist>) handlerBundler.getSerializable("blacklist");
             if (tlist.size() == 0) {
+                ToastUtil.show(M_BlackListActivity.this, getString(R.string.no_data));
                 return;
             }
             sAdapter = new M_BlackListAdapter(M_BlackListActivity.this, tlist,getHandler());

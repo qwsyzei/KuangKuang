@@ -151,7 +151,7 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
 
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
-            ToastUtil.show(ctx, R.string.delete_myword_success);
+            ToastUtil.show(ctx, R.string.delete_success);
             exitDialog.dismiss();
             fragment=new MMeFragment();
             if (fragment != null) {

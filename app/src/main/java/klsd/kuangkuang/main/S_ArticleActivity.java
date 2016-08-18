@@ -35,7 +35,6 @@ import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.CircleImageView;
 import klsd.kuangkuang.views.ContainsEmojiEditText;
-
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 
@@ -43,7 +42,7 @@ import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
  * 专题文章
  */
 public class S_ArticleActivity extends BaseActivity implements View.OnClickListener {
-    String testString, article_id, title, tag, views, like_number, comment_number, created_at;
+    String testString, article_id, title, tag, views, like_number, comment_number, created_at,author_member_id;
     private String nickname,picture_head,author_signature;
     private TextView tv_content;
     private LinearLayout layout_like, layout_comment;
@@ -63,7 +62,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_author_name,tv_author_signature;
     private CircleImageView im_author_head;
     String common_time;//类似1天前的写法
-
+private ImageView im_add_follow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,12 +86,14 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         nickname=intent.getStringExtra("nickname");
         picture_head=intent.getStringExtra("picture_son");
         author_signature=intent.getStringExtra("signature");
+        author_member_id=intent.getStringExtra("author_member_id");
 //        common_time = MyDate.timeLogic("2014-01-18 12:22:10");
         common_time = MyDate.timeLogic(created_at.substring(0, 19).replace("T", " "));
 
         tv_content = (TextView) findViewById(R.id.tv_article_content);
         RichText.from(testString).into(tv_content);
 
+        im_add_follow= (ImageView) findViewById(R.id.im_s_artile_follow);
         tv_author_name= (TextView) findViewById(R.id.article_author_name);
         tv_author_signature= (TextView) findViewById(R.id.article_author_tag);
         im_author_head= (CircleImageView) findViewById(R.id.article_author_pic);
@@ -115,7 +116,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_time = (TextView) findViewById(R.id.article_author_time);
         tv_time.setText(common_time);
         im_share.setOnClickListener(this);
-
+        im_add_follow.setOnClickListener(this);
 
         if (views.equals("null")) {
             tv_views.setText("0");
@@ -187,7 +188,10 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.dialog_comment_send_send:
                 gotoComment();
-
+                break;
+            case R.id.im_s_artile_follow:
+                //添加关注
+                gotoFollow();
                 break;
         }
     }
@@ -200,7 +204,6 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private void gotoLike() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("object_id", article_id);
-        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("species", "article");
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.addLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
@@ -220,7 +223,17 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
                 params, getHandler());
 
     }
+    /**
+     * 关注
+     */
+    private void gotoFollow() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("object", author_member_id);
+        if (http == null) http = new MyHTTP(S_ArticleActivity.this);
+        http.baseRequest(Consts.addfollowsApi, JSONHandler.JTYPE_ADD_FOLLOW, HttpRequest.HttpMethod.GET,
+                params, getHandler());
 
+    }
     /**
      * 评论
      */
@@ -268,6 +281,8 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
             cPopwindow.dismiss();
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.comment_success));
+        }else if (jtype.equals(JSONHandler.JTYPE_ADD_FOLLOW)) {
+            ToastUtil.show(S_ArticleActivity.this, getString(R.string.add_follows_success));
         }
 
     }

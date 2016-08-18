@@ -77,22 +77,42 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_s_allcomment, null);
             viewHolder.created_at = (TextView) convertView.findViewById(R.id.item_allcomment_time);
             viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.item_allcomment_nickname);
-            viewHolder.tv_reply = (TextView) convertView.findViewById(R.id.item_comment_detail_reply);
             viewHolder.tv_replytext= (TextView) convertView.findViewById(R.id.item_comment_detail_replytext);
             viewHolder.im_head = (CircleImageView) convertView.findViewById(R.id.item_allcomment_head_pic);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if (ac.getObject_id().equals("0")&&ac.getMember_id().equals(DataCenter.getMember_id())) {
+        if (ac.getObject_id().equals("0")&&ac.getMember_id().equals(DataCenter.getMember_id())) {//没有对谁，又是自己的
             viewHolder.tv_replytext.setText(ac.getBody());
-            viewHolder.tv_reply.setVisibility(View.GONE);
-            flag=0;
-        } else  if (ac.getObject_id().equals("0")&&!ac.getMember_id().equals(DataCenter.getMember_id())) {
+            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+                    exitDialog.setCanceledOnTouchOutside(true);
+                    exitDialog.show();
+
+                    tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+                    tv_cancel.setText(R.string.delete_the_comment);
+
+                    tv_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            exitDialog.dismiss();
+                            RequestParams params = new RequestParams();
+                            params.addQueryStringParameter("id",ac.getId());
+                            params.addQueryStringParameter("article_id",ac.getArticle_id() );
+                            if (http == null) http = new MyHTTP(ctx);
+                            http.baseRequest(Consts.articlesDeleteCommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
+                                    params, handler);
+                        }
+                    });
+                }
+            });
+
+        } else  if (ac.getObject_id().equals("0")&&!ac.getMember_id().equals(DataCenter.getMember_id())) {//没有对谁，是别人的
             viewHolder.tv_replytext.setText(ac.getBody());
-            viewHolder.tv_reply.setVisibility(View.VISIBLE);
-            flag=1;
-            viewHolder.tv_reply.setOnClickListener(new View.OnClickListener() {
+            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
@@ -123,15 +143,38 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
                     });
                 }
             });
-        }else if(!ac.getObject_id().equals("0")&&ac.getMember_id().equals(DataCenter.getMember_id())){
-            viewHolder.tv_reply.setVisibility(View.GONE);
-            flag=0;
+
+
+        }else if(!ac.getObject_id().equals("0")&&ac.getMember_id().equals(DataCenter.getMember_id())){//有对谁，是自己的
             viewHolder.tv_replytext.setText("回复  " + ac.getObject_nickname() + "：" + ac.getBody());
-        } else{
-            viewHolder.tv_reply.setVisibility(View.VISIBLE);
-            flag=1;
+            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+                    exitDialog.setCanceledOnTouchOutside(true);
+                    exitDialog.show();
+
+                    tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+                    tv_cancel.setText(R.string.delete_the_comment);
+
+                    tv_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            exitDialog.dismiss();
+                            RequestParams params = new RequestParams();
+                            params.addQueryStringParameter("id", ac.getId());
+                            params.addQueryStringParameter("article_id", ac.getArticle_id());
+                            if (http == null) http = new MyHTTP(ctx);
+                            http.baseRequest(Consts.articlesDeleteCommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
+                                    params, handler);
+                        }
+                    });
+                }
+            });
+
+        } else{                    //有对谁，是别人的
             viewHolder.tv_replytext.setText("回复  " + ac.getObject_nickname() + "：" + ac.getBody());
-            viewHolder.tv_reply.setOnClickListener(new View.OnClickListener() {
+            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
@@ -162,6 +205,7 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
                     });
                 }
             });
+
         }
         String time = MyDate.timeLogic(ac.getCreated_at().substring(0, 19).replace("T", " "));
         viewHolder.created_at.setText(time);
@@ -170,12 +214,14 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
         initImageLoader(context);
         ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_head);
 
-
         return convertView;
     }
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
             ToastUtil.show(ctx, R.string.reply_and_refresh);
+            exitDialog.dismiss();
+        }else if (jtype.equals(JSONHandler.JTYPE_COMMENT_DESTROY)) {
+            ToastUtil.show(ctx, R.string.delete_success);
             exitDialog.dismiss();
         }
     }
@@ -190,7 +236,6 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
     public final class ViewHolder {
         public TextView  created_at;
         TextView tv_nickname;
-        TextView tv_reply;
         TextView tv_replytext;
         CircleImageView im_head;
     }

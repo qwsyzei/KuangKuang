@@ -67,6 +67,12 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ToastUtil.show(a,"我是圈子");
+    }
+
     /**
      * 数据初始化
      */
@@ -124,8 +130,6 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
             String jtype = bundle.getString("jtype");
             if (res == null) {
                 ToastUtil.show(a, getString(R.string.network_problem));
-//                a.startActivity(new Intent(a, LoginActivity.class));
-//                a.finish();
             } else if (res.equals("OK")) {
                 if (jtype.equals(JSONHandler.JTYPE_CIRCLE_LIST)) {
                     int curTradesSize = cirList.size();

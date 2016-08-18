@@ -16,12 +16,11 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
 import java.util.List;
 
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.main.M_BlackListActivity;
-import klsd.kuangkuang.models.Blacklist;
+import klsd.kuangkuang.main.M_FollowListActivity;
+import klsd.kuangkuang.models.Follows;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.ErrorCodes;
 import klsd.kuangkuang.utils.JSONHandler;
@@ -32,10 +31,10 @@ import klsd.kuangkuang.views.ExitDialog;
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
- * 黑名单列表的adapter
- * Created by qiwei on 2016/8/4.
+ * 关注列表adapter
+ * Created by qiwei on 2016/8/18.
  */
-public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
+public class M_FollowListAdapter extends ArrayAdapter<Follows> {
     MyHTTP http;
     private Context ctx;
     private Handler handler;
@@ -44,7 +43,7 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
     Bundle handlerBundler;
     private ExitDialog exitDialog;
     private TextView tv_cancel;
-    public M_BlackListAdapter(Context context, List<Blacklist> list,Handler h) {
+    public M_FollowListAdapter(Context context, List<Follows> list,Handler h) {
         super(context, R.layout.item_blacklist, list);
         this.ctx = context;
         this.handler = h;
@@ -65,7 +64,7 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final Blacklist ac = getItem(position);
+        final Follows ac = getItem(position);
         final ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -89,16 +88,16 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
                 exitDialog.show();
 
                 tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
-                tv_cancel.setText(R.string.delete_black_list);
+                tv_cancel.setText(R.string.cancel_follow);
 
                 tv_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         exitDialog.dismiss();
                         RequestParams params = new RequestParams();
-                        params.addQueryStringParameter("object_id",ac.getObject_id() );
+                        params.addQueryStringParameter("object",ac.getObject_id());
                         if (http == null) http = new MyHTTP(ctx);
-                        http.baseRequest(Consts.deleteblacklistApi, JSONHandler.JTYPE_DELETE_BLACK, HttpRequest.HttpMethod.GET,
+                        http.baseRequest(Consts.destroyfollowsApi, JSONHandler.JTYPE_DELETE_FOLLOW, HttpRequest.HttpMethod.GET,
                                 params, handler);
                     }
                 });
@@ -109,9 +108,9 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
     }
 
     public void updateData() {
-        if (jtype.equals(JSONHandler.JTYPE_DELETE_BLACK)) {
-            ToastUtil.show(ctx, R.string.delete_success123);
-            Intent intent=new Intent(ctx, M_BlackListActivity.class);
+        if (jtype.equals(JSONHandler.JTYPE_DELETE_FOLLOW)) {
+            ToastUtil.show(ctx, R.string.success_cancel_follow);
+            Intent intent=new Intent(ctx, M_FollowListActivity.class);
             ctx.startActivity(intent);
             ((Activity)ctx).finish();
         }
@@ -129,4 +128,5 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
         ImageView im_pic;
     }
 }
+
 

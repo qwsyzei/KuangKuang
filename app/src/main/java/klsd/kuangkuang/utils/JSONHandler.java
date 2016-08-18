@@ -20,6 +20,7 @@ import klsd.kuangkuang.models.CircleAllComment;
 import klsd.kuangkuang.models.CircleLike;
 import klsd.kuangkuang.models.Circles;
 import klsd.kuangkuang.models.Documents;
+import klsd.kuangkuang.models.Follows;
 import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.models.MyCollect;
 import klsd.kuangkuang.models.MyWord;
@@ -79,7 +80,7 @@ public class JSONHandler {
     public final static String JTYPE_COLLECT_SHOW = "collect_show";
     public final static String JTYPE_COLLECT = "collect_article";
     public final static String JTYPE_COLLECT_DESTROY = "collect_destroy";
-
+    public final static String JTYPE_COMMENT_DESTROY = "comment_destroy";
     public final static String JTYPE_MEMBER_DOCUMENTS = "member_documents";
     public final static String JTYPE_MEMBER_UPDATE_DOCUMENTS = "update_member_documents";
     public final static String JTYPE_MEMBER_UPDATE_HEAD = "update_member_head";
@@ -101,6 +102,9 @@ public class JSONHandler {
     public final static String JTYPE_ADD_BLACK= "add_black_list";//加入黑名单
     public final static String JTYPE_DELETE_BLACK= "delete_black_list";//从黑名单移除
     public final static String JTYPE_BLACK_LIST= "black_list";//黑名单列表
+    public final static String JTYPE_ADD_FOLLOW= "add_follow";//加入关注
+    public final static String JTYPE_DELETE_FOLLOW= "delete_follow";//从关注移除
+    public final static String JTYPE_FOLLOW_LIST= "follow_list";//关注列表
 
     public JSONHandler() {
     }
@@ -356,6 +360,15 @@ public class JSONHandler {
                     mc.add(top);
                 }
                 bundle.putSerializable("blacklist", mc);
+            }else if (jtype2.equals(JTYPE_FOLLOW_LIST)) {
+                ArrayList<Follows> mc = new ArrayList<Follows>();
+                for (int i = 0; i < olistArrays.size(); i++) {
+                    JSONObject object = olistArrays.get(i);
+                    Follows top = new Follows(ctx);
+                    top.getFromJSONObjectItem(object);
+                    mc.add(top);
+                }
+                bundle.putSerializable("follows", mc);
             }
         } catch (Exception e) {
         }
@@ -412,6 +425,7 @@ public class JSONHandler {
         osStrings.add(JTYPE_ARTICLES_LIKE);
         osStrings.add(JTYPE_COLLECT);
         osStrings.add(JTYPE_COLLECT_DESTROY);
+        osStrings.add(JTYPE_COMMENT_DESTROY);
         osStrings.add(JTYPE_DELETE_MYWORD);
         osStrings.add(JTYPE_ARTICLES_VIEWS);
         osStrings.add(JTYPE_ARTICLES_COMMENT);
@@ -432,6 +446,8 @@ public class JSONHandler {
         osStrings.add(JTYPE_GIVE_SUGGEST);
         osStrings.add(JTYPE_ADD_BLACK);
         osStrings.add(JTYPE_DELETE_BLACK);
+        osStrings.add(JTYPE_ADD_FOLLOW);
+        osStrings.add(JTYPE_DELETE_FOLLOW);
         return osStrings.contains(jtype2);
     }
 
@@ -453,6 +469,7 @@ public class JSONHandler {
         osStrings.add(JTYPE_COLLECT_SHOW);
         osStrings.add(JTYPE_ARTICLES_TOP);
         osStrings.add(JTYPE_BLACK_LIST);
+        osStrings.add(JTYPE_FOLLOW_LIST);
         osStrings.add(JTYPE_GET_FUND_SOURCES);
         osStrings.add(JTYPE_GET_ACCOUNT_VERSIONS);
         osStrings.add(JTYPE_DEPOSITS);

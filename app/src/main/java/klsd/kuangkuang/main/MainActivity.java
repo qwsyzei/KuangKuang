@@ -37,7 +37,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
     RadioGroup radioGroup;
     private FragmentManager fm;
     private FragmentTransaction ft;
-    private RadioButton rbA, rbD;
+    private RadioButton rbA,rbB,rbC, rbD;
     private MSubjectFragment mSubjectFragment;
     private MCircleFragment mCircleFragment;
     private MToolFragment mToolFragment;
@@ -67,8 +67,17 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         Intent intent = getIntent();
         str = intent.getStringExtra("release");
         im_title_left = (ImageView) findViewById(R.id.im_more_subject);
-        im_title_left.setOnClickListener(this);
+
         layout_main_layout = (LinearLayout) findViewById(R.id.layout_main_layout);
+        rbA = (RadioButton) findViewById(R.id.main_rb1);
+        rbB = (RadioButton) findViewById(R.id.main_rb2);
+        rbC = (RadioButton) findViewById(R.id.main_rb3);
+        rbD = (RadioButton) findViewById(R.id.main_rb4);
+        im_title_left.setOnClickListener(this);
+//        rbA.setOnClickListener(this);
+//        rbB.setOnClickListener(this);
+//        rbC.setOnClickListener(this);
+//        rbD.setOnClickListener(this);
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         /**
@@ -76,11 +85,11 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
          */
         if (str != null && str.equals("123")) {
             ft.replace(R.id.just_subject_layout, new MMeFragment());
-            rbD = (RadioButton) findViewById(R.id.main_rb4);
+
             rbD.setChecked(true);
         } else {
             ft.replace(R.id.just_subject_layout, new MSubjectFragment("0"));//news_every_content是为fragment留出的空间，用fragment替换
-            rbA = (RadioButton) findViewById(R.id.main_rb1);
+
             rbA.setChecked(true);
         }
         ft.commit();
@@ -149,6 +158,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         switch (checkedId) {
             case R.id.main_rb1:
                 im_title_left.setVisibility(View.VISIBLE);
+
                 ft.replace(R.id.just_subject_layout, new MSubjectFragment("0"));
 
                 break;
@@ -176,12 +186,66 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         }
         ft.commit();
     }
+    public void showFragment(int index) {
+        FragmentTransaction ft = fm.beginTransaction();
 
+        // 想要显示一个fragment,先隐藏所有fragment，防止重叠
+        hideFragments(ft);
+        switch (index) {
+            case 1:
+                // 如果fragment1已经存在则将其显示出来
+                if (mSubjectFragment != null)
+                    ft.show(mSubjectFragment);
+                    // 否则是第一次切换则添加fragment1，注意添加后是会显示出来的，replace方法也是先remove后add
+                else {
+                    mSubjectFragment = new MSubjectFragment("0");
+                    ft.add(R.id.just_subject_layout, mSubjectFragment);
+                }
+                break;
+            case 2:
+                if (mCircleFragment != null)
+                    ft.show(mCircleFragment);
+                else {
+                    mCircleFragment = new MCircleFragment();
+                    ft.add(R.id.just_subject_layout, mCircleFragment);
+                }
+                break;
+            case 3:
+                if (mToolFragment != null)
+                    ft.show(mToolFragment);
+                else {
+                    mToolFragment = new MToolFragment();
+                    ft.add(R.id.just_subject_layout, mToolFragment);
+                }
+                break;
+            case 4:
+                if (mMeFragment != null)
+                    ft.show(mMeFragment);
+                else {
+                    mMeFragment = new MMeFragment();
+                    ft.add(R.id.just_subject_layout, mMeFragment);
+                }
+                break;
+        }
+        ft.commit();
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.im_more_subject:
                 toggle();
+                break;
+            case R.id.main_rb1:
+              showFragment(1);
+                break;
+            case R.id.main_rb2:
+                showFragment(2);
+                break;
+            case R.id.main_rb3:
+                showFragment(3);
+                break;
+            case R.id.main_rb4:
+                showFragment(4);
                 break;
         }
     }
@@ -207,6 +271,18 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
 
             }
         }
+    }
+
+    // 当fragment已被实例化，就隐藏起来
+    public void hideFragments(FragmentTransaction ft) {
+        if (mSubjectFragment != null)
+            ft.hide(mSubjectFragment);
+        if (mCircleFragment != null)
+            ft.hide(mCircleFragment);
+        if (mToolFragment != null)
+            ft.hide(mToolFragment);
+        if (mMeFragment != null)
+            ft.hide(mMeFragment);
     }
 
     @Override

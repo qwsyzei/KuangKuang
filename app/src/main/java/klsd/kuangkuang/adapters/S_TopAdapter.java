@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +105,8 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
                 intent.putExtra("nickname", ac.getNickname());
                 intent.putExtra("picture_son", ac.getPicture_son());
                 intent.putExtra("signature", ac.getSignature());
+                intent.putExtra("author_member_id",ac.getMember_id());
+
                 ctx.startActivity(intent);
             }
         });

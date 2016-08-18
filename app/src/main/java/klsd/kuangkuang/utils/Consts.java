@@ -15,6 +15,7 @@ public final static String host123="http://192.168.31.167:3000";
     public final static String articlesTopApi = baseApiPath + "/articles/Top10";
     public final static String articlesViewApi = baseApiPath + "/articles/numbers";//观看
     public final static String articlesCommentApi = baseApiPath + "/articles/comment";//评论
+    public final static String articlesDeleteCommentApi = baseApiPath + "/articles/destroy_commentary";//删除文章评论
     public final static String articlesCommentaryApi = baseApiPath + "/articles/commentary";//文章所有评论
     public final static String articlesCollectArticleApi = baseApiPath + "/collect/collect_article";//收藏
     public final static String articlesCollectDestroyApi = baseApiPath + "/collect/collect_destroy";//取消收藏
@@ -44,6 +45,9 @@ public final static String host123="http://192.168.31.167:3000";
     public final static String addblacklistApi = baseApiPath + "/blacklist/add_blacklist";//加入黑名单
     public final static String deleteblacklistApi = baseApiPath + "/blacklist/delete_blacklist";//删除黑名单
     public final static String blacklistApi = baseApiPath + "/blacklist/blacklist_list";//黑名单列表
+    public final static String addfollowsApi = baseApiPath + "/focus/add_follows";//加入关注
+    public final static String followslistApi = baseApiPath + "/focus/follows_list";//关注列表
+    public final static String destroyfollowsApi = baseApiPath + "/focus/destroy_follows";//取消关注
 
     // phone_number common
     public final static String getAuthCodeApi = baseApiPath + "/registers/code";
@@ -75,7 +79,7 @@ public final static String host123="http://192.168.31.167:3000";
         signInApi,
             getTimeApi,
         getbackPasswordPhoneApi,
-            articlesListApi,
+//            articlesListApi,
             articlesCommentaryApi,
             articlesTopApi,
             articlesViewApi,

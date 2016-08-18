@@ -121,6 +121,8 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
             case R.id.tv_title_right:
                 if (edit.getText().toString().equals("")) {
                     ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.no_word));
+                } else if(Bimp.drr.size()==0){
+                    ToastUtil.show(C_ReleaseWordActivity.this, getString(R.string.no_picture));
                 } else {
                     send_pro();
                 }

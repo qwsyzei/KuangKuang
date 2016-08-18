@@ -221,7 +221,6 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
     private void gotoLike() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("object_id", id);
-        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("species", "micropost");
         if (http == null) http = new MyHTTP(M_CircleDetailActivity.this);
         http.baseRequest(Consts.addLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,

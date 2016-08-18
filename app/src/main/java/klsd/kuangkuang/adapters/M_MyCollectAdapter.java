@@ -111,6 +111,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
                 intent.putExtra("nickname", ac.getNickname());
                 intent.putExtra("picture_son", ac.getPicture_son());
                 intent.putExtra("signature", ac.getSignature());
+                intent.putExtra("author_member_id",ac.getMember_id());
                 ctx.startActivity(intent);
 
             }

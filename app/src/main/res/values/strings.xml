@@ -15,6 +15,7 @@
     <string name="cancel">取消</string>
 
     <string name="no_more_data">没有更多数据了</string>
+    <string name="no_data">无数据</string>
     <string name="not_login">您未登录</string>
     <string name="not_set">未设置</string>
     <string name="set">设置</string>
@@ -159,15 +160,21 @@
     <string name="everyday_sign">每日签到</string>
     <string name="my_collect">我的收藏</string>
     <string name="black_list">黑名单</string>
+    <string name="my_follows">我的关注</string>
+    <string name="add_follows">+关注</string>
+    <string name="add_follows_success">关注成功</string>
     <string name="cannot_add_self_black_list">不可将自己加入黑名单</string>
     <string name="delete_black_list">移除黑名单</string>
-    <string name="delete_black_list_success">移除成功</string>
+    <string name="cancel_follow">取消关注</string>
+    <string name="delete_success123">移除成功</string>
     <string name="cancel_collect">取消收藏</string>
     <string name="success_cancel_collect">取消收藏成功</string>
+    <string name="success_cancel_follow">取消关注成功</string>
     <string name="today">今天</string>
     <string name="release_now">马上发表说说</string>
     <string name="delete_myword">删除该说说</string>
-    <string name="delete_myword_success">删除成功</string>
+    <string name="delete_the_comment">删除该评论</string>
+    <string name="delete_success">删除成功</string>
     <!-- 工具 -->
     <string name="check_certificate">查证书</string>
     <string name="measure_hand_size">量手寸</string>
@@ -212,6 +219,7 @@
     <string name="if_tip_off">是否要举报该说说</string>
     <string name="tip_off_success">举报成功</string>
     <string name="no_word">您还未输入文字</string>
+    <string name="no_picture">您还未添加图片</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- 返回错误信息 -->

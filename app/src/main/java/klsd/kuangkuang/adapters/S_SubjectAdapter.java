@@ -143,6 +143,7 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
                 intent.putExtra("nickname", subject.getNickname());
                 intent.putExtra("picture_son", subject.getPicture_son());
                 intent.putExtra("signature", subject.getSignature());
+                intent.putExtra("author_member_id",subject.getMember_id());
                 ctx.startActivity(intent);
             }
         });

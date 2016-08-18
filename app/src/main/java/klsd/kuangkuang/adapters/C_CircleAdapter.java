@@ -159,7 +159,6 @@ private LinearLayout layout_black,layout_tip_off;
                     //点赞
                     RequestParams params = new RequestParams();
                     params.addQueryStringParameter("object_id", circles.getId());
-                    params.addQueryStringParameter("member_id", DataCenter.getMember_id());
                     params.addQueryStringParameter("species", "micropost");
                     if (http == null) http = new MyHTTP(ctx);
                     http.baseRequest(Consts.addLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
