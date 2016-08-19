@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +21,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.fragments.MMeFragment;
 import klsd.kuangkuang.main.M_CircleDetailActivity;
 import klsd.kuangkuang.main.MainActivity;
 import klsd.kuangkuang.models.MyWord;
@@ -85,12 +84,10 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-//        if (!ac.getUrl1().equals("null")) {
-//            viewHolder.pic_url1.setVisibility(View.VISIBLE);
             Context context = ctx.getApplicationContext();
             initImageLoader(context);
             ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
-//        }
+
         String today=MyDate.todayDate();
 
         if (today.equals(ac.get_the_time())){
@@ -153,10 +150,12 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
             ToastUtil.show(ctx, R.string.delete_success);
             exitDialog.dismiss();
-            fragment=new MMeFragment();
-            if (fragment != null) {
-                switchFragment(fragment);
-            }
+            Intent intent = new Intent(ctx, MainActivity.class);
+            intent.putExtra("goto", "me");
+            ctx.startActivity(intent);
+            ((MainActivity) ctx).overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+            ((MainActivity) ctx).finish();
+
         }
     }
 
@@ -167,19 +166,7 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
             ToastUtil.show(ctx, responseJson);
         }
     }
-    /**
-     * 切换fragment
-     * @param fragment
-     */
-    private void switchFragment(Fragment fragment) {
-        if (ctx== null) {
-            return;
-        }
-        if (ctx instanceof MainActivity) {
-            MainActivity fca = (MainActivity) ctx;
-            fca.switchConent(fragment);
-        }
-    }
+
     public final class ViewHolder {
         TextView content_son, day, month;
         ImageView pic_url1;

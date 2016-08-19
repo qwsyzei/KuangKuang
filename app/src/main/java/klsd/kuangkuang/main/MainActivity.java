@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -32,12 +33,11 @@ import klsd.kuangkuang.utils.DataCenter;
 /**
  * 主界面
  */
-public class MainActivity extends SlidingFragmentActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+public class MainActivity extends SlidingFragmentActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     private ImageView im_title_left;//标题左上方的图标
     RadioGroup radioGroup;
-    private FragmentManager fm;
-    private FragmentTransaction ft;
-    private RadioButton rbA,rbB,rbC, rbD;
+
+    private RadioButton rbA, rbB, rbC, rbD;
     private MSubjectFragment mSubjectFragment;
     private MCircleFragment mCircleFragment;
     private MToolFragment mToolFragment;
@@ -45,6 +45,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
     private Fragment mContent;
     private LinearLayout layout_main_layout;
     String str = "0";
+    String sub_key="0";
     private IntentFilter intentFilter;
     private NetworkChangeReceiver networkChangeReceiver;
 
@@ -65,7 +66,12 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         IntentFilter filter = new IntentFilter(BaseActivity.action);
         registerReceiver(broadcastReceiver, filter);
         Intent intent = getIntent();
-        str = intent.getStringExtra("release");
+        str = intent.getStringExtra("goto");
+
+        sub_key=intent.getStringExtra("subject");
+        if (sub_key==null){
+            sub_key="0";
+        }
         im_title_left = (ImageView) findViewById(R.id.im_more_subject);
 
         layout_main_layout = (LinearLayout) findViewById(R.id.layout_main_layout);
@@ -78,21 +84,20 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
 //        rbB.setOnClickListener(this);
 //        rbC.setOnClickListener(this);
 //        rbD.setOnClickListener(this);
-        fm = getSupportFragmentManager();
-        ft = fm.beginTransaction();
+
         /**
          * 应用进入后，默认选择点击Fragment01
          */
-        if (str != null && str.equals("123")) {
-            ft.replace(R.id.just_subject_layout, new MMeFragment());
-
+        if (str != null && str.equals("me")) {
+            showFragment(4,sub_key);
             rbD.setChecked(true);
-        } else {
-            ft.replace(R.id.just_subject_layout, new MSubjectFragment("0"));//news_every_content是为fragment留出的空间，用fragment替换
+        }else if(str != null && str.equals("circle")){
 
+        } else {
+            showFragment(1,sub_key);
             rbA.setChecked(true);
         }
-        ft.commit();
+
         radioGroup = (RadioGroup) findViewById(R.id.main_radiogroup);
         radioGroup.setOnCheckedChangeListener(this);
     }
@@ -102,9 +107,9 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
      */
     private void initSlidingMenu() {
 
-        if (mContent == null) {
-            mContent = new MSubjectFragment("0");
-        }
+//        if (mContent == null) {
+//            mContent = new MSubjectFragment("0");
+//        }
         // 设置左侧滑动菜单
         setBehindContentView(R.layout.menu_frame_left);
         getSupportFragmentManager().beginTransaction().replace(R.id.menu_frame, new LeftFragment()).commit();
@@ -130,19 +135,17 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         sm.setBehindScrollScale(0.0f);
 
     }
-
-    /**
-     * 切换Fragment
-     *
-     * @param fragment
-     */
-    public void switchConent(Fragment fragment) {
-        mContent = fragment;
-        getSupportFragmentManager().beginTransaction().replace(R.id.just_subject_layout, fragment).commit();
-        getSlidingMenu().showContent();
-//        tv_title.setText(title);
-    }
-
+//    /**
+//     * 切换Fragment
+//     *
+//     * @param fragment
+//     */
+//    public void switchConent(Fragment fragment) {
+//        mContent = fragment;
+//        getSupportFragmentManager().beginTransaction().replace(R.id.just_subject_layout, fragment).commit();
+//        getSlidingMenu().showContent();
+////        tv_title.setText(title);
+//    }
 
     /**
      * radiobutton 改变选中状态
@@ -153,29 +156,26 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
      */
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        fm = getSupportFragmentManager();
-        ft = fm.beginTransaction();
+
         switch (checkedId) {
             case R.id.main_rb1:
                 im_title_left.setVisibility(View.VISIBLE);
-
-                ft.replace(R.id.just_subject_layout, new MSubjectFragment("0"));
-
+                showFragment(1,sub_key);
                 break;
             case R.id.main_rb2:
                 im_title_left.setVisibility(View.GONE);
-                ft.replace(R.id.just_subject_layout, new MCircleFragment());
+                showFragment(2,sub_key);
 
                 break;
             case R.id.main_rb3:
                 im_title_left.setVisibility(View.GONE);
-                ft.replace(R.id.just_subject_layout, new MToolFragment());
+                showFragment(3,sub_key);
 
                 break;
             case R.id.main_rb4:
                 if (DataCenter.isSigned()) {
                     im_title_left.setVisibility(View.GONE);
-                    ft.replace(R.id.just_subject_layout, new MMeFragment());
+                    showFragment(4,sub_key);
 
                 } else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -184,10 +184,12 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
                 }
                 break;
         }
-        ft.commit();
+
     }
-    public void showFragment(int index) {
-        FragmentTransaction ft = fm.beginTransaction();
+
+    public void showFragment(int index,String subject_key) {
+        FragmentManager fm = getSupportFragmentManager();  //获得Fragment管理器
+        FragmentTransaction ft = fm.beginTransaction(); //开启一个事务
 
         // 想要显示一个fragment,先隐藏所有fragment，防止重叠
         hideFragments(ft);
@@ -198,7 +200,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
                     ft.show(mSubjectFragment);
                     // 否则是第一次切换则添加fragment1，注意添加后是会显示出来的，replace方法也是先remove后add
                 else {
-                    mSubjectFragment = new MSubjectFragment("0");
+                    mSubjectFragment = new MSubjectFragment(subject_key);
                     ft.add(R.id.just_subject_layout, mSubjectFragment);
                 }
                 break;
@@ -229,27 +231,27 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
         }
         ft.commit();
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.im_more_subject:
                 toggle();
                 break;
-            case R.id.main_rb1:
-              showFragment(1);
-                break;
-            case R.id.main_rb2:
-                showFragment(2);
-                break;
-            case R.id.main_rb3:
-                showFragment(3);
-                break;
-            case R.id.main_rb4:
-                showFragment(4);
-                break;
+//            case R.id.main_rb1:
+//                showFragment(1);
+//                break;
+//            case R.id.main_rb2:
+//                showFragment(2);
+//                break;
+//            case R.id.main_rb3:
+//                showFragment(3);
+//                break;
+//            case R.id.main_rb4:
+//                showFragment(4);
+//                break;
         }
     }
-
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
@@ -283,6 +285,7 @@ public class MainActivity extends SlidingFragmentActivity implements RadioGroup.
             ft.hide(mToolFragment);
         if (mMeFragment != null)
             ft.hide(mMeFragment);
+
     }
 
     @Override

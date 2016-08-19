@@ -326,10 +326,12 @@ private LinearLayout layout_black,layout_tip_off;
             ToastUtil.show(ctx, R.string.praise_success);
         }else if (jtype.equals(JSONHandler.JTYPE_ADD_BLACK)) {
             ToastUtil.show(ctx, R.string.add_black_success);
-            fragment=new MCircleFragment();
-            if (fragment != null) {
-                switchFragment(fragment);
-            }
+            Intent intent = new Intent(ctx, MainActivity.class);
+            intent.putExtra("goto", "circle");
+            ctx.startActivity(intent);
+            ((MainActivity) ctx).overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+            ((MainActivity) ctx).finish();
+
         }else if (jtype.equals(JSONHandler.JTYPE_GIVE_SUGGEST)) {
             ToastUtil.show(ctx, R.string.tip_off_success);
         }
@@ -342,19 +344,7 @@ private LinearLayout layout_black,layout_tip_off;
             ToastUtil.show(ctx, responseJson);
         }
     }
-    /**
-     * 切换fragment
-     * @param fragment
-     */
-    private void switchFragment(Fragment fragment) {
-        if (ctx== null) {
-            return;
-        }
-        if (ctx instanceof MainActivity) {
-            MainActivity fca = (MainActivity) ctx;
-            fca.switchConent(fragment);
-        }
-    }
+
     public final class ViewHolder {
         public TextView describe, like, comment;
         public CircleImageView im_head_pic;

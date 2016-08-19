@@ -193,8 +193,6 @@ private TextView tv_name,tv_signature;
 
             if (res == null) {
                 ToastUtil.show(a, getString(R.string.network_problem));
-//                a.startActivity(new Intent(a, LoginActivity.class));
-//                a.finish();
             } else if (res.equals("OK")) {
                 if (jtype.equals(JSONHandler.JTYPE_MYWORD_LIST)) {
                     int curTradesSize = sList.size();
@@ -522,5 +520,9 @@ private TextView tv_name,tv_signature;
             }
         }, 3000);
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("我的我的被关闭了", "onDestroy() returned: " + "");
+    }
 }

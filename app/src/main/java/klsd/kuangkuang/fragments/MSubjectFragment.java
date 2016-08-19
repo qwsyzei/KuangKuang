@@ -106,8 +106,6 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
             String jtype = bundle.getString("jtype");
             if (res == null) {
 				ToastUtil.show(a, getString(R.string.network_problem));
-//                a.startActivity(new Intent(a, LoginActivity.class));
-//                a.finish();
             } else if (res.equals("OK")) {
                 if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIST)) {
                     int curTradesSize = sList.size();
@@ -172,7 +170,7 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
                 getArticlesList();
                 ToastUtil.show(a, getString(R.string.load_more));
             }
-        }, 2200);
+        }, 2400);
     }
 
     @Override
@@ -186,6 +184,11 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
                 getArticlesList();
                 ToastUtil.show(a, getString(R.string.refresh_done));
             }
-        }, 2200);
+        }, 2400);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("专题专题被关闭了", "onDestroy() returned: " + "");
     }
 }

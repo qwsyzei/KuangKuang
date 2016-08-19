@@ -50,18 +50,5 @@ View view;
         getActivity().finish();
         aniBack();
     }
-    /**
-     * 切换fragment
-     *
-     * @param fragment
-     */
-    private void switchFragment(Fragment fragment) {
-        if (getActivity() == null) {
-            return;
-        }
-        if (getActivity() instanceof MainActivity) {
-            MainActivity fca = (MainActivity) getActivity();
-            fca.switchConent(fragment);
-        }
-    }
+
 }

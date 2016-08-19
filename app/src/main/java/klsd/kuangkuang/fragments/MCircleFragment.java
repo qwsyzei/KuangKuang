@@ -46,7 +46,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
     private C_CircleAdapter cAdapter;
     private ListView listView;
     private TextView tv_release;
-    private int limit = 8;
+    private int limit = 7;
     private int page = 1;
     // 自定义的listview的上下拉动刷新
     private PullToRefreshView mPullToRefreshView;
@@ -235,5 +235,11 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
                 ToastUtil.show(a, getString(R.string.refresh_done));
             }
         }, 3000);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("圈子被关闭了", "onDestroy() returned: " + "");
     }
 }

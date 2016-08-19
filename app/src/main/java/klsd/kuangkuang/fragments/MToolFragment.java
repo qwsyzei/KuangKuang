@@ -2,6 +2,7 @@ package klsd.kuangkuang.fragments;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,5 +70,10 @@ public class MToolFragment extends MyBaseFragment implements View.OnClickListene
                 ToastUtil.show(getActivity(), getString(R.string.please_wait));
                 break;
         }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("工具工具没了", "onDestroy() returned: " + "");
     }
 }

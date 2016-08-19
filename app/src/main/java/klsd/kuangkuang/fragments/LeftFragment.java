@@ -18,12 +18,13 @@ import klsd.kuangkuang.utils.ToastUtil;
 /**
  * @description 侧边栏菜单
  */
-public class LeftFragment extends Fragment implements OnClickListener {
+public class LeftFragment extends MyBaseFragment implements OnClickListener {
     private View settingsView;
     private View favoritesView1;
     private View commentsView1;
     private View settingsView1;
     private TextView tv_feedback;
+    String subject_key = "0";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,21 +41,17 @@ public class LeftFragment extends Fragment implements OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_menu, null);
         findViews(view);
-
         return view;
     }
 
-
     public void findViews(View view) {
         tv_feedback = (TextView) view.findViewById(R.id.tv_feedback);
-
         settingsView = view.findViewById(R.id.all_total);
         favoritesView1 = view.findViewById(R.id.tvzhubao);
         commentsView1 = view.findViewById(R.id.tvzhubaogonglue);
         settingsView1 = view.findViewById(R.id.tvkuangkuang);
 
         tv_feedback.setOnClickListener(this);
-
         settingsView.setOnClickListener(this);
         favoritesView1.setOnClickListener(this);
         commentsView1.setOnClickListener(this);
@@ -81,36 +78,43 @@ public class LeftFragment extends Fragment implements OnClickListener {
                 break;
 
             case R.id.all_total: // 全部
-                newContent = new MSubjectFragment("0");
+                subject_key = "0";
+                newContent = new MSubjectFragment(subject_key);
                 break;
             case R.id.tvzhubao: // 珠宝故事
-                newContent = new MSubjectFragment("1");
+                subject_key = "1";
+                newContent = new MSubjectFragment(subject_key);
                 break;
             case R.id.tvzhubaogonglue: // 首饰攻略
-                newContent = new MSubjectFragment("2");
+                subject_key = "2";
+                newContent = new MSubjectFragment(subject_key);
                 break;
             case R.id.tvkuangkuang: // 硄硄说
-                ToastUtil.show(getActivity(),getString(R.string.please_wait));
+                ToastUtil.show(getActivity(), getString(R.string.please_wait));
             default:
                 break;
         }
         if (newContent != null) {
-            switchFragment(newContent);
+            switchFragment(subject_key);
         }
     }
 
     /**
      * 切换fragment
-     *
-     * @param fragment
      */
-    private void switchFragment(Fragment fragment) {
+    private void switchFragment(String subject_key) {
         if (getActivity() == null) {
             return;
         }
         if (getActivity() instanceof MainActivity) {
             MainActivity fca = (MainActivity) getActivity();
-            fca.switchConent(fragment);
+
+            Intent intent = new Intent(fca, MainActivity.class);
+            intent.putExtra("subject", subject_key);
+            startActivity(intent);
+            fca.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+            fca.finish();
+
         }
     }
 

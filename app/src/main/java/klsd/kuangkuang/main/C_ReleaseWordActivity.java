@@ -367,8 +367,9 @@ private void afterRelease(){
      */
     private void Intentstyle() {
         Intent intent = new Intent(C_ReleaseWordActivity.this, MainActivity.class);
-        intent.putExtra("release", "123");
+        intent.putExtra("goto", "me");
         startActivity(intent);
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
         finish();
     }
 
