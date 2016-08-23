@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/login_p_l_r"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/login_p_l_r"
+        android:padding="@dimen/size_eight"
+        android:text="@string/clarity"
+
+        android:textSize="@dimen/big_middle_text_size" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/signup__text_m_l_r"
+        android:background="@color/little_gray"></View>
+
+    <klsd.kuangkuang.views.MyRadioGroup
+        android:id="@+id/tool_radiogroup_clarity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/login_p_l_r"
+        android:layout_marginTop="@dimen/login_p_l_r"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <RadioButton
+                android:id="@+id/rb_calculator_if"
+                style="@style/tools_radiobutton_style"
+                android:text="IF" />
+
+            <RadioButton
+                android:id="@+id/rb_calculator_vvs1"
+                style="@style/tools_radiobutton_style"
+                android:text="VVS1" />
+
+            <RadioButton
+                android:id="@+id/rb_calculator_vvs2"
+                style="@style/tools_radiobutton_style"
+                android:text="VVS2" />
+
+            <RadioButton
+                android:id="@+id/rb_calculator_vs1"
+                style="@style/tools_radiobutton_style"
+                android:text="VS1" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rb_calculator_vs2"
+                style="@style/tools_radiobutton_style"
+                android:text="VS2" />
+
+            <RadioButton
+                android:id="@+id/rb_calculator_si1"
+                style="@style/tools_radiobutton_style"
+                android:text="SI1" />
+
+            <RadioButton
+                android:id="@+id/rb_calculator_si2"
+                style="@style/tools_radiobutton_style"
+                android:text="SI2" />
+
+            <RadioButton
+                android:id="@+id/rb_calculator_si3"
+                style="@style/tools_radiobutton_style"
+                android:text="SI3" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rb_calculator_i1"
+                style="@style/tools_radiobutton_style"
+                android:text="I1" />
+
+            <RadioButton
+                android:id="@+id/rb_calculator_i2"
+                style="@style/tools_radiobutton_style"
+                android:text="I2" />
+
+            <RadioButton
+                android:id="@+id/rb_calculator_i3"
+                style="@style/tools_radiobutton_style"
+                android:text="I3" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </klsd.kuangkuang.views.MyRadioGroup>
+</LinearLayout>

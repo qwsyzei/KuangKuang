@@ -61,6 +61,10 @@
         </activity>
         <activity android:name=".main.M_FollowListActivity" >
         </activity>
+        <activity android:name=".main.T_CalculatorActivity" >
+        </activity>
+        <activity android:name=".main.T_CertificateActivity" >
+        </activity>
     </application>
 
 </manifest>

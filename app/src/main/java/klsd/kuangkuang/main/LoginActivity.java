@@ -156,16 +156,16 @@ public class LoginActivity extends BaseActivity {
             }
         }
     };
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-          // 是否触发按键为back键
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            myStartActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-            return true;
-        }else {
-            return super.onKeyDown(keyCode, event);
-        }
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//          // 是否触发按键为back键
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            myStartActivity(new Intent(LoginActivity.this, MainActivity.class));
+//            finish();
+//            return true;
+//        }else {
+//            return super.onKeyDown(keyCode, event);
+//        }
+//    }
 }
 

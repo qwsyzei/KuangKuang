@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/login_p_l_r"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/size_eight"
+        android:textSize="@dimen/big_middle_text_size"
+
+        android:layout_marginLeft="@dimen/login_p_l_r"
+        android:text="@string/color"/>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/signup__text_m_l_r"
+        android:background="@color/little_gray"></View>
+    <klsd.kuangkuang.views.MyRadioGroup
+        android:id="@+id/tool_radiogroup_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/login_p_l_r"
+        android:layout_marginBottom="@dimen/login_p_l_r"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+           >
+            <RadioButton
+                android:id="@+id/rb_calculator_d"
+                style="@style/tools_radiobutton_style"
+                android:text="D"/>
+            <RadioButton
+                android:id="@+id/rb_calculator_e"
+                style="@style/tools_radiobutton_style"
+                android:text="E"/>
+            <RadioButton
+                android:id="@+id/rb_calculator_f"
+                style="@style/tools_radiobutton_style"
+                android:text="F"/>
+            <RadioButton
+                android:id="@+id/rb_calculator_g"
+                style="@style/tools_radiobutton_style"
+                android:text="G"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+>
+            <RadioButton
+                android:id="@+id/rb_calculator_h"
+                style="@style/tools_radiobutton_style"
+                android:text="H"/>
+            <RadioButton
+                android:id="@+id/rb_calculator_i"
+                style="@style/tools_radiobutton_style"
+                android:text="I"/>
+            <RadioButton
+                android:id="@+id/rb_calculator_j"
+                style="@style/tools_radiobutton_style"
+                android:text="J"/>
+            <RadioButton
+                android:id="@+id/rb_calculator_k"
+                style="@style/tools_radiobutton_style"
+                android:text="K"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+     >
+            <RadioButton
+                android:id="@+id/rb_calculator_l"
+                style="@style/tools_radiobutton_style"
+                android:text="L"/>
+            <RadioButton
+                android:id="@+id/rb_calculator_m"
+                style="@style/tools_radiobutton_style"
+                android:text="M"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"/>
+        </LinearLayout>
+    </klsd.kuangkuang.views.MyRadioGroup>
+</LinearLayout>

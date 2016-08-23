@@ -70,7 +70,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
-        ToastUtil.show(a,"我是圈子");
+//        ToastUtil.show(a,"我是圈子");
     }
 
     /**

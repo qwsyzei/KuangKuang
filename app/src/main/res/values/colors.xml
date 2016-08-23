@@ -44,7 +44,7 @@
     <color name="half_alpha">#5000</color>
     <color name="base_gray_bg">#f7f7f7</color>
     <color name="light_font_note">#9b9b9b</color>
-
+    <color name="little_gray">#CFCFCF</color>
     <color name="new_text">#C81015</color>
     <color name="tab_border_color">#000000</color>
 

@@ -75,7 +75,7 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
     @Override
     public void onResume() {
         super.onResume();
-        ToastUtil.show(a, "我是专题");
+//        ToastUtil.show(a, "我是专题");
     }
     public void setTitle(String title) {
         TextView textView = (TextView) view.findViewById(R.id.tv_title);

@@ -16,6 +16,7 @@ import java.util.List;
 
 import klsd.kuangkuang.models.AllComment;
 import klsd.kuangkuang.models.Blacklist;
+import klsd.kuangkuang.models.Certificate;
 import klsd.kuangkuang.models.CircleAllComment;
 import klsd.kuangkuang.models.CircleLike;
 import klsd.kuangkuang.models.Circles;
@@ -105,6 +106,8 @@ public class JSONHandler {
     public final static String JTYPE_ADD_FOLLOW= "add_follow";//加入关注
     public final static String JTYPE_DELETE_FOLLOW= "delete_follow";//从关注移除
     public final static String JTYPE_FOLLOW_LIST= "follow_list";//关注列表
+    public final static String JTYPE_CERTIFICATE= "certificate";//证书查询
+    public final static String JTYPE_CALCULATOR= "calculator";//计算器计算
 
     public JSONHandler() {
     }
@@ -448,6 +451,8 @@ public class JSONHandler {
         osStrings.add(JTYPE_DELETE_BLACK);
         osStrings.add(JTYPE_ADD_FOLLOW);
         osStrings.add(JTYPE_DELETE_FOLLOW);
+        osStrings.add(JTYPE_CERTIFICATE);
+        osStrings.add(JTYPE_CALCULATOR);
         return osStrings.contains(jtype2);
     }
 
@@ -490,7 +495,11 @@ public class JSONHandler {
                 Documents m = new Documents();
                 m.getFromJSONObject(object);
                 bundle.putSerializable("documents", m);
-            } else if (jtype.equals(JTYPE_LOGIN)) {
+            } else if (jtype.equals(JTYPE_CERTIFICATE)) {
+                Certificate m = new Certificate(ctx);
+                m.getFromJSONObject(object);
+                bundle.putSerializable("certificate", m);
+            }else if (jtype.equals(JTYPE_LOGIN)) {
                 DataCenter.setAccessKey(object.getString("access_key"));
                 DataCenter.setSecretKey(object.getString("secret_key"));
                 DataCenter.setMember_id(object.getString("member_id"));
@@ -504,24 +513,13 @@ public class JSONHandler {
                 String url=object.getString("url");
                 bundle.putString("id", id);
                 bundle.putString("url", url);
-            }else if (jtype.equals(JTYPE_PICTURE1)) {
-
-            }else if (jtype.equals(JTYPE_PICTURE2)) {
-
-            }else if (jtype.equals(JTYPE_PICTURE3)) {
-
-            }else if (jtype.equals(JTYPE_PICTURE4)) {
-
-            }else if (jtype.equals(JTYPE_PICTURE5)) {
-
-            }else if (jtype.equals(JTYPE_PICTURE6)) {
-
-            }else if (jtype.equals(JTYPE_PICTURE7)) {
-
-            }else if (jtype.equals(JTYPE_PICTURE8)) {
-
-            }else if (jtype.equals(JTYPE_PICTURE9)) {
-
+            }else if (jtype.equals(JTYPE_CALCULATOR)) {
+                String cny = object.getString("cny_price");
+                String usd=object.getString("usd_price");
+                String rate=object.getString("exchange_rate");
+                bundle.putString("cny", cny);
+                bundle.putString("usd", usd);
+                bundle.putString("rate", rate);
             }else if (jtype.equals(JTYPE_RESET)) {
                 bundle.putBoolean("reset_password", true);
             } else if (jtype.equals(JTYPE_RECHARGE)) {

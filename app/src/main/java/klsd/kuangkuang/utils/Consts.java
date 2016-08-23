@@ -48,6 +48,9 @@ public final static String host123="http://192.168.31.167:3000";
     public final static String addfollowsApi = baseApiPath + "/focus/add_follows";//加入关注
     public final static String followslistApi = baseApiPath + "/focus/follows_list";//关注列表
     public final static String destroyfollowsApi = baseApiPath + "/focus/destroy_follows";//取消关注
+    public final static String caratcalculatorApi = baseApiPath + "/tools/carat_calculator";//计算机器数据
+    public final static String certificateApi = baseApiPath + "/tools/Certificate_inspection";//证书
+
 
     // phone_number common
     public final static String getAuthCodeApi = baseApiPath + "/registers/code";
@@ -85,7 +88,8 @@ public final static String host123="http://192.168.31.167:3000";
             articlesViewApi,
 //            micropostsListApi,
             circlecommentListApi,
-            givesuggestApi
+            givesuggestApi,
+            caratcalculatorApi
     };
 
 }

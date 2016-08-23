@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lightgray"
+    tools:context="klsd.kuangkuang.main.T_CalculatorActivity">
+    <RelativeLayout
+        android:id="@+id/article_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/title_two" />
+    </RelativeLayout>
+    <include layout="@layout/t_calculator_shape" />
+    <include layout="@layout/t_calculator_color" />
+    <include layout="@layout/t_calculator_clearity" />
+    <include layout="@layout/t_calculator_weight" />
+    <include layout="@layout/t_calculator_result" />
+</LinearLayout>

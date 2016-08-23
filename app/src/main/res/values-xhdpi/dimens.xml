@@ -63,7 +63,7 @@
 
     <dimen name="button_height">34dp</dimen>
     <dimen name="code_button_height">28dp</dimen>
-    <dimen name="base_margin">9dp</dimen>
+    <dimen name="base_margin">10dp</dimen>
 
 
     <dimen name="title_layout_height">40dp</dimen>
@@ -137,4 +137,9 @@
     <dimen name="circle_margin">12dp</dimen>
     <dimen name="pic3_size">38dp</dimen>
     <dimen name="personal_data_height">44dp</dimen>
+
+
+    <dimen name="tool_calrulator_edit_width">59dp</dimen>
+    <dimen name="tool_calrulator_button_width">89dp</dimen>
+    <dimen name="tool_radio_button_height">36dp</dimen>
 </resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/size_eight"
+    android:textSize="@dimen/big_middle_text_size"
+    android:layout_marginLeft="@dimen/login_p_l_r"
+    android:text="@string/shape"/>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/signup__text_m_l_r"
+        android:background="@color/little_gray"></View>
+<RadioGroup
+    android:id="@+id/tool_radiogroup_shape"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/login_p_l_r"
+    android:layout_marginBottom="@dimen/login_p_l_r"
+
+    android:orientation="horizontal">
+    <RadioButton
+     android:id="@+id/rb_calculator_round"
+        style="@style/tools_radiobutton_style"
+        android:text="@string/round"/>
+    <RadioButton
+        android:id="@+id/rb_calculator_spec"
+        style="@style/tools_radiobutton_style"
+        android:text="@string/special_shape"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+       />
+</RadioGroup>
+</LinearLayout>

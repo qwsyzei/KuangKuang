@@ -289,7 +289,7 @@ public class BaseActivity extends FragmentActivity {
 
     public void toastError() {
         try {
-            if (error_code.equals("2021")||error_code.equals("2015")) {//发现用户名未注册,或者密码格式错误(用于当更改密钥时)       就进入登录界面
+            if (error_code.equals("2021")||error_code.equals("2022")||error_code.equals("2015")) {//发现用户名未注册,或者密码格式错误(用于当更改密钥时)       就进入登录界面
                 ToastUtil.show(BaseActivity.this, getString(ErrorCodes.CODES.get(error_code)));
                 signOut();
             } else if (error_code.equals("2007")) {

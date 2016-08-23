@@ -179,7 +179,21 @@
     <string name="check_certificate">查证书</string>
     <string name="measure_hand_size">量手寸</string>
     <string name="price_calculator">价格计算器</string>
+    <string name="calculator">计算器</string>
     <string name="try_in">试戴</string>
+    <string name="shape">形状</string>
+    <string name="color">颜色</string>
+    <string name="clarity">净度</string>
+    <string name="weight">重量</string>
+    <string name="round">圆形</string>
+    <string name="special_shape">异形</string>
+    <string name="carat">克拉</string>
+    <string name="exchange_rate">汇率</string>
+    <string name="current_item_exchange_rate">实时汇率</string>
+    <string name="calculate">计算</string>
+    <string name="weight_error">重量超过上限，应小于11克拉</string>
+    <string name="input_weight_please">请填写重量</string>
+    <string name="calculating">计算中</string>
     <!-- 我的积分 -->
     <string name="score_rule">积分规则</string>
 

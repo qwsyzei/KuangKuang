@@ -139,4 +139,8 @@
     <dimen name="circle_margin">12dp</dimen>
     <dimen name="pic3_size">38dp</dimen>
     <dimen name="personal_data_height">44dp</dimen>
+
+    <dimen name="tool_calrulator_edit_width">61dp</dimen>
+    <dimen name="tool_calrulator_button_width">91dp</dimen>
+    <dimen name="tool_radio_button_height">36dp</dimen>
 </resources>

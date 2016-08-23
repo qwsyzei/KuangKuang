@@ -1,6 +1,7 @@
 package klsd.kuangkuang.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import klsd.kuangkuang.R;
+import klsd.kuangkuang.main.T_CalculatorActivity;
+import klsd.kuangkuang.main.T_CertificateActivity;
 import klsd.kuangkuang.utils.ToastUtil;
 
 /**
@@ -36,7 +39,7 @@ public class MToolFragment extends MyBaseFragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        ToastUtil.show(getActivity(), "我是工具");
+//        ToastUtil.show(getActivity(), "我是工具");
     }
     private void initView() {
         im01 = (ImageView) view.findViewById(R.id.im_mytool01);
@@ -64,10 +67,15 @@ public class MToolFragment extends MyBaseFragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.im_mytool01:
+                myStartActivity(new Intent(getActivity(), T_CertificateActivity.class));
+                break;
             case R.id.im_mytool02:
-            case R.id.im_mytool03:
+
             case R.id.im_mytool04:
                 ToastUtil.show(getActivity(), getString(R.string.please_wait));
+                break;
+            case R.id.im_mytool03:
+                myStartActivity(new Intent(getActivity(), T_CalculatorActivity.class));
                 break;
         }
     }

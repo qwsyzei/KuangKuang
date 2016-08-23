@@ -34,7 +34,20 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">12sp</item>
     </style>
-
+    <style name="tools_radiobutton_style">
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@drawable/selector_tools_text</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/selector_tools_background</item>
+        <item name="android:paddingTop">@dimen/login_p_l_r</item>
+        <item name="android:paddingBottom">@dimen/login_p_l_r</item>
+        <item name="android:paddingLeft">@dimen/base_margin</item>
+        <item name="android:paddingRight">@dimen/base_margin</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">@dimen/tool_radio_button_height</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
+    </style>
     <style name="TranAlertTextView">
 
     <item name="android:layout_width">match_parent</item>

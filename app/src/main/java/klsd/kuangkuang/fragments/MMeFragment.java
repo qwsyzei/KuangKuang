@@ -137,7 +137,7 @@ private TextView tv_name,tv_signature;
     @Override
     public void onResume() {
         super.onResume();
-        ToastUtil.show(a,"我是我ME");
+//        ToastUtil.show(a,"我是我ME");
     }
     @Override
     public void onClick(View view) {
