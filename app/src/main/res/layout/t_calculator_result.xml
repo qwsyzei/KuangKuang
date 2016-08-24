@@ -2,125 +2,144 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:background="@color/white"
+    android:orientation="vertical"
     android:layout_marginTop="@dimen/login_p_l_r"
-    android:paddingTop="@dimen/signup__text_m_l_r"
-    android:paddingBottom="@dimen/signup__text_m_l_r"
+    android:paddingBottom="@dimen/size_eight"
     android:paddingLeft="@dimen/base_margin"
     android:paddingRight="@dimen/base_margin"
-    android:background="@color/white">
-
-    <ImageView
-        android:id="@+id/calculator_result_imageview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/base_margin"
-        android:layout_marginBottom="@dimen/base_margin"
-        android:src="@mipmap/head_pic" />
+    android:paddingTop="@dimen/size_eight">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="@dimen/size_eight"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/calculator_result_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/base_margin"
+            android:layout_marginTop="@dimen/base_margin"
+            android:src="@mipmap/calculatoricon" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="￥"
-                android:layout_gravity="center"
-                android:textSize="@dimen/middle_text_size"
-                android:textColor="@color/black" />
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/size_eight"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="@dimen/tool_calrulator_button_width"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/calculator_result_money_yuan"
-                    android:layout_width="fill_parent"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/new_title_size"
-                    android:textColor="@color/kuangkuang_yellow" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/little_gray"></TextView>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/size_eight"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/calculator_tv_dollar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" $"
-                android:layout_gravity="center"
-                android:textSize="@dimen/middle_text_size"
-                android:textColor="@color/black" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="￥"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/middle_text_size" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/tool_calrulator_button_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/calculator_result_money_yuan"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/kuangkuang_yellow"
+                        android:textSize="@dimen/new_title_size" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/little_gray"></TextView>
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
-                android:layout_width="@dimen/tool_calrulator_button_width"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/login_p_l_r"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/calculator_result_money_dollar"
-                    android:layout_width="fill_parent"
-                    android:gravity="center"
+                    android:id="@+id/calculator_tv_dollar"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/new_title_size"
-                    android:textColor="@color/kuangkuang_yellow" />
+                    android:layout_gravity="center"
+                    android:text=" $"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/middle_text_size" />
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/little_gray"></TextView>
+                <LinearLayout
+                    android:layout_width="@dimen/tool_calrulator_button_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="2dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/calculator_result_money_dollar"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/kuangkuang_yellow"
+                        android:textSize="@dimen/new_title_size" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/little_gray"></TextView>
+                </LinearLayout>
             </LinearLayout>
+
+
         </LinearLayout>
 
 
     </LinearLayout>
-    <TextView
-        android:layout_width="0dp"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/current_item_exchange_rate"
-        android:layout_gravity="center"/>
-    <TextView
-        android:id="@+id/calculator_result_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:text=""
-       android:textColor="@color/kuangkuang_yellow"
-        android:layout_gravity="center"/>
-    <klsd.kuangkuang.views.CircleImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/size_eight"
-        android:layout_gravity="center"
-        android:src="@mipmap/android01"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+           />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/current_item_exchange_rate" />
+
+        <TextView
+            android:id="@+id/calculator_result_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2dp"
+            android:text=""
+            android:textColor="@color/kuangkuang_yellow" />
+
+        <ImageView
+            android:id="@+id/calculator_result_image_formula"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/login_p_l_r"
+            android:layout_marginLeft="@dimen/size_eight"
+            android:src="@mipmap/formula" />
+    </LinearLayout>
 </LinearLayout>

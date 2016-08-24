@@ -42,6 +42,7 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
+import klsd.kuangkuang.utils.UIutils;
 import klsd.kuangkuang.views.ExitDialog;
 
 public class BaseActivity extends FragmentActivity {
@@ -289,6 +290,7 @@ public class BaseActivity extends FragmentActivity {
 
     public void toastError() {
         try {
+            UIutils.cancelLoading();
             if (error_code.equals("2021")||error_code.equals("2022")||error_code.equals("2015")) {//发现用户名未注册,或者密码格式错误(用于当更改密钥时)       就进入登录界面
                 ToastUtil.show(BaseActivity.this, getString(ErrorCodes.CODES.get(error_code)));
                 signOut();

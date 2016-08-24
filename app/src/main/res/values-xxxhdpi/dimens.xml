@@ -143,4 +143,11 @@
     <dimen name="tool_calrulator_edit_width">61dp</dimen>
     <dimen name="tool_calrulator_button_width">91dp</dimen>
     <dimen name="tool_radio_button_height">36dp</dimen>
+
+    <dimen name="certificate_gia_m_t">38dp</dimen>
+    <dimen name="certificate_gia_m_b">48dp</dimen>
+    <dimen name="certificate_edit_p">28dp</dimen>
+    <dimen name="certificate_buttonlayout_p_l">78dp</dimen>
+    <dimen name="certificate_buttonlayout_p_r">24dp</dimen>
+    <dimen name="certificate_button_m_l">36dp</dimen>
 </resources>

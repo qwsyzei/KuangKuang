@@ -30,6 +30,15 @@ public class UIutils {
         progress.show();
         progress.setCanceledOnTouchOutside(false);
     }
+    public static void showDemanding(Context ctx) {
+//        if (progress == null && ctx != null){
+        progress = new ProgressDialog(ctx);
+        progress.setMessage(ctx.getString(R.string.demanding));
+        progress.setProgressStyle(ProgressDialog.BUTTON_POSITIVE);
+//        }
+        progress.show();
+        progress.setCanceledOnTouchOutside(false);
+    }
     public static void cancelLoading(){
         if (progress != null) progress.cancel();
     }

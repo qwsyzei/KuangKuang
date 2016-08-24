@@ -9,6 +9,7 @@ import java.io.Serializable;
  * Created by qiwei on 2016/8/22.
  */
 public class Certificate implements Serializable {
+    String shape,cut_grade;
     String date_of_issue, measurement, carat_weitht, color_grade, clarity_grade, depth, table;
     String crown_angle, crown_height, pavilion_angle, pavilion_depth, star_length, lower_half;
     String girdle, culet, polish, symmetry, fluorescence, clarity_characteristics, inscription;
@@ -16,6 +17,22 @@ public class Certificate implements Serializable {
 
     public Certificate(Context context) {
         this.context = context;
+    }
+
+    public String getShape() {
+        return shape;
+    }
+
+    public void setShape(String shape) {
+        this.shape = shape;
+    }
+
+    public String getCut_grade() {
+        return cut_grade;
+    }
+
+    public void setCut_grade(String cut_grade) {
+        this.cut_grade = cut_grade;
     }
 
     public String getDate_of_issue() {
@@ -180,6 +197,8 @@ public class Certificate implements Serializable {
 
     public void getFromJSONObject(JSONObject object) {
         try {
+            setShape(object.getString("shape"));
+
             setDate_of_issue(object.getString("Date_Of_Issue"));
             setMeasurement(object.getString("Measurement"));
             setCarat_weitht(object.getString("Carat_Weight"));
@@ -200,7 +219,7 @@ public class Certificate implements Serializable {
             setFluorescence(object.getString("Fluorescence"));
             setClarity_characteristics(object.getString("Clarity_Characteristics"));
             setInscription(object.getString("Inscription"));
-
+            setCut_grade(object.getString("Cut_Grade"));
         } catch (Exception e) {
         }
     }

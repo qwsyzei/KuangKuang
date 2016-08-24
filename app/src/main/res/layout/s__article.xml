@@ -41,13 +41,16 @@
                 android:id="@+id/tv_article_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/login_p_l_r"></TextView>
+                android:paddingLeft="@dimen/base_margin"
+                android:paddingRight="@dimen/base_margin"
+                android:layout_marginTop="@dimen/login_p_l_r"
+                android:layout_marginBottom="@dimen/login_p_l_r"
+               ></TextView>
 
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true">
-
                 <include layout="@layout/s_article_comment" />
             </RelativeLayout>
         </LinearLayout>

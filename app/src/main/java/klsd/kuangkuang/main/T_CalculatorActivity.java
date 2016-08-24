@@ -18,6 +18,7 @@ import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.utils.UIutils;
+import klsd.kuangkuang.views.ExitDialog;
 import klsd.kuangkuang.views.MyRadioGroup;
 
 /**
@@ -28,9 +29,10 @@ public class T_CalculatorActivity extends BaseActivity implements View.OnClickLi
     private RadioGroup rg_shape;
     private RadioButton rb_shape, rb_color, rb_clarity;
     private String shape = "ROUNDS", color = "D", clarity = "IF";
-    private ImageView im_calculator;
+    private ImageView im_calculator, im_formula;
     private EditText editText;
     private TextView tv_cny, tv_usd, tv_rate;
+    private ExitDialog exitDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +50,13 @@ public class T_CalculatorActivity extends BaseActivity implements View.OnClickLi
         rb_color = (RadioButton) findViewById(R.id.rb_calculator_d);
         rb_clarity = (RadioButton) findViewById(R.id.rb_calculator_if);
         im_calculator = (ImageView) findViewById(R.id.calculator_result_imageview);
+        im_formula = (ImageView) findViewById(R.id.calculator_result_image_formula);
         editText = (EditText) findViewById(R.id.calculator_weight_edit);
         tv_cny = (TextView) findViewById(R.id.calculator_result_money_yuan);
         tv_usd = (TextView) findViewById(R.id.calculator_result_money_dollar);
         tv_rate = (TextView) findViewById(R.id.calculator_result_rate);
         im_calculator.setOnClickListener(this);
+        im_formula.setOnClickListener(this);
         rb_shape.setChecked(true);
         rb_color.setChecked(true);
         rb_clarity.setChecked(true);
@@ -169,7 +173,20 @@ public class T_CalculatorActivity extends BaseActivity implements View.OnClickLi
                     ToastUtil.show(T_CalculatorActivity.this, getString(R.string.input_weight_please));
                 }
                 break;
+            case R.id.calculator_result_image_formula:
+                dialog_formula();
+                break;
         }
+    }
+
+    /**
+     * 公式窗口
+     */
+    private void dialog_formula() {
+        exitDialog = new ExitDialog(T_CalculatorActivity.this, R.style.MyDialogStyle, R.layout.dialog_formula);
+        exitDialog.setCanceledOnTouchOutside(true);
+        exitDialog.show();
+
     }
 
     private void gotoCalculator() {

@@ -194,6 +194,43 @@
     <string name="weight_error">重量超过上限，应小于11克拉</string>
     <string name="input_weight_please">请填写重量</string>
     <string name="calculating">计算中</string>
+    <string name="demanding">查询中</string>
+    <string name="calculate_formula">计算公式</string>
+    <string name="formula_title">钻石价格=每克拉价x重量x汇率</string>
+    <string name="formula_content">[本价格根据RAPAPORT钻石报价表计算，仅供参考，计算结果已经四舍五入取整。]</string>
+    <string name="certification_number">证书号</string>
+    <string name="demand">查询</string>
+    <string name="reset">重置</string>
+    <string name="gia_check_certificate">GIA证书查询</string>
+    <string name="input_certificate_number">请输入证书号</string>
+    <string name="wrong_certificate_number">证书号格式错误</string>
+    <string name="certificate_result">查询结果</string>
+    <string name="gia_report">GIA检测报告</string>
+    <string name="gia_diamond_file">GIA钻石档案</string>
+    <string name="gia_certificate_number">GIA证书标号</string>
+    <string name="date_of_issue">颁发日期</string>
+    <!-- 钻石档案 -->
+    <string name="measurement">尺寸</string>
+    <string name="cut_grade">切工</string>
+    <string name="proportion">比例</string>
+    <string name="depth">全身比</string>
+    <string name="table">台宽比</string>
+    <string name="crown_angle">冠角</string>
+    <string name="crown_height">冠高比</string>
+    <string name="pavilion_angle">亭角</string>
+    <string name="pavilion_depth">亭深比</string>
+    <string name="star_length">星小面比</string>
+    <string name="lower_half">下腰小面比</string>
+    <string name="girdle">腰棱</string>
+    <string name="culet">脚尖</string>
+    <string name="polish">抛光</string>
+    <string name="symmetry">对称</string>
+    <string name="fluorescence">荧光</string>
+    <string name="clarity_characteristics">净度特征</string>
+    <string name="inscription">腰码</string>
+
+
+
     <!-- 我的积分 -->
     <string name="score_rule">积分规则</string>
 
@@ -241,6 +278,7 @@
     <string name="e2038">您已收藏过此文章</string>
     <string name="e2041">您已赞过此文章</string>
     <string name="e2044">您已关注过此用户</string>
+    <string name="e2049">未找到此证书</string>
 
 
     <string name="viewpager_indicator">%1$d/%2$d</string>

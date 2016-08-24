@@ -29,6 +29,7 @@ public class ErrorCodes {
         CODES.put("2038", R.string.e2038);
         CODES.put("2041", R.string.e2041);
         CODES.put("2044", R.string.e2044);
+        CODES.put("2049", R.string.e2049);
 
 
     }
