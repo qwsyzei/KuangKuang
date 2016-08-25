@@ -50,19 +50,8 @@
         android:layout_height="wrap_content"
      android:layout_centerVertical="true"
       android:layout_alignParentLeft="true"
-android:layout_toLeftOf="@+id/item_circle_detail_reply"
         android:text="@string/reply" />
 
-    <TextView
-        android:id="@+id/item_circle_detail_reply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/base_margin"
-      android:layout_alignParentRight="true"
-        android:padding="@dimen/login_p_l_r"
-
-        android:textColor="@color/kuangkuang_yellow"
-        android:text="@string/reply"/>
 </RelativeLayout>
 
 </LinearLayout>

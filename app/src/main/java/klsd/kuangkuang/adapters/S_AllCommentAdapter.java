@@ -1,6 +1,8 @@
 package klsd.kuangkuang.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import klsd.kuangkuang.R;
+import klsd.kuangkuang.main.S_AllCommentActivity;
 import klsd.kuangkuang.models.AllComment;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
@@ -218,10 +221,18 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
     }
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
-            ToastUtil.show(ctx, R.string.reply_and_refresh);
+            ToastUtil.show(ctx, R.string.reply_success);
+            Intent intent = new Intent(ctx, S_AllCommentActivity.class);
+            intent.putExtra("a_id", S_AllCommentActivity.article_id);
+            ctx.startActivity(intent);
+            ((Activity)ctx).finish();
             exitDialog.dismiss();
         }else if (jtype.equals(JSONHandler.JTYPE_COMMENT_DESTROY)) {
             ToastUtil.show(ctx, R.string.delete_success);
+            Intent intent = new Intent(ctx, S_AllCommentActivity.class);
+            intent.putExtra("a_id", S_AllCommentActivity.article_id);
+            ctx.startActivity(intent);
+            ((Activity)ctx).finish();
             exitDialog.dismiss();
         }
     }

@@ -239,6 +239,7 @@
     <string name="praise_done">已赞</string>
     <string name="comment">评论</string>
     <string name="comment_success">评论成功</string>
+    <string name="reply_success">回复成功</string>
     <string name="send">发送</string>
     <string name="collect">收藏</string>
     <string name="collect_done">已收藏</string>

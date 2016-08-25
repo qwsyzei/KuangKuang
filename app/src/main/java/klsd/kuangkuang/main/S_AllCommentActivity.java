@@ -35,7 +35,7 @@ import klsd.kuangkuang.views.SelfListView;
 public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener {
     private TextView tv_send;
     private ContainsEmojiEditText edit_comment;
-    String article_id;
+    public static String article_id;
     ArrayList<AllComment> mylist;
     private S_AllCommentAdapter allAdapter;
     private SelfListView listView;
@@ -115,11 +115,15 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
-            ToastUtil.show(S_AllCommentActivity.this, getString(R.string.comment_and_refresh));
-            edit_comment.setText("");
-            edit_comment.setCursorVisible(false);
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(edit_comment.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
+            ToastUtil.show(S_AllCommentActivity.this, getString(R.string.comment_success));
+            Intent intent = new Intent(S_AllCommentActivity.this, S_AllCommentActivity.class);
+            intent.putExtra("a_id", article_id);
+            startActivity(intent);
+            finish();
+//            edit_comment.setText("");
+//            edit_comment.setCursorVisible(false);
+//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.hideSoftInputFromWindow(edit_comment.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_ALL_COMMENT)) {
             int curTradesSize = mylist.size();
             ArrayList<AllComment> os = (ArrayList<AllComment>) handlerBundler.getSerializable("all_comment");

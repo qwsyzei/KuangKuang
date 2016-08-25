@@ -3,6 +3,8 @@ package klsd.kuangkuang.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import klsd.kuangkuang.R;
@@ -23,6 +25,7 @@ private TextView tv_gia_number,tv_date;//证书标号     颁发日期
     private TextView tv_clarity_characteristics;//净度特征
     private TextView tv_inscription;//腰码
     public static Certificate cer;
+  private LinearLayout layout15,layout23,layout24,layout25,layout26,layout27,layout28;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +38,15 @@ private TextView tv_gia_number,tv_date;//证书标号     颁发日期
         Intent intent=getIntent();
       String gia_number=intent.getStringExtra("number");
         Log.d("接到了吗", "initView() returned: " + cer.getStar_length());
+layout15= (LinearLayout) findViewById(R.id.layout_c_result15);
+      layout23= (LinearLayout) findViewById(R.id.layout_c_result23);
+      layout24= (LinearLayout) findViewById(R.id.layout_c_result24);
+      layout25= (LinearLayout) findViewById(R.id.layout_c_result25);
+      layout26= (LinearLayout) findViewById(R.id.layout_c_result26);
+      layout27= (LinearLayout) findViewById(R.id.layout_c_result27);
+      layout28= (LinearLayout) findViewById(R.id.layout_c_result28);
 
-        tv_gia_number= (TextView) findViewById(R.id.c_result_gia_number);
+      tv_gia_number= (TextView) findViewById(R.id.c_result_gia_number);
         tv_date= (TextView) findViewById(R.id.c_result_date);
         tv_shape= (TextView) findViewById(R.id.c_result_shape);
         tv_size= (TextView) findViewById(R.id.c_result_measurement);
@@ -63,6 +73,16 @@ private TextView tv_gia_number,tv_date;//证书标号     颁发日期
         tv_inscription= (TextView) findViewById(R.id.c_result_inscription);
 
         //            tv_shape.setText(Shape());
+      if (!cer.getShape().equals("Round Brilliant")){
+          tv_shape.setText(getString(R.string.special_shape));
+        layout15.setVisibility(View.GONE);
+        layout23.setVisibility(View.GONE);
+        layout24.setVisibility(View.GONE);
+        layout25.setVisibility(View.GONE);
+        layout26.setVisibility(View.GONE);
+        layout27.setVisibility(View.GONE);
+        layout28.setVisibility(View.GONE);
+      }
         tv_date.setText(cer.getDate_of_issue());
         tv_gia_number.setText(gia_number);
         tv_size.setText(cer.getMeasurement());

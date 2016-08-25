@@ -76,7 +76,6 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_circle_detail_comment, null);
             viewHolder.created_at = (TextView) convertView.findViewById(R.id.item_circle_detail_time);
             viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.item_circle_detail_nickname);
-            viewHolder.tv_reply = (TextView) convertView.findViewById(R.id.item_circle_detail_reply);
             viewHolder.tv_replytext= (TextView) convertView.findViewById(R.id.item_circle_detail_replytext);
             viewHolder.im_head = (CircleImageView) convertView.findViewById(R.id.item_circle_detail_head_pic);
             convertView.setTag(viewHolder);
@@ -84,13 +83,36 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (ac.getObject_id().equals("0")&&ac.getMember_id().equals(DataCenter.getMember_id())) {
+        if (ac.getObject_id().equals("0")&&ac.getMember_id().equals(DataCenter.getMember_id())) {//没有对谁，又是自己的
             viewHolder.tv_replytext.setText(ac.getContent_text());
-            viewHolder.tv_reply.setVisibility(View.GONE);
-        } else  if (ac.getObject_id().equals("0")&&!ac.getMember_id().equals(DataCenter.getMember_id())) {
+//            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+//                    exitDialog.setCanceledOnTouchOutside(true);
+//                    exitDialog.show();
+//
+//                    tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+//                    tv_cancel.setText(R.string.delete_the_comment);
+//
+//                    tv_cancel.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            exitDialog.dismiss();
+//                            RequestParams params = new RequestParams();
+//                            params.addQueryStringParameter("id", ac.getId());
+//                            params.addQueryStringParameter("article_id", ac.getArticle_id());
+//                            if (http == null) http = new MyHTTP(ctx);
+//                            http.baseRequest(Consts.articlesDeleteCommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
+//                                    params, handler);
+//                        }
+//                    });
+//                }
+//            });
+
+        } else  if (ac.getObject_id().equals("0")&&!ac.getMember_id().equals(DataCenter.getMember_id())) {//没有对谁，是别人的
             viewHolder.tv_replytext.setText(ac.getContent_text());
-            viewHolder.tv_reply.setVisibility(View.VISIBLE);
-            viewHolder.tv_reply.setOnClickListener(new View.OnClickListener() {
+            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
@@ -122,13 +144,38 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                     });
                 }
             });
-        }else if(!ac.getObject_id().equals("0")&&ac.getMember_id().equals(DataCenter.getMember_id())){
-            viewHolder.tv_reply.setVisibility(View.GONE);
+
+
+        }else if(!ac.getObject_id().equals("0")&&ac.getMember_id().equals(DataCenter.getMember_id())){//有对谁，是自己的
             viewHolder.tv_replytext.setText("回复  " + ac.getObject_nickname() + "：" + ac.getContent_text());
-        } else{
-            viewHolder.tv_reply.setVisibility(View.VISIBLE);
+//            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+//                    exitDialog.setCanceledOnTouchOutside(true);
+//                    exitDialog.show();
+//
+//                    tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+//                    tv_cancel.setText(R.string.delete_the_comment);
+//
+//                    tv_cancel.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            exitDialog.dismiss();
+//                            RequestParams params = new RequestParams();
+//                            params.addQueryStringParameter("id", ac.getId());
+//                            params.addQueryStringParameter("article_id", ac.getArticle_id());
+//                            if (http == null) http = new MyHTTP(ctx);
+//                            http.baseRequest(Consts.articlesDeleteCommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
+//                                    params, handler);
+//                        }
+//                    });
+//                }
+//            });
+
+        } else{                    //有对谁，是别人的
             viewHolder.tv_replytext.setText("回复  " + ac.getObject_nickname() + "：" + ac.getContent_text());
-            viewHolder.tv_reply.setOnClickListener(new View.OnClickListener() {
+            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
@@ -189,7 +236,6 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
     public final class ViewHolder {
         public TextView  created_at;
         TextView tv_nickname;
-        TextView tv_reply;
         TextView tv_replytext;
         CircleImageView im_head;
     }

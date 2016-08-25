@@ -129,6 +129,7 @@
             />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/layout_c_result15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

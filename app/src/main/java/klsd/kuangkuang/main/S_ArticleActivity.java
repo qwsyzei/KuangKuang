@@ -281,6 +281,9 @@ private ImageView im_add_follow;
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
             cPopwindow.dismiss();
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.comment_success));
+            Intent intent = new Intent(S_ArticleActivity.this, S_AllCommentActivity.class);
+            intent.putExtra("a_id", article_id);
+            startActivity(intent);
         }else if (jtype.equals(JSONHandler.JTYPE_ADD_FOLLOW)) {
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.add_follows_success));
         }

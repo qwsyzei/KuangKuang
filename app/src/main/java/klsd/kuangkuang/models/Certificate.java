@@ -206,12 +206,7 @@ public class Certificate implements Serializable {
             setClarity_grade(object.getString("Clarity_Grade"));
             setDepth(object.getString("Depth"));
             setTable(object.getString("Table"));
-            setCrown_angle(object.getString("Crown_Angle"));
-            setCrown_height(object.getString("Crown_Height"));
-            setPavilion_angle(object.getString("Pavilion_Angle"));
-            setPavilion_depth(object.getString("Pavilion_Depth"));
-            setStar_length(object.getString("Star_Length"));
-            setLower_half(object.getString("Lower_Half"));
+
             setGirdle(object.getString("Girdle"));
             setCulet(object.getString("Culet"));
             setPolish(object.getString("Polish"));
@@ -220,6 +215,12 @@ public class Certificate implements Serializable {
             setClarity_characteristics(object.getString("Clarity_Characteristics"));
             setInscription(object.getString("Inscription"));
             setCut_grade(object.getString("Cut_Grade"));
+            setCrown_angle(object.getString("Crown_Angle"));
+            setCrown_height(object.getString("Crown_Height"));
+            setPavilion_angle(object.getString("Pavilion_Angle"));
+            setPavilion_depth(object.getString("Pavilion_Depth"));
+            setStar_length(object.getString("Star_Length"));
+            setLower_half(object.getString("Lower_Half"));
         } catch (Exception e) {
         }
     }
