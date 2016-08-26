@@ -77,11 +77,14 @@ private LinearLayout layout_black,layout_tip_off;
     private List<CircleGridViewEntity> headerEntitiesList;
     private C_CircleGridAdapter cGridAdapter;
     private Fragment fragment;
+    private List<Circles> mylist;
+    private String id;
 
     public C_CircleAdapter(Context context, List<Circles> objects, Handler h) {
         super(context, R.layout.item_circle, objects);
         this.ctx = context;
         this.handler = h;
+        this.mylist=objects;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -201,6 +204,7 @@ private LinearLayout layout_black,layout_tip_off;
                                     if (DataCenter.getMember_id().equals(circles.getMember_id())){
                                         ToastUtil.show(ctx,R.string.cannot_add_self_black_list);
                                     }else{
+                                        id=circles.getMember_id();
                                         //加入黑名单
                                         RequestParams params = new RequestParams();
                                         params.addQueryStringParameter("object_id", circles.getMember_id());
@@ -289,7 +293,6 @@ private LinearLayout layout_black,layout_tip_off;
         } else {
             viewHolder.comment.setText(circles.getComment());
         }
-
                 Context context = ctx.getApplicationContext();
                 initImageLoader(context);
                 ImageLoader.getInstance().displayImage(Consts.host + "/" + circles.getPicture_son(), viewHolder.im_head_pic);
@@ -326,11 +329,12 @@ private LinearLayout layout_black,layout_tip_off;
             ToastUtil.show(ctx, R.string.praise_success);
         }else if (jtype.equals(JSONHandler.JTYPE_ADD_BLACK)) {
             ToastUtil.show(ctx, R.string.add_black_success);
-            Intent intent = new Intent(ctx, MainActivity.class);
-            intent.putExtra("goto", "circle");
-            ctx.startActivity(intent);
-            ((MainActivity) ctx).overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
-            ((MainActivity) ctx).finish();
+            for (int i = mylist.size() - 1;i >= 0;i--){
+                if (mylist.get(i).getMember_id().equals(id)){
+                    mylist.remove(i);
+                }
+            }
+            notifyDataSetChanged();
 
         }else if (jtype.equals(JSONHandler.JTYPE_GIVE_SUGGEST)) {
             ToastUtil.show(ctx, R.string.tip_off_success);

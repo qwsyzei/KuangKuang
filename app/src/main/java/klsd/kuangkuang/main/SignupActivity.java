@@ -122,7 +122,17 @@ public class SignupActivity extends BaseActivity {
                     }
                     break;
                 case R.id.im_signup_phone:
-                    toPhoneSignup();
+                    if (edit_phonenumber.getText().toString().equals("")){
+                        ToastUtil.show(SignupActivity.this,getString(R.string.no_phone));
+                    }else if(edit_phoneyan.getText().toString().equals("")){
+                        ToastUtil.show(SignupActivity.this,getString(R.string.no_input_code));
+                    }else if(edit_password.getText().toString().equals("")){
+                        ToastUtil.show(SignupActivity.this,getString(R.string.no_input_psd));
+                    }else if(edit_password_confirm.getText().toString().equals("")){
+                        ToastUtil.show(SignupActivity.this,getString(R.string.no_confirm_psd));
+                    }else{
+                        toPhoneSignup();
+                    }
                     break;
                 case R.id.im_signup_delete:
                     edit_phonenumber.setText("");

@@ -92,7 +92,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             showFragment(4,sub_key);
             rbD.setChecked(true);
         }else if(str != null && str.equals("circle")){
-
+            showFragment(2,sub_key);
+            rbB.setChecked(true);
         } else {
             showFragment(1,sub_key);
             rbA.setChecked(true);

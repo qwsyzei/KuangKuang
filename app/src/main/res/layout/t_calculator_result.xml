@@ -24,9 +24,11 @@
             android:src="@mipmap/calculatoricon" />
 
         <LinearLayout
+            android:id="@+id/layout_c_calculator_result_result"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_marginLeft="@dimen/size_eight"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <LinearLayout
@@ -119,8 +121,10 @@
             android:layout_weight="1"
            />
         <TextView
+            android:id="@+id/calculator_result_rate_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:text="@string/current_item_exchange_rate" />
 

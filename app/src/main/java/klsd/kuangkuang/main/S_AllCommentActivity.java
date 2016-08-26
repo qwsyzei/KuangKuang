@@ -40,7 +40,6 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
     private S_AllCommentAdapter allAdapter;
     private SelfListView listView;
     private int page = 1;
-    private LinearLayout layout_send;
     // 自定义的listview的上下拉动刷新
     private PullToRefreshView mPullToRefreshView;
 
@@ -53,12 +52,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView() {
-        layout_send = (LinearLayout) findViewById(R.id.all_comment_send);
-        if (isSigned()) {
-            layout_send.setVisibility(View.VISIBLE);
-        } else {
-            layout_send.setVisibility(View.GONE);
-        }
+
         mylist = new ArrayList<>();
         Intent intent = getIntent();
         article_id = intent.getStringExtra("a_id");
@@ -77,7 +71,16 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.all_comment_send_send:
-                gotoComment();
+                    if (isSigned()) {
+                        if (edit_comment.getText().toString().equals("")){
+                            ToastUtil.show(S_AllCommentActivity.this, getString(R.string.please_input_content));
+                        }else {
+                            gotoComment();
+                        }
+                    } else {
+                        ToastUtil.show(S_AllCommentActivity.this, getString(R.string.not_login));
+                    }
+
                 break;
         }
     }
@@ -104,7 +107,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("article_id", article_id);
         params.addQueryStringParameter("page", page + "");
-        params.addQueryStringParameter("limit", "8");
+        params.addQueryStringParameter("limit", "15");
         params = KelaParams.generateSignParam("GET", Consts.articlesCommentaryApi, params);
         if (http == null) http = new MyHTTP(S_AllCommentActivity.this);
         http.baseRequest(Consts.articlesCommentaryApi, JSONHandler.JTYPE_ARTICLES_ALL_COMMENT, HttpRequest.HttpMethod.GET,
@@ -116,14 +119,15 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
             ToastUtil.show(S_AllCommentActivity.this, getString(R.string.comment_success));
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(edit_comment.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
             Intent intent = new Intent(S_AllCommentActivity.this, S_AllCommentActivity.class);
             intent.putExtra("a_id", article_id);
             startActivity(intent);
             finish();
 //            edit_comment.setText("");
 //            edit_comment.setCursorVisible(false);
-//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.hideSoftInputFromWindow(edit_comment.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
+
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_ALL_COMMENT)) {
             int curTradesSize = mylist.size();
             ArrayList<AllComment> os = (ArrayList<AllComment>) handlerBundler.getSerializable("all_comment");

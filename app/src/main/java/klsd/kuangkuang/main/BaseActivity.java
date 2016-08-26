@@ -154,6 +154,7 @@ public class BaseActivity extends FragmentActivity {
 
     public void signOut() {
         setMember(null);
+
         DataCenter.setSignedOut();
         SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
         editor.clear();

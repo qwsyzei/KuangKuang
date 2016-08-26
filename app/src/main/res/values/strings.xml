@@ -71,7 +71,7 @@
     <string name="email_send_success">邮件发送成功</string>
     <string name="phone_empty">请输入手机号码</string>
     <string name="email_empty">请输入Email</string>
-    <string name="psd_empty">请输入密码</string>
+
     <string name="wrong_login">用户名或密码错误</string>
     <string name="change_success">修改成功</string>
     <string name="old_new">新密码不可与原密码相同</string>
@@ -107,12 +107,16 @@
     <string name="agreement">请同意用户协议</string>
     <string name="network_problem">网络连接错误</string>
     <string name="checkup_network">请检查网络连接</string>
+
+    <string name="no_phone">未填写手机号</string>
     <string name="no_input_psd">未填写密码</string>
+    <string name="no_input_code">未填写验证码</string>
+    <string name="no_confirm_psd">未确认密码</string>
+
     <string name="confirm_new_psd">确认新密码</string>
     <string name="no_input_new_psd">未填写新密码</string>
     <string name="no_confirm_new_psd">未确认新密码</string>
 
-    <string name="no_input_code">未填写验证码</string>
     <string name="forget_loginpsd">忘记登录密码</string>
     <string name="wrong_phone_number">手机号有误</string>
     <string name="update_phone_number_success">手机号更新成功</string>
@@ -125,6 +129,7 @@
     <string name="main_me">我</string>
     <string name="load_more">加载更多数据</string>
     <string name="refresh_done">数据刷新完成</string>
+    <string name="not_login_forbid">您未登录，无法操作</string>
     <!-- 以下是设置名称 -->
     <string name="personal_data">个人资料</string>
     <string name="admin_manager">账号管理</string>
@@ -253,7 +258,7 @@
     <string name="friend_circle">朋友圈</string>
     <string name="praise_success">点赞成功</string>
     <string name="reply">回复</string>
-
+    <string name="please_input_content">请输入内容</string>
     <!-- 圈子 -->
     <string name="top10">Top10</string>
     <string name="release_word">发布说说</string>

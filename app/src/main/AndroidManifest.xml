@@ -28,7 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.LoginActivity" />
+        <activity android:name=".main.LoginActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".main.SignupActivity" />
         <activity android:name=".main.M_SetActivity" />
         <activity android:name=".main.M_PersonalDataActivity" />
@@ -66,6 +67,9 @@
         <activity android:name=".main.T_CertificateActivity" >
         </activity>
         <activity android:name=".main.T_CertificateResultActivity" >
+        </activity>
+        <activity android:name=".main.Main2Activity" >
+
         </activity>
     </application>
 

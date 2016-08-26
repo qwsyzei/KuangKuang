@@ -1,5 +1,6 @@
 package klsd.kuangkuang.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -35,6 +36,7 @@ public class ForgetPsdActivity extends BaseActivity {
     private ImageView im_set;
     private ImageView im_eye1, im_eye2;
     private int flag1 = 0, flag2 = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -57,7 +59,6 @@ public class ForgetPsdActivity extends BaseActivity {
 
         im_eye1 = (ImageView) findViewById(R.id.forget_im_change1);
         im_eye2 = (ImageView) findViewById(R.id.forget_im_change2);
-
         im_eye1.setOnClickListener(listener);
         im_eye2.setOnClickListener(listener);
 
@@ -78,14 +79,24 @@ public class ForgetPsdActivity extends BaseActivity {
                     edit_phonenumber.setText("");
                     break;
                 case R.id.getback_code_phone:
-                    if (edit_phonenumber.getText().length()==11){
+                    if (edit_phonenumber.getText().length() == 11) {
                         toPhoneCode();
-                    }else{
-                        ToastUtil.show(ForgetPsdActivity.this,getString(R.string.wrong_admin_name));
+                    } else {
+                        ToastUtil.show(ForgetPsdActivity.this, getString(R.string.wrong_admin_name));
                     }
                     break;
                 case R.id.forget_im_done:
-                    toGetbackPhone();
+                    if (edit_phonenumber.getText().toString().equals("")){
+                        ToastUtil.show(ForgetPsdActivity.this,getString(R.string.no_phone));
+                    }else if(edit_phoneyan.getText().toString().equals("")){
+                        ToastUtil.show(ForgetPsdActivity.this,getString(R.string.no_input_code));
+                    }else if(edit_newpsd.getText().toString().equals("")){
+                        ToastUtil.show(ForgetPsdActivity.this,getString(R.string.no_input_new_psd));
+                    }else if(edit_newpsd_confirm.getText().toString().equals("")){
+                        ToastUtil.show(ForgetPsdActivity.this,getString(R.string.no_confirm_new_psd));
+                    }else{
+                        toGetbackPhone();
+                    }
                     break;
                 case R.id.forget_im_change1:
                     if (flag1 == 0) {
@@ -167,10 +178,9 @@ public class ForgetPsdActivity extends BaseActivity {
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_SIGN)) {
-            if (handlerBundler.getBoolean("signup")) {
-                ToastUtil.show(ForgetPsdActivity.this, getString(R.string.set_success));
-//                myStartActivity(new Intent(ForgetPsdActivity.this, MarketActivity.class));
-            }
+            ToastUtil.show(ForgetPsdActivity.this, getString(R.string.set_success));
+            myStartActivity(new Intent(ForgetPsdActivity.this, LoginActivity.class));
+            finish();
         }
     }
 

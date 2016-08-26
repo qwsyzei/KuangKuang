@@ -47,12 +47,6 @@
                 android:layout_marginBottom="@dimen/login_p_l_r"
                ></TextView>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
-                <include layout="@layout/s_article_comment" />
-            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

@@ -1,8 +1,6 @@
 package klsd.kuangkuang.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.main.M_FollowListActivity;
 import klsd.kuangkuang.models.Follows;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.ErrorCodes;
@@ -27,7 +24,6 @@ import klsd.kuangkuang.utils.JSONHandler;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.ExitDialog;
-
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
@@ -43,10 +39,13 @@ public class M_FollowListAdapter extends ArrayAdapter<Follows> {
     Bundle handlerBundler;
     private ExitDialog exitDialog;
     private TextView tv_cancel;
+    List<Follows> mylist;
+    private int position123;
     public M_FollowListAdapter(Context context, List<Follows> list,Handler h) {
         super(context, R.layout.item_blacklist, list);
         this.ctx = context;
         this.handler = h;
+        this.mylist=list;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -83,6 +82,7 @@ public class M_FollowListAdapter extends ArrayAdapter<Follows> {
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                position123=position;
                 exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
                 exitDialog.setCanceledOnTouchOutside(true);
                 exitDialog.show();
@@ -110,9 +110,8 @@ public class M_FollowListAdapter extends ArrayAdapter<Follows> {
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_DELETE_FOLLOW)) {
             ToastUtil.show(ctx, R.string.success_cancel_follow);
-            Intent intent=new Intent(ctx, M_FollowListActivity.class);
-            ctx.startActivity(intent);
-            ((Activity)ctx).finish();
+            mylist.remove(position123);
+            notifyDataSetChanged();
         }
     }
 

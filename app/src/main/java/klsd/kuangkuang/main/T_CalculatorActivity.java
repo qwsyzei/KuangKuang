@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -33,7 +34,8 @@ public class T_CalculatorActivity extends BaseActivity implements View.OnClickLi
     private EditText editText;
     private TextView tv_cny, tv_usd, tv_rate;
     private ExitDialog exitDialog;
-
+private LinearLayout layout_result;//隐藏的
+    private TextView tv_rate_text;//隐藏的
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,9 @@ public class T_CalculatorActivity extends BaseActivity implements View.OnClickLi
         tv_cny = (TextView) findViewById(R.id.calculator_result_money_yuan);
         tv_usd = (TextView) findViewById(R.id.calculator_result_money_dollar);
         tv_rate = (TextView) findViewById(R.id.calculator_result_rate);
+
+        layout_result= (LinearLayout) findViewById(R.id.layout_c_calculator_result_result);
+        tv_rate_text= (TextView) findViewById(R.id.calculator_result_rate_text);
         im_calculator.setOnClickListener(this);
         im_formula.setOnClickListener(this);
         rb_shape.setChecked(true);
@@ -207,6 +212,8 @@ public class T_CalculatorActivity extends BaseActivity implements View.OnClickLi
             String cny = handlerBundler.getString("cny");
             String usd = handlerBundler.getString("usd");
             String rate = handlerBundler.getString("rate");
+            layout_result.setVisibility(View.VISIBLE);
+            tv_rate_text.setVisibility(View.VISIBLE);
             tv_cny.setText(cny);
             tv_usd.setText(usd);
             tv_rate.setText(rate);

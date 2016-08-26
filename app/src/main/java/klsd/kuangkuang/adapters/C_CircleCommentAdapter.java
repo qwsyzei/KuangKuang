@@ -1,12 +1,16 @@
 package klsd.kuangkuang.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import klsd.kuangkuang.R;
+import klsd.kuangkuang.main.C_CircleAllCommentActivity;
 import klsd.kuangkuang.models.CircleAllComment;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
@@ -42,16 +47,21 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
     private ExitDialog exitDialog;
     private TextView tv_yes, tv_cancel;
     private ContainsEmojiEditText editText;
+    private List<CircleAllComment> list;
     MyHTTP http;
     private Handler handler;
     String jtype, responseJson;
     String error_code;
     Bundle handlerBundler;
+   int pos;
+    int position123;
+    CircleAllComment cac;
 
     public C_CircleCommentAdapter(Context context, List<CircleAllComment> objects, Handler h) {
         super(context, R.layout.item_circle_detail_comment, objects);
         this.ctx = context;
         this.handler = h;
+        this.list=objects;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -82,39 +92,47 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+        position123=position;
         if (ac.getObject_id().equals("0")&&ac.getMember_id().equals(DataCenter.getMember_id())) {//没有对谁，又是自己的
             viewHolder.tv_replytext.setText(ac.getContent_text());
-//            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
-//                    exitDialog.setCanceledOnTouchOutside(true);
-//                    exitDialog.show();
-//
-//                    tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
-//                    tv_cancel.setText(R.string.delete_the_comment);
-//
-//                    tv_cancel.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            exitDialog.dismiss();
-//                            RequestParams params = new RequestParams();
-//                            params.addQueryStringParameter("id", ac.getId());
-//                            params.addQueryStringParameter("article_id", ac.getArticle_id());
-//                            if (http == null) http = new MyHTTP(ctx);
-//                            http.baseRequest(Consts.articlesDeleteCommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
-//                                    params, handler);
-//                        }
-//                    });
-//                }
-//            });
+            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    pos=position;
+                    Log.d("第一个POSTION是多少", "getView() returned: " + position+"");
+                    if (DataCenter.isSigned()) {
+                    exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+                    exitDialog.setCanceledOnTouchOutside(true);
+                    exitDialog.show();
+
+                    tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+                    tv_cancel.setText(R.string.delete_the_comment);
+
+                    tv_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            exitDialog.dismiss();
+                            RequestParams params = new RequestParams();
+                            params.addQueryStringParameter("object", ac.getId());
+                            if (http == null) http = new MyHTTP(ctx);
+                            http.baseRequest(Consts.deletecirclecommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
+                                    params, handler);
+                        }
+                    });
+                } else {
+                    ToastUtil.show(ctx, R.string.not_login_forbid);
+                }
+                }
+            });
 
         } else  if (ac.getObject_id().equals("0")&&!ac.getMember_id().equals(DataCenter.getMember_id())) {//没有对谁，是别人的
             viewHolder.tv_replytext.setText(ac.getContent_text());
             viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    pos=position;
+                    Log.d("第22222个POSTION是多少", "getView() returned: " + position+"");
+                    if (DataCenter.isSigned()) {
                     exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
                     exitDialog.setCanceledOnTouchOutside(true);
                     exitDialog.show();
@@ -142,42 +160,53 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                             exitDialog.dismiss();
                         }
                     });
+                } else {
+                    ToastUtil.show(ctx, R.string.not_login_forbid);
+                }
                 }
             });
 
 
         }else if(!ac.getObject_id().equals("0")&&ac.getMember_id().equals(DataCenter.getMember_id())){//有对谁，是自己的
             viewHolder.tv_replytext.setText("回复  " + ac.getObject_nickname() + "：" + ac.getContent_text());
-//            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
-//                    exitDialog.setCanceledOnTouchOutside(true);
-//                    exitDialog.show();
-//
-//                    tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
-//                    tv_cancel.setText(R.string.delete_the_comment);
-//
-//                    tv_cancel.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            exitDialog.dismiss();
-//                            RequestParams params = new RequestParams();
-//                            params.addQueryStringParameter("id", ac.getId());
-//                            params.addQueryStringParameter("article_id", ac.getArticle_id());
-//                            if (http == null) http = new MyHTTP(ctx);
-//                            http.baseRequest(Consts.articlesDeleteCommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
-//                                    params, handler);
-//                        }
-//                    });
-//                }
-//            });
+            viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    pos=position;
+                    Log.d("第333333个POSTION是多少", "getView() returned: " + position+"");
+                    if (DataCenter.isSigned()) {
+                    exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+                    exitDialog.setCanceledOnTouchOutside(true);
+                    exitDialog.show();
+
+                    tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+                    tv_cancel.setText(R.string.delete_the_comment);
+
+                    tv_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            exitDialog.dismiss();
+                            RequestParams params = new RequestParams();
+                            params.addQueryStringParameter("object", ac.getId());
+                            if (http == null) http = new MyHTTP(ctx);
+                            http.baseRequest(Consts.deletecirclecommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
+                                    params, handler);
+                        }
+                    });
+                    } else {
+                        ToastUtil.show(ctx, R.string.not_login_forbid);
+                    }
+                }
+            });
 
         } else{                    //有对谁，是别人的
             viewHolder.tv_replytext.setText("回复  " + ac.getObject_nickname() + "：" + ac.getContent_text());
             viewHolder.tv_replytext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    pos=position;
+                    Log.d("第4444444个POSTION是多少", "getView() returned: " + position+"");
+                    if (DataCenter.isSigned()) {
                     exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
                     exitDialog.setCanceledOnTouchOutside(true);
                     exitDialog.show();
@@ -205,6 +234,9 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                             exitDialog.dismiss();
                         }
                     });
+                } else {
+                    ToastUtil.show(ctx, R.string.not_login_forbid);
+                }
                 }
             });
         }
@@ -220,8 +252,23 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
 
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
-            ToastUtil.show(ctx, R.string.reply_and_refresh);
+            ToastUtil.show(ctx, R.string.reply_success);
+            InputMethodManager imm = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0); //强制隐藏键盘//清空数据并让它失去焦点
             exitDialog.dismiss();
+//            list.add(cac);
+//            notifyDataSetChanged();
+            Intent intent = new Intent(ctx, C_CircleAllCommentActivity.class);
+            intent.putExtra("micropost_id", C_CircleAllCommentActivity.micropost_id);
+            ctx.startActivity(intent);
+            ((Activity)ctx).finish();
+        }else if (jtype.equals(JSONHandler.JTYPE_COMMENT_DESTROY)) {
+            ToastUtil.show(ctx, R.string.delete_success);
+            exitDialog.dismiss();
+            Log.d("POSPOSPOSPOS是多少", "getView() returned: " + pos + "");
+            list.remove(pos);
+            notifyDataSetChanged();
+
         }
     }
 

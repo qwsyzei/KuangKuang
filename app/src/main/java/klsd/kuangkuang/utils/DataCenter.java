@@ -66,6 +66,7 @@ private static String member_id;
 		isSign = false;
 		accessKey = null;
 		secretKey = null;
+		member_id=null;
 	}
 
 	public static String getMarket() {

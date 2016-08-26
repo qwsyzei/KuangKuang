@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="3">
+        android:layout_weight="1">
 
         <ImageView
             android:id="@+id/im_s_artile_collect"
@@ -17,11 +17,15 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/collect" />
     </LinearLayout>
-
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal">
     <LinearLayout
         android:gravity="center"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:orientation="horizontal">
@@ -46,8 +50,9 @@
         android:id="@+id/layout_s_artile_like"
         android:gravity="center"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="2dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -70,8 +75,9 @@
     <LinearLayout
         android:id="@+id/layout_s_artile_comment"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="2dp"
         android:gravity="center"
         android:layout_weight="1"
         android:orientation="horizontal">
@@ -90,6 +96,8 @@
             android:layout_gravity="center"
             android:text="0" />
     </LinearLayout>
+</LinearLayout>
+
 
 
 </LinearLayout>

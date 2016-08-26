@@ -1,8 +1,6 @@
 package klsd.kuangkuang.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -18,9 +16,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
-
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.main.M_BlackListActivity;
 import klsd.kuangkuang.models.Blacklist;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.ErrorCodes;
@@ -44,10 +40,13 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
     Bundle handlerBundler;
     private ExitDialog exitDialog;
     private TextView tv_cancel;
+    List<Blacklist> mylist;
+    int position123;
     public M_BlackListAdapter(Context context, List<Blacklist> list,Handler h) {
         super(context, R.layout.item_blacklist, list);
         this.ctx = context;
         this.handler = h;
+        this.mylist=list;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -84,13 +83,12 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+              position123=position;
                 exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
                 exitDialog.setCanceledOnTouchOutside(true);
                 exitDialog.show();
-
                 tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
                 tv_cancel.setText(R.string.delete_black_list);
-
                 tv_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -111,9 +109,8 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_DELETE_BLACK)) {
             ToastUtil.show(ctx, R.string.delete_success123);
-            Intent intent=new Intent(ctx, M_BlackListActivity.class);
-            ctx.startActivity(intent);
-            ((Activity)ctx).finish();
+            mylist.remove(position123);
+            notifyDataSetChanged();
         }
     }
 

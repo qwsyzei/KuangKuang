@@ -4,15 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -20,21 +17,15 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.util.ArrayList;
-
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.adapters.S_AllCommentAdapter;
-import klsd.kuangkuang.models.AllComment;
 import klsd.kuangkuang.richtext.RichText;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.DataCenter;
 import klsd.kuangkuang.utils.JSONHandler;
-import klsd.kuangkuang.utils.KelaParams;
 import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.CircleImageView;
-import klsd.kuangkuang.views.ContainsEmojiEditText;
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 
@@ -46,15 +37,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private String nickname,picture_head,author_signature;
     private TextView tv_content;
     private LinearLayout layout_like, layout_comment;
-    private TextView tv_allcomment;
-    private S_AllCommentAdapter allAdapter;
-    public ArrayList<AllComment> os;
-    private int page = 1;
-    private ListView listView;
-    private TextView tv_dialog_send;
-    private ContainsEmojiEditText edit_dialog_comment;
     private ImageView im_collect, im_share;
-    private PopupWindow cPopwindow;
     private PopupWindow sharePopwindow;
     private TextView tv_title, tv_tag;
     private TextView tv_views, tv_like, tv_comment;
@@ -103,12 +86,9 @@ private ImageView im_add_follow;
             ImageLoader.getInstance().displayImage(Consts.host+"/"+picture_head, im_author_head);
         }
 
-        listView = (ListView) findViewById(R.id.listview_article_comment3);
-        listView.setFocusable(false);//因为还有个scrollview，会影响显示位置
         layout_like = (LinearLayout) findViewById(R.id.layout_s_artile_like);
         layout_comment = (LinearLayout) findViewById(R.id.layout_s_artile_comment);
         im_collect = (ImageView) findViewById(R.id.im_s_artile_collect);
-        tv_allcomment = (TextView) findViewById(R.id.article_look_all_comment);
         tv_views = (TextView) findViewById(R.id.article_views_number);
         tv_like = (TextView) findViewById(R.id.article_like_number);
         tv_comment = (TextView) findViewById(R.id.article_comment_number);
@@ -145,11 +125,9 @@ private ImageView im_add_follow;
         tv_tag = (TextView) findViewById(R.id.article_author_title_tag);
         tv_tag.setText("[" + tag + "]");
 
-        tv_allcomment.setOnClickListener(this);
         layout_like.setOnClickListener(this);
         layout_comment.setOnClickListener(this);
         im_collect.setOnClickListener(this);
-        gotoAllComment();
     }
 
     @Override
@@ -163,11 +141,9 @@ private ImageView im_add_follow;
                 }
                 break;
             case R.id.layout_s_artile_comment:
-                if (isSigned()) {
-                    Comment_Dialog(view);
-                } else {
-                    ToastUtil.show(S_ArticleActivity.this, getString(R.string.not_login));
-                }
+                    Intent intent = new Intent(S_ArticleActivity.this, S_AllCommentActivity.class);
+                    intent.putExtra("a_id", article_id);
+                    startActivity(intent);
                 break;
             case R.id.im_article_title_share:
                 Share_Dialog(view);
@@ -178,16 +154,6 @@ private ImageView im_add_follow;
                 } else {
                     ToastUtil.show(S_ArticleActivity.this,getString(R.string.not_login));
                 }
-                break;
-            case R.id.article_look_all_comment:
-
-                    Intent intent = new Intent(S_ArticleActivity.this, S_AllCommentActivity.class);
-                    intent.putExtra("a_id", article_id);
-                    startActivity(intent);
-
-                break;
-            case R.id.dialog_comment_send_send:
-                gotoComment();
                 break;
             case R.id.im_s_artile_follow:
                 //添加关注
@@ -234,89 +200,16 @@ private ImageView im_add_follow;
                 params, getHandler());
 
     }
-    /**
-     * 评论
-     */
-    private void gotoComment() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("article_id", article_id);
-        params.addQueryStringParameter("comment", edit_dialog_comment.getText().toString());
-        if (http == null) http = new MyHTTP(S_ArticleActivity.this);
-        http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
-                params, getHandler());
-
-    }
-
-    /**
-     * 获取所有评论
-     */
-    private void gotoAllComment() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("article_id", article_id);
-        params.addQueryStringParameter("page", "1");
-        params.addQueryStringParameter("limit", "3");
-        params = KelaParams.generateSignParam("GET", Consts.articlesCommentaryApi, params);
-        if (http == null) http = new MyHTTP(S_ArticleActivity.this);
-        http.baseRequest(Consts.articlesCommentaryApi, JSONHandler.JTYPE_ARTICLES_ALL_COMMENT, HttpRequest.HttpMethod.GET,
-                params, getHandler());
-
-    }
 
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.praise_done));
-        } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_ALL_COMMENT)) {
-
-            os = (ArrayList<AllComment>) handlerBundler.getSerializable("all_comment");
-            if (os.size() == 0) {
-                Log.d("评论是没有数据的", "updateData() returned: " + "");
-                return;
-            }
-            allAdapter = new S_AllCommentAdapter(S_ArticleActivity.this, os,getHandler());
-            listView.setAdapter(allAdapter);
-
         } else if (jtype.equals(JSONHandler.JTYPE_COLLECT)) {
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.collect_done));
-        } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
-            cPopwindow.dismiss();
-            ToastUtil.show(S_ArticleActivity.this, getString(R.string.comment_success));
-            Intent intent = new Intent(S_ArticleActivity.this, S_AllCommentActivity.class);
-            intent.putExtra("a_id", article_id);
-            startActivity(intent);
-        }else if (jtype.equals(JSONHandler.JTYPE_ADD_FOLLOW)) {
+        } else if (jtype.equals(JSONHandler.JTYPE_ADD_FOLLOW)) {
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.add_follows_success));
         }
-
-    }
-
-
-    //评论窗口
-    private void Comment_Dialog(View v) {
-        View pop_view = getLayoutInflater().inflate(R.layout.dialog_comment, null, false);
-        cPopwindow = new PopupWindow(pop_view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, true);
-        // 设置动画效果
-        cPopwindow.setAnimationStyle(R.style.mystyle);
-        cPopwindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//可解决被软键盘遮住的问题
-        cPopwindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-        //实例化一个ColorDrawable颜色为半透明
-        ColorDrawable dw = new ColorDrawable(0xb01b1b1b);
-        pop_view.setBackgroundDrawable(dw);
-        pop_view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                cPopwindow.dismiss();
-                return true;
-            }
-        });
-
-        edit_dialog_comment = (ContainsEmojiEditText) pop_view.findViewById(R.id.dialog_comment_edit);
-        tv_dialog_send = (TextView) pop_view.findViewById(R.id.dialog_comment_send_send);
-        tv_dialog_send.setOnClickListener(this);
-        edit_dialog_comment.requestFocus();
-        //调用系统输入法
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
 

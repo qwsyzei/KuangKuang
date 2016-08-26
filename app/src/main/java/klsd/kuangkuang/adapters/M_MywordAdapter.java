@@ -48,11 +48,14 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
     String error_code;
     Bundle handlerBundler;
     private Fragment fragment;
+    private List<MyWord> mylist;
+    private int position123;
 
     public M_MywordAdapter(Context context, List<MyWord> objects, Handler h) {
         super(context, R.layout.item_myword, objects);
         this.ctx = context;
         this.handler = h;
+        this.mylist=objects;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -124,6 +127,7 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                position123=position;
                 exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_delete);
                 exitDialog.setCanceledOnTouchOutside(true);
                 exitDialog.show();
@@ -150,11 +154,8 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
             ToastUtil.show(ctx, R.string.delete_success);
             exitDialog.dismiss();
-            Intent intent = new Intent(ctx, MainActivity.class);
-            intent.putExtra("goto", "me");
-            ctx.startActivity(intent);
-            ((MainActivity) ctx).overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
-            ((MainActivity) ctx).finish();
+            mylist.remove(position123);
+            notifyDataSetChanged();
 
         }
     }
