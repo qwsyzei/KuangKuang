@@ -26,15 +26,15 @@ import klsd.kuangkuang.utils.MyDate;
 import klsd.kuangkuang.utils.MyHTTP;
 import klsd.kuangkuang.utils.ToastUtil;
 import klsd.kuangkuang.views.CircleImageView;
-import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
+import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 专题文章
  */
 public class S_ArticleActivity extends BaseActivity implements View.OnClickListener {
-    String testString, article_id, title, tag, views, like_number, comment_number, created_at,author_member_id;
-    private String nickname,picture_head,author_signature;
+    String testString, article_id, title, tag, views, like_number, comment_number, created_at, author_member_id;
+    private String nickname, picture_head, author_signature;
     private TextView tv_content;
     private LinearLayout layout_like, layout_comment;
     private ImageView im_collect, im_share;
@@ -42,16 +42,18 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_title, tv_tag;
     private TextView tv_views, tv_like, tv_comment;
     private TextView tv_time;//文章发表时间
-    private TextView tv_author_name,tv_author_signature;
+    private TextView tv_author_name, tv_author_signature;
     private CircleImageView im_author_head;
     String common_time;//类似1天前的写法
-private ImageView im_add_follow;
+    private ImageView im_add_follow;
+    MyHTTP http;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.s__article);
-        Context context =getApplicationContext();
+        Context context = getApplicationContext();
         initImageLoader(context);
         initView();
     }
@@ -66,24 +68,24 @@ private ImageView im_add_follow;
         like_number = intent.getStringExtra("like");
         comment_number = intent.getStringExtra("comment");
         created_at = intent.getStringExtra("created_at");
-        nickname=intent.getStringExtra("nickname");
-        picture_head=intent.getStringExtra("picture_son");
-        author_signature=intent.getStringExtra("signature");
-        author_member_id=intent.getStringExtra("author_member_id");
+        nickname = intent.getStringExtra("nickname");
+        picture_head = intent.getStringExtra("picture_son");
+        author_signature = intent.getStringExtra("signature");
+        author_member_id = intent.getStringExtra("author_member_id");
 //        common_time = MyDate.timeLogic("2014-01-18 12:22:10");
         common_time = MyDate.timeLogic(created_at.substring(0, 19).replace("T", " "));
 
         tv_content = (TextView) findViewById(R.id.tv_article_content);
         RichText.from(testString).into(tv_content);
 
-        im_add_follow= (ImageView) findViewById(R.id.im_s_artile_follow);
-        tv_author_name= (TextView) findViewById(R.id.article_author_name);
-        tv_author_signature= (TextView) findViewById(R.id.article_author_tag);
-        im_author_head= (CircleImageView) findViewById(R.id.article_author_pic);
+        im_add_follow = (ImageView) findViewById(R.id.im_s_artile_follow);
+        tv_author_name = (TextView) findViewById(R.id.article_author_name);
+        tv_author_signature = (TextView) findViewById(R.id.article_author_tag);
+        im_author_head = (CircleImageView) findViewById(R.id.article_author_pic);
         tv_author_name.setText(nickname);
         tv_author_signature.setText(author_signature);
-        if (!picture_head.equals("null")){
-            ImageLoader.getInstance().displayImage(Consts.host+"/"+picture_head, im_author_head);
+        if (!picture_head.equals("null")) {
+            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_author_head);
         }
 
         layout_like = (LinearLayout) findViewById(R.id.layout_s_artile_like);
@@ -135,29 +137,38 @@ private ImageView im_add_follow;
         switch (view.getId()) {
             case R.id.layout_s_artile_like:
                 if (isSigned()) {
-                gotoLike();
+                    gotoLike();
                 } else {
                     ToastUtil.show(S_ArticleActivity.this, getString(R.string.not_login));
                 }
                 break;
             case R.id.layout_s_artile_comment:
-                    Intent intent = new Intent(S_ArticleActivity.this, S_AllCommentActivity.class);
-                    intent.putExtra("a_id", article_id);
-                    startActivity(intent);
+                Intent intent = new Intent(S_ArticleActivity.this, S_AllCommentActivity.class);
+                intent.putExtra("a_id", article_id);
+                startActivity(intent);
                 break;
             case R.id.im_article_title_share:
                 Share_Dialog(view);
                 break;
             case R.id.im_s_artile_collect:
                 if (isSigned()) {
-                gotoCollect();
+                    gotoCollect();
                 } else {
-                    ToastUtil.show(S_ArticleActivity.this,getString(R.string.not_login));
+                    ToastUtil.show(S_ArticleActivity.this, getString(R.string.not_login));
                 }
                 break;
             case R.id.im_s_artile_follow:
                 //添加关注
-                gotoFollow();
+                if (isSigned()) {
+                    if (author_member_id.equals(DataCenter.getMember_id())) {
+                        ToastUtil.show(S_ArticleActivity.this, getString(R.string.cannot_add_follow_self));
+                    } else {
+                        gotoFollow();
+                    }
+                } else {
+                    ToastUtil.show(S_ArticleActivity.this, getString(R.string.not_login));
+                }
+
                 break;
         }
     }
@@ -165,8 +176,6 @@ private ImageView im_add_follow;
     /**
      * 赞
      */
-    MyHTTP http;
-
     private void gotoLike() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("object_id", article_id);
@@ -187,8 +196,8 @@ private ImageView im_add_follow;
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.articlesCollectArticleApi, JSONHandler.JTYPE_COLLECT, HttpRequest.HttpMethod.GET,
                 params, getHandler());
-
     }
+
     /**
      * 关注
      */
@@ -198,7 +207,6 @@ private ImageView im_add_follow;
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.addfollowsApi, JSONHandler.JTYPE_ADD_FOLLOW, HttpRequest.HttpMethod.GET,
                 params, getHandler());
-
     }
 
     public void updateData() {

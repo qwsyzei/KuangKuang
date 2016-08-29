@@ -11,6 +11,7 @@ import klsd.kuangkuang.R;
 public class ErrorCodes {
     public static HashMap<String,Integer> CODES = new HashMap<String, Integer>();
     static {
+        CODES.put("1001",R.string.error1001);
         CODES.put("2007",R.string.error2007);
         CODES.put("2013",R.string.error2013);
         CODES.put("2014",R.string.error2014);

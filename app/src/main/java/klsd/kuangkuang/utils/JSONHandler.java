@@ -21,6 +21,7 @@ import klsd.kuangkuang.models.CircleAllComment;
 import klsd.kuangkuang.models.CircleLike;
 import klsd.kuangkuang.models.Circles;
 import klsd.kuangkuang.models.Documents;
+import klsd.kuangkuang.models.Fans;
 import klsd.kuangkuang.models.Follows;
 import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.models.MyCollect;
@@ -106,6 +107,7 @@ public class JSONHandler {
     public final static String JTYPE_ADD_FOLLOW= "add_follow";//加入关注
     public final static String JTYPE_DELETE_FOLLOW= "delete_follow";//从关注移除
     public final static String JTYPE_FOLLOW_LIST= "follow_list";//关注列表
+    public final static String JTYPE_FANS_LIST= "fans_list";//粉丝列表
     public final static String JTYPE_CERTIFICATE= "certificate";//证书查询
     public final static String JTYPE_CALCULATOR= "calculator";//计算器计算
 
@@ -372,6 +374,15 @@ public class JSONHandler {
                     mc.add(top);
                 }
                 bundle.putSerializable("follows", mc);
+            }else if (jtype2.equals(JTYPE_FANS_LIST)) {
+                ArrayList<Fans> mc = new ArrayList<Fans>();
+                for (int i = 0; i < olistArrays.size(); i++) {
+                    JSONObject object = olistArrays.get(i);
+                    Fans top = new Fans(ctx);
+                    top.getFromJSONObjectItem(object);
+                    mc.add(top);
+                }
+                bundle.putSerializable("fans", mc);
             }
         } catch (Exception e) {
         }
@@ -475,6 +486,7 @@ public class JSONHandler {
         osStrings.add(JTYPE_ARTICLES_TOP);
         osStrings.add(JTYPE_BLACK_LIST);
         osStrings.add(JTYPE_FOLLOW_LIST);
+        osStrings.add(JTYPE_FANS_LIST);
         osStrings.add(JTYPE_GET_FUND_SOURCES);
         osStrings.add(JTYPE_GET_ACCOUNT_VERSIONS);
         osStrings.add(JTYPE_DEPOSITS);

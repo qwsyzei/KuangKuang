@@ -34,6 +34,7 @@ public class M_FeedBackActivity extends BaseActivity {
 
     private void initView() {
         edit = (ContainsEmojiEditText) findViewById(R.id.feedback_edit);
+        EditTListener(edit);
         btn = (Button) findViewById(R.id.feedback_button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

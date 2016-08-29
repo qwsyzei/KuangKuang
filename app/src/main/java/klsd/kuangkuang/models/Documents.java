@@ -12,6 +12,7 @@ public class Documents implements Serializable {
 
     private String name, birthday, address, sex, signature, aasm_state, zipcode, city;
     private String picture;
+    private String follow_number,followed_number;
 
     public String getName() {
         return name;
@@ -85,6 +86,22 @@ public class Documents implements Serializable {
         this.picture = picture;
     }
 
+    public String getFollow_number() {
+        return follow_number;
+    }
+
+    public void setFollow_number(String follow_number) {
+        this.follow_number = follow_number;
+    }
+
+    public String getFollowed_number() {
+        return followed_number;
+    }
+
+    public void setFollowed_number(String followed_number) {
+        this.followed_number = followed_number;
+    }
+
     public void getFromJSONObject(JSONObject object) {
         try {
             setName(object.getString("nickname"));
@@ -94,6 +111,8 @@ public class Documents implements Serializable {
             setSignature(object.getString("signature"));
             setCity(object.getString("city"));
             setPicture(object.getString("picture"));
+            setFollow_number(object.getString("follow_number"));
+            setFollowed_number(object.getString("followed_number"));
         } catch (Exception e) {
         }
     }

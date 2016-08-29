@@ -30,6 +30,7 @@ import klsd.kuangkuang.main.BaseActivity;
 import klsd.kuangkuang.main.C_ReleaseWordActivity;
 import klsd.kuangkuang.main.LoginActivity;
 import klsd.kuangkuang.main.M_BlackListActivity;
+import klsd.kuangkuang.main.M_FansListActivity;
 import klsd.kuangkuang.main.M_FollowListActivity;
 import klsd.kuangkuang.main.M_MyCollectActivity;
 import klsd.kuangkuang.main.M_PersonalDataActivity;
@@ -55,7 +56,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
     private List<MyWord> cirList;
     private M_MywordAdapter mywordAdapter;
     private ImageView im_set;
-    private RelativeLayout layout_collect,layout_follows,layout_blacklist;
+    private RelativeLayout layout_collect,layout_blacklist;
     private ArrayList<MyWord> sList;
     private SelfListView listView;
     private static Activity a;
@@ -66,6 +67,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
     private Documents documents;
     private ImageView im_head_big, im_head_small;
 private TextView tv_name,tv_signature;
+    private TextView tv_fans,tv_follows;
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
     public MMeFragment() {
@@ -115,19 +117,22 @@ private TextView tv_name,tv_signature;
         im_head_small = (ImageView) view.findViewById(R.id.me_head_small);
         im_set = (ImageView) view.findViewById(R.id.im_title_set);
         layout_collect = (RelativeLayout) view.findViewById(R.id.me_collect_layout);
-        layout_follows= (RelativeLayout) view.findViewById(R.id.me_follows_layout);
         layout_blacklist= (RelativeLayout) view.findViewById(R.id.me_black_layout);
         layout_release = (LinearLayout) view.findViewById(R.id.layout_me_release_word_now);
         layout_today= (LinearLayout) view.findViewById(R.id.layout_me_myword_today);
         listView = (SelfListView) view.findViewById(R.id.listview_me_myword);
         tv_name= (TextView) view.findViewById(R.id.me_nickname);
         tv_signature= (TextView) view.findViewById(R.id.me_signature);
+        tv_fans= (TextView) view.findViewById(R.id.me_fans_tv);
+        tv_follows= (TextView) view.findViewById(R.id.me_follows_tv);
+
         listView.setFocusable(false);
         layout_release.setOnClickListener(this);
         layout_collect.setOnClickListener(this);
-        layout_follows.setOnClickListener(this);
         layout_blacklist.setOnClickListener(this);
         im_head_small.setOnClickListener(this);
+        tv_fans.setOnClickListener(this);
+        tv_follows.setOnClickListener(this);
         im_set.setOnClickListener(this);
         mPullToRefreshView= (PullToRefresh123View)view.findViewById(R.id.pull_refresh_view_me);
         mPullToRefreshView.setOnFooterRefreshListener(this);
@@ -148,9 +153,6 @@ private TextView tv_name,tv_signature;
             case R.id.me_collect_layout:
                 myStartActivity(new Intent(getActivity(), M_MyCollectActivity.class));
                 break;
-            case R.id.me_follows_layout:
-                myStartActivity(new Intent(getActivity(), M_FollowListActivity.class));
-                break;
             case R.id.me_black_layout:
                 myStartActivity(new Intent(getActivity(), M_BlackListActivity.class));
                 break;
@@ -159,6 +161,12 @@ private TextView tv_name,tv_signature;
                 break;
             case R.id.me_head_small:
                 myStartActivity(new Intent(getActivity(), M_PersonalDataActivity.class));
+                break;
+            case R.id.me_fans_tv:
+                myStartActivity(new Intent(getActivity(), M_FansListActivity.class));
+                break;
+            case R.id.me_follows_tv:
+                myStartActivity(new Intent(getActivity(), M_FollowListActivity.class));
                 break;
         }
     }
@@ -221,9 +229,19 @@ private TextView tv_name,tv_signature;
                     documents = (Documents) bundle.getSerializable("documents");
                     tv_name.setText(documents.getName());
                     if (documents.getSignature().equals("null")){
-                        tv_signature.setText("");
+                        tv_signature.setText(getString(R.string.not_too_lazy));
                     }else{
                         tv_signature.setText(documents.getSignature());
+                    }
+                    if (documents.getFollow_number().contains(".0")){
+                        tv_follows.setText(getString(R.string.follows)+" "+documents.getFollow_number().replace(".0",""));
+                    }else{
+                        tv_follows.setText(getString(R.string.follows)+" "+documents.getFollow_number());
+                    }
+                    if (documents.getFollowed_number().contains(".0")){
+                        tv_fans.setText(getString(R.string.fans)+" "+documents.getFollowed_number().replace(".0",""));
+                    }else{
+                        tv_fans.setText(getString(R.string.fans)+" "+documents.getFollowed_number());
                     }
                     getbitmap123();
                 loadDataFrom();

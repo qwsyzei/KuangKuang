@@ -74,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:maxLength="13"
                 android:background="@null"
                 android:text="开心就好"
                 android:textSize="@dimen/middle_text_size" />

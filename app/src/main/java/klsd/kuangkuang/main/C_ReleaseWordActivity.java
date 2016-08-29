@@ -82,6 +82,7 @@ public class C_ReleaseWordActivity extends BaseActivity implements View.OnClickL
         dialog = new UploadDialog(this, R.style.UploadDialog, R.string.upload_dialog_textView);
         dialog.setCanceledOnTouchOutside(false);
         edit = (ContainsEmojiEditText) findViewById(R.id.release_edit);
+        EditTListener(edit);
         layout = (RelativeLayout) findViewById(R.id.layout_release_word_open_pop);
         layout.setOnClickListener(this);
         tv_release = (TextView) findViewById(R.id.tv_title_right);

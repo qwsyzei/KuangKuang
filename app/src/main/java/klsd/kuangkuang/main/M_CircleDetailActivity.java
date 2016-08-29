@@ -275,7 +275,7 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
         } else if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
             ToastUtil.show(M_CircleDetailActivity.this, "删除成功");
             Intent intent = new Intent(M_CircleDetailActivity.this, MainActivity.class);
-            intent.putExtra("release", "123");
+            intent.putExtra("goto", "me");
             startActivity(intent);
             finish();
 
@@ -348,6 +348,7 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
         });
 
         edit_dialog_comment = (ContainsEmojiEditText) pop_view.findViewById(R.id.dialog_comment_edit);
+        EditTListener(edit_dialog_comment);
         tv_dialog_send = (TextView) pop_view.findViewById(R.id.dialog_comment_send_send);
         tv_dialog_send.setOnClickListener(this);
         edit_dialog_comment.requestFocus();
@@ -368,7 +369,7 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
                 ToastUtil.show(M_CircleDetailActivity.this, "加载更多数据");
             }
 
-        }, 2200);
+        }, 2400);
     }
     private void Delete_Dialog() {
         exitDialog = new ExitDialog(M_CircleDetailActivity.this, R.style.MyDialogStyle, R.layout.dialog_exit);

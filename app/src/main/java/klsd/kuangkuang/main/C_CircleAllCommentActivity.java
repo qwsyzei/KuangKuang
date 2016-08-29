@@ -60,6 +60,7 @@ public class C_CircleAllCommentActivity extends BaseActivity implements View.OnC
         mPullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_refresh_view_circle_allcomment);
         tv_send = (TextView) findViewById(R.id.all_comment_send_send);
         edit_comment = (ContainsEmojiEditText) findViewById(R.id.all_comment_send_edit);
+        EditTListener(edit_comment);
         tv_send.setOnClickListener(this);
         mPullToRefreshView.setOnHeaderRefreshListener(this);
         mPullToRefreshView.setOnFooterRefreshListener(this);

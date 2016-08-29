@@ -54,6 +54,8 @@ public class ForgetPsdActivity extends BaseActivity {
         edit_phoneyan = (EditText) findViewById(R.id.getback_phone_yan);
         edit_newpsd = (ContainsEmojiEditText) findViewById(R.id.edit_newpassword);
         edit_newpsd_confirm = (ContainsEmojiEditText) findViewById(R.id.edit_confirm_newpassword);
+        EditTListener(edit_newpsd);
+        EditTListener(edit_newpsd_confirm);
         tv_getcode = (TextView) findViewById(R.id.getback_code_phone);
         im_set = (ImageView) findViewById(R.id.forget_im_done);
 

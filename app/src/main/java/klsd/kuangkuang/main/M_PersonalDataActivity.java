@@ -89,6 +89,8 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         tv_change_head = (TextView) findViewById(R.id.tv_personal_data_change_head);
         edit_per_nickname = (ContainsEmojiEditText) findViewById(R.id.per_nickname);
         edit_per_signature = (ContainsEmojiEditText) findViewById(R.id.per_edit_signature);
+        EditTListener(edit_per_nickname);
+        EditTListener(edit_per_signature);
         edit_per_nickname.setOnFocusChangeListener(this);//用于判断焦点
         edit_per_signature.setOnFocusChangeListener(this);
         spinner_sex = (Spinner) findViewById(R.id.per_spinner_sex);

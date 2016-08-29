@@ -66,6 +66,8 @@ public class SignupActivity extends BaseActivity {
         edit_phoneyan = (EditText) findViewById(R.id.signup_phone_yan);
         edit_password = (ContainsEmojiEditText) findViewById(R.id.signup_phone_edit_password);
         edit_password_confirm = (ContainsEmojiEditText) findViewById(R.id.signup_phone_edit_password_again);
+        EditTListener(edit_password);
+        EditTListener(edit_password_confirm);
         tv_get = (TextView) findViewById(R.id.signup_phone_getyan);
        im_signup = (ImageView) findViewById(R.id.im_signup_phone);
         im_eye1 = (ImageView) findViewById(R.id.sign_up_im_change1);

@@ -43,6 +43,7 @@
             android:paddingLeft="@dimen/login_p_l_r"
             android:digits="0123456789"
             android:maxLength="10"
+            android:inputType="number"
             android:maxLines="1"
             android:background="@drawable/small_corner_box"/>
     </LinearLayout>

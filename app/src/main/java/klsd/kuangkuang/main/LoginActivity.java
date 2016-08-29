@@ -88,6 +88,7 @@ public class LoginActivity extends BaseActivity {
 
         edit_admin = (EditText) findViewById(R.id.editTPhone);
         editTPassword = (ContainsEmojiEditText) findViewById(R.id.editTPassword);
+        EditTListener(editTPassword);
         tv_signup = (TextView) findViewById(R.id.tv_signup);
         tv_forget = (TextView) findViewById(R.id.tv_forgetpassword);
         im_inputcancel = (ImageView) findViewById(R.id.getback_im_cancel);

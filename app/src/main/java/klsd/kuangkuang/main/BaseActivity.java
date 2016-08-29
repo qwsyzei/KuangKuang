@@ -33,6 +33,9 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.PatternSyntaxException;
+
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.models.Member;
 import klsd.kuangkuang.utils.Consts;
@@ -183,15 +186,41 @@ public class BaseActivity extends FragmentActivity {
         if (this.getClass().toString().contains("Welcome"))
             finish();
     }
+    int mMaxLenth = 200;//设置允许输入的字符长度
+    public static String stringFilter(String str) {
 
-
-    public String getMarket() {
-        return DataCenter.getMarket();
+        return str.replaceAll(" ","");
     }
+public void EditTListener(final EditText mEditText){
+    mEditText.addTextChangedListener(new TextWatcher() {
+        private int cou = 0;
+        int selectionEnd = 0;
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+            cou = before + count;
+            String editable = mEditText.getText().toString();
+            String str = stringFilter(editable); //过滤特殊字符
+            if (!editable.equals(str)) {
+                mEditText.setText(str);
+            }
+            mEditText.setSelection(mEditText.length());
+            cou = mEditText.length();
+        }
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+        }
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (cou > mMaxLenth) {
+                selectionEnd = mEditText.getSelectionEnd();
+                s.delete(mMaxLenth, selectionEnd);
+            }
+        }
+    });
 
-    public void setMarket(String m) {
-        DataCenter.setMarket(m);
-    }
+}
 
     public Member getMember() {
         return DataCenter.getMember();
@@ -274,20 +303,6 @@ public class BaseActivity extends FragmentActivity {
         }
     };
 
-    private View.OnClickListener listener = new OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.exit_yes:
-
-                    exitDialog.dismiss();
-                    break;
-                case R.id.exit_no:
-                    exitDialog.dismiss();
-                    break;
-            }
-        }
-    };
 
     public void toastError() {
         try {

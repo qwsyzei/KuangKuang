@@ -5,9 +5,8 @@ import android.app.Application;
 public class Consts extends Application {
 
     // API
-//    public final static String host = "http://119.254.211.82:8080";//生产
-    public final static String host="http://119.254.100.167:8080";//测试
-public final static String host123="http://192.168.31.167:3000";
+//    public final static String host = "http://139.198.3.184:8080";//生产
+    public final static String host="http://139.198.3.185:8080";//测试
     public final static String baseApiPath = host+ "/api/v2";
 
     // HTML
@@ -48,6 +47,7 @@ public final static String host123="http://192.168.31.167:3000";
     public final static String blacklistApi = baseApiPath + "/blacklist/blacklist_list";//黑名单列表
     public final static String addfollowsApi = baseApiPath + "/focus/add_follows";//加入关注
     public final static String followslistApi = baseApiPath + "/focus/follows_list";//关注列表
+    public final static String fanslistApi = baseApiPath + "/focus/followed_list";//粉丝列表
     public final static String destroyfollowsApi = baseApiPath + "/focus/destroy_follows";//取消关注
     public final static String caratcalculatorApi = baseApiPath + "/tools/carat_calculator";//计算机器数据
     public final static String certificateApi = baseApiPath + "/tools/Certificate_inspection";//证书

@@ -166,8 +166,13 @@
     <string name="my_collect">我的收藏</string>
     <string name="black_list">黑名单</string>
     <string name="my_follows">我的关注</string>
-    <string name="add_follows">+关注</string>
+    <string name="follows">关注</string>
+    <string name="my_fans">最新粉丝</string>
+    <string name="fans">粉丝</string>
+    <string name="add_follows">加关注</string>
+    <string name="already_follows">已关注</string>
     <string name="add_follows_success">关注成功</string>
+    <string name="cannot_add_follow_self">不可关注自己</string>
     <string name="cannot_add_self_black_list">不可将自己加入黑名单</string>
     <string name="delete_black_list">移除黑名单</string>
     <string name="cancel_follow">取消关注</string>
@@ -180,6 +185,8 @@
     <string name="delete_myword">删除该说说</string>
     <string name="delete_the_comment">删除该评论</string>
     <string name="delete_success">删除成功</string>
+    <string name="not_too_lazy">主人什么也没留下</string>
+    <string name="too_lazy">这个家伙太懒了，什么也没留下</string>
     <!-- 工具 -->
     <string name="check_certificate">查证书</string>
     <string name="measure_hand_size">量手寸</string>
@@ -297,6 +304,7 @@
     <string name="about_us_phone">服务电话：010-57133977</string>
     <string name="about_us_mail">邮箱：kuangkuang2016@126.com</string>
 
+    <string name="error1001">请设置出生年月</string>
     <string name="error2006">时间戳已被使用</string>
     <string name="error2007">当前手机时间与网络时间不一致，请重启应用</string>
     <string name="error2013">用户已注册过</string>

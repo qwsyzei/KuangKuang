@@ -26,7 +26,6 @@
             <include layout="@layout/m_me_top"></include>
 
             <include layout="@layout/m_me_collect"></include>
-            <include layout="@layout/m_me_follows"></include>
             <include layout="@layout/m_me_blacklist"></include>
             <LinearLayout
                 android:layout_width="match_parent"

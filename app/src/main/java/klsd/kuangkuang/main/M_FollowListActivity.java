@@ -35,7 +35,7 @@ public class M_FollowListActivity extends BaseActivity {
         getfollowList();
     }
     /**
-     * 获取黑名单列表
+     * 获取关注列表
      */
     public void getfollowList() {
         new MyHTTP(this).baseRequest(Consts.followslistApi, JSONHandler.JTYPE_FOLLOW_LIST,

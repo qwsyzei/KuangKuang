@@ -54,6 +54,9 @@ public class M_ChangePsdActivity extends BaseActivity {
         edit_psd = (ContainsEmojiEditText) findViewById(R.id.change_login_password);
         edit_newpsd = (ContainsEmojiEditText) findViewById(R.id.change_login_newpassword);
         edit_newpsd_confirm = (ContainsEmojiEditText) findViewById(R.id.change_login_newpassword_confirm);
+        EditTListener(edit_psd);
+        EditTListener(edit_newpsd);
+        EditTListener(edit_newpsd_confirm);
         btn_change = (Button) findViewById(R.id.change_login_psd_button);
         im1 = (ImageView) findViewById(R.id.change_login_im1);
         im2 = (ImageView) findViewById(R.id.change_login_im2);

@@ -62,6 +62,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
         UIutils.showLoading(S_AllCommentActivity.this);
         tv_send = (TextView) findViewById(R.id.all_comment_send_send);
         edit_comment = (ContainsEmojiEditText) findViewById(R.id.all_comment_send_edit);
+        EditTListener(edit_comment);
         tv_send.setOnClickListener(this);
         mPullToRefreshView.setOnHeaderRefreshListener(this);
         mPullToRefreshView.setOnFooterRefreshListener(this);

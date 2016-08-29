@@ -7,18 +7,19 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 /**
- * 关注列表的实体类
- * Created by qiwei on 2016/8/18.
+ * 粉丝
+ * Created by qiwei on 2016/8/29.
  */
-public class Follows implements Serializable {
+public class Fans implements Serializable {
 
     private String nickname, picture_son;//名字  头像 url
-    private String object_id;
     private String signature;
+    private String object_id;
+    private String isfollow;
 
     private Context context;
 
-    public Follows(Context context) {
+    public Fans(Context context) {
         this.context = context;
     }
 
@@ -30,12 +31,12 @@ public class Follows implements Serializable {
         this.object_id = object_id;
     }
 
-    public String getSignature() {
-        return signature;
+    public String getIsfollow() {
+        return isfollow;
     }
 
-    public void setSignature(String signature) {
-        this.signature = signature;
+    public void setIsfollow(String isfollow) {
+        this.isfollow = isfollow;
     }
 
     public String getNickname() {
@@ -54,12 +55,20 @@ public class Follows implements Serializable {
         this.picture_son = picture_son;
     }
 
+    public String getSignature() {
+        return signature;
+    }
 
-    public Follows getFromJSONObjectItem(JSONObject object) {
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public Fans getFromJSONObjectItem(JSONObject object) {
         try {
             setNickname(object.getString("nickname"));
             setPicture_son(object.getString("picture"));
             setObject_id(object.getString("object_id"));
+            setIsfollow(object.getString("follow"));
             setSignature(object.getString("signature"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,4 +77,5 @@ public class Follows implements Serializable {
     }
 
 }
+
 
