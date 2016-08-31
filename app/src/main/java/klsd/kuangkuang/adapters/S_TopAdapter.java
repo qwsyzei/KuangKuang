@@ -18,6 +18,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
+
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.main.S_ArticleActivity;
 import klsd.kuangkuang.models.Top;
@@ -40,7 +41,8 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
     String jtype, responseJson;
     String error_code;
     Bundle handlerBundler;
-    public S_TopAdapter(Context context, List<Top> list,Handler h) {
+
+    public S_TopAdapter(Context context, List<Top> list, Handler h) {
         super(context, R.layout.item_top_ten, list);
         this.ctx = context;
         this.handler = h;
@@ -66,18 +68,18 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = (FrameLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_top_ten, null);
-            viewHolder.top= (TextView) convertView.findViewById(R.id.item_top_tv);
+            viewHolder.top = (TextView) convertView.findViewById(R.id.item_top_tv);
             viewHolder.title = (TextView) convertView.findViewById(R.id.item_top_tv_title);
             viewHolder.tag = (TextView) convertView.findViewById(R.id.item_top_tv_tag);
-            viewHolder.im_pic= (ImageView) convertView.findViewById(R.id.item_top_im);
+            viewHolder.im_pic = (ImageView) convertView.findViewById(R.id.item_top_im);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-       viewHolder.top.setText("Top"+(position+1)+"");
+        viewHolder.top.setText("Top" + (position + 1) + "");
         viewHolder.title.setText(ac.getTitle());
         viewHolder.tag.setText(ac.getTag());
-
+        Log.d("我在GIEDVIEW", "getView() returned: " + ac.getIs_like());
         Context context = ctx.getApplicationContext();
         initImageLoader(context);
         ImageLoader.getInstance().displayImage(ac.getPicture_url(), viewHolder.im_pic);
@@ -105,16 +107,18 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
                 intent.putExtra("nickname", ac.getNickname());
                 intent.putExtra("picture_son", ac.getPicture_son());
                 intent.putExtra("signature", ac.getSignature());
-                intent.putExtra("author_member_id",ac.getMember_id());
-
+                intent.putExtra("author_member_id", ac.getMember_id());
+                intent.putExtra("follow_state", ac.getFollow_state());
+                intent.putExtra("is_like",ac.getIs_like());
                 ctx.startActivity(intent);
             }
         });
 
         return convertView;
     }
+
     public void updateData() {
-       if (jtype.equals(JSONHandler.JTYPE_ARTICLES_VIEWS)) {
+        if (jtype.equals(JSONHandler.JTYPE_ARTICLES_VIEWS)) {
         }
     }
 
@@ -125,8 +129,9 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
             ToastUtil.show(ctx, responseJson);
         }
     }
+
     public final class ViewHolder {
-        TextView title, tag,top;
+        TextView title, tag, top;
         ImageView im_pic;
     }
 }

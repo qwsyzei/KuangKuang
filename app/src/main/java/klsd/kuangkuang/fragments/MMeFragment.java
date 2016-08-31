@@ -70,6 +70,7 @@ private TextView tv_name,tv_signature;
     private TextView tv_fans,tv_follows;
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
+    int flag=0;
     public MMeFragment() {
         // Required empty public constructor
     }
@@ -111,7 +112,7 @@ private TextView tv_name,tv_signature;
 
     private void initView() {
         documents = new Documents();
-        getData();
+
         sList = new ArrayList<>();
         im_head_big = (ImageView) view.findViewById(R.id.me_head_big);
         im_head_small = (ImageView) view.findViewById(R.id.me_head_small);
@@ -136,12 +137,16 @@ private TextView tv_name,tv_signature;
         im_set.setOnClickListener(this);
         mPullToRefreshView= (PullToRefresh123View)view.findViewById(R.id.pull_refresh_view_me);
         mPullToRefreshView.setOnFooterRefreshListener(this);
+        getMyWordList();
         mywordAdapter = new M_MywordAdapter(a, sList, handler);
         listView.setAdapter(mywordAdapter);
     }
     @Override
     public void onResume() {
         super.onResume();
+        if (flag==1){
+            getData();
+        }
 //        ToastUtil.show(a,"我是我ME");
     }
     @Override
@@ -203,6 +208,7 @@ private TextView tv_name,tv_signature;
                 ToastUtil.show(a, getString(R.string.network_problem));
             } else if (res.equals("OK")) {
                 if (jtype.equals(JSONHandler.JTYPE_MYWORD_LIST)) {
+
                     int curTradesSize = sList.size();
                     ArrayList<MyWord> os = (ArrayList<MyWord>) bundle.getSerializable("myword_list");
                     for (int i=0;i<os.size();i++){
@@ -225,6 +231,8 @@ private TextView tv_name,tv_signature;
                         mywordAdapter.notifyDataSetChanged();
                     }
                     page += 1;
+                    getData();
+                    flag=1;
                 } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
                     documents = (Documents) bundle.getSerializable("documents");
                     tv_name.setText(documents.getName());
@@ -233,6 +241,8 @@ private TextView tv_name,tv_signature;
                     }else{
                         tv_signature.setText(documents.getSignature());
                     }
+                    Log.d("关注数", "handleMessage() returned: " + documents.getFollow_number());
+                    Log.d("粉丝数", "handleMessage() returned: " + documents.getFollowed_number());
                     if (documents.getFollow_number().contains(".0")){
                         tv_follows.setText(getString(R.string.follows)+" "+documents.getFollow_number().replace(".0",""));
                     }else{
@@ -244,7 +254,7 @@ private TextView tv_name,tv_signature;
                         tv_fans.setText(getString(R.string.fans)+" "+documents.getFollowed_number());
                     }
                     getbitmap123();
-                loadDataFrom();
+//                loadDataFrom();
                 }
             } else if (res.equals("123")) {
                 if (!documents.getPicture().equals("null")&&!documents.getPicture().equals("uploads/head_portrait")) {

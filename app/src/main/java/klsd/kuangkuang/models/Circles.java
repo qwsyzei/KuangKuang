@@ -17,12 +17,46 @@ public class Circles implements Serializable {
     private String id, member_id, created_at, updated_at;//标题，内容描述
     private String content_son, nickname, picture_son;//内容，作者名字，作者头像
     private String like, comment;
+    private String signature,followed_number,follow_state;
     private Bitmap head;//这个是假的，回头删了
     private String url1, url2, url3, url4, url5, url6, url7, url8, url9;
+    private String islike;
     private Context context;
 
     public Circles(Context context) {
         this.context = context;
+    }
+
+    public String getIslike() {
+        return islike;
+    }
+
+    public void setIslike(String islike) {
+        this.islike = islike;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getFollowed_number() {
+        return followed_number;
+    }
+
+    public void setFollowed_number(String followed_number) {
+        this.followed_number = followed_number;
+    }
+
+    public String getFollow_state() {
+        return follow_state;
+    }
+
+    public void setFollow_state(String follow_state) {
+        this.follow_state = follow_state;
     }
 
     public String getUrl1() {
@@ -202,11 +236,15 @@ public class Circles implements Serializable {
         return this;
     }
 
-    public Circles getcontentfrom(String content, String nickname, String picture_son) {
+    public Circles getcontentfrom(String content, String nickname, String picture_son,String signature,String followed_number,String follow_state,String islike) {
         try {
             setContent_son(content);
             setNickname(nickname);
             setPicture_son(picture_son);
+            setSignature(signature);
+            setFollowed_number(followed_number);
+            setFollow_state(follow_state);
+            setIslike(islike);
         } catch (Exception e) {
             e.printStackTrace();
         }

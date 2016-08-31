@@ -278,7 +278,6 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
             intent.putExtra("goto", "me");
             startActivity(intent);
             finish();
-
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
             ToastUtil.show(M_CircleDetailActivity.this, "评论成功");
             cPopwindow.dismiss();

@@ -188,7 +188,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
     }
 
-    public void showFragment(int index,String subject_key) {
+    public  void showFragment(int index,String subject_key) {
         FragmentManager fm = getSupportFragmentManager();  //获得Fragment管理器
         FragmentTransaction ft = fm.beginTransaction(); //开启一个事务
 

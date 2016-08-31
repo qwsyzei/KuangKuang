@@ -17,7 +17,7 @@
         android:gravity="bottom"
         android:orientation="vertical"
         android:background="@color/top_background123"
-        android:paddingBottom="@dimen/signup__text_m_l_r"
+        android:paddingBottom="@dimen/size_eight"
        >
 
         <klsd.kuangkuang.views.CircleImageView
@@ -25,6 +25,8 @@
             android:layout_width="@dimen/me_head_small_size"
             android:layout_height="@dimen/me_head_small_size"
             android:layout_gravity="center"
+            android:src="@mipmap/zhan_circle_head"
+            android:layout_marginTop="@dimen/size_eight"
             android:layout_marginBottom="@dimen/size_eight" />
 
         <TextView
@@ -63,6 +65,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_eight"
                 android:layout_marginRight="@dimen/size_eight"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
                 android:background="@color/white"/>
             <TextView
                 android:id="@+id/me_follows_tv"

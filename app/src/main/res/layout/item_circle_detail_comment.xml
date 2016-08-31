@@ -48,6 +48,7 @@
         android:id="@+id/item_circle_detail_replytext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/clickstate"
      android:layout_centerVertical="true"
       android:layout_alignParentLeft="true"
         android:text="@string/reply" />

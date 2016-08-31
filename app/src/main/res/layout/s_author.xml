@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="klsd.kuangkuang.main.S_AuthorActivity">
+    <RelativeLayout
+        android:id="@+id/article_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/title_article" />
+    </RelativeLayout>
+    <klsd.kuangkuang.views.PullToRefresh123View
+        android:id="@+id/pull_refresh_view_author"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:background="@color/lightgray" >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/s_author_info"></include>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/base_margin"
+                    >
+                    <include layout="@layout/s_author_words"></include>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </klsd.kuangkuang.views.PullToRefresh123View>
+</LinearLayout>

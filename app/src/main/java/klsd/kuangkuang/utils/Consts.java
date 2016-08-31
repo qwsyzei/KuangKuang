@@ -5,8 +5,8 @@ import android.app.Application;
 public class Consts extends Application {
 
     // API
-//    public final static String host = "http://139.198.3.184:8080";//生产
-    public final static String host="http://139.198.3.185:8080";//测试
+    public final static String host = "http://139.198.3.184:8080";//生产
+//    public final static String host="http://139.198.3.185:8080";//测试
     public final static String baseApiPath = host+ "/api/v2";
 
     // HTML
@@ -85,7 +85,7 @@ public class Consts extends Application {
         getbackPasswordPhoneApi,
 //            articlesListApi,
             articlesCommentaryApi,
-            articlesTopApi,
+//            articlesTopApi,
             articlesViewApi,
 //            micropostsListApi,
             circlecommentListApi,

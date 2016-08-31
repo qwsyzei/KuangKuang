@@ -44,7 +44,6 @@ public class S_TopTenActivity extends BaseActivity {
      */
     public void getTop10() {
         RequestParams params = new RequestParams();
-        params = KelaParams.generateSignParam("GET", Consts.articlesTopApi, params);
         new MyHTTP(this).baseRequest(Consts.articlesTopApi, JSONHandler.JTYPE_ARTICLES_TOP,
                 HttpRequest.HttpMethod.GET, params, getHandler());
     }

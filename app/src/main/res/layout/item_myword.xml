@@ -3,6 +3,7 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:paddingTop="@dimen/login_p_l_r"
     android:paddingBottom="@dimen/login_p_l_r"
+    android:background="@drawable/clickstate"
     android:layout_height="wrap_content">
 <TextView
     android:id="@+id/item_myword_day"

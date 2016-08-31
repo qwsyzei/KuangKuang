@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/white"
+    android:background="@drawable/clickstate"
     android:paddingBottom="@dimen/login_p_l_r"
     android:paddingLeft="@dimen/base_margin"
     android:paddingRight="@dimen/base_margin"

@@ -73,6 +73,10 @@
         </activity>
         <activity android:name=".main.M_FansListActivity" >
         </activity>
+        <activity android:name=".main.S_AuthorActivity" >
+        </activity>
+        <activity android:name=".main.S_CircleAuthorActivity" >
+        </activity>
     </application>
 
 </manifest>

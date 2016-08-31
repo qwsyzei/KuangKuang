@@ -12,15 +12,32 @@ import java.io.Serializable;
  */
 public class Top implements Serializable {
     private String title, content, picture_url;
-    private String describe_son,id;
+    private String describe_son, id;
     private String member_id, created_at, updated_at, tag, display;//暂时不用
     private String views, like, comment;
-    private String nickname,signature,picture_son;//作者名字  作者描述   作者头像 url
-
+    private String nickname, signature, picture_son;//作者名字  作者描述   作者头像 url
+    private String follow_state;
+    private String is_like;
     private Context context;
 
     public Top(Context context) {
         this.context = context;
+    }
+
+    public String getIs_like() {
+        return is_like;
+    }
+
+    public void setIs_like(String is_like) {
+        this.is_like = is_like;
+    }
+
+    public String getFollow_state() {
+        return follow_state;
+    }
+
+    public void setFollow_state(String follow_state) {
+        this.follow_state = follow_state;
     }
 
     public String getTitle() {
@@ -168,13 +185,15 @@ public class Top implements Serializable {
         }
         return this;
     }
-    public Top getauthorInfo(String nickname,String picture_son,String signature,String describe_son) {
+
+    public Top getauthorInfo(String nickname, String picture_son, String signature, String describe_son, String follow_state,String is_like) {
         try {
             setNickname(nickname);
             setPicture_son(picture_son);
             setSignature(signature);
             setDescribe_son(describe_son);
-
+            setFollow_state(follow_state);
+            setIs_like(is_like);
         } catch (Exception e) {
             e.printStackTrace();
         }

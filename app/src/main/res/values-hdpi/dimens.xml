@@ -97,6 +97,8 @@
     <dimen name="login_title_m_t">15dp</dimen>
     <dimen name="login_title_m_l">11dp</dimen>
     <dimen name="login_m_l">37dp</dimen>
+    <dimen name="article_author_frame_height">78dp</dimen>
+
     <dimen name="article_author_m_t">32dp</dimen>
     <dimen name="article_author_m_b">28dp</dimen>
     <dimen name="article_author_layout_height">240dp</dimen>
@@ -111,11 +113,11 @@
 
     <dimen name="togglebutton_width">49dp</dimen>
     <dimen name="togglebutton_height">25dp</dimen>
-    <dimen name="article_author_head_size">45dp</dimen>
+    <dimen name="article_author_head_size">48dp</dimen>
     <dimen name="subject_author_head_size">36dp</dimen>
     <dimen name="myword_pic_size">67dp</dimen>
     <dimen name="circle_text_height">47dp</dimen>
-    <dimen name="me_head_small_size">96dp</dimen>
+    <dimen name="me_head_small_size">87dp</dimen>
     <dimen name="me_head_big_height">180dp</dimen>
 
     <dimen name="item_gridview_size">98dp</dimen>

@@ -102,7 +102,8 @@ public class M_FansListAdapter extends ArrayAdapter<Fans> {
         viewHolder.layout_follow_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                position123 = position;
+                if (ac.getIsfollow().equals("0")){
+                    position123 = position;
                 exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
                 exitDialog.setCanceledOnTouchOutside(true);
                 exitDialog.show();
@@ -121,6 +122,7 @@ public class M_FansListAdapter extends ArrayAdapter<Fans> {
                                 params, handler);
                     }
                 });
+            }
             }
         });
 

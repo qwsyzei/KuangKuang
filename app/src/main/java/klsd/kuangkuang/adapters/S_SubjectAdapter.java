@@ -144,6 +144,8 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
                 intent.putExtra("picture_son", subject.getPicture_son());
                 intent.putExtra("signature", subject.getSignature());
                 intent.putExtra("author_member_id",subject.getMember_id());
+                intent.putExtra("follow_state",subject.getFollow_state());
+                intent.putExtra("is_like",subject.getIs_like());
                 ctx.startActivity(intent);
             }
         });

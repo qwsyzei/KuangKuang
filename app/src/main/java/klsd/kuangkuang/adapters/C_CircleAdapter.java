@@ -1,5 +1,6 @@
 package klsd.kuangkuang.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -40,6 +41,7 @@ import klsd.kuangkuang.fragments.MCircleFragment;
 import klsd.kuangkuang.main.C_CircleAllCommentActivity;
 import klsd.kuangkuang.main.ImagePagerActivity;
 import klsd.kuangkuang.main.MainActivity;
+import klsd.kuangkuang.main.S_CircleAuthorActivity;
 import klsd.kuangkuang.models.Circles;
 import klsd.kuangkuang.models.CircleGridViewEntity;
 import klsd.kuangkuang.utils.Consts;
@@ -71,12 +73,11 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
     Bundle handlerBundler;
     private ExitDialog exitDialog;
     private MoreDialog moreDialog;
-    private TextView tv_yes,tv_no,tv_title;
+    private TextView tv_yes, tv_no, tv_title;
     private TextView tv_dialog_cancel;
-private LinearLayout layout_black,layout_tip_off;
+    private LinearLayout layout_black, layout_tip_off;
     private List<CircleGridViewEntity> headerEntitiesList;
     private C_CircleGridAdapter cGridAdapter;
-    private Fragment fragment;
     private List<Circles> mylist;
     private String id;
 
@@ -84,7 +85,7 @@ private LinearLayout layout_black,layout_tip_off;
         super(context, R.layout.item_circle, objects);
         this.ctx = context;
         this.handler = h;
-        this.mylist=objects;
+        this.mylist = objects;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -116,7 +117,8 @@ private LinearLayout layout_black,layout_tip_off;
             viewHolder.time = (TextView) convertView.findViewById(R.id.item_circle_time);
             viewHolder.layout_like = (LinearLayout) convertView.findViewById(R.id.layout_item_circle_like);
             viewHolder.layout_comment = (LinearLayout) convertView.findViewById(R.id.layout_item_circle_comment);
-            viewHolder.im_black= (ImageView) convertView.findViewById(R.id.item_circle_black);
+            viewHolder.im_black = (ImageView) convertView.findViewById(R.id.item_circle_black);
+            viewHolder.im_like = (ImageView) convertView.findViewById(R.id.item_circle_like_im);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -155,23 +157,7 @@ private LinearLayout layout_black,layout_tip_off;
         for (int i = 0; i < number; i++) {
             imageUrls.add(Consts.host + "/" + url[i]);
         }
-        viewHolder.layout_like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (DataCenter.isSigned()) {
-                    //点赞
-                    RequestParams params = new RequestParams();
-                    params.addQueryStringParameter("object_id", circles.getId());
-                    params.addQueryStringParameter("species", "micropost");
-                    if (http == null) http = new MyHTTP(ctx);
-                    http.baseRequest(Consts.addLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
-                            params, handler);
-                } else {
-                    ToastUtil.show(ctx, R.string.not_login);
-                }
 
-            }
-        });
         viewHolder.im_black.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,10 +176,10 @@ private LinearLayout layout_black,layout_tip_off;
                     @Override
                     public void onClick(View view) {
                         moreDialog.dismiss();
-                        if (DataCenter.isSigned()){
+                        if (DataCenter.isSigned()) {
                             exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_exit);
                             exitDialog.show();
-                            tv_title= (TextView) exitDialog.findViewById(R.id.dialog_exit_title);
+                            tv_title = (TextView) exitDialog.findViewById(R.id.dialog_exit_title);
                             tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
                             tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
                             tv_title.setText(R.string.if_add_black);
@@ -201,10 +187,10 @@ private LinearLayout layout_black,layout_tip_off;
                                 @Override
                                 public void onClick(View view) {
                                     exitDialog.dismiss();
-                                    if (DataCenter.getMember_id().equals(circles.getMember_id())){
-                                        ToastUtil.show(ctx,R.string.cannot_add_self_black_list);
-                                    }else{
-                                        id=circles.getMember_id();
+                                    if (DataCenter.getMember_id().equals(circles.getMember_id())) {
+                                        ToastUtil.show(ctx, R.string.cannot_add_self_black_list);
+                                    } else {
+                                        id = circles.getMember_id();
                                         //加入黑名单
                                         RequestParams params = new RequestParams();
                                         params.addQueryStringParameter("object_id", circles.getMember_id());
@@ -221,9 +207,9 @@ private LinearLayout layout_black,layout_tip_off;
                                     exitDialog.dismiss();
                                 }
                             });
-                        }else{
+                        } else {
                             //提示未登录   或弹窗登录
-                            ToastUtil.show(ctx,R.string.not_login);
+                            ToastUtil.show(ctx, R.string.not_login);
                         }
 
                     }
@@ -234,7 +220,7 @@ private LinearLayout layout_black,layout_tip_off;
                         moreDialog.dismiss();
                         exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_exit);
                         exitDialog.show();
-                        tv_title= (TextView) exitDialog.findViewById(R.id.dialog_exit_title);
+                        tv_title = (TextView) exitDialog.findViewById(R.id.dialog_exit_title);
                         tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
                         tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
                         tv_title.setText(R.string.if_tip_off);
@@ -277,25 +263,70 @@ private LinearLayout layout_black,layout_tip_off;
                 ctx.startActivity(intent);
             }
         });
+        viewHolder.im_head_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (circles.getMember_id().equals(DataCenter.getMember_id())){
+                    Intent intent = new Intent(ctx, MainActivity.class);
+                    intent.putExtra("goto", "me");
+                    ctx.startActivity(intent);
+                    ((Activity)ctx).finish();
+                }else{
+                    Intent intent = new Intent(ctx, S_CircleAuthorActivity.class);
+                    intent.putExtra("author_id", circles.getMember_id());
+                    intent.putExtra("picture_head", circles.getPicture_son());
+                    intent.putExtra("name", circles.getNickname());
+                    intent.putExtra("signature", circles.getSignature());
+                    intent.putExtra("follow_state", circles.getFollow_state());
+                    intent.putExtra("followed_number", circles.getFollowed_number());
+                    ctx.startActivity(intent);
+                }
+            }
+        });
         viewHolder.author.setText(circles.getNickname());
         viewHolder.describe.setText(circles.getContent_son());
+
+        if (circles.getIslike().equals("1")) {
+            viewHolder.im_like.setImageResource(R.mipmap.small_like01);
+        } else {
+            viewHolder.im_like.setImageResource(R.mipmap.small_like);
+            viewHolder.layout_like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (DataCenter.isSigned()) {
+                        //点赞
+                        RequestParams params = new RequestParams();
+                        params.addQueryStringParameter("object_id", circles.getId());
+                        params.addQueryStringParameter("species", "micropost");
+                        if (http == null) http = new MyHTTP(ctx);
+                        http.baseRequest(Consts.addLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
+                                params, handler);
+                    } else {
+                        ToastUtil.show(ctx, R.string.not_login);
+                    }
+
+                }
+            });
+        }
         if (circles.getLike().equals("null")) {
             viewHolder.like.setText("0");
-        } else if (circles.getLike().contains("0")) {
+        } else if (circles.getLike().contains(".0")) {
+
             viewHolder.like.setText(circles.getLike().replace(".0", ""));
         } else {
+
             viewHolder.like.setText(circles.getLike());
         }
         if (circles.getComment().equals("null")) {
             viewHolder.comment.setText("0");
-        } else if (circles.getComment().contains("0")) {
+        } else if (circles.getComment().contains(".0")) {
             viewHolder.comment.setText(circles.getComment().replace(".0", ""));
         } else {
             viewHolder.comment.setText(circles.getComment());
         }
-                Context context = ctx.getApplicationContext();
-                initImageLoader(context);
-                ImageLoader.getInstance().displayImage(Consts.host + "/" + circles.getPicture_son(), viewHolder.im_head_pic);
+        Context context = ctx.getApplicationContext();
+        initImageLoader(context);
+        ImageLoader.getInstance().displayImage(Consts.host + "/" + circles.getPicture_son(), viewHolder.im_head_pic);
 
         String common_time = MyDate.timeLogic(circles.getCreated_at().substring(0, 19).replace("T", " "));
         viewHolder.time.setText(common_time);
@@ -310,6 +341,7 @@ private LinearLayout layout_black,layout_tip_off;
 
         return convertView;
     }
+
     /**
      * 打开图片查看器
      *
@@ -327,16 +359,17 @@ private LinearLayout layout_black,layout_tip_off;
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
             ToastUtil.show(ctx, R.string.praise_success);
-        }else if (jtype.equals(JSONHandler.JTYPE_ADD_BLACK)) {
+
+        } else if (jtype.equals(JSONHandler.JTYPE_ADD_BLACK)) {
             ToastUtil.show(ctx, R.string.add_black_success);
-            for (int i = mylist.size() - 1;i >= 0;i--){
-                if (mylist.get(i).getMember_id().equals(id)){
+            for (int i = mylist.size() - 1; i >= 0; i--) {
+                if (mylist.get(i).getMember_id().equals(id)) {
                     mylist.remove(i);
                 }
             }
             notifyDataSetChanged();
 
-        }else if (jtype.equals(JSONHandler.JTYPE_GIVE_SUGGEST)) {
+        } else if (jtype.equals(JSONHandler.JTYPE_GIVE_SUGGEST)) {
             ToastUtil.show(ctx, R.string.tip_off_success);
         }
     }
@@ -356,5 +389,6 @@ private LinearLayout layout_black,layout_tip_off;
         TextView author, time;
         LinearLayout layout_like, layout_comment;
         ImageView im_black;
+        ImageView im_like;
     }
 }

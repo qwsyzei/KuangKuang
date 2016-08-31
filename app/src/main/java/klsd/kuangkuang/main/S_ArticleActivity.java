@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,10 +35,13 @@ import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
  */
 public class S_ArticleActivity extends BaseActivity implements View.OnClickListener {
     String testString, article_id, title, tag, views, like_number, comment_number, created_at, author_member_id;
+    private String follow_state;
+    private String is_like;
     private String nickname, picture_head, author_signature;
     private TextView tv_content;
     private LinearLayout layout_like, layout_comment;
     private ImageView im_collect, im_share;
+    private ImageView im_like;
     private PopupWindow sharePopwindow;
     private TextView tv_title, tv_tag;
     private TextView tv_views, tv_like, tv_comment;
@@ -72,6 +76,9 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         picture_head = intent.getStringExtra("picture_son");
         author_signature = intent.getStringExtra("signature");
         author_member_id = intent.getStringExtra("author_member_id");
+        follow_state = intent.getStringExtra("follow_state");
+        is_like = intent.getStringExtra("is_like");
+        Log.d("赞了没有", "initView() returned: " + is_like);
 //        common_time = MyDate.timeLogic("2014-01-18 12:22:10");
         common_time = MyDate.timeLogic(created_at.substring(0, 19).replace("T", " "));
 
@@ -82,11 +89,9 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_author_name = (TextView) findViewById(R.id.article_author_name);
         tv_author_signature = (TextView) findViewById(R.id.article_author_tag);
         im_author_head = (CircleImageView) findViewById(R.id.article_author_pic);
+        im_like = (ImageView) findViewById(R.id.article_im_like);
+        im_author_head.setOnClickListener(this);
         tv_author_name.setText(nickname);
-        tv_author_signature.setText(author_signature);
-        if (!picture_head.equals("null")) {
-            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_author_head);
-        }
 
         layout_like = (LinearLayout) findViewById(R.id.layout_s_artile_like);
         layout_comment = (LinearLayout) findViewById(R.id.layout_s_artile_comment);
@@ -96,9 +101,29 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_comment = (TextView) findViewById(R.id.article_comment_number);
         im_share = (ImageView) findViewById(R.id.im_article_title_share);
         tv_time = (TextView) findViewById(R.id.article_author_time);
+        if (author_signature.equals("null")) {
+            tv_author_signature.setText(getString(R.string.not_too_lazy));
+        } else {
+            tv_author_signature.setText(author_signature);
+        }
+        if (is_like != null && is_like.equals("1")) {
+            im_like.setImageResource(R.mipmap.like01);
+        } else {
+            im_like.setImageResource(R.mipmap.like);
+            layout_like.setOnClickListener(this);
+        }
+        if (!picture_head.equals("null")) {
+            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_author_head);
+        }
+        if (follow_state.equals("0")) {
+            im_add_follow.setImageResource(R.mipmap.follow_btn);
+            im_add_follow.setOnClickListener(this);
+        } else {
+            im_add_follow.setImageResource(R.mipmap.followed_gray);
+        }
+
         tv_time.setText(common_time);
         im_share.setOnClickListener(this);
-        im_add_follow.setOnClickListener(this);
 
         if (views.equals("null")) {
             tv_views.setText("0");
@@ -127,7 +152,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_tag = (TextView) findViewById(R.id.article_author_title_tag);
         tv_tag.setText("[" + tag + "]");
 
-        layout_like.setOnClickListener(this);
+
         layout_comment.setOnClickListener(this);
         im_collect.setOnClickListener(this);
     }
@@ -169,6 +194,15 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
                     ToastUtil.show(S_ArticleActivity.this, getString(R.string.not_login));
                 }
 
+                break;
+            case R.id.article_author_pic:
+                Intent intent1 = new Intent(S_ArticleActivity.this, S_AuthorActivity.class);
+                intent1.putExtra("author_id", author_member_id);
+                intent1.putExtra("picture_head", picture_head);
+                intent1.putExtra("name", nickname);
+                intent1.putExtra("signature", author_signature);
+                intent1.putExtra("follow_state", follow_state);
+                startActivity(intent1);
                 break;
         }
     }
@@ -213,10 +247,14 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.praise_done));
+            im_like.setImageResource(R.mipmap.like01);
+            tv_like.setText((Integer.parseInt(tv_like.getText().toString()) + 1) + "");
         } else if (jtype.equals(JSONHandler.JTYPE_COLLECT)) {
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.collect_done));
         } else if (jtype.equals(JSONHandler.JTYPE_ADD_FOLLOW)) {
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.add_follows_success));
+            im_add_follow.setImageResource(R.mipmap.followed_gray);
+            follow_state = "1";
         }
 
     }

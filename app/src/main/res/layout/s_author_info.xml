@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <FrameLayout
@@ -16,7 +17,7 @@
             android:src="@mipmap/wing" />
 
         <klsd.kuangkuang.views.CircleImageView
-            android:id="@+id/article_author_pic"
+            android:id="@+id/author_info_pic"
             android:layout_width="@dimen/article_author_head_size"
             android:layout_height="@dimen/article_author_head_size"
             android:layout_gravity="center_horizontal"
@@ -27,10 +28,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/base_margin"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/article_author_name"
+            android:id="@+id/author_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -40,66 +42,32 @@
             android:textSize="@dimen/big_middle_text_size" />
 
         <TextView
-            android:id="@+id/article_author_tag"
+            android:id="@+id/author_signature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/size_eight"
-            android:text="作家，珠宝类产品专家" />
+            android:text="作家，珠宝类产品专家"
+          />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/base_margin"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/time_or_history" />
-
-            <TextView
-                android:id="@+id/article_author_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/login_p_l_r"
-                android:text="1天前" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="200dp"
-            android:layout_height="0.5dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/base_margin"
-            android:background="@color/light_font_note"></View>
 
         <ImageView
-            android:id="@+id/im_s_artile_follow"
+            android:id="@+id/im_s_author_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/login_p_l_r"
+            android:layout_marginTop="@dimen/size_eight"
             android:src="@mipmap/follow_btn" />
 
         <TextView
-            android:id="@+id/article_author_title"
+            android:id="@+id/author_followed_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/base_margin"
-            android:text="如何搞定巴黎时装周"
-            android:textSize="@dimen/new_title_size" />
+            android:text="已有8人关注"
+            />
 
-        <TextView
-            android:id="@+id/article_author_title_tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="2dp"
-            android:text="[明星珠宝专题]"
-            android:textColor="@color/kela_yellow" />
     </LinearLayout>
 
 </LinearLayout>

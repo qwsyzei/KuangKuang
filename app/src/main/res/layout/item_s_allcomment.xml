@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/white"
+  android:background="@color/white"
     android:padding="@dimen/size_eight">
 
     <LinearLayout
@@ -41,6 +41,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_marginTop="@dimen/item_circle_detail_comment_m_t"
         android:paddingLeft="@dimen/item_circle_detail_comment_m_l"
         android:paddingTop="@dimen/login_p_l_r"
@@ -50,6 +51,7 @@
             android:id="@+id/item_comment_detail_replytext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/clickstate"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:text="@string/reply" />

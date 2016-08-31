@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="@dimen/login_p_l_r"
-    android:background="@color/white"
+    android:background="@drawable/clickstate"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <RelativeLayout

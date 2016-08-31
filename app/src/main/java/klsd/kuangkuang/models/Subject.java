@@ -20,11 +20,29 @@ public class Subject implements Serializable {
     private String views, like, comment;
     private String nickname,signature,picture_son;//作者名字  作者描述   作者头像 url
     private Bitmap head_pic;          //头像                                                     暂时不用
+    private String follow_state;
+    private String is_like;
 
     private Context context;
 
     public Subject(Context context) {
         this.context = context;
+    }
+
+    public String getIs_like() {
+        return is_like;
+    }
+
+    public void setIs_like(String is_like) {
+        this.is_like = is_like;
+    }
+
+    public String getFollow_state() {
+        return follow_state;
+    }
+
+    public void setFollow_state(String follow_state) {
+        this.follow_state = follow_state;
     }
 
     public String getId() {
@@ -184,13 +202,14 @@ public class Subject implements Serializable {
         }
         return this;
     }
-    public Subject getauthorInfo(String nickname,String picture_son,String signature,String describe_son) {
+    public Subject getauthorInfo(String nickname,String picture_son,String signature,String describe_son,String follow_state,String is_like) {
         try {
             setNickname(nickname);
             setPicture_son(picture_son);
             setSignature(signature);
             setDescribe_son(describe_son);
-
+            setFollow_state(follow_state);
+            setIs_like(is_like);
         } catch (Exception e) {
             e.printStackTrace();
         }

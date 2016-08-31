@@ -225,9 +225,11 @@ public class JSONHandler {
                     String picture_son=object11.getString("picture");
                     String signature=object11.getString("signature");
                     String describe_son=object11.getString("describe");
+                    String follow_state=object11.getString("follow");
+                    String is_like=object11.getString("is_like");
                     Subject sub = new Subject(ctx);
                     sub.getFromJSONObjectItem(object);
-                    sub.getauthorInfo(nickname,picture_son,signature,describe_son);
+                    sub.getauthorInfo(nickname,picture_son,signature,describe_son,follow_state,is_like);
                     as.add(sub);
                 }
                 bundle.putSerializable("subject_article", as);
@@ -254,8 +256,12 @@ public class JSONHandler {
                     String content=object1.getString("mic_content");
                     String nickname=object1.getString("nickname");
                     String picture_son=object1.getString("picture");
+                    String signature=object1.getString("signature");
+                    String followed_number=object1.getString("followed_number");
+                    String follow_state=object1.getString("is_follow");
+                    String islike=object1.getString("is_like");
                     sub.getFromJSONObjectItem(object);
-                    sub.getcontentfrom(content,nickname,picture_son);
+                    sub.getcontentfrom(content,nickname,picture_son,signature,followed_number,follow_state,islike);
                     as.add(sub);
                 }
                 bundle.putSerializable("circle_list", as);
@@ -330,9 +336,11 @@ public class JSONHandler {
                     String picture_son=object11.getString("picture");
                     String signature=object11.getString("signature");
                     String describe_son=object11.getString("describe");
+                    String follow_state=object11.getString("follow");
+                    String is_like=object11.getString("is_like");
                     MyCollect sub = new MyCollect(ctx);
                     sub.getFromJSONObjectItem(object);
-                    sub.getauthorInfo(nickname, picture_son, signature, describe_son);
+                    sub.getauthorInfo(nickname, picture_son, signature, describe_son,follow_state,is_like);
                     mc.add(sub);
                 }
                 bundle.putSerializable("collect_show", mc);
@@ -345,9 +353,11 @@ public class JSONHandler {
                     String picture_son=object11.getString("picture");
                     String signature=object11.getString("signature");
                     String describe_son=object11.getString("describe");
+                    String follow_state=object11.getString("follow");
+                    String is_like=object11.getString("is_like");
                     Top top = new Top(ctx);
                     top.getFromJSONObjectItem(object);
-                    top.getauthorInfo(nickname, picture_son, signature, describe_son);
+                    top.getauthorInfo(nickname, picture_son, signature, describe_son,follow_state,is_like);
                     mc.add(top);
                 }
                 bundle.putSerializable("top", mc);
