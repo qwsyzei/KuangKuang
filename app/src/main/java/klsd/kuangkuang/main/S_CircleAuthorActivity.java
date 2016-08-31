@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import klsd.kuangkuang.R;
-import klsd.kuangkuang.adapters.M_MywordAdapter;
+import klsd.kuangkuang.adapters.S_WordsAdapter;
 import klsd.kuangkuang.models.Documents;
 import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.utils.Consts;
@@ -38,7 +38,7 @@ public class S_CircleAuthorActivity extends BaseActivity implements PullToRefres
     private int page = 1;
     MyHTTP http;
     private SelfListView listView;
-    private M_MywordAdapter mywordAdapter;
+    private S_WordsAdapter wordsAdapter;
     private ArrayList<MyWord> sList;
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
@@ -98,8 +98,8 @@ public class S_CircleAuthorActivity extends BaseActivity implements PullToRefres
         mPullToRefreshView = (PullToRefresh123View) findViewById(R.id.pull_refresh_view_author);
         mPullToRefreshView.setOnFooterRefreshListener(this);
         loadDataFrom();
-        mywordAdapter = new M_MywordAdapter(S_CircleAuthorActivity.this, sList, getHandler());
-        listView.setAdapter(mywordAdapter);
+        wordsAdapter = new S_WordsAdapter(S_CircleAuthorActivity.this, sList, getHandler());
+        listView.setAdapter(wordsAdapter);
     }
 
     /**
@@ -141,10 +141,10 @@ public class S_CircleAuthorActivity extends BaseActivity implements PullToRefres
             addTrades("bottom", os);
             if (curTradesSize == 0) {
                 sList = os;
-                mywordAdapter = new M_MywordAdapter(S_CircleAuthorActivity.this, sList, getHandler());
-                listView.setAdapter(mywordAdapter);
+                wordsAdapter = new S_WordsAdapter(S_CircleAuthorActivity.this, sList, getHandler());
+                listView.setAdapter(wordsAdapter);
             } else {
-                mywordAdapter.notifyDataSetChanged();
+                wordsAdapter.notifyDataSetChanged();
             }
             page += 1;
         }else if (jtype.equals(JSONHandler.JTYPE_ADD_FOLLOW)) {
@@ -176,8 +176,8 @@ public class S_CircleAuthorActivity extends BaseActivity implements PullToRefres
                 sList.add(i, e);
             }
         }
-        if (mywordAdapter != null) {
-            mywordAdapter.notifyDataSetChanged();
+        if (wordsAdapter != null) {
+            wordsAdapter.notifyDataSetChanged();
         }
     }
 

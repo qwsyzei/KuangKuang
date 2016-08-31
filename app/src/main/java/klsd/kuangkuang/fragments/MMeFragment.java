@@ -219,9 +219,9 @@ private TextView tv_name,tv_signature;
                     }
                     Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
-                        ToastUtil.show(a, a.getString(R.string.no_more_data));
-                        return;
-                    }
+                        getData();
+//                        return;
+                    }else {
                     addTrades("bottom", os);
                     if (curTradesSize == 0) {
                         sList = os;
@@ -233,6 +233,7 @@ private TextView tv_name,tv_signature;
                     page += 1;
                     getData();
                     flag=1;
+                    }
                 } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
                     documents = (Documents) bundle.getSerializable("documents");
                     tv_name.setText(documents.getName());
@@ -255,6 +256,7 @@ private TextView tv_name,tv_signature;
                     }
                     getbitmap123();
 //                loadDataFrom();
+
                 }
             } else if (res.equals("123")) {
                 if (!documents.getPicture().equals("null")&&!documents.getPicture().equals("uploads/head_portrait")) {

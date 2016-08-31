@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import java.util.List;
 
 import klsd.kuangkuang.R;
 import klsd.kuangkuang.main.M_CircleDetailActivity;
-import klsd.kuangkuang.main.MainActivity;
 import klsd.kuangkuang.models.MyWord;
 import klsd.kuangkuang.utils.Consts;
 import klsd.kuangkuang.utils.ErrorCodes;
@@ -35,10 +33,10 @@ import klsd.kuangkuang.views.ExitDialog;
 import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
- * 我的说说adapter
- * Created by qiwei on 2016/7/14.
+ * 其它朋友的说说adapter
+ * Created by qiwei on 2016/8/31.
  */
-public class M_MywordAdapter extends ArrayAdapter<MyWord> {
+public class S_WordsAdapter extends ArrayAdapter<MyWord> {
     MyHTTP http;
     private Context ctx;
     private ExitDialog exitDialog;
@@ -47,11 +45,10 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
     String jtype, responseJson;
     String error_code;
     Bundle handlerBundler;
-    private Fragment fragment;
     private List<MyWord> mylist;
     private int position123;
 
-    public M_MywordAdapter(Context context, List<MyWord> objects, Handler h) {
+    public S_WordsAdapter(Context context, List<MyWord> objects, Handler h) {
         super(context, R.layout.item_myword, objects);
         this.ctx = context;
         this.handler = h;
@@ -87,11 +84,11 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-            Context context = ctx.getApplicationContext();
-            initImageLoader(context);
-            ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
+        Context context = ctx.getApplicationContext();
+        initImageLoader(context);
+        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
 
-        String today=MyDate.todayDate();
+        String today= MyDate.todayDate();
 
         if (today.equals(ac.get_the_time())){
             viewHolder.month.setVisibility(View.GONE);
@@ -122,7 +119,7 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
                 intent.putExtra("url8", ac.getUrl8());
                 intent.putExtra("url9", ac.getUrl9());
                 intent.putExtra("url9", ac.getUrl9());
-                intent.putExtra("type", "me");
+                intent.putExtra("type", "author");
                 ctx.startActivity(intent);
             }
         });
@@ -175,3 +172,4 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         ImageView pic_url1;
     }
 }
+

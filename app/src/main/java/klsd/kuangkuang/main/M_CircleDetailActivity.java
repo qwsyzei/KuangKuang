@@ -52,7 +52,7 @@ import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 public class M_CircleDetailActivity extends BaseActivity implements View.OnClickListener, PullToRefresh123View.OnFooterRefreshListener {
     private String id, head_pic, time, nickname, content, like_number, comment_number;
     private String url1, url2, url3, url4, url5, url6, url7, url8, url9;
-
+private String type;//从哪里来的
     private ImageView im_head;
     private TextView tv_time, tv_nickname, tv_content, tv_like, tv_comment;
     private LinearLayout layout_like, layout_comment, layout_delete;
@@ -100,6 +100,7 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
         url7 = intent.getStringExtra("url7");
         url8 = intent.getStringExtra("url8");
         url9 = intent.getStringExtra("url9");
+        type=intent.getStringExtra("type");
         likeList();
         if (url1.equals("null")) {
             number = 0;
@@ -137,6 +138,12 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
         layout_delete = (LinearLayout) findViewById(R.id.layout_circle_detail_delete);
         tv_like = (TextView) findViewById(R.id.circle_detail_like);
         tv_comment = (TextView) findViewById(R.id.circle_detail_comment);
+
+        if (type.equals("me")){
+            layout_delete.setVisibility(View.VISIBLE);
+        }else{
+            layout_delete.setVisibility(View.GONE);
+        }
         layout_like.setOnClickListener(this);
         layout_comment.setOnClickListener(this);
         layout_delete.setOnClickListener(this);
