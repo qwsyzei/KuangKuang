@@ -147,7 +147,6 @@ private TextView tv_name,tv_signature;
         if (flag==1){
             getData();
         }
-//        ToastUtil.show(a,"我是我ME");
     }
     @Override
     public void onClick(View view) {
@@ -221,7 +220,8 @@ private TextView tv_name,tv_signature;
                     if (os.size() == 0) {
                         getData();
 //                        return;
-                    }else {
+                    }
+                    else {
                     addTrades("bottom", os);
                     if (curTradesSize == 0) {
                         sList = os;
@@ -242,8 +242,6 @@ private TextView tv_name,tv_signature;
                     }else{
                         tv_signature.setText(documents.getSignature());
                     }
-                    Log.d("关注数", "handleMessage() returned: " + documents.getFollow_number());
-                    Log.d("粉丝数", "handleMessage() returned: " + documents.getFollowed_number());
                     if (documents.getFollow_number().contains(".0")){
                         tv_follows.setText(getString(R.string.follows)+" "+documents.getFollow_number().replace(".0",""));
                     }else{
@@ -256,7 +254,6 @@ private TextView tv_name,tv_signature;
                     }
                     getbitmap123();
 //                loadDataFrom();
-
                 }
             } else if (res.equals("123")) {
                 if (!documents.getPicture().equals("null")&&!documents.getPicture().equals("uploads/head_portrait")) {

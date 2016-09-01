@@ -372,6 +372,8 @@ private void afterRelease(){
         startActivity(intent);
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
         finish();
+        Intent intent123 = new Intent(action);
+        sendBroadcast(intent123);
     }
 
     public void updateData() {

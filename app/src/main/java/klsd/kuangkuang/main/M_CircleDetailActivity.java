@@ -285,6 +285,8 @@ private String type;//从哪里来的
             intent.putExtra("goto", "me");
             startActivity(intent);
             finish();
+            Intent intent123 = new Intent(action);
+            sendBroadcast(intent123);
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
             ToastUtil.show(M_CircleDetailActivity.this, "评论成功");
             cPopwindow.dismiss();
