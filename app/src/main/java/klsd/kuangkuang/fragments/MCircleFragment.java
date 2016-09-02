@@ -174,24 +174,6 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         }
     }
 
-    /**
-     * 假数据
-     */
-    private Bitmap bit_head;
-
-    private List<Circles> getSubjectList() {
-        cirList = new ArrayList<Circles>();
-        Circles sub = new Circles(a);
-        sub.setContent_son("    四月生日石。 地球上最坚硬的天然物质。 已有十亿年以上的历史。此种风靡全球的宝石，不仅……");
-        sub.setNickname("当年明月");
-        sub.setLike("15");
-        sub.setComment("3");
-        sub.setCreated_at("发布于1小时前");
-        sub.setHead(BitmapFactory.decodeResource(a.getResources(), R.mipmap.touxiang01));
-        cirList.add(sub);
-
-        return cirList;
-    }
 
     public boolean isSigned() {
         return DataCenter.isSigned();

@@ -181,8 +181,7 @@ public class ForgetPsdActivity extends BaseActivity {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_SIGN)) {
             ToastUtil.show(ForgetPsdActivity.this, getString(R.string.set_success));
-            myStartActivity(new Intent(ForgetPsdActivity.this, LoginActivity.class));
-            finish();
+            finish();//直接finish就能返回到登录界面
         }
     }
 

@@ -53,7 +53,6 @@ import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
  */
 public class MMeFragment extends MyBaseFragment implements View.OnClickListener,PullToRefresh123View.OnFooterRefreshListener {
     View view;
-    private List<MyWord> cirList;
     private M_MywordAdapter mywordAdapter;
     private ImageView im_set;
     private RelativeLayout layout_collect,layout_blacklist;
@@ -68,6 +67,7 @@ public class MMeFragment extends MyBaseFragment implements View.OnClickListener,
     private ImageView im_head_big, im_head_small;
 private TextView tv_name,tv_signature;
     private TextView tv_fans,tv_follows;
+    private LinearLayout layout_fans,layout_follows;
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
     int flag=0;
@@ -92,24 +92,6 @@ private TextView tv_name,tv_signature;
         return view;
     }
 
-
-    /**
-     * 假数据
-     *
-     * @return
-     */
-    private List<MyWord> getSubjectList() {
-        cirList = new ArrayList<MyWord>();
-        MyWord sub = new MyWord(a);
-        sub.setDay("10");
-//        sub.setContent("    四月生日石。 地球上最坚硬的天然物质。 已有十亿年以上的历史。此种风靡全球的宝石，不仅……");
-        sub.setMonth("7");
-//        sub.setBitmip(BitmapFactory.decodeResource(a.getResources(), R.mipmap.m31));
-        cirList.add(sub);
-
-        return cirList;
-    }
-
     private void initView() {
         documents = new Documents();
 
@@ -126,14 +108,16 @@ private TextView tv_name,tv_signature;
         tv_signature= (TextView) view.findViewById(R.id.me_signature);
         tv_fans= (TextView) view.findViewById(R.id.me_fans_tv);
         tv_follows= (TextView) view.findViewById(R.id.me_follows_tv);
+        layout_fans= (LinearLayout) view.findViewById(R.id.layout_me_top_fans);
+        layout_follows= (LinearLayout) view.findViewById(R.id.layout_me_top_follows);
 
         listView.setFocusable(false);
         layout_release.setOnClickListener(this);
         layout_collect.setOnClickListener(this);
         layout_blacklist.setOnClickListener(this);
         im_head_small.setOnClickListener(this);
-        tv_fans.setOnClickListener(this);
-        tv_follows.setOnClickListener(this);
+        layout_fans.setOnClickListener(this);
+        layout_follows.setOnClickListener(this);
         im_set.setOnClickListener(this);
         mPullToRefreshView= (PullToRefresh123View)view.findViewById(R.id.pull_refresh_view_me);
         mPullToRefreshView.setOnFooterRefreshListener(this);
@@ -166,10 +150,10 @@ private TextView tv_name,tv_signature;
             case R.id.me_head_small:
                 myStartActivity(new Intent(getActivity(), M_PersonalDataActivity.class));
                 break;
-            case R.id.me_fans_tv:
+            case R.id.layout_me_top_fans:
                 myStartActivity(new Intent(getActivity(), M_FansListActivity.class));
                 break;
-            case R.id.me_follows_tv:
+            case R.id.layout_me_top_follows:
                 myStartActivity(new Intent(getActivity(), M_FollowListActivity.class));
                 break;
         }
@@ -243,14 +227,14 @@ private TextView tv_name,tv_signature;
                         tv_signature.setText(documents.getSignature());
                     }
                     if (documents.getFollow_number().contains(".0")){
-                        tv_follows.setText(getString(R.string.follows)+" "+documents.getFollow_number().replace(".0",""));
+                        tv_follows.setText(documents.getFollow_number().replace(".0",""));
                     }else{
-                        tv_follows.setText(getString(R.string.follows)+" "+documents.getFollow_number());
+                        tv_follows.setText(documents.getFollow_number());
                     }
                     if (documents.getFollowed_number().contains(".0")){
-                        tv_fans.setText(getString(R.string.fans)+" "+documents.getFollowed_number().replace(".0",""));
+                        tv_fans.setText(documents.getFollowed_number().replace(".0",""));
                     }else{
-                        tv_fans.setText(getString(R.string.fans)+" "+documents.getFollowed_number());
+                        tv_fans.setText(documents.getFollowed_number());
                     }
                     getbitmap123();
 //                loadDataFrom();

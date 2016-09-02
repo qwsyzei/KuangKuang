@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,13 +20,18 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.soundcloud.android.crop.Crop;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,7 +77,7 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
 
     public static final String IMAGE_UNSPECIFIED = "image/*";
     ImageLoader imageLoader;
-
+    private static String path="/sdcard/myHead/";//sd路径
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,16 +281,19 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 initDialog();
                 break;
             case R.id.layout_from_album:
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                Intent intent = new Intent(Intent.ACTION_PICK, null);
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                         IMAGE_UNSPECIFIED);
-                startActivityForResult(intent, PHOTOZOOM);
+                startActivityForResult(intent, Crop.REQUEST_PICK);
                 selectPicDialog.dismiss();
                 break;
             case R.id.layout_take_photo:
                 Intent intent123 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                intent123.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
+//                        Environment.getExternalStorageDirectory().getAbsolutePath() + "/MedicalApplication/Camera/userImage/", "temp.jpg")));
                 intent123.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
-                        Environment.getExternalStorageDirectory().getAbsolutePath() + "/MedicalApplication/Camera/userImage/", "temp.jpg")));
+                        Environment.getExternalStorageDirectory(), "temp.jpg")));
                 System.out.println("=============" + Environment.getExternalStorageDirectory());
                 startActivityForResult(intent123, PHOTOHRAPH);
                 selectPicDialog.dismiss();
@@ -335,43 +345,105 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == NONE)
-            return;
-        // 拍照
-        if (requestCode == PHOTOHRAPH) {
-            // 设置文件保存路径这里放在跟目录下
-            File picture = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/MedicalApplication/Camera/userImage/", "temp.jpg");
-            System.out.println("------------------------" + picture.getPath());
-            startPhotoZoom(Uri.fromFile(picture));
-//            startPhotoZoom(photoUri);
-        }
-
-        if (data == null)
-            return;
-
-        // 读取相册缩放图片
-        if (requestCode == PHOTOZOOM) {
-            startPhotoZoom(data.getData());
-        }
-        // 处理结果
-        if (requestCode == PHOTORESULT) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap photo = extras.getParcelable("data");
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG, 70, stream);// (0 -
-                // 100)压缩文件
-                byte[] bt = stream.toByteArray();//为了转成16进制
-                photoStr = byte2hex(bt);//
-                im_head.setImageBitmap(photo);
-                updateHead();
-            }
-
-        }
-
+//        if (resultCode == NONE)
+//            return;
+//        // 拍照
+//        if (requestCode == PHOTOHRAPH) {
+//            // 设置文件保存路径这里放在跟目录下
+////            File picture = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/MedicalApplication/Camera/userImage/", "temp.jpg");
+//            File picture = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+//            System.out.println("------------------------" + picture.getPath());
+////            startPhotoZoom(Uri.fromFile(picture));
+//            beginCrop(Uri.fromFile(picture));
+//
+//        }
+//
+//        if (data == null)
+//            return;
+//
+//        // 读取相册缩放图片
+//        if (requestCode == PHOTOZOOM) {
+////            startPhotoZoom(data.getData());
+//            beginCrop(data.getData());
+//        }
+//        // 处理结果
+//        if (requestCode == PHOTORESULT) {
+//
+//            Bundle extras = data.getExtras();
+//            if (extras != null) {
+//                Bitmap photo = extras.getParcelable("data");
+////                setPicToView(photo);
+//                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                photo.compress(Bitmap.CompressFormat.JPEG, 70, stream);// (0 -
+//                // 100)压缩文件
+//                byte[] bt = stream.toByteArray();//为了转成16进制
+//                photoStr = byte2hex(bt);//
+//                im_head.setImageBitmap(photo);
+//                updateHead();
+//            }
+//
+//        }
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
+            beginCrop(data.getData());
+        } else if (requestCode == Crop.REQUEST_CROP) {
+            handleCrop(resultCode, data);
+        }
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_select) {
+            im_head.setImageDrawable(null);
+            Crop.pickImage(this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    private void beginCrop(Uri source) {
+        Uri destination = Uri.fromFile(new File(getCacheDir(), "cropped"));
+        Crop.of(source, destination).asSquare().start(this);
+    }
+
+    private void handleCrop(int resultCode, Intent result) {
+        if (resultCode == RESULT_OK) {
+            im_head.setImageURI(Crop.getOutput(result));
+
+        } else if (resultCode == Crop.RESULT_ERROR) {
+            Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setPicToView(Bitmap mBitmap) {
+        String sdStatus = Environment.getExternalStorageState();
+        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+            return;
+        }
+        FileOutputStream b = null;
+        File file = new File(path);
+        file.mkdirs();// 创建文件夹
+        String fileName =path + "temp.jpg";//图片名字
+        try {
+            b = new FileOutputStream(fileName);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                //关闭流
+                b.flush();
+                b.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     /**
      * 二进制转字符串
      *

@@ -29,6 +29,7 @@ import klsd.kuangkuang.views.ContainsEmojiEditText;
 
 /**
  * 手机注册界面
+ *
  * @author qiwei
  */
 public class SignupActivity extends BaseActivity {
@@ -44,10 +45,22 @@ public class SignupActivity extends BaseActivity {
     private int flag1 = 0, flag2 = 0;
 
     String member_id;
+
+    private static FinishListener finishListener;
+
+    public interface FinishListener {
+        void onOK(String text);
+    }
+
+    public void setListener(FinishListener finishListener) {
+        this.finishListener = finishListener;
+    }
+
     /**
-     *对用户名和密码进行加解密
+     * 对用户名和密码进行加解密
      */
     private EncrypAES mAes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -59,7 +72,7 @@ public class SignupActivity extends BaseActivity {
     }
 
     private void initView() {
-        im_delete= (ImageView) findViewById(R.id.im_signup_delete);
+        im_delete = (ImageView) findViewById(R.id.im_signup_delete);
 
         tv_email_signup = (TextView) findViewById(R.id.tv_email_signup);
         edit_phonenumber = (EditText) findViewById(R.id.signup_phone_number);
@@ -69,7 +82,7 @@ public class SignupActivity extends BaseActivity {
         EditTListener(edit_password);
         EditTListener(edit_password_confirm);
         tv_get = (TextView) findViewById(R.id.signup_phone_getyan);
-       im_signup = (ImageView) findViewById(R.id.im_signup_phone);
+        im_signup = (ImageView) findViewById(R.id.im_signup_phone);
         im_eye1 = (ImageView) findViewById(R.id.sign_up_im_change1);
         im_eye2 = (ImageView) findViewById(R.id.sign_up_im_change2);
 
@@ -117,22 +130,22 @@ public class SignupActivity extends BaseActivity {
             // TODO Auto-generated method stub
             switch (v.getId()) {
                 case R.id.signup_phone_getyan:
-                    if (edit_phonenumber.getText().length()==11){
+                    if (edit_phonenumber.getText().length() == 11) {
                         toPhoneCode();
-                    }else{
-                        ToastUtil.show(SignupActivity.this,getString(R.string.wrong_admin_name));
+                    } else {
+                        ToastUtil.show(SignupActivity.this, getString(R.string.wrong_admin_name));
                     }
                     break;
                 case R.id.im_signup_phone:
-                    if (edit_phonenumber.getText().toString().equals("")){
-                        ToastUtil.show(SignupActivity.this,getString(R.string.no_phone));
-                    }else if(edit_phoneyan.getText().toString().equals("")){
-                        ToastUtil.show(SignupActivity.this,getString(R.string.no_input_code));
-                    }else if(edit_password.getText().toString().equals("")){
-                        ToastUtil.show(SignupActivity.this,getString(R.string.no_input_psd));
-                    }else if(edit_password_confirm.getText().toString().equals("")){
-                        ToastUtil.show(SignupActivity.this,getString(R.string.no_confirm_psd));
-                    }else{
+                    if (edit_phonenumber.getText().toString().equals("")) {
+                        ToastUtil.show(SignupActivity.this, getString(R.string.no_phone));
+                    } else if (edit_phoneyan.getText().toString().equals("")) {
+                        ToastUtil.show(SignupActivity.this, getString(R.string.no_input_code));
+                    } else if (edit_password.getText().toString().equals("")) {
+                        ToastUtil.show(SignupActivity.this, getString(R.string.no_input_psd));
+                    } else if (edit_password_confirm.getText().toString().equals("")) {
+                        ToastUtil.show(SignupActivity.this, getString(R.string.no_confirm_psd));
+                    } else {
                         toPhoneSignup();
                     }
                     break;
@@ -190,28 +203,30 @@ public class SignupActivity extends BaseActivity {
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_SIGN)) {
-                member_id=handlerBundler.getString("signup");
-               DataCenter.setMember_id(member_id);
-                ToastUtil.show(SignupActivity.this, R.string.signup_success);
-                //保存登录信息
-                SharedPreferences.Editor editor=getSharedPreferences("login_info",MODE_PRIVATE).edit();
-                mAes=new EncrypAES();
-                String admin= mAes.EncryptorString(edit_phonenumber.getText().toString());//加密用户名
-                String password=mAes.EncryptorString(edit_password.getText().toString());//加密密码
+            member_id = handlerBundler.getString("signup");
+            DataCenter.setMember_id(member_id);
+            ToastUtil.show(SignupActivity.this, R.string.signup_success);
+            //保存登录信息
+            SharedPreferences.Editor editor = getSharedPreferences("login_info", MODE_PRIVATE).edit();
+            mAes = new EncrypAES();
+            String admin = mAes.EncryptorString(edit_phonenumber.getText().toString());//加密用户名
+            String password = mAes.EncryptorString(edit_password.getText().toString());//加密密码
 
-                editor.putBoolean("isLogin", true);
-                editor.putString("admin", admin);
-                editor.putString("password", password);
-                editor.commit();
+            editor.putBoolean("isLogin", true);
+            editor.putString("admin", admin);
+            editor.putString("password", password);
+            editor.commit();
+            finishListener.onOK("finish");//告诉login界面要finish
             sendSignIn(edit_phonenumber.getText().toString(), edit_password.getText().toString(), getHandler());//注册成功就自动登录
 
-        }else if (jtype.equals(JSONHandler.JTYPE_LOGIN)) {
+        } else if (jtype.equals(JSONHandler.JTYPE_LOGIN)) {
             if (handlerBundler.getBoolean("signed")) {
                 DataCenter.setSigned();
                 getMemberData();
             }
         } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_ME)) {
             setMember((Member) handlerBundler.getSerializable("member"));
+
             startActivity(new Intent(SignupActivity.this, MainActivity.class));//主界面
             finish();
         }

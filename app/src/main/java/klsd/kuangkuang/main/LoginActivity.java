@@ -32,6 +32,7 @@ public class LoginActivity extends BaseActivity {
     private ImageView im_inputcancel, im_eye;//email输入时删除全部的图标，即“叉”,密码可见状态的图标
     private  int flag = 0;
 
+
     /**
      *对用户名和密码进行加解密
      */
@@ -45,6 +46,20 @@ public class LoginActivity extends BaseActivity {
         initViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SignupActivity.FinishListener finishListener=new SignupActivity.FinishListener() {
+            @Override
+            public void onOK(String text) {
+                if (text!=null&&text.equals("finish")){
+                    finish();//接到Signup给的信号就finish
+                }
+            }
+        };
+        SignupActivity signup=new SignupActivity();
+        signup.setListener(finishListener);
+    }
 
     @Override
     public void signIn(View v) {
@@ -157,16 +172,6 @@ public class LoginActivity extends BaseActivity {
             }
         }
     };
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//          // 是否触发按键为back键
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            myStartActivity(new Intent(LoginActivity.this, MainActivity.class));
-//            finish();
-//            return true;
-//        }else {
-//            return super.onKeyDown(keyCode, event);
-//        }
-//    }
+
 }
 

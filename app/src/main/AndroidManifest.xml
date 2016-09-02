@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:allowBackup="true"
@@ -31,7 +32,7 @@
         </activity>
         <activity
             android:name=".main.LoginActivity"
-            android:launchMode="singleTask" />
+             />
         <activity android:name=".main.SignupActivity" />
         <activity android:name=".main.M_SetActivity" />
         <activity android:name=".main.M_PersonalDataActivity" />
@@ -78,6 +79,7 @@
         </activity>
         <activity android:name=".main.S_CircleAuthorActivity" >
         </activity>
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
     </application>
 
 </manifest>

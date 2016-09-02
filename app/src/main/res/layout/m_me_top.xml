@@ -52,14 +52,28 @@
             android:layout_gravity="center"
             android:layout_marginTop="2dp"
             android:orientation="horizontal">
-            <TextView
-                android:id="@+id/me_fans_tv"
+            <LinearLayout
+                android:id="@+id/layout_me_top_fans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:paddingTop="@dimen/login_p_l_r"
-                android:padding="@dimen/login_p_l_r"
-                android:text="@string/fans"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:paddingTop="@dimen/login_p_l_r"
+                    android:paddingBottom="@dimen/login_p_l_r"
+                    android:text="@string/fans"/>
+                <TextView
+                    android:id="@+id/me_fans_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/kuangkuang_yellow"
+                    android:paddingTop="@dimen/login_p_l_r"
+                    android:paddingBottom="@dimen/login_p_l_r"
+                    android:paddingLeft="@dimen/login_p_l_r"
+                    android:text="0"/>
+            </LinearLayout>
             <TextView
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
@@ -68,13 +82,31 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:background="@color/white"/>
-            <TextView
-                android:id="@+id/me_follows_tv"
+            <LinearLayout
+                android:id="@+id/layout_me_top_follows"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/login_p_l_r"
-                android:textColor="@color/white"
-                android:text="@string/follows"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/login_p_l_r"
+                    android:paddingBottom="@dimen/login_p_l_r"
+                    android:textColor="@color/white"
+                    android:text="@string/follows"/>
+                <TextView
+                    android:id="@+id/me_follows_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/login_p_l_r"
+                    android:paddingBottom="@dimen/login_p_l_r"
+                    android:paddingLeft="@dimen/login_p_l_r"
+                    android:textColor="@color/kuangkuang_yellow"
+                    android:text="0"/>
+            </LinearLayout>
+
+
+
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
