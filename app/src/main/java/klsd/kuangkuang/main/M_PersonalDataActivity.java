@@ -70,14 +70,10 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
     private SelectPicDialog selectPicDialog;
     private LinearLayout layout_from_album, layout_take_photo;
     private TextView tv_dialog_cancel;
-    public static final int NONE = 0;
     public static final int PHOTOHRAPH = 1;// 拍照
-    public static final int PHOTOZOOM = 2; // 缩放
-    public static final int PHOTORESULT = 3;// 结果
-
+    MyHTTP http;
     public static final String IMAGE_UNSPECIFIED = "image/*";
     ImageLoader imageLoader;
-    private static String path="/sdcard/myHead/";//sd路径
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +116,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
     /**
      * 获取个人资料
      */
-    MyHTTP http;
-
     private void getData() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("member_id", DataCenter.getMember_id());
@@ -147,7 +141,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 params, getHandler());
     }
 
-
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
@@ -162,7 +155,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 tv_city.setText(getString(R.string.not_set));
             } else {
                 tv_city.setText(documents.getCity());
-
             }
             if (documents.getName().equals("null")) {
                 edit_per_nickname.setText("k" + getMember().getPhone_number());
@@ -171,10 +163,8 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
             }
             if (documents.getSignature().equals("null")) {
                 edit_per_signature.setText("");
-
             } else {
                 edit_per_signature.setText(documents.getSignature());
-
             }
             sex = documents.getSex();
             if (sex.equals("male")) {
@@ -183,7 +173,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 spinner_sex.setSelection(1);
             }
             head_url = Consts.host + "/" + documents.getPicture();
-            Log.d("头像的地址是", "updateData() returned: " + head_url);
 
             imageUrlsList = new ArrayList<>();
             imageUrlsList.add(head_url);
@@ -200,8 +189,8 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
             ToastUtil.show(M_PersonalDataActivity.this, getString(R.string.head_pic_upload_success));
             Log.d("头像上传成功", "updateData() returned: " + "");
                    //清理头像的缓存
-//            DiskCacheUtils.removeFromCache(head_url, imageLoader.getDiskCache());
-//            MemoryCacheUtils.removeFromCache(head_url, imageLoader.getMemoryCache());
+            imageLoader.getInstance().clearDiskCache();
+            imageLoader.getInstance().clearMemoryCache();
         }
 
     }
@@ -210,7 +199,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
      * 时间选择器
      */
     public void onDatePicker() {
-
         DateTimePicker picker = new DateTimePicker(this);
         picker.setMode(DateTimePicker.Mode.YEAR_MONTH_DAY);
         picker.setRange(1950, 2020);
@@ -225,7 +213,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 } else {
                     tv_birthday.setText(format.format(result));
                 }
-
             }
         });
         picker.showAtBottom();
@@ -250,7 +237,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
 
     /**
      * 打开图片查看器
-     *
      * @param position
      * @param urls2
      */
@@ -282,7 +268,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.layout_from_album:
                 Intent intent = new Intent(Intent.ACTION_PICK, null);
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                         IMAGE_UNSPECIFIED);
                 startActivityForResult(intent, Crop.REQUEST_PICK);
@@ -290,11 +275,8 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.layout_take_photo:
                 Intent intent123 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                intent123.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
-//                        Environment.getExternalStorageDirectory().getAbsolutePath() + "/MedicalApplication/Camera/userImage/", "temp.jpg")));
                 intent123.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
-                        Environment.getExternalStorageDirectory(), "temp.jpg")));
-                System.out.println("=============" + Environment.getExternalStorageDirectory());
+                        Environment.getExternalStorageDirectory().getAbsolutePath(), "temp.jpg")));
                 startActivityForResult(intent123, PHOTOHRAPH);
                 selectPicDialog.dismiss();
                 break;
@@ -345,48 +327,13 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == NONE)
-//            return;
-//        // 拍照
-//        if (requestCode == PHOTOHRAPH) {
-//            // 设置文件保存路径这里放在跟目录下
-////            File picture = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/MedicalApplication/Camera/userImage/", "temp.jpg");
-//            File picture = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-//            System.out.println("------------------------" + picture.getPath());
-////            startPhotoZoom(Uri.fromFile(picture));
-//            beginCrop(Uri.fromFile(picture));
-//
-//        }
-//
-//        if (data == null)
-//            return;
-//
-//        // 读取相册缩放图片
-//        if (requestCode == PHOTOZOOM) {
-////            startPhotoZoom(data.getData());
-//            beginCrop(data.getData());
-//        }
-//        // 处理结果
-//        if (requestCode == PHOTORESULT) {
-//
-//            Bundle extras = data.getExtras();
-//            if (extras != null) {
-//                Bitmap photo = extras.getParcelable("data");
-////                setPicToView(photo);
-//                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                photo.compress(Bitmap.CompressFormat.JPEG, 70, stream);// (0 -
-//                // 100)压缩文件
-//                byte[] bt = stream.toByteArray();//为了转成16进制
-//                photoStr = byte2hex(bt);//
-//                im_head.setImageBitmap(photo);
-//                updateHead();
-//            }
-//
-//        }
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
+        if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {//相册
             beginCrop(data.getData());
-        } else if (requestCode == Crop.REQUEST_CROP) {
+        } else if (requestCode == PHOTOHRAPH && resultCode == RESULT_OK) {//拍照
+            File picture = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"temp.jpg");
+            beginCrop(Uri.fromFile(picture));
+        }else if (requestCode == Crop.REQUEST_CROP) {
             handleCrop(resultCode, data);
         }
 
@@ -413,40 +360,43 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
 
     private void handleCrop(int resultCode, Intent result) {
         if (resultCode == RESULT_OK) {
-            im_head.setImageURI(Crop.getOutput(result));
-
+           Bitmap photo= getBitmapFromUri(Crop.getOutput(result));
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.JPEG, 70, stream);// (0 -
+                // 100)压缩文件
+                byte[] bt = stream.toByteArray();//为了转成16进制
+                photoStr = byte2hex(bt);//
+                im_head.setImageBitmap(photo);
+                updateHead();
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void setPicToView(Bitmap mBitmap) {
-        String sdStatus = Environment.getExternalStorageState();
-        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-            return;
+    /**
+     * URI转bitmap
+     * @param uri
+     * @return
+     */
+    private Bitmap getBitmapFromUri(Uri uri)
+    {
+        try
+        {
+            // 读取uri所在的图片
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            return bitmap;
         }
-        FileOutputStream b = null;
-        File file = new File(path);
-        file.mkdirs();// 创建文件夹
-        String fileName =path + "temp.jpg";//图片名字
-        try {
-            b = new FileOutputStream(fileName);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
-        } catch (FileNotFoundException e) {
+        catch (Exception e)
+        {
+            Log.e("[Android]", e.getMessage());
+            Log.e("[Android]", "目录为：" + uri);
             e.printStackTrace();
-        } finally {
-            try {
-                //关闭流
-                b.flush();
-                b.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            return null;
         }
     }
+
     /**
      * 二进制转字符串
-     *
      * @param b
      * @return
      */
@@ -462,20 +412,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
             }
         }
         return sb.toString();
-    }
-
-    public void startPhotoZoom(Uri uri) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, IMAGE_UNSPECIFIED);
-        intent.putExtra("crop", "true");
-        // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 500);
-        intent.putExtra("outputY", 500);
-        intent.putExtra("return-data", true);
-        startActivityForResult(intent, PHOTORESULT);
     }
 
     @Override
