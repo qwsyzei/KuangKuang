@@ -18,10 +18,19 @@ public class Top implements Serializable {
     private String nickname, signature, picture_son;//作者名字  作者描述   作者头像 url
     private String follow_state;
     private String is_like;
+    private String is_collect;
     private Context context;
 
     public Top(Context context) {
         this.context = context;
+    }
+
+    public String getIs_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(String is_collect) {
+        this.is_collect = is_collect;
     }
 
     public String getIs_like() {
@@ -186,7 +195,7 @@ public class Top implements Serializable {
         return this;
     }
 
-    public Top getauthorInfo(String nickname, String picture_son, String signature, String describe_son, String follow_state,String is_like) {
+    public Top getauthorInfo(String nickname, String picture_son, String signature, String describe_son, String follow_state,String is_like,String is_collect) {
         try {
             setNickname(nickname);
             setPicture_son(picture_son);
@@ -194,6 +203,7 @@ public class Top implements Serializable {
             setDescribe_son(describe_son);
             setFollow_state(follow_state);
             setIs_like(is_like);
+            setIs_collect(is_collect);
         } catch (Exception e) {
             e.printStackTrace();
         }

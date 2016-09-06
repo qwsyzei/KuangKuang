@@ -36,7 +36,7 @@ import static klsd.kuangkuang.utils.MyApplication.initImageLoader;
 public class S_ArticleActivity extends BaseActivity implements View.OnClickListener {
     String testString, article_id, title, tag, views, like_number, comment_number, created_at, author_member_id;
     private String follow_state;
-    private String is_like;
+    private String is_like,is_collect;
     private String nickname, picture_head, author_signature;
     private TextView tv_content;
     private LinearLayout layout_like, layout_comment;
@@ -78,6 +78,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         author_member_id = intent.getStringExtra("author_member_id");
         follow_state = intent.getStringExtra("follow_state");
         is_like = intent.getStringExtra("is_like");
+        is_collect=intent.getStringExtra("is_collect");
         Log.d("赞了没有", "initView() returned: " + is_like);
 //        common_time = MyDate.timeLogic("2014-01-18 12:22:10");
         common_time = MyDate.timeLogic(created_at.substring(0, 19).replace("T", " "));
@@ -121,7 +122,12 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         } else {
             im_add_follow.setImageResource(R.mipmap.followed_gray);
         }
-
+        if (is_collect.equals("0")) {
+            im_collect.setImageResource(R.mipmap.collect);
+            im_collect.setOnClickListener(this);
+        } else {
+            im_collect.setImageResource(R.mipmap.collect_gray);
+        }
         tv_time.setText(common_time);
         im_share.setOnClickListener(this);
 
@@ -152,9 +158,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_tag = (TextView) findViewById(R.id.article_author_title_tag);
         tv_tag.setText("[" + tag + "]");
 
-
         layout_comment.setOnClickListener(this);
-        im_collect.setOnClickListener(this);
     }
 
     @Override
@@ -226,7 +230,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private void gotoCollect() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("article_id", article_id);
-        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
+//        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         if (http == null) http = new MyHTTP(S_ArticleActivity.this);
         http.baseRequest(Consts.articlesCollectArticleApi, JSONHandler.JTYPE_COLLECT, HttpRequest.HttpMethod.GET,
                 params, getHandler());
@@ -251,6 +255,8 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             tv_like.setText((Integer.parseInt(tv_like.getText().toString()) + 1) + "");
         } else if (jtype.equals(JSONHandler.JTYPE_COLLECT)) {
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.collect_done));
+            im_collect.setImageResource(R.mipmap.collect_gray);
+            im_collect.setClickable(false);
         } else if (jtype.equals(JSONHandler.JTYPE_ADD_FOLLOW)) {
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.add_follows_success));
             im_add_follow.setImageResource(R.mipmap.followed_gray);

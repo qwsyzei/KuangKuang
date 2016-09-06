@@ -227,9 +227,10 @@ public class JSONHandler {
                     String describe_son=object11.getString("describe");
                     String follow_state=object11.getString("follow");
                     String is_like=object11.getString("is_like");
+                    String is_collect=object11.getString("is_collect");
                     Subject sub = new Subject(ctx);
                     sub.getFromJSONObjectItem(object);
-                    sub.getauthorInfo(nickname,picture_son,signature,describe_son,follow_state,is_like);
+                    sub.getauthorInfo(nickname,picture_son,signature,describe_son,follow_state,is_like,is_collect);
                     as.add(sub);
                 }
                 bundle.putSerializable("subject_article", as);
@@ -338,9 +339,10 @@ public class JSONHandler {
                     String describe_son=object11.getString("describe");
                     String follow_state=object11.getString("follow");
                     String is_like=object11.getString("is_like");
+                    String is_collect=object11.getString("is_collect");
                     MyCollect sub = new MyCollect(ctx);
                     sub.getFromJSONObjectItem(object);
-                    sub.getauthorInfo(nickname, picture_son, signature, describe_son,follow_state,is_like);
+                    sub.getauthorInfo(nickname, picture_son, signature, describe_son,follow_state,is_like,is_collect);
                     mc.add(sub);
                 }
                 bundle.putSerializable("collect_show", mc);
@@ -355,9 +357,10 @@ public class JSONHandler {
                     String describe_son=object11.getString("describe");
                     String follow_state=object11.getString("follow");
                     String is_like=object11.getString("is_like");
+                    String is_collect=object11.getString("is_collect");
                     Top top = new Top(ctx);
                     top.getFromJSONObjectItem(object);
-                    top.getauthorInfo(nickname, picture_son, signature, describe_son,follow_state,is_like);
+                    top.getauthorInfo(nickname, picture_son, signature, describe_son,follow_state,is_like,is_collect);
                     mc.add(top);
                 }
                 bundle.putSerializable("top", mc);

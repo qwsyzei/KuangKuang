@@ -22,11 +22,19 @@ public class Subject implements Serializable {
     private Bitmap head_pic;          //头像                                                     暂时不用
     private String follow_state;
     private String is_like;
-
+private String is_collect;
     private Context context;
 
     public Subject(Context context) {
         this.context = context;
+    }
+
+    public String getIs_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(String is_collect) {
+        this.is_collect = is_collect;
     }
 
     public String getIs_like() {
@@ -202,7 +210,7 @@ public class Subject implements Serializable {
         }
         return this;
     }
-    public Subject getauthorInfo(String nickname,String picture_son,String signature,String describe_son,String follow_state,String is_like) {
+    public Subject getauthorInfo(String nickname,String picture_son,String signature,String describe_son,String follow_state,String is_like,String is_collect) {
         try {
             setNickname(nickname);
             setPicture_son(picture_son);
@@ -210,6 +218,7 @@ public class Subject implements Serializable {
             setDescribe_son(describe_son);
             setFollow_state(follow_state);
             setIs_like(is_like);
+            setIs_collect(is_collect);
         } catch (Exception e) {
             e.printStackTrace();
         }

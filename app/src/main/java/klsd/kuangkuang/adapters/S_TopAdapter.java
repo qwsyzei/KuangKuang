@@ -110,6 +110,7 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
                 intent.putExtra("author_member_id", ac.getMember_id());
                 intent.putExtra("follow_state", ac.getFollow_state());
                 intent.putExtra("is_like",ac.getIs_like());
+                intent.putExtra("is_collect",ac.getIs_collect());
                 ctx.startActivity(intent);
             }
         });

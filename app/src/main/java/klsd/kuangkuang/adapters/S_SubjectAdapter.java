@@ -146,6 +146,7 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
                 intent.putExtra("author_member_id",subject.getMember_id());
                 intent.putExtra("follow_state",subject.getFollow_state());
                 intent.putExtra("is_like",subject.getIs_like());
+                intent.putExtra("is_collect",subject.getIs_collect());
                 ctx.startActivity(intent);
             }
         });

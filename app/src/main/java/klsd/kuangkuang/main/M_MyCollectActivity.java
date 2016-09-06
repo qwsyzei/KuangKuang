@@ -63,7 +63,7 @@ M_MyCollectAdapter myCollectAdapter;
      */
     private void getCollectShowList123() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
+//        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("page", page + "");
         params.addQueryStringParameter("limit", "6");
 

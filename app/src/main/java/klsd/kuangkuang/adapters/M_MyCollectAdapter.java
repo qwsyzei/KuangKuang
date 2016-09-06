@@ -108,6 +108,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
                 intent.putExtra("author_member_id", ac.getMember_id());
                 intent.putExtra("follow_state",ac.getFollow_state());
                 intent.putExtra("is_like",ac.getIs_like());
+                intent.putExtra("is_collect",ac.getIs_collect());
                 ctx.startActivity(intent);
 
             }
@@ -126,7 +127,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
                     public void onClick(View view) {
                         RequestParams params = new RequestParams();
                         params.addQueryStringParameter("article_id", ac.getId());
-                        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
+//                        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
                         if (http == null) http = new MyHTTP(ctx);
                         http.baseRequest(Consts.articlesCollectDestroyApi, JSONHandler.JTYPE_COLLECT_DESTROY, HttpRequest.HttpMethod.GET,
                                 params, handler);
