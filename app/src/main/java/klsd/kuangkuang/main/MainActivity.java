@@ -23,6 +23,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 import klsd.kuangkuang.R;
+import klsd.kuangkuang.adapters.M_MywordAdapter;
 import klsd.kuangkuang.fragments.LeftFragment;
 import klsd.kuangkuang.fragments.MCircleFragment;
 import klsd.kuangkuang.fragments.MMeFragment;
@@ -42,7 +43,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private MCircleFragment mCircleFragment;
     private MToolFragment mToolFragment;
     private MMeFragment mMeFragment;
-    private Fragment mContent;
     private LinearLayout layout_main_layout;
     String str = "0";
     String sub_key="0";
@@ -80,10 +80,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         rbC = (RadioButton) findViewById(R.id.main_rb3);
         rbD = (RadioButton) findViewById(R.id.main_rb4);
         im_title_left.setOnClickListener(this);
-//        rbA.setOnClickListener(this);
-//        rbB.setOnClickListener(this);
-//        rbC.setOnClickListener(this);
-//        rbD.setOnClickListener(this);
 
         /**
          * 应用进入后，默认选择点击Fragment01
@@ -102,6 +98,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         radioGroup = (RadioGroup) findViewById(R.id.main_radiogroup);
         radioGroup.setOnCheckedChangeListener(this);
     }
+
+
 
     /**
      * 初始化侧边栏
@@ -136,22 +134,10 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         sm.setBehindScrollScale(0.0f);
 
     }
-//    /**
-//     * 切换Fragment
-//     *
-//     * @param fragment
-//     */
-//    public void switchConent(Fragment fragment) {
-//        mContent = fragment;
-//        getSupportFragmentManager().beginTransaction().replace(R.id.just_subject_layout, fragment).commit();
-//        getSlidingMenu().showContent();
-////        tv_title.setText(title);
-//    }
 
     /**
      * radiobutton 改变选中状态
      * 进行切换fragment
-     *
      * @param group
      * @param checkedId
      */
@@ -239,18 +225,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             case R.id.im_more_subject:
                 toggle();
                 break;
-//            case R.id.main_rb1:
-//                showFragment(1);
-//                break;
-//            case R.id.main_rb2:
-//                showFragment(2);
-//                break;
-//            case R.id.main_rb3:
-//                showFragment(3);
-//                break;
-//            case R.id.main_rb4:
-//                showFragment(4);
-//                break;
+
         }
     }
 

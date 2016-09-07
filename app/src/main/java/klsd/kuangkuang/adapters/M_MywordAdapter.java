@@ -1,5 +1,6 @@
 package klsd.kuangkuang.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,7 +48,6 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
     String jtype, responseJson;
     String error_code;
     Bundle handlerBundler;
-    private Fragment fragment;
     private List<MyWord> mylist;
     private int position123;
 
@@ -55,7 +55,7 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         super(context, R.layout.item_myword, objects);
         this.ctx = context;
         this.handler = h;
-        this.mylist=objects;
+        this.mylist = objects;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -87,25 +87,25 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-            Context context = ctx.getApplicationContext();
-            initImageLoader(context);
-            ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
+        Context context = ctx.getApplicationContext();
+        initImageLoader(context);
+        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
 
-        String today=MyDate.todayDate();
+        String today = MyDate.todayDate();
 
-        if (today.equals(ac.get_the_time())){
+        if (today.equals(ac.get_the_time())) {
             viewHolder.month.setVisibility(View.GONE);
             viewHolder.day.setText("今天");
-        }else{
+        } else {
             viewHolder.day.setText(ac.getDay());
-            viewHolder.month.setText(ac.getMonth()+"月");
+            viewHolder.month.setText(ac.getMonth() + "月");
         }
         viewHolder.content_son.setText(ac.getContent_son());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ctx, M_CircleDetailActivity.class);
-                intent.putExtra("id",ac.getId());
+                intent.putExtra("id", ac.getId());
                 intent.putExtra("head_pic", ac.getPicture_son());
                 intent.putExtra("created_at", ac.getCreated_at());
                 intent.putExtra("nickname", ac.getNickname());
@@ -129,7 +129,7 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                position123=position;
+                position123 = position;
                 exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_delete);
                 exitDialog.setCanceledOnTouchOutside(true);
                 exitDialog.show();
@@ -156,9 +156,12 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
         if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
             ToastUtil.show(ctx, R.string.delete_success);
             exitDialog.dismiss();
-            mylist.remove(position123);
-            notifyDataSetChanged();
-
+//            mylist.remove(position123);
+//            notifyDataSetChanged();
+            Intent intent = new Intent(ctx, MainActivity.class);
+            intent.putExtra("goto", "me");
+           ctx.startActivity(intent);
+            ((Activity)ctx).finish();
         }
     }
 

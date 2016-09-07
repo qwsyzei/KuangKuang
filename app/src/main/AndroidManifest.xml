@@ -72,6 +72,7 @@
         <activity android:name=".main.T_CertificateResultActivity" >
         </activity>
         <activity android:name=".main.Main2Activity" >
+
         </activity>
         <activity android:name=".main.M_FansListActivity" >
         </activity>
