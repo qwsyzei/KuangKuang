@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgray"
+    android:background="@color/white"
     android:orientation="vertical"
-    tools:context="klsd.kuangkuang.main.S_ArticleActivity">
+    tools:context="yksg.kuangkuang.main.S_ArticleActivity">
 
     <RelativeLayout
         android:id="@+id/article_title_layout"
@@ -37,15 +37,13 @@
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/tv_article_content"
+            <WebView
+                android:id="@+id/webview_article"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/base_margin"
-                android:paddingRight="@dimen/base_margin"
                 android:layout_marginTop="@dimen/login_p_l_r"
                 android:layout_marginBottom="@dimen/login_p_l_r"
-               ></TextView>
+               ></WebView>
 
         </LinearLayout>
     </ScrollView>
