@@ -21,7 +21,7 @@
         android:layout_marginLeft="@dimen/signup__text_m_l_r"
         android:background="@color/little_gray"></View>
 
-    <klsd.kuangkuang.views.MyRadioGroup
+    <yksg.kuangkuang.views.MyRadioGroup
         android:id="@+id/tool_radiogroup_clarity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -108,5 +108,5 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
-    </klsd.kuangkuang.views.MyRadioGroup>
+    </yksg.kuangkuang.views.MyRadioGroup>
 </LinearLayout>

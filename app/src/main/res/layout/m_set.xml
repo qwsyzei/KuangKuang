@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgray"
-    tools:context="klsd.kuangkuang.main.M_SetActivity">
+    tools:context="yksg.kuangkuang.main.M_SetActivity">
 
     <RelativeLayout
         android:id="@+id/user_title_layout"
@@ -229,13 +229,13 @@
                 style="@style/common_text_style"
                 android:text="@string/start_push" />
 
-            <klsd.kuangkuang.views.ToggleButton
+            <yksg.kuangkuang.views.ToggleButton
                 android:id="@+id/set_toggle"
                 android:layout_width="@dimen/togglebutton_width"
                 android:layout_height="@dimen/togglebutton_height"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/clickable"></klsd.kuangkuang.views.ToggleButton>
+                android:src="@mipmap/clickable"></yksg.kuangkuang.views.ToggleButton>
 
         </RelativeLayout>
 

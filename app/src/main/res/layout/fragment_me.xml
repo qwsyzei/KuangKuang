@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:background="@color/lightgray"
     android:orientation="vertical"
-    tools:context="klsd.kuangkuang.main.M_MeActivity">
+    tools:context="yksg.kuangkuang.main.M_MeActivity">
 
     <include layout="@layout/title_me"></include>
-    <klsd.kuangkuang.views.PullToRefresh123View
+    <yksg.kuangkuang.views.PullToRefresh123View
         android:id="@+id/pull_refresh_view_me"
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -36,5 +36,5 @@
 
         </LinearLayout>
     </ScrollView>
-    </klsd.kuangkuang.views.PullToRefresh123View>
+    </yksg.kuangkuang.views.PullToRefresh123View>
 </LinearLayout>

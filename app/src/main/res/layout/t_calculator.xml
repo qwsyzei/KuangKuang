@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/lightgray"
-    tools:context="klsd.kuangkuang.main.T_CalculatorActivity">
+    tools:context="yksg.kuangkuang.main.T_CalculatorActivity">
     <RelativeLayout
         android:id="@+id/article_title_layout"
         android:layout_width="fill_parent"

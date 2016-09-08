@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="klsd.kuangkuang.main.C_CircleAllCommentActivity">
+    tools:context="yksg.kuangkuang.main.C_CircleAllCommentActivity">
     <LinearLayout
         android:id="@+id/all_comment_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <include layout="@layout/title_two"/>
     </LinearLayout>
-    <klsd.kuangkuang.views.PullToRefreshView
+    <yksg.kuangkuang.views.PullToRefreshView
         android:id="@+id/pull_refresh_view_circle_allcomment"
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -22,16 +22,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent">
-                <klsd.kuangkuang.views.SelfListView
+                <yksg.kuangkuang.views.SelfListView
                     android:id="@+id/listview_circle_allcomment"
                     android:layout_width="match_parent"
                     android:layout_marginTop="@dimen/size_eight"
                     android:layout_height="match_parent"
-                    ></klsd.kuangkuang.views.SelfListView>
+                    ></yksg.kuangkuang.views.SelfListView>
             </LinearLayout>
         </ScrollView>
 
-    </klsd.kuangkuang.views.PullToRefreshView>
+    </yksg.kuangkuang.views.PullToRefreshView>
     <LinearLayout
         android:id="@+id/all_comment_send"
         android:layout_width="match_parent"

@@ -1,0 +1,143 @@
+package yksg.kuangkuang.main;
+
+
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import java.io.File;
+
+import yksg.kuangkuang.R;
+import yksg.kuangkuang.utils.DataCleanManager;
+
+import yksg.kuangkuang.utils.ToastUtil;
+import yksg.kuangkuang.views.CleanCacheDialog;
+import yksg.kuangkuang.views.ExitDialog;
+import yksg.kuangkuang.views.ToggleButton;
+
+
+public class M_SetActivity extends BaseActivity implements View.OnClickListener {
+    private RelativeLayout layout_personal, layout_admin, layout_about_us, layout_feedback, layout_give_mark, layout_clean_cache, layout_start_push;
+    private CleanCacheDialog cleanDialog;
+    private ExitDialog exitDialog;
+
+    private Button btn;
+    private TextView tv_clean_yes, tv_clean_no;
+    private ToggleButton toggleButton;
+    private TextView tv_cache;
+    private String cacheSize;
+    private static String dir = Environment.getExternalStorageDirectory()
+            .getAbsolutePath() + "/Android/data/klsd.kuangkuang/cache/";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.m_set);
+        setTitle(getString(R.string.set));
+        initView();
+    }
+
+    private void initView() {
+        toggleButton = (ToggleButton) findViewById(R.id.set_toggle);
+        layout_personal = (RelativeLayout) findViewById(R.id.set_personal_data);
+        layout_admin = (RelativeLayout) findViewById(R.id.set_admin_manager);
+        layout_about_us = (RelativeLayout) findViewById(R.id.set_about_us);
+        layout_feedback = (RelativeLayout) findViewById(R.id.set_feedback);
+        layout_give_mark = (RelativeLayout) findViewById(R.id.set_give_mark);
+        layout_clean_cache = (RelativeLayout) findViewById(R.id.set_clean_cache);
+        layout_start_push = (RelativeLayout) findViewById(R.id.set_start_push);
+        btn = (Button) findViewById(R.id.btn_exit);
+        tv_cache = (TextView) findViewById(R.id.set_tv_cache);
+        try {
+            cacheSize = DataCleanManager.getCacheSize(new File(dir));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tv_cache.setText(cacheSize);
+        layout_personal.setOnClickListener(this);
+        layout_admin.setOnClickListener(this);
+        layout_about_us.setOnClickListener(this);
+        layout_feedback.setOnClickListener(this);
+        layout_give_mark.setOnClickListener(this);
+        layout_clean_cache.setOnClickListener(this);
+        btn.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.set_personal_data:
+                myStartActivity(new Intent(M_SetActivity.this, M_PersonalDataActivity.class));
+                break;
+            case R.id.set_admin_manager:
+                myStartActivity(new Intent(M_SetActivity.this, M_AdminManagerActivity.class));
+                break;
+            case R.id.set_about_us:
+                myStartActivity(new Intent(M_SetActivity.this, M_AboutUsActivity.class));
+                break;
+            case R.id.set_feedback:
+                myStartActivity(new Intent(M_SetActivity.this, M_FeedBackActivity.class));
+                break;
+            case R.id.set_give_mark:
+                try {
+                    Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    ToastUtil.show(M_SetActivity.this, getString(R.string.no_market));
+                }
+                break;
+            case R.id.set_clean_cache:
+                Clean_Dialog();
+                break;
+            case R.id.dialog_clean_yes:
+                cleanDialog.dismiss();
+                DataCleanManager.deleteFolderFile(dir, false);
+                tv_cache.setText("0.00MB");
+                break;
+            case R.id.dialog_clean_no:
+                cleanDialog.dismiss();
+                break;
+            case R.id.exit_yes:
+                signOut();
+                break;
+            case R.id.exit_no:
+                exitDialog.dismiss();
+                break;
+            case R.id.btn_exit:
+                Exit_Dialog();
+                break;
+        }
+    }
+
+
+
+    private void Clean_Dialog() {
+        cleanDialog = new CleanCacheDialog(M_SetActivity.this, R.style.MyDialogStyle, R.layout.dialog_clean_cache);
+        cleanDialog.show();
+        tv_clean_yes = (TextView) cleanDialog.findViewById(R.id.dialog_clean_yes);
+        tv_clean_no = (TextView) cleanDialog.findViewById(R.id.dialog_clean_no);
+        tv_clean_yes.setOnClickListener(this);
+        tv_clean_no.setOnClickListener(this);
+
+    }
+
+    private void Exit_Dialog() {
+        exitDialog = new ExitDialog(M_SetActivity.this, R.style.MyDialogStyle, R.layout.dialog_exit);
+        exitDialog.show();
+
+        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
+        tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
+        tv_yes.setOnClickListener(this);
+        tv_no.setOnClickListener(this);
+
+    }
+}

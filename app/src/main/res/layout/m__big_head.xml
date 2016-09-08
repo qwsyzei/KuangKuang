@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="klsd.kuangkuang.main.M_BigHeadActivity">
+    tools:context="yksg.kuangkuang.main.M_BigHeadActivity">
     <LinearLayout
         android:id="@+id/change_login_psd_title"
         android:layout_width="match_parent"

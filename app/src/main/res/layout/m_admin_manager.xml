@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/lightgray"
-    tools:context="klsd.kuangkuang.main.M_AdminManagerActivity">
+    tools:context="yksg.kuangkuang.main.M_AdminManagerActivity">
 
 
         <RelativeLayout

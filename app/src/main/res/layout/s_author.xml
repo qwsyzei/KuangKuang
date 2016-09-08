@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="klsd.kuangkuang.main.S_AuthorActivity">
+    tools:context="yksg.kuangkuang.main.S_AuthorActivity">
     <RelativeLayout
         android:id="@+id/article_title_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <include layout="@layout/title_article" />
     </RelativeLayout>
-    <klsd.kuangkuang.views.PullToRefresh123View
+    <yksg.kuangkuang.views.PullToRefresh123View
         android:id="@+id/pull_refresh_view_author"
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -37,5 +37,5 @@
 
             </LinearLayout>
         </ScrollView>
-    </klsd.kuangkuang.views.PullToRefresh123View>
+    </yksg.kuangkuang.views.PullToRefresh123View>
 </LinearLayout>

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "klsd.kuangkuang"
+        applicationId "yksg.kuangkuang"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

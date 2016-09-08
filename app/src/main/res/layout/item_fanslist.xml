@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/base_margin"
     android:paddingTop="@dimen/login_p_l_r">
 
-    <klsd.kuangkuang.views.CircleImageView
+    <yksg.kuangkuang.views.CircleImageView
         android:id="@+id/item_fanslist_im_head"
         android:layout_width="@dimen/article_author_head_size"
         android:layout_height="@dimen/article_author_head_size"

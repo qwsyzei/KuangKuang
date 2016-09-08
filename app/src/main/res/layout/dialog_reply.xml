@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/gray_in_orders" />
-        <klsd.kuangkuang.views.ContainsEmojiEditText
+        <yksg.kuangkuang.views.ContainsEmojiEditText
             android:id="@+id/dialog_reply_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -12,7 +12,7 @@
         android:focusable="false"
         android:layout_marginBottom="@dimen/base_margin"
         android:orientation="horizontal">
-        <klsd.kuangkuang.views.ContainsEmojiEditText
+        <yksg.kuangkuang.views.ContainsEmojiEditText
             android:id="@+id/dialog_comment_edit"
             android:layout_width="0dp"
             android:layout_height="fill_parent"

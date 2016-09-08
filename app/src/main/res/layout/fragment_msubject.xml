@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/lightgray"
-    tools:context="klsd.kuangkuang.fragments.MSubjectFragment">
+    tools:context="yksg.kuangkuang.fragments.MSubjectFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <include layout="@layout/title_subject"></include>
     </LinearLayout>
-    <klsd.kuangkuang.views.PullToRefreshView
+    <yksg.kuangkuang.views.PullToRefreshView
         android:id="@+id/pull_refresh_view_subject"
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -23,15 +23,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent">
-    <klsd.kuangkuang.views.SelfListView
+    <yksg.kuangkuang.views.SelfListView
         android:id="@+id/listview_msubject"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:cacheColorHint="@color/transparent"
         android:divider="@color/lightgray"
-        android:dividerHeight="@dimen/login_p_l_r"></klsd.kuangkuang.views.SelfListView>
+        android:dividerHeight="@dimen/login_p_l_r"></yksg.kuangkuang.views.SelfListView>
     </LinearLayout>
     </ScrollView>
 
-    </klsd.kuangkuang.views.PullToRefreshView>
+    </yksg.kuangkuang.views.PullToRefreshView>
 </LinearLayout>

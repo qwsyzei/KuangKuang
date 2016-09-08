@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/lightgray"
     android:orientation="vertical"
-    tools:context="klsd.kuangkuang.main.M_FollowListActivity">
+    tools:context="yksg.kuangkuang.main.M_FollowListActivity">
     <RelativeLayout
         android:id="@+id/user_title_layout"
         android:layout_width="fill_parent"

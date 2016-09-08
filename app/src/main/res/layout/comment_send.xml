@@ -5,7 +5,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:layout_height="@dimen/s_all_comment_height">
-<klsd.kuangkuang.views.ContainsEmojiEditText
+<yksg.kuangkuang.views.ContainsEmojiEditText
     android:id="@+id/all_comment_send_edit"
     android:layout_width="0dp"
     android:layout_height="fill_parent"

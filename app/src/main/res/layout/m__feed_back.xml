@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/lightgray"
     android:orientation="vertical"
-    tools:context="klsd.kuangkuang.main.M_FeedBackActivity">
+    tools:context="yksg.kuangkuang.main.M_FeedBackActivity">
 
     <RelativeLayout
         android:id="@+id/user_title_layout"
@@ -21,7 +21,7 @@
         android:layout_margin="@dimen/base_margin"
         android:background="@color/white">
 
-        <klsd.kuangkuang.views.ContainsEmojiEditText
+        <yksg.kuangkuang.views.ContainsEmojiEditText
             android:id="@+id/feedback_edit"
             android:layout_width="match_parent"
             android:layout_height="@dimen/big_edit_height"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgray"
-    tools:context="com.klsd.main.ChangeLoginPsdActivity">
+    tools:context="com.yksg.main.ChangeLoginPsdActivity">
 
     <LinearLayout
         android:id="@+id/change_login_psd_title"
@@ -42,7 +42,7 @@
                 android:textSize="@dimen/middle_text_size"
                 android:textColor="@color/black"
                 android:text="@string/old_password" />
-            <klsd.kuangkuang.views.ContainsEmojiEditText
+            <yksg.kuangkuang.views.ContainsEmojiEditText
                 android:id="@+id/change_login_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@ android:layout_marginTop="@dimen/size_eight"
                 android:textSize="@dimen/middle_text_size"
                 android:textColor="@color/black"
                 android:text="@string/newpassword" />
-            <klsd.kuangkuang.views.ContainsEmojiEditText
+            <yksg.kuangkuang.views.ContainsEmojiEditText
                 android:id="@+id/change_login_newpassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -130,7 +130,7 @@ android:layout_marginTop="@dimen/size_eight"
                 android:textSize="@dimen/middle_text_size"
                 android:textColor="@color/black"
                 android:text="@string/newpassword_confirm" />
-            <klsd.kuangkuang.views.ContainsEmojiEditText
+            <yksg.kuangkuang.views.ContainsEmojiEditText
                 android:id="@+id/change_login_newpassword_confirm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

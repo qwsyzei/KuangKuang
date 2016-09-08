@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgray"
-    tools:context="com.klsd.main.NewPhoneActivity">
+    tools:context="com.yksg.main.NewPhoneActivity">
 
     <LinearLayout
         android:id="@+id/bindphone_title"

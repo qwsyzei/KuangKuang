@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <klsd.kuangkuang.views.ObservableScrollView
+    <yksg.kuangkuang.views.ObservableScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +30,7 @@
 
         </LinearLayout>
 
-    </klsd.kuangkuang.views.ObservableScrollView>
+    </yksg.kuangkuang.views.ObservableScrollView>
 
     <include layout="@layout/title_two" />
 

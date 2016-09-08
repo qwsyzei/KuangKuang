@@ -13,7 +13,7 @@
         android:layout_marginRight="@dimen/base_margin"
         android:paddingTop="@dimen/login_p_l_r">
 
-        <klsd.kuangkuang.views.CircleImageView
+        <yksg.kuangkuang.views.CircleImageView
             android:id="@+id/item_circle_head_pic"
             android:layout_width="@dimen/article_author_head_size"
             android:layout_height="@dimen/article_author_head_size"
@@ -50,7 +50,7 @@
         android:text="123"
         android:textSize="@dimen/small_middle_text_size" />
 
-    <klsd.kuangkuang.views.SelfGridView
+    <yksg.kuangkuang.views.SelfGridView
         android:id="@+id/gridview_circle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         android:paddingLeft="@dimen/base_margin"
         android:paddingRight="@dimen/base_margin"
         android:smoothScrollbar="true"
-        android:soundEffectsEnabled="true"></klsd.kuangkuang.views.SelfGridView>
+        android:soundEffectsEnabled="true"></yksg.kuangkuang.views.SelfGridView>
 
     <View
         android:layout_width="match_parent"

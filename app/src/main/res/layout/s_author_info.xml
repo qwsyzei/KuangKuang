@@ -16,7 +16,7 @@
             android:layout_marginTop="@dimen/size_eight"
             android:src="@mipmap/wing" />
 
-        <klsd.kuangkuang.views.CircleImageView
+        <yksg.kuangkuang.views.CircleImageView
             android:id="@+id/author_info_pic"
             android:layout_width="@dimen/article_author_head_size"
             android:layout_height="@dimen/article_author_head_size"

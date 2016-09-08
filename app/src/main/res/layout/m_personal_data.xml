@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgray"
-    tools:context="klsd.kuangkuang.main.M_PersonalDataActivity">
+    tools:context="yksg.kuangkuang.main.M_PersonalDataActivity">
 
     <RelativeLayout
         android:id="@+id/user_title_layout"
@@ -30,7 +30,7 @@
             android:padding="@dimen/login_p_l_r">
 
 
-            <klsd.kuangkuang.views.CircleImageView
+            <yksg.kuangkuang.views.CircleImageView
                 android:id="@+id/im_head_pic"
                 android:layout_width="@dimen/head_pic_size"
                 android:layout_height="@dimen/head_pic_size"
@@ -68,7 +68,7 @@
                 style="@style/common_text_style123"
                 android:text="@string/nick_name" />
 
-            <klsd.kuangkuang.views.ContainsEmojiEditText
+            <yksg.kuangkuang.views.ContainsEmojiEditText
                 android:id="@+id/per_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -212,7 +212,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true">
 
-            <klsd.kuangkuang.views.ContainsEmojiEditText
+            <yksg.kuangkuang.views.ContainsEmojiEditText
                 android:id="@+id/per_edit_signature"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/release_word_edit_height"

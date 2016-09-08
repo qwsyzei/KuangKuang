@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <klsd.kuangkuang.views.CircleImageView
+    <yksg.kuangkuang.views.CircleImageView
         android:id="@+id/im_item_girdview_like_head"
         android:layout_width="@dimen/item_gridview_like_size"
         android:layout_gravity="center"

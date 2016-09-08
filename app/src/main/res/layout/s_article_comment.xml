@@ -15,11 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/light_font_note"></View>
-    <klsd.kuangkuang.views.SelfListView
+    <yksg.kuangkuang.views.SelfListView
         android:id="@+id/listview_article_comment3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/base_margin"></klsd.kuangkuang.views.SelfListView>
+        android:layout_marginTop="@dimen/base_margin"></yksg.kuangkuang.views.SelfListView>
     <TextView
         android:id="@+id/article_look_all_comment"
         android:layout_width="match_parent"

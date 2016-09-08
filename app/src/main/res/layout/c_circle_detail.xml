@@ -27,7 +27,7 @@
             android:layout_height="fill_parent"
             android:background="@color/lightgray"></View>
 
-        <klsd.kuangkuang.views.PullToRefresh123View
+        <yksg.kuangkuang.views.PullToRefresh123View
             android:id="@+id/pull_refresh_view_circle_detail"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -56,7 +56,7 @@
                             android:layout_height="wrap_content"
                             android:paddingTop="@dimen/login_p_l_r">
 
-                            <klsd.kuangkuang.views.CircleImageView
+                            <yksg.kuangkuang.views.CircleImageView
                                 android:id="@+id/circle_detail_head_pic"
                                 android:layout_width="@dimen/article_author_head_size"
                                 android:layout_height="@dimen/article_author_head_size"
@@ -94,7 +94,7 @@
                             android:text="123"
                             android:textSize="@dimen/middle_text_size" />
 
-                        <klsd.kuangkuang.views.SelfGridView
+                        <yksg.kuangkuang.views.SelfGridView
                             android:id="@+id/gridview_circle_detail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
                          android:layout_marginTop="2dp"
                             android:numColumns="3"
                             android:smoothScrollbar="true"
-                            android:soundEffectsEnabled="true"></klsd.kuangkuang.views.SelfGridView>
+                            android:soundEffectsEnabled="true"></yksg.kuangkuang.views.SelfGridView>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -211,7 +211,7 @@
                             android:layout_gravity="center_vertical"
                             android:src="@mipmap/like01" />
 
-                        <klsd.kuangkuang.views.SelfGridView
+                        <yksg.kuangkuang.views.SelfGridView
                             android:id="@+id/gridview_circle_detail_like"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -219,7 +219,7 @@
                             android:layout_marginRight="@dimen/base_margin"
                             android:numColumns="8"
                             android:smoothScrollbar="true"
-                            android:soundEffectsEnabled="true"></klsd.kuangkuang.views.SelfGridView>
+                            android:soundEffectsEnabled="true"></yksg.kuangkuang.views.SelfGridView>
                     </LinearLayout>
 
                     <View
@@ -239,17 +239,17 @@
                         android:paddingTop="20dp"
                         android:src="@mipmap/comment01" />
 
-                    <klsd.kuangkuang.views.SelfListView
+                    <yksg.kuangkuang.views.SelfListView
                         android:id="@+id/listview_circle_detail"
                         android:layout_width="match_parent"
                         android:layout_height="fill_parent"
                         android:layout_marginLeft="35dp"
                         android:layout_marginTop="-41dp"
                         android:divider="@color/lightgray"
-                        android:dividerHeight="2dp"></klsd.kuangkuang.views.SelfListView>
+                        android:dividerHeight="2dp"></yksg.kuangkuang.views.SelfListView>
                 </LinearLayout>
             </ScrollView>
-        </klsd.kuangkuang.views.PullToRefresh123View>
+        </yksg.kuangkuang.views.PullToRefresh123View>
 
         <View
             android:layout_width="@dimen/size_eight"
