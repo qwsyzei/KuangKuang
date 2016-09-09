@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import yksg.kuangkuang.R;
@@ -24,6 +26,7 @@ import yksg.kuangkuang.utils.JSONHandler;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.views.ExitDialog;
+
 import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
@@ -41,11 +44,13 @@ public class M_FollowListAdapter extends ArrayAdapter<Follows> {
     private TextView tv_cancel;
     List<Follows> mylist;
     private int position123;
-    public M_FollowListAdapter(Context context, List<Follows> list,Handler h) {
+    private Picasso picasso;
+
+    public M_FollowListAdapter(Context context, List<Follows> list, Handler h) {
         super(context, R.layout.item_followlist, list);
         this.ctx = context;
         this.handler = h;
-        this.mylist=list;
+        this.mylist = list;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -68,49 +73,50 @@ public class M_FollowListAdapter extends ArrayAdapter<Follows> {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_followlist, null);
-            viewHolder.name= (TextView) convertView.findViewById(R.id.item_followlist_tv_name);
-            viewHolder.signature= (TextView) convertView.findViewById(R.id.item_followlist_tv_signature);
-            viewHolder.im_pic= (ImageView) convertView.findViewById(R.id.item_followlist_im_head);
-            viewHolder.im_follow_state= (ImageView) convertView.findViewById(R.id.item_followlist_im_follow);
-            viewHolder.tv_follow_state= (TextView) convertView.findViewById(R.id.item_followlist_tv_im_tv);
-            viewHolder.layout_follow_state= (LinearLayout) convertView.findViewById(R.id.layout_item_followlist_follow);
+            viewHolder.name = (TextView) convertView.findViewById(R.id.item_followlist_tv_name);
+            viewHolder.signature = (TextView) convertView.findViewById(R.id.item_followlist_tv_signature);
+            viewHolder.im_pic = (ImageView) convertView.findViewById(R.id.item_followlist_im_head);
+            viewHolder.im_follow_state = (ImageView) convertView.findViewById(R.id.item_followlist_im_follow);
+            viewHolder.tv_follow_state = (TextView) convertView.findViewById(R.id.item_followlist_tv_im_tv);
+            viewHolder.layout_follow_state = (LinearLayout) convertView.findViewById(R.id.layout_item_followlist_follow);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.name.setText(ac.getNickname());
-        if (ac.getSignature().equals("null")){
+        if (ac.getSignature().equals("null")) {
             viewHolder.signature.setText(R.string.too_lazy);
-        }else{
+        } else {
             viewHolder.signature.setText(ac.getSignature());
         }
-        Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_pic);
-viewHolder.layout_follow_state.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        position123=position;
-        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
-        exitDialog.setCanceledOnTouchOutside(true);
-        exitDialog.show();
-
-        tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
-        tv_cancel.setText(R.string.cancel_follow);
-
-        tv_cancel.setOnClickListener(new View.OnClickListener() {
+//        Context context = ctx.getApplicationContext();
+//        initImageLoader(context);
+//        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_pic);
+        picasso.with(ctx).load(Consts.host + "/" + ac.getPicture_son()).into(viewHolder.im_pic);
+        viewHolder.layout_follow_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                exitDialog.dismiss();
-                RequestParams params = new RequestParams();
-                params.addQueryStringParameter("object",ac.getObject_id());
-                if (http == null) http = new MyHTTP(ctx);
-                http.baseRequest(Consts.destroyfollowsApi, JSONHandler.JTYPE_DELETE_FOLLOW, HttpRequest.HttpMethod.GET,
-                        params, handler);
+                position123 = position;
+                exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+                exitDialog.setCanceledOnTouchOutside(true);
+                exitDialog.show();
+
+                tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+                tv_cancel.setText(R.string.cancel_follow);
+
+                tv_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        exitDialog.dismiss();
+                        RequestParams params = new RequestParams();
+                        params.addQueryStringParameter("object", ac.getObject_id());
+                        if (http == null) http = new MyHTTP(ctx);
+                        http.baseRequest(Consts.destroyfollowsApi, JSONHandler.JTYPE_DELETE_FOLLOW, HttpRequest.HttpMethod.GET,
+                                params, handler);
+                    }
+                });
             }
         });
-    }
-});
 
         return convertView;
     }
@@ -130,8 +136,9 @@ viewHolder.layout_follow_state.setOnClickListener(new View.OnClickListener() {
             ToastUtil.show(ctx, responseJson);
         }
     }
+
     public final class ViewHolder {
-        TextView name,signature;
+        TextView name, signature;
         ImageView im_pic;
         TextView tv_follow_state;
         ImageView im_follow_state;

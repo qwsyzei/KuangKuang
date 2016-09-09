@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,13 +72,14 @@ private String type;//从哪里来的
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
     private TextView tv_dialog_title;
+    private Picasso picasso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.c_circle_detail);
         setTitle(getString(R.string.details));
-        Context context = getApplicationContext();
-        initImageLoader(context);
+//        Context context = getApplicationContext();
+//        initImageLoader(context);
         initView();
 
     }
@@ -150,7 +152,8 @@ private String type;//从哪里来的
         mPullToRefreshView.setOnFooterRefreshListener(this);
 
         if (!head_pic.equals("null")) {
-            ImageLoader.getInstance().displayImage(Consts.host + "/" + head_pic, im_head);
+//            ImageLoader.getInstance().displayImage(Consts.host + "/" + head_pic, im_head);
+            picasso.with(M_CircleDetailActivity.this).load(Consts.host + "/" + head_pic).into(im_head);
         }
         tv_time.setText(MyDate.monthDay(time));
         tv_nickname.setText(nickname);

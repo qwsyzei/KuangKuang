@@ -14,8 +14,10 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.models.Blacklist;
 import yksg.kuangkuang.utils.Consts;
@@ -42,11 +44,13 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
     private TextView tv_cancel;
     List<Blacklist> mylist;
     int position123;
-    public M_BlackListAdapter(Context context, List<Blacklist> list,Handler h) {
+    private Picasso picasso;
+
+    public M_BlackListAdapter(Context context, List<Blacklist> list, Handler h) {
         super(context, R.layout.item_blacklist, list);
         this.ctx = context;
         this.handler = h;
-        this.mylist=list;
+        this.mylist = list;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -69,21 +73,21 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_blacklist, null);
-            viewHolder.name= (TextView) convertView.findViewById(R.id.item_blacklist_tv_name);
-            viewHolder.im_pic= (ImageView) convertView.findViewById(R.id.item_blacklist_im_head);
+            viewHolder.name = (TextView) convertView.findViewById(R.id.item_blacklist_tv_name);
+            viewHolder.im_pic = (ImageView) convertView.findViewById(R.id.item_blacklist_im_head);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.name.setText(ac.getNickname());
-        Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host+"/"+ac.getPicture_son(), viewHolder.im_pic);
-
+//        Context context = ctx.getApplicationContext();
+//        initImageLoader(context);
+//        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_pic);
+        picasso.with(ctx).load(Consts.host + "/" + ac.getPicture_son()).into(viewHolder.im_pic);
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-              position123=position;
+                position123 = position;
                 exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
                 exitDialog.setCanceledOnTouchOutside(true);
                 exitDialog.show();
@@ -94,7 +98,7 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
                     public void onClick(View view) {
                         exitDialog.dismiss();
                         RequestParams params = new RequestParams();
-                        params.addQueryStringParameter("object_id",ac.getObject_id() );
+                        params.addQueryStringParameter("object_id", ac.getObject_id());
                         if (http == null) http = new MyHTTP(ctx);
                         http.baseRequest(Consts.deleteblacklistApi, JSONHandler.JTYPE_DELETE_BLACK, HttpRequest.HttpMethod.GET,
                                 params, handler);
@@ -121,6 +125,7 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
             ToastUtil.show(ctx, responseJson);
         }
     }
+
     public final class ViewHolder {
         TextView name;
         ImageView im_pic;

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,7 @@ private TextView tv_name,tv_signature;
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
     int flag=0;
+    private Picasso picasso;
     public MMeFragment() {
         // Required empty public constructor
     }
@@ -241,7 +243,8 @@ private TextView tv_name,tv_signature;
                 }
             } else if (res.equals("123")) {
                 if (!documents.getPicture().equals("null")&&!documents.getPicture().equals("uploads/head_portrait")) {
-                    ImageLoader.getInstance().displayImage(Consts.host + "/" + documents.getPicture(), im_head_small);
+//                    ImageLoader.getInstance().displayImage(Consts.host + "/" + documents.getPicture(), im_head_small);
+                    picasso.with(a).load(Consts.host + "/" + documents.getPicture()).into(im_head_small);
                     Bitmap bitmap1 = fastblur(a, bitmap, 5, false);
                     im_head_big.setImageBitmap(bitmap1);
                 }

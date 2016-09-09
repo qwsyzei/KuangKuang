@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
     int flag=0;
     private List<AllComment> mylist;
 private int position123;
-
+private Picasso picasso;
     public S_AllCommentAdapter(Context context, List<AllComment> objects, Handler h) {
         super(context, R.layout.item_s_allcomment, objects);
         this.ctx = context;
@@ -238,10 +239,10 @@ private int position123;
         String time = MyDate.timeLogic(ac.getCreated_at().substring(0, 19).replace("T", " "));
         viewHolder.created_at.setText(time);
         viewHolder.tv_nickname.setText(ac.getNickname());
-        Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_head);
-
+//        Context context = ctx.getApplicationContext();
+//        initImageLoader(context);
+//        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_head);
+picasso.with(ctx).load(Consts.host + "/" + ac.getPicture_son()).into(viewHolder.im_head);
         return convertView;
     }
     public void updateData() {

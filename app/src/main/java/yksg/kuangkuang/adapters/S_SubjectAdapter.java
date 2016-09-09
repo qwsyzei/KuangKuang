@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
     String jtype, responseJson;
     String error_code;
     Bundle handlerBundler;
+    private Picasso picasso;
 
     public S_SubjectAdapter(Context context, List<Subject> objects, Handler h) {
         super(context, R.layout.item_s_subject, objects);
@@ -113,14 +115,14 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         } else {
             viewHolder.tv_author_name.setText(subject.getNickname());
         }
-        viewHolder.tv_tag.setText("["+subject.getTag()+"]");
+        viewHolder.tv_tag.setText("[" + subject.getTag() + "]");
 
-        Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host +subject.getPicture(), viewHolder.im_picture);
-        ImageLoader.getInstance().displayImage(Consts.host + "/" + subject.getPicture_son(), viewHolder.im_head_pic);
-
-
+//        Context context = ctx.getApplicationContext();
+//        initImageLoader(context);
+//        ImageLoader.getInstance().displayImage(Consts.host + subject.getPicture(), viewHolder.im_picture);
+//        ImageLoader.getInstance().displayImage(Consts.host + "/" + subject.getPicture_son(), viewHolder.im_head_pic);
+        picasso.with(ctx).load(Consts.host + subject.getPicture()).into(viewHolder.im_picture);
+        picasso.with(ctx).load(Consts.host + "/" + subject.getPicture_son()).into(viewHolder.im_head_pic);
         viewHolder.layout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,10 +145,10 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
                 intent.putExtra("nickname", subject.getNickname());
                 intent.putExtra("picture_son", subject.getPicture_son());
                 intent.putExtra("signature", subject.getSignature());
-                intent.putExtra("author_member_id",subject.getMember_id());
-                intent.putExtra("follow_state",subject.getFollow_state());
-                intent.putExtra("is_like",subject.getIs_like());
-                intent.putExtra("is_collect",subject.getIs_collect());
+                intent.putExtra("author_member_id", subject.getMember_id());
+                intent.putExtra("follow_state", subject.getFollow_state());
+                intent.putExtra("is_like", subject.getIs_like());
+                intent.putExtra("is_collect", subject.getIs_collect());
                 ctx.startActivity(intent);
             }
         });

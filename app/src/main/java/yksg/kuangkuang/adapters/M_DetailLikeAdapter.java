@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.models.CircleLike;
@@ -21,6 +23,7 @@ import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
 public class M_DetailLikeAdapter extends ArrayAdapter<CircleLike> {
     private Context ctx ;
     private List<CircleLike> list;
+private Picasso picasso;
 
     public M_DetailLikeAdapter(Context context, List<CircleLike> list) {
         super(context, R.layout.item_gridview,list);
@@ -51,9 +54,10 @@ public class M_DetailLikeAdapter extends ArrayAdapter<CircleLike> {
             ret.setTag(holder);
         }
         ViewHolder holder = (ViewHolder) ret.getTag();
-    Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host + "/" + list.get(position).getUser_head_url(), holder.bgIcon);
+//    Context context = ctx.getApplicationContext();
+//        initImageLoader(context);
+//        ImageLoader.getInstance().displayImage(Consts.host + "/" + list.get(position).getUser_head_url(), holder.bgIcon);
+        picasso.with(ctx).load(Consts.host + "/" + list.get(position).getUser_head_url()).into(holder.bgIcon);
         return ret;
     }
     class ViewHolder {

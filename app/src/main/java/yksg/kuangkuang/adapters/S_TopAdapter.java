@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
     String jtype, responseJson;
     String error_code;
     Bundle handlerBundler;
-
+private Picasso picasso;
     public S_TopAdapter(Context context, List<Top> list, Handler h) {
         super(context, R.layout.item_top_ten, list);
         this.ctx = context;
@@ -78,10 +79,10 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
         viewHolder.top.setText("Top" + (position + 1) + "");
         viewHolder.title.setText(ac.getTitle());
         viewHolder.tag.setText(ac.getTag());
-        Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host+ac.getPicture_url(), viewHolder.im_pic);
-
+//        Context context = ctx.getApplicationContext();
+//        initImageLoader(context);
+//        ImageLoader.getInstance().displayImage(Consts.host + ac.getPicture_url(), viewHolder.im_pic);
+picasso.with(ctx).load(Consts.host+ac.getPicture_url()).into(viewHolder.im_pic);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

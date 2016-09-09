@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.utils.Consts;
@@ -52,13 +53,14 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private ImageView im_add_follow;
     MyHTTP http;
     private WebView webView;
+    private Picasso picasso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.s__article);
-        Context context = getApplicationContext();
-        initImageLoader(context);
+//        Context context = getApplicationContext();
+//        initImageLoader(context);
         initView();
     }
 
@@ -121,7 +123,8 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             layout_like.setOnClickListener(this);
         }
         if (!picture_head.equals("null")) {
-            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_author_head);
+//            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_author_head);
+            picasso.with(S_ArticleActivity.this).load(Consts.host + "/" + picture_head).into(im_author_head);
         }
         if (follow_state.equals("0")) {
             im_add_follow.setImageResource(R.mipmap.follow_btn);

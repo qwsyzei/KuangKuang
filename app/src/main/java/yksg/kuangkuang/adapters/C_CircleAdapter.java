@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,7 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
     private C_CircleGridAdapter cGridAdapter;
     private List<Circles> mylist;
     private String id;
+    private Picasso picasso;
 
     public C_CircleAdapter(Context context, List<Circles> objects, Handler h) {
         super(context, R.layout.item_circle, objects);
@@ -311,10 +313,10 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
         } else {
             viewHolder.comment.setText(circles.getComment());
         }
-        Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host + "/" + circles.getPicture_son(), viewHolder.im_head_pic);
-
+//        Context context = ctx.getApplicationContext();
+//        initImageLoader(context);
+//        ImageLoader.getInstance().displayImage(Consts.host + "/" + circles.getPicture_son(), viewHolder.im_head_pic);
+picasso.with(ctx).load(Consts.host + "/" + circles.getPicture_son()).into(viewHolder.im_head_pic);
         String common_time = MyDate.timeLogic(circles.getCreated_at().substring(0, 19).replace("T", " "));
         viewHolder.time.setText(common_time);
         cGridAdapter = new C_CircleGridAdapter(ctx, headerEntitiesList);

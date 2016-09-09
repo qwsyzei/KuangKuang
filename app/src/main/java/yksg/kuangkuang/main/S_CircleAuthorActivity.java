@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +50,13 @@ public class S_CircleAuthorActivity extends BaseActivity implements PullToRefres
     private ImageView im_follow;
     private CircleImageView im_pic_head;
     private Documents documents;
+    private Picasso picasso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.s_author);
-        Context context = getApplicationContext();
-        initImageLoader(context);
+//        Context context = getApplicationContext();
+//        initImageLoader(context);
         initView();
     }
 
@@ -91,7 +93,8 @@ public class S_CircleAuthorActivity extends BaseActivity implements PullToRefres
             tv_followed_number.setText("已有"+followed_number + "人关注");
         }
         if (!picture_head.equals("null")) {
-            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_pic_head);
+//            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_pic_head);
+            picasso.with(S_CircleAuthorActivity.this).load(Consts.host + "/" + picture_head).into(im_pic_head);
         }
         listView = (SelfListView) findViewById(R.id.listview_author_words);
         listView.setFocusable(false);

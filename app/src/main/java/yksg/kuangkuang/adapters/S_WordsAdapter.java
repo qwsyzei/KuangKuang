@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class S_WordsAdapter extends ArrayAdapter<MyWord> {
     Bundle handlerBundler;
     private List<MyWord> mylist;
     private int position123;
+private Picasso picasso;
 
     public S_WordsAdapter(Context context, List<MyWord> objects, Handler h) {
         super(context, R.layout.item_myword, objects);
@@ -83,10 +85,10 @@ public class S_WordsAdapter extends ArrayAdapter<MyWord> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
-
+//        Context context = ctx.getApplicationContext();
+//        initImageLoader(context);
+//        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
+picasso.with(ctx).load(Consts.host + "/" + ac.getUrl1()).into(viewHolder.pic_url1);
         String today= MyDate.todayDate();
 
         if (today.equals(ac.get_the_time())){

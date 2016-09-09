@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class S_AuthorActivity extends BaseActivity implements PullToRefresh123Vi
     private ImageView im_follow;
     private CircleImageView im_pic_head;
     private Documents documents;
+    private Picasso picasso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +87,8 @@ public class S_AuthorActivity extends BaseActivity implements PullToRefresh123Vi
             im_follow.setImageResource(R.mipmap.followed_gray);
         }
         if (!picture_head.equals("null")) {
-            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_pic_head);
+//            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_pic_head);
+            picasso.with(S_AuthorActivity.this).load(Consts.host + "/" + picture_head).into(im_pic_head);
         }
         listView = (SelfListView) findViewById(R.id.listview_author_words);
         listView.setFocusable(false);

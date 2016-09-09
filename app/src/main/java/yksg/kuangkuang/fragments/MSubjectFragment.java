@@ -45,7 +45,7 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
     private String tagtag="0";
     public MSubjectFragment(String tag) {
         this.tagtag=tag;
-        // Required empty public constructor
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

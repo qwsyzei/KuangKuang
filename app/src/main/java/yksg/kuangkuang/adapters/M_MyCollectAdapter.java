@@ -15,7 +15,10 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
+
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.main.S_ArticleActivity;
 import yksg.kuangkuang.models.MyCollect;
@@ -26,6 +29,7 @@ import yksg.kuangkuang.utils.KelaParams;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.views.ExitDialog;
+
 import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
@@ -43,11 +47,13 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
     List<MyCollect> mylist;
     private int position123;
     MyHTTP http;
+    private Picasso picasso;
+
     public M_MyCollectAdapter(Context context, List<MyCollect> objects, Handler h) {
         super(context, R.layout.item_my_collect, objects);
         this.ctx = context;
         this.handler = h;
-        this.mylist=objects;
+        this.mylist = objects;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -79,9 +85,10 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
         }
         viewHolder.title.setText(ac.getTitle());
         viewHolder.describe_son.setText(ac.getDescribe_son());
-        Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host+ac.getPicture_url(), viewHolder.im_pic);
+//        Context context = ctx.getApplicationContext();
+//        initImageLoader(context);
+//        ImageLoader.getInstance().displayImage(Consts.host + ac.getPicture_url(), viewHolder.im_pic);
+        picasso.with(ctx).load(Consts.host + ac.getPicture_url()).into(viewHolder.im_pic);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,9 +112,9 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
                 intent.putExtra("picture_son", ac.getPicture_son());
                 intent.putExtra("signature", ac.getSignature());
                 intent.putExtra("author_member_id", ac.getMember_id());
-                intent.putExtra("follow_state",ac.getFollow_state());
-                intent.putExtra("is_like",ac.getIs_like());
-                intent.putExtra("is_collect",ac.getIs_collect());
+                intent.putExtra("follow_state", ac.getFollow_state());
+                intent.putExtra("is_like", ac.getIs_like());
+                intent.putExtra("is_collect", ac.getIs_collect());
                 ctx.startActivity(intent);
 
             }
@@ -115,7 +122,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                position123=position;
+                position123 = position;
                 exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
                 exitDialog.setCanceledOnTouchOutside(true);
                 exitDialog.show();
@@ -143,7 +150,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
             exitDialog.dismiss();
             mylist.remove(position123);
             notifyDataSetChanged();
-        }else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_VIEWS)) {
+        } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_VIEWS)) {
 
         }
     }

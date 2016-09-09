@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class M_FansListAdapter extends ArrayAdapter<Fans> {
     private TextView tv_cancel;
     List<Fans> mylist;
     private int position123;
+    private Picasso picasso;
 
     public M_FansListAdapter(Context context, List<Fans> list, Handler h) {
         super(context, R.layout.item_fanslist, list);
@@ -74,55 +76,56 @@ public class M_FansListAdapter extends ArrayAdapter<Fans> {
             viewHolder.name = (TextView) convertView.findViewById(R.id.item_fanslist_tv_name);
             viewHolder.signature = (TextView) convertView.findViewById(R.id.item_fanslist_tv_signature);
             viewHolder.im_pic = (ImageView) convertView.findViewById(R.id.item_fanslist_im_head);
-            viewHolder.im_follow_state= (ImageView) convertView.findViewById(R.id.item_fanslist_im_follow);
-            viewHolder.tv_follow_state= (TextView) convertView.findViewById(R.id.item_fanslist_tv_im_tv);
-            viewHolder.layout_follow_state= (LinearLayout) convertView.findViewById(R.id.layout_item_fanslist_follow);
+            viewHolder.im_follow_state = (ImageView) convertView.findViewById(R.id.item_fanslist_im_follow);
+            viewHolder.tv_follow_state = (TextView) convertView.findViewById(R.id.item_fanslist_tv_im_tv);
+            viewHolder.layout_follow_state = (LinearLayout) convertView.findViewById(R.id.layout_item_fanslist_follow);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.name.setText(ac.getNickname());
-        if (ac.getSignature().equals("null")){
+        if (ac.getSignature().equals("null")) {
             viewHolder.signature.setText(R.string.too_lazy);
-        }else{
+        } else {
             viewHolder.signature.setText(ac.getSignature());
         }
-        Context context = ctx.getApplicationContext();
-        initImageLoader(context);
-        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_pic);
+//        Context context = ctx.getApplicationContext();
+//        initImageLoader(context);
+//        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_pic);
+        picasso.with(ctx).load(Consts.host + "/" + ac.getPicture_son()).into(viewHolder.im_pic);
         if (ac.getIsfollow().equals("1")) {
             viewHolder.im_follow_state.setImageResource(R.mipmap.follow_done01);
             viewHolder.tv_follow_state.setText(R.string.already_follows);
-        } else if(ac.getIsfollow().equals("2")){
+        } else if (ac.getIsfollow().equals("2")) {
             viewHolder.im_follow_state.setImageResource(R.mipmap.follow_done);
             viewHolder.tv_follow_state.setText(R.string.already_follows);
-        }else {
+        } else {
             viewHolder.im_follow_state.setImageResource(R.mipmap.follow_togo);
         }
         viewHolder.layout_follow_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ac.getIsfollow().equals("0")){
+                if (ac.getIsfollow().equals("0")) {
                     position123 = position;
-                exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
-                exitDialog.setCanceledOnTouchOutside(true);
-                exitDialog.show();
+                    exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+                    exitDialog.setCanceledOnTouchOutside(true);
+                    exitDialog.show();
 
-                tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
-                tv_cancel.setText(R.string.add_follows);
+                    tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+                    tv_cancel.setText(R.string.add_follows);
 
-                tv_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        exitDialog.dismiss();
-                        RequestParams params = new RequestParams();
-                        params.addQueryStringParameter("object", ac.getObject_id());
-                        if (http == null) http = new MyHTTP(ctx);
-                        http.baseRequest(Consts.addfollowsApi, JSONHandler.JTYPE_ADD_FOLLOW, HttpRequest.HttpMethod.GET,
-                                params, handler);
-                    }
-                });
-            }
+                    tv_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            exitDialog.dismiss();
+                            RequestParams params = new RequestParams();
+                            params.addQueryStringParameter("object", ac.getObject_id());
+                            if (http == null) http = new MyHTTP(ctx);
+                            http.baseRequest(Consts.addfollowsApi, JSONHandler.JTYPE_ADD_FOLLOW, HttpRequest.HttpMethod.GET,
+                                    params, handler);
+                        }
+                    });
+                }
             }
         });
 
