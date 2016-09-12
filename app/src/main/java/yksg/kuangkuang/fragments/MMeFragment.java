@@ -72,7 +72,6 @@ private TextView tv_name,tv_signature;
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
     int flag=0;
-    private Picasso picasso;
     public MMeFragment() {
         // Required empty public constructor
     }
@@ -205,6 +204,7 @@ private TextView tv_name,tv_signature;
                     Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
                         getData();
+                        flag=1;
 //                        return;
                     }
                     else {
@@ -243,8 +243,7 @@ private TextView tv_name,tv_signature;
                 }
             } else if (res.equals("123")) {
                 if (!documents.getPicture().equals("null")&&!documents.getPicture().equals("uploads/head_portrait")) {
-//                    ImageLoader.getInstance().displayImage(Consts.host + "/" + documents.getPicture(), im_head_small);
-                    picasso.with(a).load(Consts.host + "/" + documents.getPicture()).into(im_head_small);
+                    ImageLoader.getInstance().displayImage(Consts.host + "/" + documents.getPicture(), im_head_small);
                     Bitmap bitmap1 = fastblur(a, bitmap, 5, false);
                     im_head_big.setImageBitmap(bitmap1);
                 }

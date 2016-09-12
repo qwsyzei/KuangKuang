@@ -160,7 +160,7 @@ String the_time=time.substring(5, 7);
 			String the_time=timeStringToUnixTime123(dateStr);
 			// 相差的秒数
 			long time = (getSystemTime() - Long.parseLong(the_time)) / 1000;
-			Log.d("毫秒差是", "timeLogic() returned: " + time);
+//			Log.d("毫秒差是", "timeLogic() returned: " + time);
 
 			if (time > 0 && time < 60) { // 1小时内
 				return sb.append(time + "秒前").toString();

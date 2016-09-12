@@ -1,9 +1,13 @@
 package yksg.kuangkuang.main;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,11 +30,10 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.soundcloud.android.crop.Crop;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,6 +76,9 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
     MyHTTP http;
     public static final String IMAGE_UNSPECIFIED = "image/*";
     ImageLoader imageLoader;
+    int degree;//角度
+    int degee_finally=0;//最终角度
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,60 +143,6 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         if (http == null) http = new MyHTTP(M_PersonalDataActivity.this);
         http.baseRequest(Consts.memberUpdateDocumentsApi, JSONHandler.JTYPE_MEMBER_UPDATE_DOCUMENTS, HttpRequest.HttpMethod.GET,
                 params, getHandler());
-    }
-
-    public void updateData() {
-        super.updateData();
-        if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
-            documents = (Documents) handlerBundler.getSerializable("documents");
-            if (documents.getBirthday().equals("null")) {
-                tv_birthday.setText(getString(R.string.not_choose));
-            } else {
-                tv_birthday.setText(documents.getBirthday());
-            }
-
-            if (documents.getCity().equals("null")) {
-                tv_city.setText(getString(R.string.not_set));
-            } else {
-                tv_city.setText(documents.getCity());
-            }
-            if (documents.getName().equals("null")) {
-                edit_per_nickname.setText("k" + getMember().getPhone_number());
-            } else {
-                edit_per_nickname.setText(documents.getName());
-            }
-            if (documents.getSignature().equals("null")) {
-                edit_per_signature.setText("");
-            } else {
-                edit_per_signature.setText(documents.getSignature());
-            }
-            sex = documents.getSex();
-            if (sex.equals("male")) {
-                spinner_sex.setSelection(0);
-            } else {
-                spinner_sex.setSelection(1);
-            }
-            head_url = Consts.host + "/" + documents.getPicture();
-
-            imageUrlsList = new ArrayList<>();
-            imageUrlsList.add(head_url);
-
-            if (head_url.equals("null")) {
-                im_head.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.touxiang03));
-            } else {
-                ImageLoader.getInstance().displayImage(head_url, im_head);
-            }
-        } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_DOCUMENTS)) {
-            ToastUtil.show(M_PersonalDataActivity.this, getString(R.string.save_success));
-            Log.d("个人资料上传成功", "updateData() returned: " + "");
-        } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_HEAD)) {
-            ToastUtil.show(M_PersonalDataActivity.this, getString(R.string.head_pic_upload_success));
-            Log.d("头像上传成功", "updateData() returned: " + "");
-                   //清理头像的缓存
-            imageLoader.getInstance().clearDiskCache();
-            imageLoader.getInstance().clearMemoryCache();
-        }
-
     }
 
     /**
@@ -292,16 +244,16 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
     /**
      * 上传头像
      */
-    private void updateHead() {
+    private void updateHead(String photoSt) {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("member_id", DataCenter.getMember_id());
-        params.addQueryStringParameter("picture", photoStr);
+        params.addQueryStringParameter("picture", photoSt);
         if (http == null) http = new MyHTTP(M_PersonalDataActivity.this);
         http.baseRequest(Consts.memberUpdateHeadApi, JSONHandler.JTYPE_MEMBER_UPDATE_HEAD, HttpRequest.HttpMethod.POST,
                 params, getHandler());
     }
 
-    //创建dialog
+
     private void initDialog() {
         selectPicDialog = new SelectPicDialog(M_PersonalDataActivity.this, R.style.dialog123);//创建Dialog并设置样式主题
         Window window = selectPicDialog.getWindow();
@@ -327,14 +279,28 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {//相册
+            Uri originalUri = null;
+            File file = null;
+            if (null != data && data.getData() != null) {
+                originalUri = data.getData();
+                file = getFileFromMediaUri(M_PersonalDataActivity.this, originalUri);
+            }
+             degree = getBitmapDegree(file.getAbsolutePath());
+                        Log.d("相册角度是", "onActivityResult() returned: " + degree+"");
             beginCrop(data.getData());
         } else if (requestCode == PHOTOHRAPH && resultCode == RESULT_OK) {//拍照
             File picture = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"temp.jpg");
+
+            degree = getBitmapDegree(picture.getAbsolutePath());
+            Log.d("拍照拍照角度是", "onActivityResult() returned: " + degree+"");
+
             beginCrop(Uri.fromFile(picture));
         }else if (requestCode == Crop.REQUEST_CROP) {
+
             handleCrop(resultCode, data);
         }
-
+        degee_finally=degree;
+        Log.d("判断结束的角度是", "onActivityResult() returned: " + degee_finally);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -358,19 +324,43 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
 
     private void handleCrop(int resultCode, Intent result) {
         if (resultCode == RESULT_OK) {
-           Bitmap photo= getBitmapFromUri(Crop.getOutput(result));
+            Bitmap photo= getBitmapFromUri(Crop.getOutput(result));
+            Log.d("可以旋转的角度是333333", "onActivityResult() returned: " + degee_finally+"");
+            Bitmap new_bm=rotateBitmapByDegree(photo, degee_finally);//根据角度旋转
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG, 70, stream);// (0 -
-                // 100)压缩文件
-                byte[] bt = stream.toByteArray();//为了转成16进制
-                photoStr = byte2hex(bt);//
-                im_head.setImageBitmap(photo);
-                updateHead();
+            new_bm.compress(Bitmap.CompressFormat.JPEG, 70, stream);// (0 -
+            // 100)压缩文件
+            byte[] bt = stream.toByteArray();//为了转成16进制
+            photoStr = byte2hex(bt);//
+            im_head.setImageBitmap(new_bm);
+            updateHead(photoStr);
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
+    /**
+     * 通过Uri获取文件
+     * @param ac
+     * @param uri
+     * @return
+     */
+    public static File getFileFromMediaUri(Context ac, Uri uri) {
+        if(uri.getScheme().toString().compareTo("content") == 0){
+            ContentResolver cr = ac.getContentResolver();
+            Cursor cursor = cr.query(uri, null, null, null, null);// 根据Uri从数据库中找
+            if (cursor != null) {
+                cursor.moveToFirst();
+                String filePath = cursor.getString(cursor.getColumnIndex("_data"));// 获取图片路径
+                cursor.close();
+                if (filePath != null) {
+                    return new File(filePath);
+                }
+            }
+        }else if(uri.getScheme().toString().compareTo("file") == 0){
+            return new File(uri.toString().replace("file://",""));
+        }
+        return null;
+    }
     /**
      * URI转bitmap
      * @param uri
@@ -423,5 +413,112 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    /**
+     * 读取图片的旋转的角度
+     * @param path 图片绝对路径
+     * @return 图片的旋转角度
+     */
+    public static int getBitmapDegree(String path) {
+        int degree = 0;
+        try {
+            // 从指定路径下读取图片，并获取其EXIF信息
+            ExifInterface exifInterface = new ExifInterface(path);
+            // 获取图片的旋转信息
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
+    }
+    /**
+     * 将图片按照某个角度进行旋转
+     *
+     * @param bm     需要旋转的图片
+     * @param degree 旋转角度
+     * @return 旋转后的图片
+     */
+    public static Bitmap rotateBitmapByDegree(Bitmap bm, int degree) {
+        Bitmap returnBm = null;
 
+        // 根据旋转角度，生成旋转矩阵
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        try {
+            // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
+            returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+        } catch (OutOfMemoryError e) {
+        }
+        if (returnBm == null) {
+            returnBm = bm;
+        }
+        if (bm != returnBm) {
+            bm.recycle();
+        }
+        return returnBm;
+    }
+    public void updateData() {
+        super.updateData();
+        if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
+            documents = (Documents) handlerBundler.getSerializable("documents");
+            if (documents.getBirthday().equals("null")) {
+                tv_birthday.setText(getString(R.string.not_choose));
+            } else {
+                tv_birthday.setText(documents.getBirthday());
+            }
+
+            if (documents.getCity().equals("null")) {
+                tv_city.setText(getString(R.string.not_set));
+            } else {
+                tv_city.setText(documents.getCity());
+            }
+            if (documents.getName().equals("null")) {
+                edit_per_nickname.setText("k" + getMember().getPhone_number());
+            } else {
+                edit_per_nickname.setText(documents.getName());
+            }
+            if (documents.getSignature().equals("null")) {
+                edit_per_signature.setText("");
+            } else {
+                edit_per_signature.setText(documents.getSignature());
+            }
+            sex = documents.getSex();
+            if (sex.equals("male")) {
+                spinner_sex.setSelection(0);
+            } else {
+                spinner_sex.setSelection(1);
+            }
+            head_url = Consts.host + "/" + documents.getPicture();
+
+            imageUrlsList = new ArrayList<>();
+            imageUrlsList.add(head_url);
+
+            if (head_url.equals("null")) {
+                im_head.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.touxiang03));
+            } else {
+                imageLoader.getInstance().displayImage(head_url, im_head);
+            }
+        } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_DOCUMENTS)) {
+            ToastUtil.show(M_PersonalDataActivity.this, getString(R.string.save_success));
+            Log.d("个人资料上传成功", "updateData() returned: " + "");
+        } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_UPDATE_HEAD)) {
+            ToastUtil.show(M_PersonalDataActivity.this, getString(R.string.head_pic_upload_success));
+            Log.d("头像上传成功", "updateData() returned: " + "");
+            //清理头像的缓存
+            imageLoader.getInstance().clearDiskCache();
+            imageLoader.getInstance().clearMemoryCache();
+        }
+
+    }
 }
