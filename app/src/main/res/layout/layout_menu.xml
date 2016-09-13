@@ -28,7 +28,7 @@
         android:layout_marginRight="40dp"
         android:background="@mipmap/biz_pc_account_line" />
     <TextView
-        android:id="@+id/tvzhubao"
+        android:id="@+id/tv_jiangxinyike"
         android:layout_width="match_parent"
         android:layout_height="40.0dip"
         android:clickable="true"
@@ -36,7 +36,7 @@
         android:gravity="center"
         android:paddingLeft="15.0dip"
         android:paddingRight="10.0dip"
-        android:text="珠宝故事"
+        android:text="@string/jiangxinyike"
         android:textColor="@color/black"
         android:textSize="16.0sp" />
 
@@ -47,7 +47,7 @@
         android:layout_marginRight="40dp"
         android:background="@mipmap/biz_pc_account_line" />
     <TextView
-        android:id="@+id/tvzhubaogonglue"
+        android:id="@+id/tv_zhexiangyouli"
         android:layout_width="match_parent"
         android:layout_height="40.0dip"
         android:clickable="true"
@@ -55,10 +55,9 @@
         android:gravity="center"
         android:paddingLeft="15.0dip"
         android:paddingRight="10.0dip"
-        android:text="首饰攻略"
+        android:text="@string/zhexiangyouli"
         android:textColor="@color/black"
         android:textSize="16.0sp" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="2.0dip"
@@ -66,7 +65,7 @@
         android:layout_marginRight="40dp"
         android:background="@mipmap/biz_pc_account_line" />
     <TextView
-        android:id="@+id/tvkuangkuang"
+        android:id="@+id/tv_shanyaozhenqing"
         android:layout_width="match_parent"
         android:layout_height="40.0dip"
         android:clickable="true"
@@ -74,7 +73,25 @@
         android:gravity="center"
         android:paddingLeft="15.0dip"
         android:paddingRight="10.0dip"
-        android:text="硄硄说"
+        android:text="@string/shanyaozhenqing"
+        android:textColor="@color/black"
+        android:textSize="16.0sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2.0dip"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@mipmap/biz_pc_account_line" />
+    <TextView
+        android:id="@+id/tv_kuangkuang"
+        android:layout_width="match_parent"
+        android:layout_height="40.0dip"
+        android:clickable="true"
+        android:drawablePadding="1.0dip"
+        android:gravity="center"
+        android:paddingLeft="15.0dip"
+        android:paddingRight="10.0dip"
+        android:text="@string/kuangkuangshuo"
         android:textColor="@color/black"
         android:textSize="16.0sp" />
 

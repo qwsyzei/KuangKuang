@@ -242,8 +242,12 @@
     <string name="clarity_characteristics">净度特征</string>
     <string name="inscription">腰码</string>
 
-
-
+    <!-- 专题名称 -->
+    <string name="alltotal">全部</string>
+    <string name="jiangxinyike">匠心一克</string>
+    <string name="zhexiangyouli">这厢有礼</string>
+    <string name="shanyaozhenqing">闪耀真情</string>
+    <string name="kuangkuangshuo">硄硄说</string>
     <!-- 我的积分 -->
     <string name="score_rule">积分规则</string>
 

@@ -19,12 +19,14 @@ import yksg.kuangkuang.utils.ToastUtil;
  * @description 侧边栏菜单
  */
 public class LeftFragment extends MyBaseFragment implements OnClickListener {
-    private View settingsView;
-    private View favoritesView1;
-    private View commentsView1;
-    private View settingsView1;
+
+    private View allView;
+    private View jiangxinView;
+    private View zhexiangView;
+    private View shanyaoView;
+    private View kuangkuangView;
     private TextView tv_feedback;
-    String subject_key = "0";
+    String subject_key = "all";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,16 +48,19 @@ public class LeftFragment extends MyBaseFragment implements OnClickListener {
 
     public void findViews(View view) {
         tv_feedback = (TextView) view.findViewById(R.id.tv_feedback);
-        settingsView = view.findViewById(R.id.all_total);
-        favoritesView1 = view.findViewById(R.id.tvzhubao);
-        commentsView1 = view.findViewById(R.id.tvzhubaogonglue);
-        settingsView1 = view.findViewById(R.id.tvkuangkuang);
+        allView = view.findViewById(R.id.all_total);
+        jiangxinView = view.findViewById(R.id.tv_jiangxinyike);
+        zhexiangView = view.findViewById(R.id.tv_zhexiangyouli);
+        shanyaoView = view.findViewById(R.id.tv_shanyaozhenqing);
+        kuangkuangView = view.findViewById(R.id.tv_kuangkuang);
+
 
         tv_feedback.setOnClickListener(this);
-        settingsView.setOnClickListener(this);
-        favoritesView1.setOnClickListener(this);
-        commentsView1.setOnClickListener(this);
-        settingsView1.setOnClickListener(this);
+        allView.setOnClickListener(this);
+        jiangxinView.setOnClickListener(this);
+        zhexiangView.setOnClickListener(this);
+        shanyaoView.setOnClickListener(this);
+        kuangkuangView.setOnClickListener(this);
     }
 
     @Override
@@ -76,21 +81,25 @@ public class LeftFragment extends MyBaseFragment implements OnClickListener {
                 Intent intent = new Intent(getActivity(), M_FeedBackActivity.class);
                 getActivity().startActivity(intent);
                 break;
-
             case R.id.all_total: // 全部
-                subject_key = "0";
+                subject_key = "all";
                 newContent = new MSubjectFragment(subject_key);
                 break;
-            case R.id.tvzhubao: // 珠宝故事
-                subject_key = "1";
+            case R.id.tv_jiangxinyike: // 匠心一克
+                subject_key = "匠心一克";
                 newContent = new MSubjectFragment(subject_key);
                 break;
-            case R.id.tvzhubaogonglue: // 首饰攻略
-                subject_key = "2";
+            case R.id.tv_zhexiangyouli: // 这厢有礼
+                subject_key = "这厢有礼";
                 newContent = new MSubjectFragment(subject_key);
                 break;
-            case R.id.tvkuangkuang: // 硄硄说
-                ToastUtil.show(getActivity(), getString(R.string.please_wait));
+            case R.id.tv_shanyaozhenqing: // 闪耀真情
+                subject_key = "闪耀真情";
+                newContent = new MSubjectFragment(subject_key);
+                break;
+            case R.id.tv_kuangkuang: // 硄硄说
+                subject_key = "硄硄说";
+                newContent = new MSubjectFragment(subject_key);
             default:
                 break;
         }

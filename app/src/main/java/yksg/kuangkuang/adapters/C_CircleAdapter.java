@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -255,12 +256,12 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
         viewHolder.im_head_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (circles.getMember_id().equals(DataCenter.getMember_id())){
+                if (circles.getMember_id().equals(DataCenter.getMember_id())) {
                     Intent intent = new Intent(ctx, MainActivity.class);
                     intent.putExtra("goto", "me");
                     ctx.startActivity(intent);
-                    ((Activity)ctx).finish();
-                }else{
+                    ((Activity) ctx).finish();
+                } else {
                     Intent intent = new Intent(ctx, S_CircleAuthorActivity.class);
                     intent.putExtra("author_id", circles.getMember_id());
                     intent.putExtra("picture_head", circles.getPicture_son());
@@ -313,11 +314,15 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
         } else {
             viewHolder.comment.setText(circles.getComment());
         }
-//        Context context = ctx.getApplicationContext();
-//        initImageLoader(context);
-//        ImageLoader.getInstance().displayImage(Consts.host + "/" + circles.getPicture_son(), viewHolder.im_head_pic);
-picasso.with(ctx).load(Consts.host + "/" + circles.getPicture_son()).into(viewHolder.im_head_pic);
-        String common_time = MyDate.timeLogic(circles.getCreated_at().substring(0, 19).replace("T", " "));
+
+        picasso.with(ctx).load(Consts.host + "/" + circles.getPicture_son()).into(viewHolder.im_head_pic);
+        String common_time = null;
+            try {
+                common_time = MyDate.timeLogic(circles.getCreated_at());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         viewHolder.time.setText(common_time);
         cGridAdapter = new C_CircleGridAdapter(ctx, headerEntitiesList);
         viewHolder.selfGridView.setAdapter(cGridAdapter);

@@ -81,7 +81,11 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         follow_state = intent.getStringExtra("follow_state");
         is_like = intent.getStringExtra("is_like");
         is_collect=intent.getStringExtra("is_collect");
-        common_time = MyDate.timeLogic(created_at.substring(0, 19).replace("T", " "));
+            try {
+                common_time = MyDate.timeLogic(created_at);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         webView = (WebView) findViewById(R.id.webview_article);
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);

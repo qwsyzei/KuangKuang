@@ -42,7 +42,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private MMeFragment mMeFragment;
     private LinearLayout layout_main_layout;
     String str = "0";
-    String sub_key="0";
+    String sub_key="all";
     private IntentFilter intentFilter;
     private NetworkChangeReceiver networkChangeReceiver;
 
@@ -67,7 +67,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
         sub_key=intent.getStringExtra("subject");
         if (sub_key==null){
-            sub_key="0";
+            sub_key="all";
         }
         im_title_left = (ImageView) findViewById(R.id.im_more_subject);
 

@@ -101,7 +101,6 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                 @Override
                 public void onClick(View view) {
                     pos = position;
-                    Log.d("第一个POSTION是多少", "getView() returned: " + position + "");
                     if (DataCenter.isSigned()) {
                         exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
                         exitDialog.setCanceledOnTouchOutside(true);
@@ -133,7 +132,6 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                 @Override
                 public void onClick(View view) {
                     pos = position;
-                    Log.d("第22222个POSTION是多少", "getView() returned: " + position + "");
                     if (DataCenter.isSigned()) {
                         exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
                         exitDialog.setCanceledOnTouchOutside(true);
@@ -175,7 +173,6 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                 @Override
                 public void onClick(View view) {
                     pos = position;
-                    Log.d("第333333个POSTION是多少", "getView() returned: " + position + "");
                     if (DataCenter.isSigned()) {
                         exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
                         exitDialog.setCanceledOnTouchOutside(true);
@@ -207,7 +204,6 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                 @Override
                 public void onClick(View view) {
                     pos = position;
-                    Log.d("第4444444个POSTION是多少", "getView() returned: " + position + "");
                     if (DataCenter.isSigned()) {
                         exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
                         exitDialog.setCanceledOnTouchOutside(true);
@@ -242,12 +238,15 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                 }
             });
         }
-        String time = MyDate.timeLogic(ac.getCreated_at().substring(0, 19).replace("T", " "));
+        String time = null;
+            try {
+                time = MyDate.timeLogic(ac.getCreated_at());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         viewHolder.created_at.setText(time);
         viewHolder.tv_nickname.setText(ac.getNickname());
-//        Context context = ctx.getApplicationContext();
-//        initImageLoader(context);
-//        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_head);
+
         picasso.with(ctx).load(Consts.host + "/" + ac.getPicture_son()).into(viewHolder.im_head);
         return convertView;
     }
