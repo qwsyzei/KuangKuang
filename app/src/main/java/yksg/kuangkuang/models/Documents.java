@@ -22,6 +22,7 @@ public class Documents implements Serializable {
         this.name = name;
     }
 
+
     public String getBirthday() {
         return birthday;
     }
@@ -116,4 +117,5 @@ public class Documents implements Serializable {
         } catch (Exception e) {
         }
     }
+
 }

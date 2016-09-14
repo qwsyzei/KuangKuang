@@ -33,7 +33,7 @@ public class M_SetActivity extends BaseActivity implements View.OnClickListener 
     private TextView tv_cache;
     private String cacheSize;
     private static String dir = Environment.getExternalStorageDirectory()
-            .getAbsolutePath() + "/Android/data/klsd.kuangkuang/cache/";
+            .getAbsolutePath() + "/Android/data/yksg.kuangkuang/cache/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -37,6 +39,7 @@ import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
  */
 public class ImageDetailFragment extends Fragment {
     private String mImageUrl;
+    private Context ctx;
     //	private ImageView mImageView;
     private ImageView mImageView;
     private ProgressBar progressBar;
@@ -44,7 +47,7 @@ public class ImageDetailFragment extends Fragment {
     private ExitDialog exitDialog;
     private TextView tv_save;
     Bitmap bitmap1;
-
+//private Picasso picasso;
     public static ImageDetailFragment newInstance(String imageUrl) {
         final ImageDetailFragment f = new ImageDetailFragment();
 
@@ -137,6 +140,8 @@ public class ImageDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+//        //在查看大图时放弃使用内存缓存，图片从网络下载完成后会缓存到磁盘中，加载会从磁盘中加载，这样可以加速内存的回收。
+//        picasso.with(ctx).load(mImageUrl).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().centerInside().into(mImageView);
         ImageLoader.getInstance().displayImage(mImageUrl, mImageView, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {

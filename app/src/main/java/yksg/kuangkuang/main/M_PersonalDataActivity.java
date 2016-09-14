@@ -333,6 +333,9 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
             byte[] bt = stream.toByteArray();//为了转成16进制
             photoStr = byte2hex(bt);//
             im_head.setImageBitmap(new_bm);
+            //清理头像的缓存(这里不见得起作用)
+            imageLoader.getInstance().clearDiskCache();
+            imageLoader.getInstance().clearMemoryCache();
             updateHead(photoStr);
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
@@ -484,7 +487,7 @@ public class M_PersonalDataActivity extends BaseActivity implements View.OnClick
                 tv_city.setText(documents.getCity());
             }
             if (documents.getName().equals("null")) {
-                edit_per_nickname.setText("k" + getMember().getPhone_number());
+                edit_per_nickname.setText( getMember().getPhone_number()+"kk");
             } else {
                 edit_per_nickname.setText(documents.getName());
             }
