@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/word_layout_height"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/item_myword_gridview_im"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/zhan_subject" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <FrameLayout
+            android:layout_width="@dimen/time_pic_layout_width"
+            android:layout_height="@dimen/time_pic_layout_height"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/login_p_l_r">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY"
+                android:src="@mipmap/time_pic" />
+
+            <TextView
+                android:id="@+id/item_myword_gridview_tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="3dp"
+                android:text="2016/9/30"
+                android:textSize="@dimen/new_hint_size"
+                android:textColor="@color/white" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/item_myword_gridview_tv_content"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/time_pic_layout_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/top_background123"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="123"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</FrameLayout>

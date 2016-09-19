@@ -14,7 +14,6 @@
     <dimen name="title_bar_hight">41dp</dimen>
     <dimen name="tab_bottom_height">46dp</dimen>
     <dimen name="base_line_item_height">40dp</dimen>
-
     
     <dimen name="market_top_1_height">41dp</dimen>
     <dimen name="market_top_1_1_height">22dp</dimen>
@@ -70,8 +69,6 @@
     <dimen name="title_red_height">30dp</dimen>
 
     <dimen name="size_eight">7dp</dimen>
-
-
     <dimen name="spinner_p_l">43dp</dimen>
 
     <dimen name="personal_signature_m_t">14dp</dimen>
@@ -125,7 +122,7 @@
     <dimen name="me_head_small_size">89dp</dimen>
     <dimen name="me_head_big_height">189dp</dimen>
 
-    <dimen name="item_gridview_size">101dp</dimen>
+    <dimen name="item_gridview_size">105dp</dimen>
     <dimen name="item_gridview_like_size">30dp</dimen>
     <dimen name="layout_menu_m_t">49dp</dimen>
     <dimen name="layout_menu_m_b">24dp</dimen>
@@ -133,10 +130,10 @@
     <dimen name="item_circle_detail_comment_m_l">38dp</dimen>
     <dimen name="item_circle_detail_comment_m_t">-5dp</dimen>
     <dimen name="item_subject_height">149dp</dimen>
-    <dimen name="item_collect_height">139dp</dimen>
+    <dimen name="item_collect_height">159dp</dimen>
 
     <dimen name="about_us_bottom">25dp</dimen>
-    <dimen name="circle_margin">12dp</dimen>
+    <dimen name="circle_margin">14dp</dimen>
     <dimen name="pic3_size">38dp</dimen>
     <dimen name="personal_data_height">44dp</dimen>
 
@@ -151,4 +148,9 @@
     <dimen name="certificate_buttonlayout_p_l">78dp</dimen>
     <dimen name="certificate_buttonlayout_p_r">24dp</dimen>
     <dimen name="certificate_button_m_l">36dp</dimen>
+
+    <dimen name="time_pic_layout_width">69dp</dimen>
+    <dimen name="time_pic_layout_height">28dp</dimen>
+    <dimen name="word_layout_height">159dp</dimen>
+    <dimen name="me_radiobutton_p">35dp</dimen>
 </resources>

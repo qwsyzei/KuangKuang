@@ -57,8 +57,10 @@
         android:layout_marginLeft="@dimen/circle_margin"
         android:layout_marginRight="@dimen/circle_margin"
         android:numColumns="3"
-        android:paddingLeft="@dimen/base_margin"
-        android:paddingRight="@dimen/base_margin"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp"
+        android:paddingLeft="@dimen/login_p_l_r"
+        android:paddingRight="@dimen/login_p_l_r"
         android:smoothScrollbar="true"
         android:soundEffectsEnabled="true"></yksg.kuangkuang.views.SelfGridView>
 

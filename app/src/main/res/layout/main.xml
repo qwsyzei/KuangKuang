@@ -1,14 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
     android:id="@+id/layout_main_layout"
-    >
-<FrameLayout
-    android:id="@+id/main_layout"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <ImageView
             android:id="@+id/im_more_subject"
@@ -18,55 +18,49 @@
             android:padding="@dimen/base_margin"
             android:src="@mipmap/heng3" />
 
-    <LinearLayout
-       android:id="@+id/just_subject_layout"
+        <LinearLayout
+            android:id="@+id/just_subject_layout"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"></LinearLayout>
+    </FrameLayout>
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"></LinearLayout>
-</FrameLayout>
+        android:layout_height="0.5dp"
+        android:background="#2000" />
 
-  <View
-      android:layout_width="match_parent"
-      android:layout_height="0.5dp"
-      android:background="#2000"
-      />
+    <RadioGroup
+        android:id="@+id/main_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/nomal_padding_dimen"
+        android:orientation="horizontal">
 
-  <RadioGroup
-      android:id="@+id/main_radiogroup"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:layout_marginTop="@dimen/nomal_padding_dimen"
-      >
+        <RadioButton
+            android:id="@+id/main_rb1"
+            style="@style/tab_radiobutton_style"
+            android:drawableTop="@drawable/mainback_subject"
+            android:text="@string/main_subject" />
 
-    <RadioButton
-        android:id="@+id/main_rb1"
-        style="@style/tab_radiobutton_style"
-        android:drawableTop="@drawable/mainback_subject"
-        android:text="@string/main_subject"
-        />
+        <RadioButton
+            android:id="@+id/main_rb2"
+            style="@style/tab_radiobutton_style"
+            android:drawableTop="@drawable/mainback_circle"
+            android:text="@string/main_circle" />
 
-    <RadioButton
-        android:id="@+id/main_rb2"
-        style="@style/tab_radiobutton_style"
-        android:drawableTop="@drawable/mainback_circle"
-        android:text="@string/main_circle"
-        />
+        <RadioButton
+            android:id="@+id/main_rb3"
+            style="@style/tab_radiobutton_style"
+            android:drawableTop="@drawable/mainback_tool"
+            android:text="@string/main_tool" />
 
-    <RadioButton
-        android:id="@+id/main_rb3"
-        style="@style/tab_radiobutton_style"
-        android:drawableTop="@drawable/mainback_tool"
-        android:text="@string/main_tool"
-        />
-
-    <RadioButton
-        android:id="@+id/main_rb4"
-        style="@style/tab_radiobutton_style"
-        android:drawableTop="@drawable/mainback_user"
-        android:text="@string/main_me"
-        />
-  </RadioGroup>
+        <RadioButton
+            android:id="@+id/main_rb4"
+            style="@style/tab_radiobutton_style"
+            android:drawableTop="@drawable/mainback_user"
+            android:text="@string/main_me" />
+    </RadioGroup>
 
 
 </LinearLayout>

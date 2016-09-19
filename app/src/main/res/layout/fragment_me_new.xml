@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgray"
+    android:orientation="vertical"
+    tools:context="yksg.kuangkuang.main.M_MeActivity">
+
+    <include layout="@layout/title_me"></include>
+    <yksg.kuangkuang.views.PullToRefresh123View
+        android:id="@+id/pull_refresh_view_me"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:background="@color/lightgray" >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/m_me_top"></include>
+                <include layout="@layout/m_me_blacklist"></include>
+                <RadioGroup
+                    android:id="@+id/me_radiogroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nomal_padding_dimen"
+                    android:paddingTop="@dimen/size_eight"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/me_rb1"
+                        style="@style/me_radiobutton_style"
+                        android:drawableBottom="@drawable/me_line"
+                        android:paddingLeft="@dimen/me_radiobutton_p"
+                        android:text="我的说说" />
+
+                    <RadioButton
+                        android:id="@+id/me_rb2"
+                        style="@style/me_radiobutton_style"
+                        android:paddingRight="@dimen/me_radiobutton_p"
+                        android:drawableBottom="@drawable/me_line"
+                        android:text="我的收藏" />
+
+                </RadioGroup>
+                <LinearLayout
+                    android:id="@+id/just_me_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </yksg.kuangkuang.views.PullToRefresh123View>
+</LinearLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <yksg.kuangkuang.views.SelfGridView
+        android:id="@+id/gridview_fragment_myword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/login_p_l_r"
+        android:layout_marginLeft="@dimen/base_margin"
+        android:layout_marginRight="@dimen/base_margin"
+        android:horizontalSpacing="@dimen/login_p_l_r"
+        android:verticalSpacing="@dimen/login_p_l_r"
+        android:numColumns="2"
+        android:smoothScrollbar="true"
+        android:soundEffectsEnabled="true"></yksg.kuangkuang.views.SelfGridView>
+</LinearLayout>

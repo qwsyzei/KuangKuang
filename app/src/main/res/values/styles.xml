@@ -34,6 +34,16 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="me_radiobutton_style">
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@drawable/selector_text_tab</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/middle_text_size</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
     <style name="tools_radiobutton_style">
         <item name="android:button">@null</item>
         <item name="android:textColor">@drawable/selector_tools_text</item>

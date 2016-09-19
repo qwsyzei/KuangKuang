@@ -185,7 +185,15 @@ public class MyWord implements Serializable {
     public String get_the_time() {    //日期
         return MyDate.yearmonthDay(created_at) ;
     }
-
+    public String get_create_time() {    //时间
+        String time="";
+        try {
+            time=MyDate. timeLogic(created_at) ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return time;
+    }
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }

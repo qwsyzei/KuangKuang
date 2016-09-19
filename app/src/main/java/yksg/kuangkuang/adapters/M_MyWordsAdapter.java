@@ -5,22 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
-
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.main.M_CircleDetailActivity;
 import yksg.kuangkuang.main.MainActivity;
@@ -28,35 +23,31 @@ import yksg.kuangkuang.models.MyWord;
 import yksg.kuangkuang.utils.Consts;
 import yksg.kuangkuang.utils.ErrorCodes;
 import yksg.kuangkuang.utils.JSONHandler;
-import yksg.kuangkuang.utils.MyDate;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.views.ExitDialog;
 
-import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
-
 /**
- * 我的说说adapter
- * Created by qiwei on 2016/7/14.
+ * 我的说说gridview的adapter
+ * Created by qiwei on 2016/9/19.
  */
-public class M_MywordAdapter extends ArrayAdapter<MyWord> {
-    MyHTTP http;
+public class M_MyWordsAdapter extends ArrayAdapter<MyWord> {
     private Context ctx;
+    private List<MyWord> list;
+    private Picasso picasso;
+    MyHTTP http;
     private ExitDialog exitDialog;
     private TextView tv_delete;
     private Handler handler;
     String jtype, responseJson;
     String error_code;
     Bundle handlerBundler;
-    private List<MyWord> mylist;
     private int position123;
-    private Picasso picasso;
-
-    public M_MywordAdapter(Context context, List<MyWord> objects, Handler h) {
-        super(context, R.layout.item_myword, objects);
+    public M_MyWordsAdapter(Context context, List<MyWord> list, Handler h) {
+        super(context,R.layout.item_myword_gridview,list);
         this.ctx = context;
+        this.list = list;
         this.handler = h;
-        this.mylist = objects;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -73,59 +64,59 @@ public class M_MywordAdapter extends ArrayAdapter<MyWord> {
     }
 
     @Override
+    public int getCount() {
+        int ret = 0;
+        if (list != null) {
+            ret = list.size();
+        }
+        return ret;
+    }
+
+    @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final MyWord ac = getItem(position);
-        final ViewHolder viewHolder;
-        if (convertView == null) {
-            viewHolder = new ViewHolder();
-            convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_myword, null);
-            viewHolder.content_son = (TextView) convertView.findViewById(R.id.item_myword_content);
-            viewHolder.day = (TextView) convertView.findViewById(R.id.item_myword_day);
-            viewHolder.month = (TextView) convertView.findViewById(R.id.item_myword_month);
-            viewHolder.pic_url1 = (ImageView) convertView.findViewById(R.id.item_myword_pic);
-            convertView.setTag(viewHolder);
+        View ret = null;
+        if (convertView != null) {
+            ret = convertView;
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            ViewHolder holder = null;
+            ret = LayoutInflater.from(ctx).inflate(R.layout.item_myword_gridview, parent, false);
+            holder = new ViewHolder();
+            holder.bg_im = (ImageView) ret.findViewById(R.id.item_myword_gridview_im);
+            holder.tv_time = (TextView) ret.findViewById(R.id.item_myword_gridview_tv_time);
+            holder.tv_content = (TextView) ret.findViewById(R.id.item_myword_gridview_tv_content);
+            ret.setTag(holder);
         }
+        ViewHolder holder = (ViewHolder) ret.getTag();
 
-
-picasso.with(ctx).load(Consts.host + "/" + ac.getUrl1()).into(viewHolder.pic_url1);
-        String today = MyDate.todayDate();
-
-        if (today.equals(ac.get_the_time())) {
-            viewHolder.month.setVisibility(View.GONE);
-            viewHolder.day.setText("今天");
-        } else {
-            viewHolder.day.setText(ac.getDay());
-            viewHolder.month.setText(ac.getMonth() + "月");
-        }
-        viewHolder.content_son.setText(ac.getContent_son());
-        convertView.setOnClickListener(new View.OnClickListener() {
+        picasso.with(ctx).load(Consts.host + "/" + list.get(position).getUrl1()).into(holder.bg_im);
+        holder.tv_time.setText(list.get(position).get_create_time());
+        holder.tv_content.setText(list.get(position).getContent_son());
+        ret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ctx, M_CircleDetailActivity.class);
-                intent.putExtra("id", ac.getId());
-                intent.putExtra("head_pic", ac.getPicture_son());
-                intent.putExtra("created_at", ac.getCreated_at());
-                intent.putExtra("nickname", ac.getNickname());
-                intent.putExtra("content", ac.getContent_son());
-                intent.putExtra("like", ac.getLike_number());
-                intent.putExtra("comment", ac.getComment_number());
-                intent.putExtra("url1", ac.getUrl1());
-                intent.putExtra("url2", ac.getUrl2());
-                intent.putExtra("url3", ac.getUrl3());
-                intent.putExtra("url4", ac.getUrl4());
-                intent.putExtra("url5", ac.getUrl5());
-                intent.putExtra("url6", ac.getUrl6());
-                intent.putExtra("url7", ac.getUrl7());
-                intent.putExtra("url8", ac.getUrl8());
-                intent.putExtra("url9", ac.getUrl9());
-                intent.putExtra("url9", ac.getUrl9());
+                intent.putExtra("id", list.get(position).getId());
+                intent.putExtra("head_pic", list.get(position).getPicture_son());
+                intent.putExtra("created_at", list.get(position).getCreated_at());
+                intent.putExtra("nickname", list.get(position).getNickname());
+                intent.putExtra("content", list.get(position).getContent_son());
+                intent.putExtra("like", list.get(position).getLike_number());
+                intent.putExtra("comment", list.get(position).getComment_number());
+                intent.putExtra("url1", list.get(position).getUrl1());
+                intent.putExtra("url2", list.get(position).getUrl2());
+                intent.putExtra("url3", list.get(position).getUrl3());
+                intent.putExtra("url4", list.get(position).getUrl4());
+                intent.putExtra("url5", list.get(position).getUrl5());
+                intent.putExtra("url6", list.get(position).getUrl6());
+                intent.putExtra("url7", list.get(position).getUrl7());
+                intent.putExtra("url8", list.get(position).getUrl8());
+                intent.putExtra("url9", list.get(position).getUrl9());
+                intent.putExtra("url9", list.get(position).getUrl9());
                 intent.putExtra("type", "me");
                 ctx.startActivity(intent);
             }
         });
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+        ret.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 position123 = position;
@@ -138,7 +129,7 @@ picasso.with(ctx).load(Consts.host + "/" + ac.getUrl1()).into(viewHolder.pic_url
                     @Override
                     public void onClick(View view) {
                         RequestParams params = new RequestParams();
-                        params.addQueryStringParameter("id", ac.getId());
+                        params.addQueryStringParameter("id", list.get(position).getId());
 
                         if (http == null) http = new MyHTTP(ctx);
                         http.baseRequest(Consts.deleteMywordApi, JSONHandler.JTYPE_DELETE_MYWORD, HttpRequest.HttpMethod.GET,
@@ -148,18 +139,15 @@ picasso.with(ctx).load(Consts.host + "/" + ac.getUrl1()).into(viewHolder.pic_url
                 return true;
             }
         });
-        return convertView;
+        return ret;
     }
-
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
             ToastUtil.show(ctx, R.string.delete_success);
             exitDialog.dismiss();
-//            mylist.remove(position123);
-//            notifyDataSetChanged();
             Intent intent = new Intent(ctx, MainActivity.class);
             intent.putExtra("goto", "me");
-           ctx.startActivity(intent);
+            ctx.startActivity(intent);
             ((Activity)ctx).finish();
         }
     }
@@ -171,9 +159,11 @@ picasso.with(ctx).load(Consts.host + "/" + ac.getUrl1()).into(viewHolder.pic_url
             ToastUtil.show(ctx, responseJson);
         }
     }
-
-    public final class ViewHolder {
-        TextView content_son, day, month;
-        ImageView pic_url1;
+    class ViewHolder {
+        ImageView bg_im;
+        TextView tv_time;
+        TextView tv_content;
     }
+
 }
+

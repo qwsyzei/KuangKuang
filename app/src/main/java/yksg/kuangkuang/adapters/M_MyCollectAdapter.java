@@ -85,9 +85,6 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
         }
         viewHolder.title.setText(ac.getTitle());
         viewHolder.describe_son.setText(ac.getDescribe_son());
-//        Context context = ctx.getApplicationContext();
-//        initImageLoader(context);
-//        ImageLoader.getInstance().displayImage(Consts.host + ac.getPicture_url(), viewHolder.im_pic);
         picasso.with(ctx).load(Consts.host + ac.getPicture_url()).into(viewHolder.im_pic);
 
         convertView.setOnClickListener(new View.OnClickListener() {

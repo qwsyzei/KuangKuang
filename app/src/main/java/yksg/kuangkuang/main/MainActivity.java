@@ -26,6 +26,7 @@ import yksg.kuangkuang.fragments.MCircleFragment;
 import yksg.kuangkuang.fragments.MMeFragment;
 import yksg.kuangkuang.fragments.MSubjectFragment;
 import yksg.kuangkuang.fragments.MToolFragment;
+import yksg.kuangkuang.fragments.NEWmeFragment;
 import yksg.kuangkuang.utils.DataCenter;
 
 /**
@@ -39,7 +40,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private MSubjectFragment mSubjectFragment;
     private MCircleFragment mCircleFragment;
     private MToolFragment mToolFragment;
-    private MMeFragment mMeFragment;
+//    private MMeFragment mMeFragment;
+    private NEWmeFragment mMeFragment;
     private LinearLayout layout_main_layout;
     String str = "0";
     String sub_key="all";
@@ -208,7 +210,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 if (mMeFragment != null)
                     ft.show(mMeFragment);
                 else {
-                    mMeFragment = new MMeFragment();
+                    mMeFragment=new NEWmeFragment();
+//                    mMeFragment = new MMeFragment();
                     ft.add(R.id.just_subject_layout, mMeFragment);
                 }
                 break;

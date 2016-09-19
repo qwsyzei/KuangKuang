@@ -9,7 +9,7 @@
         android:id="@+id/item_my_collect_pic"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_collect_height"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@mipmap/zhan_subject" />
 
     <TextView
@@ -25,5 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/login_p_l_r"
+        android:maxLines="1"
         android:text="钻石的美丽谁能懂" />
 </LinearLayout>

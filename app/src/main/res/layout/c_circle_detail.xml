@@ -102,6 +102,8 @@
                             android:layout_marginLeft="@dimen/base_margin"
                             android:layout_marginRight="@dimen/base_margin"
                          android:layout_marginTop="2dp"
+                            android:verticalSpacing="2dp"
+                            android:horizontalSpacing="2dp"
                             android:numColumns="3"
                             android:smoothScrollbar="true"
                             android:soundEffectsEnabled="true"></yksg.kuangkuang.views.SelfGridView>

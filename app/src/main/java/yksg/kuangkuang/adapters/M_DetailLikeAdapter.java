@@ -54,9 +54,7 @@ private Picasso picasso;
             ret.setTag(holder);
         }
         ViewHolder holder = (ViewHolder) ret.getTag();
-//    Context context = ctx.getApplicationContext();
-//        initImageLoader(context);
-//        ImageLoader.getInstance().displayImage(Consts.host + "/" + list.get(position).getUser_head_url(), holder.bgIcon);
+
         picasso.with(ctx).load(Consts.host + "/" + list.get(position).getUser_head_url()).into(holder.bgIcon);
         return ret;
     }

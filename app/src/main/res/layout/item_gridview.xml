@@ -7,7 +7,6 @@
     android:layout_width="@dimen/item_gridview_size"
     android:layout_gravity="center"
     android:scaleType="centerCrop"
-    android:layout_margin="1dp"
     android:src="@mipmap/zhan_circle_pic"
     android:layout_height="@dimen/item_gridview_size" />
 </LinearLayout>
