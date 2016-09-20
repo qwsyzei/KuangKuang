@@ -28,7 +28,6 @@ public class EnterActivity extends BaseActivity implements Runnable {
     //是否为登录状态
     boolean isLogin = false;
 
-    boolean isNetWork;
 public static String secret;
     public static long server_time_cha;
     /**
@@ -43,7 +42,7 @@ public static String secret;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enter);//布局是空白的，什么都不需要有
         secret=getString(R.string.secret_key);
-        isNetWork = CommonUtils.CheckNetwork(EnterActivity.this);
+
         Log.d("连接状态", "run() returned: " + isNetWork);
         if (isNetWork == false) {
             Toast.makeText(EnterActivity.this, getString(R.string.network_problem), Toast.LENGTH_SHORT).show();

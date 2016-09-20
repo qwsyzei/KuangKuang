@@ -1,7 +1,7 @@
 package yksg.kuangkuang.main;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -18,18 +18,16 @@ import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import yksg.kuangkuang.R;
+import yksg.kuangkuang.main.common.CommonUtils;
 import yksg.kuangkuang.utils.Consts;
 import yksg.kuangkuang.utils.JSONHandler;
 import yksg.kuangkuang.utils.MyDate;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.views.CircleImageView;
-
-import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 专题文章
@@ -54,17 +52,18 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     MyHTTP http;
     private WebView webView;
     private Picasso picasso;
+    boolean isNetWork;//网络连接状态
+    private TextView tv_network_error;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.s__article);
-//        Context context = getApplicationContext();
-//        initImageLoader(context);
         initView();
     }
 
     private void initView() {
+        isNetWork = CommonUtils.CheckNetwork(S_ArticleActivity.this);
         Intent intent = getIntent();
         testString = intent.getStringExtra("content_html");
         article_id = intent.getStringExtra("article_id");
@@ -86,19 +85,26 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        webView = (WebView) findViewById(R.id.webview_article);
-        WebSettings settings = webView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        webView.loadUrl(testString);
-        //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
-                view.loadUrl(url);
-                return true;
-            }
-        });
+        if (isNetWork==false){
+            tv_network_error= (TextView) findViewById(R.id.article_network_error_tv);
+            tv_network_error.setVisibility(View.VISIBLE);
+            tv_network_error.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+            tv_network_error.getPaint().setAntiAlias(true);//抗锯齿
+        }else{
+            webView = (WebView) findViewById(R.id.webview_article);
+            WebSettings settings = webView.getSettings();
+            settings.setJavaScriptEnabled(true);
+            webView.loadUrl(testString);
+            //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                    view.loadUrl(url);
+                    return true;
+                }
+            });
+        }
         im_add_follow = (ImageView) findViewById(R.id.im_s_artile_follow);
         tv_author_name = (TextView) findViewById(R.id.article_author_name);
         tv_author_signature = (TextView) findViewById(R.id.article_author_tag);
@@ -127,7 +133,6 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             layout_like.setOnClickListener(this);
         }
         if (!picture_head.equals("null")) {
-//            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_author_head);
             picasso.with(S_ArticleActivity.this).load(Consts.host + "/" + picture_head).into(im_author_head);
         }
         if (follow_state.equals("0")) {

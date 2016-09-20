@@ -74,7 +74,11 @@ public class M_SetActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.set_personal_data:
-                myStartActivity(new Intent(M_SetActivity.this, M_PersonalDataActivity.class));
+                if (isNetWork==false){
+                    ToastUtil.show(M_SetActivity.this,getString(R.string.cannot_enter_info));
+                }else{
+                    myStartActivity(new Intent(M_SetActivity.this, M_PersonalDataActivity.class));
+                }
                 break;
             case R.id.set_admin_manager:
                 myStartActivity(new Intent(M_SetActivity.this, M_AdminManagerActivity.class));

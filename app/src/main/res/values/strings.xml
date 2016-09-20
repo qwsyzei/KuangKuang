@@ -107,7 +107,7 @@
     <string name="agreement">请同意用户协议</string>
     <string name="network_problem">网络连接错误</string>
     <string name="checkup_network">请检查网络连接</string>
-
+    <string name="cannot_enter_info">无法进入个人资料页</string>
     <string name="no_phone">未填写手机号</string>
     <string name="no_input_psd">未填写密码</string>
     <string name="no_input_code">未填写验证码</string>
@@ -271,6 +271,7 @@
     <string name="praise_success">点赞成功</string>
     <string name="reply">回复</string>
     <string name="please_input_content">请输入内容</string>
+    <string name="network_error_cannot_show">网络连接错误，文章无法显示</string>
     <!-- 圈子 -->
     <string name="top10">Top10</string>
     <string name="release_word">发布说说</string>

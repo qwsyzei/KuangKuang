@@ -34,6 +34,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import yksg.kuangkuang.R;
+import yksg.kuangkuang.main.common.CommonUtils;
 import yksg.kuangkuang.models.Member;
 import yksg.kuangkuang.utils.Consts;
 import yksg.kuangkuang.utils.DataCenter;
@@ -59,10 +60,12 @@ public class BaseActivity extends FragmentActivity {
     TextView tv_yes, tv_no;
     private IntentFilter intentFilter;
     private NetworkChangeReceiver networkChangeReceiver;
+    public boolean isNetWork;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        isNetWork = CommonUtils.CheckNetwork(BaseActivity.this);
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();

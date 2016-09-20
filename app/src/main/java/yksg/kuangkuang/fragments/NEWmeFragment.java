@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -139,7 +141,14 @@ public class NEWmeFragment extends MyBaseFragment implements View.OnClickListene
                 myStartActivity(new Intent(getActivity(), C_ReleaseWordActivity.class));
                 break;
             case R.id.me_head_small:
-                myStartActivity(new Intent(getActivity(), M_PersonalDataActivity.class));
+                ConnectivityManager connectionManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
+                //当网络开关没开时点击头像不能进入个人资料界面
+                if (networkInfo != null && networkInfo.isAvailable()) {
+                    myStartActivity(new Intent(getActivity(), M_PersonalDataActivity.class));
+                } else {
+                    ToastUtil.show(getActivity(),getString(R.string.cannot_enter_info));
+                }
                 break;
             case R.id.layout_me_top_fans:
                 myStartActivity(new Intent(getActivity(), M_FansListActivity.class));
@@ -500,9 +509,12 @@ public class NEWmeFragment extends MyBaseFragment implements View.OnClickListene
                 }
                 break;
             case 2:
-                if (collectFragment != null)
-                    ft.show(collectFragment);
-                else {
+                if (collectFragment != null) {
+                    //先清除再添加，目的在于每次都用新的收藏列表
+                    ft.remove(collectFragment);
+                    collectFragment = new M_collectFragment();
+                    ft.add(R.id.just_me_layout, collectFragment);
+                } else {
                     collectFragment = new M_collectFragment();
                     ft.add(R.id.just_me_layout, collectFragment);
                 }

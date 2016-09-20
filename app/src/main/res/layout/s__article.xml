@@ -33,6 +33,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <include layout="@layout/s_article_author"></include>
             </LinearLayout>
 
@@ -41,10 +42,18 @@
                 android:id="@+id/webview_article"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/login_p_l_r"
                 android:layout_marginBottom="@dimen/login_p_l_r"
-               ></WebView>
+                android:layout_marginTop="@dimen/login_p_l_r"></WebView>
 
+            <TextView
+                android:id="@+id/article_network_error_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/base_margin"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/network_error_cannot_show"
+                android:textColor="@color/blue" />
         </LinearLayout>
     </ScrollView>
 
