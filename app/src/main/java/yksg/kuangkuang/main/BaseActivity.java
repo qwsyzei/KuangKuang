@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -22,8 +23,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +49,9 @@ import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.utils.UIutils;
 import yksg.kuangkuang.views.ExitDialog;
+import yksg.kuangkuang.views.ObservableScrollView;
 
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends FragmentActivity{
 
     private Application app;
     public static final String action = "signout.broadcast.action";
@@ -61,6 +66,7 @@ public class BaseActivity extends FragmentActivity {
     private IntentFilter intentFilter;
     private NetworkChangeReceiver networkChangeReceiver;
     public boolean isNetWork;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +78,7 @@ public class BaseActivity extends FragmentActivity {
         registerReceiver(networkChangeReceiver, intentFilter);
         app = getApplication();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

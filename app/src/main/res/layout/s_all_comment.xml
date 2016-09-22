@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="yksg.kuangkuang.main.S_AllCommentActivity">
-
-    <LinearLayout
-        android:id="@+id/all_comment_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/title_two" />
-    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
     <yksg.kuangkuang.views.PullToRefreshView
         android:id="@+id/pull_refresh_view_allcomment"
@@ -21,22 +16,30 @@
         android:layout_weight="1"
         android:background="@color/lightgray">
 
-        <ScrollView
+        <yksg.kuangkuang.views.ObservableScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="fill_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent">
-
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/layout_zhanwei"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/title_layout_height"
+                    android:orientation="horizontal"
+                    ></LinearLayout>
                 <yksg.kuangkuang.views.SelfListView
                     android:id="@+id/listview_allcomment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:layout_marginTop="@dimen/size_eight"
                     android:background="@color/white"></yksg.kuangkuang.views.SelfListView>
             </LinearLayout>
-        </ScrollView>
+        </yksg.kuangkuang.views.ObservableScrollView>
 
     </yksg.kuangkuang.views.PullToRefreshView>
 
@@ -48,3 +51,11 @@
         <include layout="@layout/comment_send" />
     </LinearLayout>
 </LinearLayout>
+    <LinearLayout
+        android:id="@+id/all_comment_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/title_two" />
+    </LinearLayout>
+</RelativeLayout>

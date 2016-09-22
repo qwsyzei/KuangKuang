@@ -1,7 +1,12 @@
 package yksg.kuangkuang.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+
 import com.lidroid.xutils.http.client.HttpRequest;
 import java.util.ArrayList;
 
@@ -13,14 +18,20 @@ import yksg.kuangkuang.utils.JSONHandler;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.utils.UIutils;
+import yksg.kuangkuang.views.ObservableScrollView;
+import yksg.kuangkuang.views.SelfListView;
 
 /**
  * 粉丝列表
  */
-public class M_FansListActivity extends BaseActivity {
-    private ListView listView;
+public class M_FansListActivity extends BaseActivity implements ObservableScrollView.ScrollViewListener{
+    private SelfListView listView;
     private ArrayList<Fans> tlist;
     private M_FansListAdapter fAdapter;
+    private RelativeLayout layoutHead;
+    private ObservableScrollView scrollView;
+    private LinearLayout layout_zhan;//占位用的布局
+    private int height;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +40,22 @@ public class M_FansListActivity extends BaseActivity {
         initView();
     }
     private void initView() {
+        scrollView = (ObservableScrollView) findViewById(R.id.scrollview);
+        layoutHead = (RelativeLayout) findViewById(R.id.title_RelativeLayout);
+        layout_zhan = (LinearLayout) findViewById(R.id.layout_zhanwei);
+        //获取顶部图片高度后，设置滚动监听
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
+
+                scrollView.setScrollViewListener(M_FansListActivity.this);
+            }
+        });
         tlist = new ArrayList<>();
-        listView = (ListView) findViewById(R.id.listview_fanslist);
+        listView = (SelfListView) findViewById(R.id.listview_fanslist);
         UIutils.showLoading(M_FansListActivity.this);
         getfansList();
     }
@@ -52,6 +77,20 @@ public class M_FansListActivity extends BaseActivity {
             }
             fAdapter = new M_FansListAdapter(M_FansListActivity.this, tlist,getHandler());
             listView.setAdapter(fAdapter);
+        }
+
+    }
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y,
+                                int oldx, int oldy) {
+        //当向上滑动距离大于占位布局的高度值，就调整标题的背景
+        if (y > height) {
+            float alpha = (128);//0~255    完全透明~不透明
+
+            //4个参数，第一个是透明度，后三个是红绿蓝三元色参数
+            layoutHead.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
+        } else {
+            layoutHead.setBackgroundColor(Color.BLACK);
         }
 
     }

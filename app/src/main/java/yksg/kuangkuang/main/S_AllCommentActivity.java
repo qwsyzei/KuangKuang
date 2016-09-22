@@ -2,10 +2,14 @@ package yksg.kuangkuang.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
@@ -24,13 +28,14 @@ import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.utils.UIutils;
 import yksg.kuangkuang.views.ContainsEmojiEditText;
+import yksg.kuangkuang.views.ObservableScrollView;
 import yksg.kuangkuang.views.PullToRefreshView;
 import yksg.kuangkuang.views.SelfListView;
 
 /**
  * 全部评论
  */
-public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener {
+public class S_AllCommentActivity extends BaseActivity implements View.OnClickListener, PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener, ObservableScrollView.ScrollViewListener {
     private TextView tv_send;
     private ContainsEmojiEditText edit_comment;
     public static String article_id;
@@ -40,6 +45,10 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
     private int page = 1;
     // 自定义的listview的上下拉动刷新
     private PullToRefreshView mPullToRefreshView;
+    private RelativeLayout layoutHead;
+    private ObservableScrollView scrollView;
+    private LinearLayout layout_zhan;//占位用的布局
+    private int height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +59,20 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView() {
+        scrollView = (ObservableScrollView) findViewById(R.id.scrollview);
+        layoutHead = (RelativeLayout) findViewById(R.id.title_RelativeLayout);
+        layout_zhan = (LinearLayout) findViewById(R.id.layout_zhanwei);
+        //获取顶部图片高度后，设置滚动监听
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
 
+                scrollView.setScrollViewListener(S_AllCommentActivity.this);
+            }
+        });
         mylist = new ArrayList<>();
         Intent intent = getIntent();
         article_id = intent.getStringExtra("a_id");
@@ -70,15 +92,15 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.all_comment_send_send:
-                    if (isSigned()) {
-                        if (edit_comment.getText().toString().equals("")){
-                            ToastUtil.show(S_AllCommentActivity.this, getString(R.string.please_input_content));
-                        }else {
-                            gotoComment();
-                        }
+                if (isSigned()) {
+                    if (edit_comment.getText().toString().equals("")) {
+                        ToastUtil.show(S_AllCommentActivity.this, getString(R.string.please_input_content));
                     } else {
-                        ToastUtil.show(S_AllCommentActivity.this, getString(R.string.not_login));
+                        gotoComment();
                     }
+                } else {
+                    ToastUtil.show(S_AllCommentActivity.this, getString(R.string.not_login));
+                }
 
                 break;
         }
@@ -139,7 +161,7 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
             addTrades("bottom", os);//用于添加数据
             if (curTradesSize == 0) {
                 mylist = os;
-                allAdapter = new S_AllCommentAdapter(S_AllCommentActivity.this, mylist,getHandler());
+                allAdapter = new S_AllCommentAdapter(S_AllCommentActivity.this, mylist, getHandler());
                 listView.setAdapter(allAdapter);
             } else {
 
@@ -194,5 +216,20 @@ public class S_AllCommentActivity extends BaseActivity implements View.OnClickLi
             }
 
         }, 2200);
+    }
+
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y,
+                                int oldx, int oldy) {
+        //当向上滑动距离大于占位布局的高度值，就调整标题的背景
+        if (y > height) {
+            float alpha = (128);//0~255    完全透明~不透明
+
+            //4个参数，第一个是透明度，后三个是红绿蓝三元色参数
+            layoutHead.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
+        } else {
+            layoutHead.setBackgroundColor(Color.BLACK);
+        }
+
     }
 }

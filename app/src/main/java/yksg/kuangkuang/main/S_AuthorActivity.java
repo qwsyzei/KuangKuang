@@ -2,10 +2,14 @@ package yksg.kuangkuang.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
@@ -26,6 +30,7 @@ import yksg.kuangkuang.utils.JSONHandler;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.views.CircleImageView;
+import yksg.kuangkuang.views.ObservableScrollView;
 import yksg.kuangkuang.views.PullToRefresh123View;
 import yksg.kuangkuang.views.SelfListView;
 
@@ -34,7 +39,7 @@ import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
 /**
  * 文章用户的主页
  */
-public class S_AuthorActivity extends BaseActivity implements PullToRefresh123View.OnFooterRefreshListener,View.OnClickListener{
+public class S_AuthorActivity extends BaseActivity implements PullToRefresh123View.OnFooterRefreshListener,View.OnClickListener,ObservableScrollView.ScrollViewListener{
     private int limit = 10;
     private int page = 1;
     MyHTTP http;
@@ -51,6 +56,10 @@ public class S_AuthorActivity extends BaseActivity implements PullToRefresh123Vi
     private CircleImageView im_pic_head;
     private Documents documents;
     private Picasso picasso;
+    private RelativeLayout layoutHead;
+    private ObservableScrollView scrollView;
+    private LinearLayout layout_zhan;//占位用的布局
+    private int height;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +70,20 @@ public class S_AuthorActivity extends BaseActivity implements PullToRefresh123Vi
     }
 
     private void initView() {
+        scrollView = (ObservableScrollView) findViewById(R.id.scrollview);
+        layoutHead = (RelativeLayout) findViewById(R.id.title_RelativeLayout);
+        layout_zhan = (LinearLayout) findViewById(R.id.layout_zhanwei);
+        //获取顶部图片高度后，设置滚动监听
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
+
+                scrollView.setScrollViewListener(S_AuthorActivity.this);
+            }
+        });
         Intent intent = getIntent();
         author_id = intent.getStringExtra("author_id");
         picture_head = intent.getStringExtra("picture_head");
@@ -222,5 +245,19 @@ public class S_AuthorActivity extends BaseActivity implements PullToRefresh123Vi
         if (http == null) http = new MyHTTP(S_AuthorActivity.this);
         http.baseRequest(Consts.addfollowsApi, JSONHandler.JTYPE_ADD_FOLLOW, HttpRequest.HttpMethod.GET,
                 params, getHandler());
+    }
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y,
+                                int oldx, int oldy) {
+        //当向上滑动距离大于占位布局的高度值，就调整标题的背景
+        if (y > height) {
+            float alpha = (128);//0~255    完全透明~不透明
+
+            //4个参数，第一个是透明度，后三个是红绿蓝三元色参数
+            layoutHead.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
+        } else {
+            layoutHead.setBackgroundColor(Color.BLACK);
+        }
+
     }
 }

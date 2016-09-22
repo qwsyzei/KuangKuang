@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgray"
-    android:orientation="vertical"
     tools:context="yksg.kuangkuang.main.M_FollowListActivity">
+    <yksg.kuangkuang.views.ObservableScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/layout_zhanwei"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_layout_height"
+            android:orientation="horizontal"
+            ></LinearLayout>
+    <yksg.kuangkuang.views.SelfListView
+        android:id="@+id/listview_followlist"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/login_p_l_r"
+        android:divider="@color/lightgray"
+        android:dividerHeight="@dimen/login_p_l_r"
+        android:layout_height="0dp"
+        android:layout_weight="1"></yksg.kuangkuang.views.SelfListView>
+    </LinearLayout>
+    </yksg.kuangkuang.views.ObservableScrollView>
     <RelativeLayout
         android:id="@+id/user_title_layout"
         android:layout_width="fill_parent"
@@ -12,12 +35,4 @@
 
         <include layout="@layout/title_three" />
     </RelativeLayout>
-    <ListView
-        android:id="@+id/listview_followlist"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/login_p_l_r"
-        android:divider="@color/lightgray"
-        android:dividerHeight="@dimen/login_p_l_r"
-        android:layout_height="0dp"
-        android:layout_weight="1"></ListView>
-</LinearLayout>
+</RelativeLayout>

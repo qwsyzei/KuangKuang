@@ -2,23 +2,25 @@ package yksg.kuangkuang.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,10 +29,8 @@ import java.util.List;
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.adapters.C_CircleCommentAdapter;
 import yksg.kuangkuang.adapters.C_CircleGridAdapter;
-import yksg.kuangkuang.adapters.M_DetailLikeAdapter;
 import yksg.kuangkuang.models.CircleAllComment;
 import yksg.kuangkuang.models.CircleGridViewEntity;
-import yksg.kuangkuang.models.CircleLike;
 import yksg.kuangkuang.utils.Consts;
 import yksg.kuangkuang.utils.DataCenter;
 import yksg.kuangkuang.utils.JSONHandler;
@@ -40,20 +40,20 @@ import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.views.ContainsEmojiEditText;
 import yksg.kuangkuang.views.ExitDialog;
+import yksg.kuangkuang.views.ObservableScrollView;
 import yksg.kuangkuang.views.PullToRefresh123View;
 import yksg.kuangkuang.views.SelfGridView;
 import yksg.kuangkuang.views.SelfListView;
 
 import static yksg.kuangkuang.R.id.dialog_exit_title;
-import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 朋友圈详情页
  */
-public class M_CircleDetailActivity extends BaseActivity implements View.OnClickListener, PullToRefresh123View.OnFooterRefreshListener {
+public class M_CircleDetailActivity extends BaseActivity implements View.OnClickListener, PullToRefresh123View.OnFooterRefreshListener,ObservableScrollView.ScrollViewListener {
     private String id, head_pic, time, nickname, content, like_number, comment_number;
     private String url1, url2, url3, url4, url5, url6, url7, url8, url9;
-private String type;//从哪里来的
+    private String type;//从哪里来的
     private ImageView im_head;
     private TextView tv_time, tv_nickname, tv_content, tv_like, tv_comment;
     private LinearLayout layout_like, layout_comment, layout_delete;
@@ -61,7 +61,7 @@ private String type;//从哪里来的
     private int number;//9宫格图片的个数
     private List<CircleGridViewEntity> headerEntitiesList;
     private C_CircleGridAdapter cGridAdapter;
-    private M_DetailLikeAdapter mdAdapter;
+//    private M_DetailLikeAdapter mdAdapter;
     ArrayList<CircleAllComment> mylist;
     private C_CircleCommentAdapter allAdapter;
     private int page = 1;
@@ -73,18 +73,33 @@ private String type;//从哪里来的
     private PullToRefresh123View mPullToRefreshView;
     private TextView tv_dialog_title;
     private Picasso picasso;
+    private RelativeLayout layoutHead;
+    private ObservableScrollView scrollView;
+    private LinearLayout layout_zhan;//占位用的布局
+    private int height;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.c_circle_detail);
         setTitle(getString(R.string.details));
-//        Context context = getApplicationContext();
-//        initImageLoader(context);
         initView();
-
     }
 
     private void initView() {
+        scrollView = (ObservableScrollView) findViewById(R.id.scrollview);
+        layoutHead = (RelativeLayout) findViewById(R.id.title_RelativeLayout);
+        layout_zhan = (LinearLayout) findViewById(R.id.layout_zhanwei);
+        //获取顶部图片高度后，设置滚动监听
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
+
+                scrollView.setScrollViewListener(M_CircleDetailActivity.this);
+            }
+        });
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         head_pic = intent.getStringExtra("head_pic");
@@ -102,8 +117,9 @@ private String type;//从哪里来的
         url7 = intent.getStringExtra("url7");
         url8 = intent.getStringExtra("url8");
         url9 = intent.getStringExtra("url9");
-        type=intent.getStringExtra("type");
-        likeList();
+        type = intent.getStringExtra("type");
+//        likeList();
+        commentList();
         if (url1.equals("null")) {
             number = 0;
         } else if (url2.equals("null")) {
@@ -128,9 +144,8 @@ private String type;//从哪里来的
         mylist = new ArrayList<>();
         mPullToRefreshView = (PullToRefresh123View) findViewById(R.id.pull_refresh_view_circle_detail);
         listView = (SelfListView) findViewById(R.id.listview_circle_detail);
-//        listView.setOnScrollListener(this);
         gridview = (SelfGridView) findViewById(R.id.gridview_circle_detail);
-        gridview_like = (SelfGridView) findViewById(R.id.gridview_circle_detail_like);
+//        gridview_like = (SelfGridView) findViewById(R.id.gridview_circle_detail_like);
         im_head = (ImageView) findViewById(R.id.circle_detail_head_pic);
         tv_time = (TextView) findViewById(R.id.circle_detail_time);
         tv_nickname = (TextView) findViewById(R.id.circle_detail_name);
@@ -141,9 +156,9 @@ private String type;//从哪里来的
         tv_like = (TextView) findViewById(R.id.circle_detail_like);
         tv_comment = (TextView) findViewById(R.id.circle_detail_comment);
 
-        if (type.equals("me")){
+        if (type.equals("me")) {
             layout_delete.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             layout_delete.setVisibility(View.GONE);
         }
         layout_like.setOnClickListener(this);
@@ -214,7 +229,7 @@ private String type;//从哪里来的
                 gotoComment();
                 break;
             case R.id.layout_circle_detail_delete:
-              Delete_Dialog();
+                Delete_Dialog();
                 break;
             case R.id.exit_yes:
                 delete();
@@ -258,14 +273,14 @@ private String type;//从哪里来的
                 params, getHandler());
     }
 
-    private void likeList() {
-
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("micropost_id", id);
-        if (http == null) http = new MyHTTP(M_CircleDetailActivity.this);
-        http.baseRequest(Consts.circlelikeListApi, JSONHandler.JTYPE_CIRCLE_LIKE_LIST, HttpRequest.HttpMethod.GET,
-                params, getHandler());
-    }
+//    private void likeList() {
+//
+//        RequestParams params = new RequestParams();
+//        params.addQueryStringParameter("micropost_id", id);
+//        if (http == null) http = new MyHTTP(M_CircleDetailActivity.this);
+//        http.baseRequest(Consts.circlelikeListApi, JSONHandler.JTYPE_CIRCLE_LIKE_LIST, HttpRequest.HttpMethod.GET,
+//                params, getHandler());
+//    }
 
     private void commentList() {
         RequestParams params = new RequestParams();
@@ -295,16 +310,18 @@ private String type;//从哪里来的
             cPopwindow.dismiss();
             edit_dialog_comment.setText("");
 
-        } else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_LIKE_LIST)) {
-            commentList();
-            ArrayList<CircleLike> os = (ArrayList<CircleLike>) handlerBundler.getSerializable("circle_like_list");
-            if (os.size() == 0) {
-                return;
-            }
-            mdAdapter = new M_DetailLikeAdapter(M_CircleDetailActivity.this, os);
-            gridview_like.setAdapter(mdAdapter);
-
-        } else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_ALL_COMMENT)) {
+        }
+//        else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_LIKE_LIST)) {
+//            commentList();
+//            ArrayList<CircleLike> os = (ArrayList<CircleLike>) handlerBundler.getSerializable("circle_like_list");
+//            if (os.size() == 0) {
+//                return;
+//            }
+//            mdAdapter = new M_DetailLikeAdapter(M_CircleDetailActivity.this, os);
+//            gridview_like.setAdapter(mdAdapter);
+//
+//        }
+        else if (jtype.equals(JSONHandler.JTYPE_CIRCLE_ALL_COMMENT)) {
             int curTradesSize = mylist.size();
             ArrayList<CircleAllComment> os = (ArrayList<CircleAllComment>) handlerBundler.getSerializable("circle_all_comment");
             if (os.size() == 0) {
@@ -314,7 +331,7 @@ private String type;//从哪里来的
             addTrades("bottom", os);//用于添加数据
             if (curTradesSize == 0) {
                 mylist = os;
-                allAdapter = new C_CircleCommentAdapter(M_CircleDetailActivity.this, mylist,getHandler());
+                allAdapter = new C_CircleCommentAdapter(M_CircleDetailActivity.this, mylist, getHandler());
                 listView.setAdapter(allAdapter);
 
             } else {
@@ -382,16 +399,31 @@ private String type;//从哪里来的
 
         }, 2400);
     }
+
     private void Delete_Dialog() {
         exitDialog = new ExitDialog(M_CircleDetailActivity.this, R.style.MyDialogStyle, R.layout.dialog_exit);
 
         exitDialog.show();
-        tv_dialog_title= (TextView) exitDialog.findViewById(dialog_exit_title);
+        tv_dialog_title = (TextView) exitDialog.findViewById(dialog_exit_title);
         tv_dialog_title.setText(getString(R.string.if_delete));
         tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
         tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
         tv_yes.setOnClickListener(this);
         tv_no.setOnClickListener(this);
+
+    }
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y,
+                                int oldx, int oldy) {
+        //当向上滑动距离大于占位布局的高度值，就调整标题的背景
+        if (y > height) {
+            float alpha = (128);//0~255    完全透明~不透明
+
+            //4个参数，第一个是透明度，后三个是红绿蓝三元色参数
+            layoutHead.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
+        } else {
+            layoutHead.setBackgroundColor(Color.BLACK);
+        }
 
     }
 }

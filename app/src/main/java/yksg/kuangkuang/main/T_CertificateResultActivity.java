@@ -1,20 +1,23 @@
 package yksg.kuangkuang.main;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.models.Certificate;
+import yksg.kuangkuang.views.ObservableScrollView;
 
 /**
  * 证书结果
  */
-public class T_CertificateResultActivity extends BaseActivity {
-
+public class T_CertificateResultActivity extends BaseActivity implements ObservableScrollView.ScrollViewListener{
 
 private TextView tv_gia_number,tv_date;//证书标号     颁发日期
     private TextView tv_shape;//形状
@@ -26,6 +29,10 @@ private TextView tv_gia_number,tv_date;//证书标号     颁发日期
     private TextView tv_inscription;//腰码
     public static Certificate cer;
   private LinearLayout layout15,layout23,layout24,layout25,layout26,layout27,layout28;
+    private RelativeLayout layoutHead;
+    private ObservableScrollView scrollView;
+    private LinearLayout layout_zhan;//占位用的布局
+    private int height;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +42,20 @@ private TextView tv_gia_number,tv_date;//证书标号     颁发日期
     }
 
     private void initView() {
+        scrollView = (ObservableScrollView) findViewById(R.id.scrollview);
+        layoutHead = (RelativeLayout) findViewById(R.id.title_RelativeLayout);
+        layout_zhan = (LinearLayout) findViewById(R.id.layout_zhanwei);
+        //获取顶部图片高度后，设置滚动监听
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
+
+                scrollView.setScrollViewListener(T_CertificateResultActivity.this);
+            }
+        });
         Intent intent=getIntent();
       String gia_number=intent.getStringExtra("number");
         Log.d("接到了吗", "initView() returned: " + cer.getStar_length());
@@ -108,5 +129,18 @@ layout15= (LinearLayout) findViewById(R.id.layout_c_result15);
         tv_clarity_characteristics.setText(cer.getClarity_characteristics());
         tv_inscription.setText(cer.getInscription());
     }
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y,
+                                int oldx, int oldy) {
+        //当向上滑动距离大于占位布局的高度值，就调整标题的背景
+        if (y > height) {
+            float alpha = (128);//0~255    完全透明~不透明
 
+            //4个参数，第一个是透明度，后三个是红绿蓝三元色参数
+            layoutHead.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
+        } else {
+            layoutHead.setBackgroundColor(Color.BLACK);
+        }
+
+    }
 }

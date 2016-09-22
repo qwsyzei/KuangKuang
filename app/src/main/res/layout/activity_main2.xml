@@ -1,12 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    >
     <yksg.kuangkuang.views.ObservableScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         >
 
         <LinearLayout
@@ -14,24 +13,28 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView1"
+            <LinearLayout
+                android:id="@+id/layout_zhanwei"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/title_layout_height"
-                android:scaleType="fitXY" />
+                android:orientation="horizontal"
+          ></LinearLayout>
 
             <WebView
                 android:id="@+id/webview1"
                 android:layout_width="match_parent"
-                android:layout_height="1280dp"
+                android:layout_height="fill_parent"
 
                 />
-
 
         </LinearLayout>
 
     </yksg.kuangkuang.views.ObservableScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <include layout="@layout/title_two" />
+        <include layout="@layout/title_two" />
+    </LinearLayout>
 
 </RelativeLayout>

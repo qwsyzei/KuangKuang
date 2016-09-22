@@ -1,12 +1,14 @@
 package yksg.kuangkuang.main;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,6 +16,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
@@ -28,11 +31,12 @@ import yksg.kuangkuang.utils.MyDate;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.views.CircleImageView;
+import yksg.kuangkuang.views.ObservableScrollView;
 
 /**
  * 专题文章
  */
-public class S_ArticleActivity extends BaseActivity implements View.OnClickListener {
+public class S_ArticleActivity extends BaseActivity implements View.OnClickListener ,ObservableScrollView.ScrollViewListener{
     String testString, article_id, title, tag, views, like_number, comment_number, created_at, author_member_id;
     private String follow_state;
     private String is_like,is_collect;
@@ -54,6 +58,10 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     private Picasso picasso;
     boolean isNetWork;//网络连接状态
     private TextView tv_network_error;
+    private RelativeLayout layoutHead;
+    private ObservableScrollView scrollView;
+    private LinearLayout layout_zhan;//占位用的布局
+    private int height;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +71,20 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initView() {
+        scrollView = (ObservableScrollView) findViewById(R.id.scrollview);
+        layoutHead = (RelativeLayout) findViewById(R.id.title_RelativeLayout);
+        layout_zhan = (LinearLayout) findViewById(R.id.layout_zhanwei);
+        //获取顶部图片高度后，设置滚动监听
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
+
+                scrollView.setScrollViewListener(S_ArticleActivity.this);
+            }
+        });
         isNetWork = CommonUtils.CheckNetwork(S_ArticleActivity.this);
         Intent intent = getIntent();
         testString = intent.getStringExtra("content_html");
@@ -110,7 +132,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_author_signature = (TextView) findViewById(R.id.article_author_tag);
         im_author_head = (CircleImageView) findViewById(R.id.article_author_pic);
         im_like = (ImageView) findViewById(R.id.article_im_like);
-//        im_author_head.setOnClickListener(this);
+        im_author_head.setOnClickListener(this);
         tv_author_name.setText(nickname);
 
         layout_like = (LinearLayout) findViewById(R.id.layout_s_artile_like);
@@ -171,9 +193,9 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         } else {
             tv_comment.setText(comment_number);
         }
-
+         setTitle(title);//标题栏的标题
         tv_title = (TextView) findViewById(R.id.article_author_title);
-        tv_title.setText(title);
+        tv_title.setText(title);//作者下面的标题
         tv_tag = (TextView) findViewById(R.id.article_author_title_tag);
         tv_tag.setText("[" + tag + "]");
 
@@ -214,15 +236,15 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
                 }
 
                 break;
-//            case R.id.article_author_pic:
-//                Intent intent1 = new Intent(S_ArticleActivity.this, S_AuthorActivity.class);
-//                intent1.putExtra("author_id", author_member_id);
-//                intent1.putExtra("picture_head", picture_head);
-//                intent1.putExtra("name", nickname);
-//                intent1.putExtra("signature", author_signature);
-//                intent1.putExtra("follow_state", follow_state);
-//                startActivity(intent1);
-//                break;
+            case R.id.article_author_pic:
+                Intent intent1 = new Intent(S_ArticleActivity.this, S_AuthorActivity.class);
+                intent1.putExtra("author_id", author_member_id);
+                intent1.putExtra("picture_head", picture_head);
+                intent1.putExtra("name", nickname);
+                intent1.putExtra("signature", author_signature);
+                intent1.putExtra("follow_state", follow_state);
+                startActivity(intent1);
+                break;
         }
     }
 
@@ -297,6 +319,19 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             }
         });
     }
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y,
+                                int oldx, int oldy) {
+        //当向上滑动距离大于占位布局的高度值，就调整标题的背景
+        if (y > height) {
+            float alpha = (128);//0~255    完全透明~不透明
 
+            //4个参数，第一个是透明度，后三个是红绿蓝三元色参数
+            layoutHead.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
+        } else {
+            layoutHead.setBackgroundColor(Color.BLACK);
+        }
+
+    }
 }
 
