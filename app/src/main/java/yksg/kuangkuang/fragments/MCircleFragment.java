@@ -54,6 +54,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
     private ObservableScrollView scrollView;
     private LinearLayout layout_zhan;//占位用的布局
     private int height;
+
     public MCircleFragment() {
         // Required empty public constructor
     }
@@ -77,16 +78,9 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         layoutHead = (RelativeLayout) view.findViewById(R.id.title_RelativeLayout);
         layout_zhan = (LinearLayout) view.findViewById(R.id.layout_zhanwei);
         //获取顶部图片高度后，设置滚动监听
-        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                height = layout_zhan.getHeight();
+        height = layout_zhan.getHeight();
+        scrollView.setScrollViewListener(scrollViewListener);
 
-                scrollView.setScrollViewListener(scrollViewListener);
-            }
-        });
         cirList = new ArrayList<>();
         tv_release = (TextView) view.findViewById(R.id.tv_title_circle_right);
         tv_release.setOnClickListener(this);
@@ -127,9 +121,9 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("page", page + "");
         params.addQueryStringParameter("limit", limit + "");
-            if (http == null) http = new MyHTTP(a);
-            http.baseRequest(Consts.micropostsListApi, JSONHandler.JTYPE_CIRCLE_LIST, HttpRequest.HttpMethod.GET,
-                    params, handler);
+        if (http == null) http = new MyHTTP(a);
+        http.baseRequest(Consts.micropostsListApi, JSONHandler.JTYPE_CIRCLE_LIST, HttpRequest.HttpMethod.GET,
+                params, handler);
     }
 
     private Handler handler = new BaseActivity.KelaHandler(a) {
@@ -234,6 +228,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         super.onDestroy();
         Log.d("圈子被关闭了", "onDestroy() returned: " + "");
     }
+
     private ObservableScrollView.ScrollViewListener scrollViewListener = new ObservableScrollView.ScrollViewListener() {
 
         @Override

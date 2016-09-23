@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yksg.kuangkuang.R;
-import yksg.kuangkuang.adapters.S_WordsAdapter;
+import yksg.kuangkuang.adapters.M_MyWordsAdapter;
+import yksg.kuangkuang.adapters.M_MyWordsAdapter;
 import yksg.kuangkuang.models.Documents;
 import yksg.kuangkuang.models.MyWord;
 import yksg.kuangkuang.utils.Consts;
@@ -30,6 +31,7 @@ import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.views.CircleImageView;
 import yksg.kuangkuang.views.ObservableScrollView;
 import yksg.kuangkuang.views.PullToRefresh123View;
+import yksg.kuangkuang.views.SelfGridView;
 import yksg.kuangkuang.views.SelfListView;
 
 /**
@@ -39,9 +41,9 @@ public class S_CircleAuthorActivity extends BaseActivity implements PullToRefres
     private int limit = 10;
     private int page = 1;
     MyHTTP http;
-    private SelfListView listView;
-    private S_WordsAdapter wordsAdapter;
+    private M_MyWordsAdapter wordsAdapter;
     private ArrayList<MyWord> sList;
+    private SelfGridView gridview;
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
     String author_id;
@@ -115,13 +117,13 @@ public class S_CircleAuthorActivity extends BaseActivity implements PullToRefres
 //            ImageLoader.getInstance().displayImage(Consts.host + "/" + picture_head, im_pic_head);
             picasso.with(S_CircleAuthorActivity.this).load(Consts.host + "/" + picture_head).into(im_pic_head);
         }
-        listView = (SelfListView) findViewById(R.id.listview_author_words);
-        listView.setFocusable(false);
+        gridview= (SelfGridView)findViewById(R.id.gridview_author_words);
+        gridview.setFocusable(false);
         mPullToRefreshView = (PullToRefresh123View) findViewById(R.id.pull_refresh_view_author);
         mPullToRefreshView.setOnFooterRefreshListener(this);
         loadDataFrom();
-        wordsAdapter = new S_WordsAdapter(S_CircleAuthorActivity.this, sList, getHandler());
-        listView.setAdapter(wordsAdapter);
+        wordsAdapter = new M_MyWordsAdapter(S_CircleAuthorActivity.this, sList, getHandler());
+        gridview.setAdapter(wordsAdapter);
     }
 
     /**
@@ -163,8 +165,8 @@ public class S_CircleAuthorActivity extends BaseActivity implements PullToRefres
             addTrades("bottom", os);
             if (curTradesSize == 0) {
                 sList = os;
-                wordsAdapter = new S_WordsAdapter(S_CircleAuthorActivity.this, sList, getHandler());
-                listView.setAdapter(wordsAdapter);
+                wordsAdapter = new M_MyWordsAdapter(S_CircleAuthorActivity.this, sList, getHandler());
+                gridview.setAdapter(wordsAdapter);
             } else {
                 wordsAdapter.notifyDataSetChanged();
             }
