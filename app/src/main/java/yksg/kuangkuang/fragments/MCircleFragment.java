@@ -78,8 +78,16 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         layoutHead = (RelativeLayout) view.findViewById(R.id.title_RelativeLayout);
         layout_zhan = (LinearLayout) view.findViewById(R.id.layout_zhanwei);
         //获取顶部图片高度后，设置滚动监听
-        height = layout_zhan.getHeight();
-        scrollView.setScrollViewListener(scrollViewListener);
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
+
+                scrollView.setScrollViewListener(scrollViewListener);
+            }
+        });
 
         cirList = new ArrayList<>();
         tv_release = (TextView) view.findViewById(R.id.tv_title_circle_right);

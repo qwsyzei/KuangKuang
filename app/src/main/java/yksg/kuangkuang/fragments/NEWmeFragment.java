@@ -103,9 +103,16 @@ public class NEWmeFragment extends MyBaseFragment implements View.OnClickListene
         layoutHead = (RelativeLayout) view.findViewById(R.id.title_RelativeLayout);
         layout_zhan = (LinearLayout) view.findViewById(R.id.layout_zhanwei);
         //获取顶部图片高度后，设置滚动监听
-        height = layout_zhan.getHeight();
-        scrollView.setScrollViewListener(scrollViewListener);
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
 
+                scrollView.setScrollViewListener(scrollViewListener);
+            }
+        });
         documents = new Documents();
         radioGroup = (RadioGroup) view.findViewById(R.id.me_radiogroup);
         rbA = (RadioButton) view.findViewById(R.id.me_rb1);
