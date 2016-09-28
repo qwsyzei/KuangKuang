@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -39,6 +43,7 @@ import yksg.kuangkuang.utils.DataCenter;
 import yksg.kuangkuang.utils.JSONHandler;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
+import yksg.kuangkuang.views.ObservableScrollView;
 import yksg.kuangkuang.views.PullToRefresh123View;
 
 import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
@@ -67,6 +72,10 @@ public class NEWmeFragment extends MyBaseFragment implements View.OnClickListene
     private M_collectFragment collectFragment;
     public static final String action_myword = "myword.broadcast.action";
     public static final String action_mycollect = "mycollect.broadcast.action";
+    private RelativeLayout layoutHead;
+    private ObservableScrollView scrollView;
+    private LinearLayout layout_zhan;//占位用的布局
+    private int height;
 
     public NEWmeFragment() {
         // Required empty public constructor
@@ -90,6 +99,20 @@ public class NEWmeFragment extends MyBaseFragment implements View.OnClickListene
     }
 
     private void initView() {
+        scrollView = (ObservableScrollView) view.findViewById(R.id.scrollview);
+        layoutHead = (RelativeLayout) view.findViewById(R.id.title_RelativeLayout);
+        layout_zhan = (LinearLayout) view.findViewById(R.id.layout_zhanwei);
+        //获取顶部图片高度后，设置滚动监听
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
+
+                scrollView.setScrollViewListener(scrollViewListener);
+            }
+        });
         documents = new Documents();
         radioGroup = (RadioGroup) view.findViewById(R.id.me_radiogroup);
         rbA = (RadioButton) view.findViewById(R.id.me_rb1);
@@ -126,6 +149,24 @@ public class NEWmeFragment extends MyBaseFragment implements View.OnClickListene
         }
     }
 
+    private ObservableScrollView.ScrollViewListener scrollViewListener = new ObservableScrollView.ScrollViewListener() {
+
+        @Override
+        public void onScrollChanged(ObservableScrollView scrollView, int x, int y,
+                                    int oldx, int oldy) {
+            //当向上滑动距离大于占位布局的高度值，就调整标题的背景
+            if (y > height) {
+                float alpha = (128);//0~255    完全透明~不透明
+
+                //4个参数，第一个是透明度，后三个是红绿蓝三元色参数
+                layoutHead.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
+            } else {
+                layoutHead.setBackgroundColor(Color.BLACK);
+            }
+
+        }
+    };
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -139,7 +180,14 @@ public class NEWmeFragment extends MyBaseFragment implements View.OnClickListene
                 myStartActivity(new Intent(getActivity(), C_ReleaseWordActivity.class));
                 break;
             case R.id.me_head_small:
-                myStartActivity(new Intent(getActivity(), M_PersonalDataActivity.class));
+                ConnectivityManager connectionManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
+                //当网络开关没开时点击头像不能进入个人资料界面
+                if (networkInfo != null && networkInfo.isAvailable()) {
+                    myStartActivity(new Intent(getActivity(), M_PersonalDataActivity.class));
+                } else {
+                    ToastUtil.show(getActivity(), getString(R.string.cannot_enter_info));
+                }
                 break;
             case R.id.layout_me_top_fans:
                 myStartActivity(new Intent(getActivity(), M_FansListActivity.class));
@@ -500,9 +548,12 @@ public class NEWmeFragment extends MyBaseFragment implements View.OnClickListene
                 }
                 break;
             case 2:
-                if (collectFragment != null)
-                    ft.show(collectFragment);
-                else {
+                if (collectFragment != null) {
+                    //先清除再添加，目的在于每次都用新的收藏列表
+                    ft.remove(collectFragment);
+                    collectFragment = new M_collectFragment();
+                    ft.add(R.id.just_me_layout, collectFragment);
+                } else {
                     collectFragment = new M_collectFragment();
                     ft.add(R.id.just_me_layout, collectFragment);
                 }

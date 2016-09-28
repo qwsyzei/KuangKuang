@@ -1,30 +1,47 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/lightgray"
-    android:orientation="vertical" tools:context="yksg.kuangkuang.fragments.MCircleFragment">
-    <include layout="@layout/title_circle"></include>
-    <yksg.kuangkuang.views.PullToRefreshView
-        android:id="@+id/pull_refresh_view_circle"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp"
-        android:background="@color/lightgray" >
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent">
-<yksg.kuangkuang.views.SelfListView
-    android:id="@+id/listview_circle"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:cacheColorHint="@color/transparent"
-    android:divider="@color/lightgray"
-    android:dividerHeight="@dimen/login_p_l_r"></yksg.kuangkuang.views.SelfListView>
-    </LinearLayout>
-    </ScrollView>
+    android:background="@color/lightgray"
+    tools:context="yksg.kuangkuang.fragments.MCircleFragment">
 
-    </yksg.kuangkuang.views.PullToRefreshView>
-</LinearLayout>
+
+        <yksg.kuangkuang.views.PullToRefreshView
+            android:id="@+id/pull_refresh_view_circle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@color/lightgray">
+
+            <yksg.kuangkuang.views.ObservableScrollView
+                android:id="@+id/scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layout_zhanwei"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/title_layout_height"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <yksg.kuangkuang.views.SelfListView
+                        android:id="@+id/listview_circle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:cacheColorHint="@color/transparent"
+                        android:divider="@color/lightgray"
+                        android:dividerHeight="@dimen/login_p_l_r"></yksg.kuangkuang.views.SelfListView>
+                </LinearLayout>
+            </yksg.kuangkuang.views.ObservableScrollView>
+
+        </yksg.kuangkuang.views.PullToRefreshView>
+
+
+    <include layout="@layout/title_circle"></include>
+</RelativeLayout>

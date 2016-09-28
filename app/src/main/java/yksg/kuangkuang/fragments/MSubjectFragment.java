@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
@@ -25,6 +27,7 @@ import yksg.kuangkuang.utils.JSONHandler;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.utils.UIutils;
+import yksg.kuangkuang.views.ObservableScrollView;
 import yksg.kuangkuang.views.PullToRefreshView;
 import yksg.kuangkuang.views.SelfListView;
 
@@ -43,6 +46,7 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
     // 自定义的listview的上下拉动刷新
     private PullToRefreshView mPullToRefreshView;
     private String tagtag="0";
+
     public MSubjectFragment(String tag) {
         this.tagtag=tag;
 
@@ -71,6 +75,7 @@ public class MSubjectFragment extends MyBaseFragment implements View.OnClickList
         mPullToRefreshView.setOnFooterRefreshListener(this);
 
     }
+
     @Override
     public void onResume() {
         super.onResume();

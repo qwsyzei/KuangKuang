@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgray"
-    android:orientation="vertical"
-    tools:context="yksg.kuangkuang.main.M_MeActivity">
-
-    <include layout="@layout/title_me"></include>
-    <yksg.kuangkuang.views.PullToRefresh123View
-        android:id="@+id/pull_refresh_view_me"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp"
-        android:background="@color/lightgray" >
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+    >
+        <yksg.kuangkuang.views.PullToRefresh123View
+            android:id="@+id/pull_refresh_view_me"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="@color/lightgray">
 
-            <include layout="@layout/m_me_top"></include>
-
-            <include layout="@layout/m_me_collect"></include>
-            <include layout="@layout/m_me_blacklist"></include>
-            <LinearLayout
+            <yksg.kuangkuang.views.ObservableScrollView
+                android:id="@+id/scrollview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-              >
-                <include layout="@layout/m_me_myword"></include>
-            </LinearLayout>
+                android:layout_height="fill_parent">
 
-        </LinearLayout>
-    </ScrollView>
-    </yksg.kuangkuang.views.PullToRefresh123View>
-</LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layout_zhanwei"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/title_layout_height"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <include layout="@layout/m_me_top"></include>
+
+                    <include layout="@layout/m_me_collect"></include>
+
+                    <include layout="@layout/m_me_blacklist"></include>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <include layout="@layout/m_me_myword"></include>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </yksg.kuangkuang.views.ObservableScrollView>
+        </yksg.kuangkuang.views.PullToRefresh123View>
+
+    <include layout="@layout/title_me"></include>
+</RelativeLayout>

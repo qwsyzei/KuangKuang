@@ -47,13 +47,13 @@ public class S_WordsAdapter extends ArrayAdapter<MyWord> {
     Bundle handlerBundler;
     private List<MyWord> mylist;
     private int position123;
-private Picasso picasso;
+    private Picasso picasso;
 
     public S_WordsAdapter(Context context, List<MyWord> objects, Handler h) {
         super(context, R.layout.item_myword, objects);
         this.ctx = context;
         this.handler = h;
-        this.mylist=objects;
+        this.mylist = objects;
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 handlerBundler = msg.getData();
@@ -85,25 +85,22 @@ private Picasso picasso;
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-//        Context context = ctx.getApplicationContext();
-//        initImageLoader(context);
-//        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getUrl1(), viewHolder.pic_url1);
-picasso.with(ctx).load(Consts.host + "/" + ac.getUrl1()).into(viewHolder.pic_url1);
-        String today= MyDate.todayDate();
+        picasso.with(ctx).load(Consts.host + "/" + ac.getUrl1()).into(viewHolder.pic_url1);
+        String today = MyDate.todayDate();
 
-        if (today.equals(ac.get_the_time())){
+        if (today.equals(ac.get_the_time())) {
             viewHolder.month.setVisibility(View.GONE);
             viewHolder.day.setText("今天");
-        }else{
+        } else {
             viewHolder.day.setText(ac.getDay());
-            viewHolder.month.setText(ac.getMonth()+"月");
+            viewHolder.month.setText(ac.getMonth() + "月");
         }
         viewHolder.content_son.setText(ac.getContent_son());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ctx, M_CircleDetailActivity.class);
-                intent.putExtra("id",ac.getId());
+                intent.putExtra("id", ac.getId());
                 intent.putExtra("head_pic", ac.getPicture_son());
                 intent.putExtra("created_at", ac.getCreated_at());
                 intent.putExtra("nickname", ac.getNickname());
@@ -127,7 +124,7 @@ picasso.with(ctx).load(Consts.host + "/" + ac.getUrl1()).into(viewHolder.pic_url
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                position123=position;
+                position123 = position;
                 exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_delete);
                 exitDialog.setCanceledOnTouchOutside(true);
                 exitDialog.show();

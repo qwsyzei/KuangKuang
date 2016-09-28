@@ -1,99 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/signup__text_m_l_r"
-    android:background="@color/lightgray"
-    android:orientation="vertical">
+    android:layout_marginBottom="@dimen/base_margin"
+    android:background="@color/lightgray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <yksg.kuangkuang.views.ObservableScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layout_zhanwei"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/title_layout_height"
+                    android:orientation="horizontal"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/base_margin"
+                        android:layout_marginTop="@dimen/signup__text_m_l_r"
+                        android:text="@string/gia_report"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/big_middle_text_size" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/signup__text_m_l_r"
+                        android:layout_marginRight="@dimen/signup__text_m_l_r"
+                        android:background="@color/ebpay_gray3"></View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/login_p_l_r"
+                        android:layout_marginRight="@dimen/login_p_l_r"
+                        android:layout_marginTop="@dimen/base_margin"
+                        android:paddingLeft="@dimen/signup__text_m_l_r"
+                        android:paddingRight="@dimen/signup__text_m_l_r">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gia_certificate_number"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/date_of_issue"
+                            android:textColor="@color/black" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/size_eight"
+                        android:layout_marginLeft="@dimen/login_p_l_r"
+                        android:layout_marginRight="@dimen/login_p_l_r"
+                        android:layout_marginTop="@dimen/size_eight"
+                        android:paddingLeft="@dimen/signup__text_m_l_r"
+                        android:paddingRight="@dimen/signup__text_m_l_r">
+
+                        <TextView
+                            android:id="@+id/c_result_gia_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/c_result_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <include layout="@layout/t_c_result_gia_file1"></include>
+
+                <include layout="@layout/t_c_result_gia_file2"></include>
+
+                <include layout="@layout/t_c_result_gia_file3"></include>
+            </LinearLayout>
+        </yksg.kuangkuang.views.ObservableScrollView>
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/user_title_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+
         <include layout="@layout/title_two" />
     </RelativeLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/base_margin"
-                    android:layout_marginTop="@dimen/signup__text_m_l_r"
-                    android:text="@string/gia_report"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/big_middle_text_size" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/signup__text_m_l_r"
-                    android:layout_marginRight="@dimen/signup__text_m_l_r"
-                    android:background="@color/ebpay_gray3"></View>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/login_p_l_r"
-                    android:layout_marginRight="@dimen/login_p_l_r"
-                    android:layout_marginTop="@dimen/base_margin"
-                    android:paddingLeft="@dimen/signup__text_m_l_r"
-                    android:paddingRight="@dimen/signup__text_m_l_r">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/gia_certificate_number"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/date_of_issue"
-                        android:textColor="@color/black" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/size_eight"
-                    android:layout_marginTop="@dimen/size_eight"
-                    android:layout_marginLeft="@dimen/login_p_l_r"
-                    android:layout_marginRight="@dimen/login_p_l_r"
-                    android:paddingLeft="@dimen/signup__text_m_l_r"
-                    android:paddingRight="@dimen/signup__text_m_l_r">
-
-                    <TextView
-                        android:id="@+id/c_result_gia_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/c_result_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <include layout="@layout/t_c_result_gia_file1"></include>
-
-            <include layout="@layout/t_c_result_gia_file2"></include>
-
-            <include layout="@layout/t_c_result_gia_file3"></include>
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+</RelativeLayout>

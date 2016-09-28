@@ -3,14 +3,17 @@ package yksg.kuangkuang.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
@@ -30,6 +33,7 @@ import yksg.kuangkuang.utils.JSONHandler;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.utils.UIutils;
+import yksg.kuangkuang.views.ObservableScrollView;
 import yksg.kuangkuang.views.PullToRefreshView;
 
 /**
@@ -46,6 +50,10 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
     private int page = 1;
     // 自定义的listview的上下拉动刷新
     private PullToRefreshView mPullToRefreshView;
+    private RelativeLayout layoutHead;
+    private ObservableScrollView scrollView;
+    private LinearLayout layout_zhan;//占位用的布局
+    private int height;
 
     public MCircleFragment() {
         // Required empty public constructor
@@ -59,20 +67,28 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         view = inflater.inflate(R.layout.fragment_mcircle, container, false);
         setTitle(getString(R.string.main_circle));
         initView();
-
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-//        ToastUtil.show(a,"我是圈子");
     }
 
     /**
      * 数据初始化
      */
     private void initView() {
+        scrollView = (ObservableScrollView) view.findViewById(R.id.scrollview);
+        layoutHead = (RelativeLayout) view.findViewById(R.id.title_RelativeLayout);
+        layout_zhan = (LinearLayout) view.findViewById(R.id.layout_zhanwei);
+        //获取顶部图片高度后，设置滚动监听
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
+
+                scrollView.setScrollViewListener(scrollViewListener);
+            }
+        });
+
         cirList = new ArrayList<>();
         tv_release = (TextView) view.findViewById(R.id.tv_title_circle_right);
         tv_release.setOnClickListener(this);
@@ -113,9 +129,9 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("page", page + "");
         params.addQueryStringParameter("limit", limit + "");
-            if (http == null) http = new MyHTTP(a);
-            http.baseRequest(Consts.micropostsListApi, JSONHandler.JTYPE_CIRCLE_LIST, HttpRequest.HttpMethod.GET,
-                    params, handler);
+        if (http == null) http = new MyHTTP(a);
+        http.baseRequest(Consts.micropostsListApi, JSONHandler.JTYPE_CIRCLE_LIST, HttpRequest.HttpMethod.GET,
+                params, handler);
     }
 
     private Handler handler = new BaseActivity.KelaHandler(a) {
@@ -220,4 +236,22 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         super.onDestroy();
         Log.d("圈子被关闭了", "onDestroy() returned: " + "");
     }
+
+    private ObservableScrollView.ScrollViewListener scrollViewListener = new ObservableScrollView.ScrollViewListener() {
+
+        @Override
+        public void onScrollChanged(ObservableScrollView scrollView, int x, int y,
+                                    int oldx, int oldy) {
+            //当向上滑动距离大于占位布局的高度值，就调整标题的背景
+            if (y > height) {
+                float alpha = (128);//0~255    完全透明~不透明
+
+                //4个参数，第一个是透明度，后三个是红绿蓝三元色参数
+                layoutHead.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
+            } else {
+                layoutHead.setBackgroundColor(Color.BLACK);
+            }
+
+        }
+    };
 }

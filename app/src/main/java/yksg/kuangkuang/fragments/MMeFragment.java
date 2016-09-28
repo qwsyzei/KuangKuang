@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,7 +22,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,7 @@ import yksg.kuangkuang.utils.JSONHandler;
 import yksg.kuangkuang.utils.MyDate;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
+import yksg.kuangkuang.views.ObservableScrollView;
 import yksg.kuangkuang.views.PullToRefresh123View;
 import yksg.kuangkuang.views.SelfListView;
 
@@ -52,26 +55,32 @@ import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
 /**
  * 我
  */
-public class MMeFragment extends MyBaseFragment implements View.OnClickListener,PullToRefresh123View.OnFooterRefreshListener {
+public class MMeFragment extends MyBaseFragment implements View.OnClickListener, PullToRefresh123View.OnFooterRefreshListener {
     View view;
     private M_MywordAdapter mywordAdapter;
     private ImageView im_set;
-    private RelativeLayout layout_collect,layout_blacklist;
+    private RelativeLayout layout_collect, layout_blacklist;
     private ArrayList<MyWord> sList;
     private SelfListView listView;
     private static Activity a;
-    private int limit = 10;
+    private int limit = 8;
     private int page = 1;
     MyHTTP http;
-    private LinearLayout layout_release,layout_today;
+    private LinearLayout layout_release, layout_today;
     private Documents documents;
     private ImageView im_head_big, im_head_small;
-private TextView tv_name,tv_signature;
-    private TextView tv_fans,tv_follows;
-    private LinearLayout layout_fans,layout_follows;
+    private TextView tv_name, tv_signature;
+    private TextView tv_fans, tv_follows;
+    private LinearLayout layout_fans, layout_follows;
     // 自定义的listview的上下拉动刷新
     private PullToRefresh123View mPullToRefreshView;
-    int flag=0;
+    int flag = 0;
+
+    private RelativeLayout layoutHead;
+    private ObservableScrollView scrollView;
+    private LinearLayout layout_zhan;//占位用的布局
+    private int height;
+
     public MMeFragment() {
         // Required empty public constructor
     }
@@ -94,6 +103,20 @@ private TextView tv_name,tv_signature;
     }
 
     private void initView() {
+        scrollView = (ObservableScrollView) view.findViewById(R.id.scrollview);
+        layoutHead = (RelativeLayout) view.findViewById(R.id.title_RelativeLayout);
+        layout_zhan = (LinearLayout) view.findViewById(R.id.layout_zhanwei);
+        //获取顶部图片高度后，设置滚动监听
+        ViewTreeObserver vto = layout_zhan.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout_zhan.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                height = layout_zhan.getHeight();
+
+                scrollView.setScrollViewListener(scrollViewListener);
+            }
+        });
         documents = new Documents();
 
         sList = new ArrayList<>();
@@ -101,16 +124,16 @@ private TextView tv_name,tv_signature;
         im_head_small = (ImageView) view.findViewById(R.id.me_head_small);
         im_set = (ImageView) view.findViewById(R.id.im_title_set);
         layout_collect = (RelativeLayout) view.findViewById(R.id.me_collect_layout);
-        layout_blacklist= (RelativeLayout) view.findViewById(R.id.me_black_layout);
+        layout_blacklist = (RelativeLayout) view.findViewById(R.id.me_black_layout);
         layout_release = (LinearLayout) view.findViewById(R.id.layout_me_release_word_now);
-        layout_today= (LinearLayout) view.findViewById(R.id.layout_me_myword_today);
+        layout_today = (LinearLayout) view.findViewById(R.id.layout_me_myword_today);
         listView = (SelfListView) view.findViewById(R.id.listview_me_myword);
-        tv_name= (TextView) view.findViewById(R.id.me_nickname);
-        tv_signature= (TextView) view.findViewById(R.id.me_signature);
-        tv_fans= (TextView) view.findViewById(R.id.me_fans_tv);
-        tv_follows= (TextView) view.findViewById(R.id.me_follows_tv);
-        layout_fans= (LinearLayout) view.findViewById(R.id.layout_me_top_fans);
-        layout_follows= (LinearLayout) view.findViewById(R.id.layout_me_top_follows);
+        tv_name = (TextView) view.findViewById(R.id.me_nickname);
+        tv_signature = (TextView) view.findViewById(R.id.me_signature);
+        tv_fans = (TextView) view.findViewById(R.id.me_fans_tv);
+        tv_follows = (TextView) view.findViewById(R.id.me_follows_tv);
+        layout_fans = (LinearLayout) view.findViewById(R.id.layout_me_top_fans);
+        layout_follows = (LinearLayout) view.findViewById(R.id.layout_me_top_follows);
 
         listView.setFocusable(false);
         layout_release.setOnClickListener(this);
@@ -120,19 +143,21 @@ private TextView tv_name,tv_signature;
         layout_fans.setOnClickListener(this);
         layout_follows.setOnClickListener(this);
         im_set.setOnClickListener(this);
-        mPullToRefreshView= (PullToRefresh123View)view.findViewById(R.id.pull_refresh_view_me);
+        mPullToRefreshView = (PullToRefresh123View) view.findViewById(R.id.pull_refresh_view_me);
         mPullToRefreshView.setOnFooterRefreshListener(this);
         getMyWordList();
         mywordAdapter = new M_MywordAdapter(a, sList, handler);
         listView.setAdapter(mywordAdapter);
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        if (flag==1){
+        if (flag == 1) {
             getData();
         }
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -159,6 +184,7 @@ private TextView tv_name,tv_signature;
                 break;
         }
     }
+
     /**
      * 获取个人资料
      */
@@ -180,6 +206,23 @@ private TextView tv_name,tv_signature;
                 params, handler);
     }
 
+    private ObservableScrollView.ScrollViewListener scrollViewListener = new ObservableScrollView.ScrollViewListener() {
+
+        @Override
+        public void onScrollChanged(ObservableScrollView scrollView, int x, int y,
+                                    int oldx, int oldy) {
+            //当向上滑动距离大于占位布局的高度值，就调整标题的背景
+            if (y > height) {
+                float alpha = (128);//0~255    完全透明~不透明
+
+                //4个参数，第一个是透明度，后三个是红绿蓝三元色参数
+                layoutHead.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
+            } else {
+                layoutHead.setBackgroundColor(Color.BLACK);
+            }
+
+        }
+    };
     private Handler handler = new BaseActivity.KelaHandler(a) {
         @SuppressWarnings("unchecked")
         public void handleMessage(android.os.Message msg) {
@@ -195,8 +238,8 @@ private TextView tv_name,tv_signature;
 
                     int curTradesSize = sList.size();
                     ArrayList<MyWord> os = (ArrayList<MyWord>) bundle.getSerializable("myword_list");
-                    for (int i=0;i<os.size();i++){
-                        if (os.get(i).get_the_time().equals(MyDate.todayDate())){
+                    for (int i = 0; i < os.size(); i++) {
+                        if (os.get(i).get_the_time().equals(MyDate.todayDate())) {
                             layout_today.setVisibility(View.GONE);
                             break;
                         }
@@ -204,45 +247,44 @@ private TextView tv_name,tv_signature;
                     Log.d("OS的长度", "handleMessage() returned: " + os.size());
                     if (os.size() == 0) {
                         getData();
-                        flag=1;
+                        flag = 1;
 //                        return;
-                    }
-                    else {
-                    addTrades("bottom", os);
-                    if (curTradesSize == 0) {
-                        sList = os;
-                        mywordAdapter = new M_MywordAdapter(a, sList, handler);
-                        listView.setAdapter(mywordAdapter);
                     } else {
-                        mywordAdapter.notifyDataSetChanged();
-                    }
-                    page += 1;
-                    getData();
-                    flag=1;
+                        addTrades("bottom", os);
+                        if (curTradesSize == 0) {
+                            sList = os;
+                            mywordAdapter = new M_MywordAdapter(a, sList, handler);
+                            listView.setAdapter(mywordAdapter);
+                        } else {
+                            mywordAdapter.notifyDataSetChanged();
+                        }
+                        page += 1;
+                        getData();
+                        flag = 1;
                     }
                 } else if (jtype.equals(JSONHandler.JTYPE_MEMBER_DOCUMENTS)) {
                     documents = (Documents) bundle.getSerializable("documents");
                     tv_name.setText(documents.getName());
-                    if (documents.getSignature().equals("null")){
+                    if (documents.getSignature().equals("null")) {
                         tv_signature.setText(getString(R.string.not_too_lazy));
-                    }else{
+                    } else {
                         tv_signature.setText(documents.getSignature());
                     }
-                    if (documents.getFollow_number().contains(".0")){
-                        tv_follows.setText(documents.getFollow_number().replace(".0",""));
-                    }else{
+                    if (documents.getFollow_number().contains(".0")) {
+                        tv_follows.setText(documents.getFollow_number().replace(".0", ""));
+                    } else {
                         tv_follows.setText(documents.getFollow_number());
                     }
-                    if (documents.getFollowed_number().contains(".0")){
-                        tv_fans.setText(documents.getFollowed_number().replace(".0",""));
-                    }else{
+                    if (documents.getFollowed_number().contains(".0")) {
+                        tv_fans.setText(documents.getFollowed_number().replace(".0", ""));
+                    } else {
                         tv_fans.setText(documents.getFollowed_number());
                     }
                     getbitmap123();
 //                loadDataFrom();
                 }
             } else if (res.equals("123")) {
-                if (!documents.getPicture().equals("null")&&!documents.getPicture().equals("uploads/head_portrait")) {
+                if (!documents.getPicture().equals("null") && !documents.getPicture().equals("uploads/head_portrait")) {
                     ImageLoader.getInstance().displayImage(Consts.host + "/" + documents.getPicture(), im_head_small);
                     Bitmap bitmap1 = fastblur(a, bitmap, 5, false);
                     im_head_big.setImageBitmap(bitmap1);
@@ -288,7 +330,6 @@ private TextView tv_name,tv_signature;
     }
 
 
-
     public void setTitle(String title) {
         TextView textView = (TextView) view.findViewById(R.id.tv_title);
         if (textView != null) textView.setText(title);
@@ -298,7 +339,6 @@ private TextView tv_name,tv_signature;
         TextView textView = (TextView) view.findViewById(R.id.tv_title_right);
         if (textView != null) textView.setText(tv_right);
     }
-
 
 
     //刷新数据的方法
@@ -533,6 +573,7 @@ private TextView tv_name,tv_signature;
             }
         }, 3000);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
