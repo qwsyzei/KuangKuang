@@ -56,7 +56,7 @@ public class BaseActivity extends FragmentActivity {
 
     boolean flag = false;
     ExitDialog exitDialog;
-    TextView tv_yes, tv_no;
+    public TextView tv_yes, tv_no;
     private IntentFilter intentFilter;
     private NetworkChangeReceiver networkChangeReceiver;
     @Override

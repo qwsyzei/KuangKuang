@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -75,16 +76,14 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
         final ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_my_collect, null);
+            convertView = (FrameLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_my_collect, null);
             viewHolder.title = (TextView) convertView.findViewById(R.id.item_my_collect_tv_title);
-            viewHolder.describe_son = (TextView) convertView.findViewById(R.id.item_my_collect_tv_describe);
             viewHolder.im_pic = (ImageView) convertView.findViewById(R.id.item_my_collect_pic);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.title.setText(ac.getTitle());
-        viewHolder.describe_son.setText(ac.getDescribe_son());
         picasso.with(ctx).load(Consts.host + ac.getPicture_url()).into(viewHolder.im_pic);
 
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +160,7 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
     }
 
     public final class ViewHolder {
-        TextView title, describe_son;
+        TextView title;
         ImageView im_pic;
     }
 }

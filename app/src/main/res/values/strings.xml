@@ -289,6 +289,7 @@
     <string name="tip_off_success">举报成功</string>
     <string name="no_word">您还未输入文字</string>
     <string name="no_picture">您还未添加图片</string>
+    <string name="if_delete_picture">要删除这张照片吗？</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- 返回错误信息 -->

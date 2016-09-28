@@ -16,25 +16,20 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true" >
 
-        <Button
-            android:id="@+id/photo_bt_exit"  
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/bt_quxiao" />
 
         <Button
             android:id="@+id/photo_bt_del"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/signup__text_m_l_r"
+            android:layout_alignParentLeft="true"
             android:background="@drawable/bt_shanchu" />
 
         <Button
             android:id="@+id/photo_bt_enter"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginRight="@dimen/signup__text_m_l_r"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/bt_queding" />
