@@ -36,11 +36,7 @@ public class MToolFragment extends MyBaseFragment implements View.OnClickListene
         initView();
         return view;
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-//        ToastUtil.show(getActivity(), "我是工具");
-    }
+
     private void initView() {
         im01 = (ImageView) view.findViewById(R.id.im_mytool01);
         im02 = (ImageView) view.findViewById(R.id.im_mytool02);

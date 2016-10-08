@@ -254,6 +254,7 @@
     <!-- 文章用的 -->
     <string name="praise">赞</string>
     <string name="praise_done">已赞</string>
+    <string name="cancel_praise_done">已取消赞</string>
     <string name="comment">评论</string>
     <string name="comment_success">评论成功</string>
     <string name="reply_success">回复成功</string>

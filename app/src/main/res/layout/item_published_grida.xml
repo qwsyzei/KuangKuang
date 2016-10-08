@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/item_grida_image"
-        android:layout_width="68dp"
-        android:layout_height="68dp"
+        android:layout_width="@dimen/release_item_gridview_size"
+        android:layout_height="@dimen/release_item_gridview_size"
         android:scaleType="centerCrop"
         android:src="@mipmap/zhan_circle_pic" >
     </ImageView>

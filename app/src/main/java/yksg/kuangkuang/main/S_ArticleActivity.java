@@ -39,9 +39,8 @@ import yksg.kuangkuang.views.ObservableScrollView;
 public class S_ArticleActivity extends BaseActivity implements View.OnClickListener ,ObservableScrollView.ScrollViewListener{
     String testString, article_id, title, tag, views, like_number, comment_number, created_at, author_member_id;
     private String follow_state;
-    private String is_like,is_collect;
+    private String is_like="0",is_collect="0";
     private String nickname, picture_head, author_signature;
-    private TextView tv_content;
     private LinearLayout layout_like, layout_comment;
     private ImageView im_collect, im_share;
     private ImageView im_like;
@@ -143,6 +142,7 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         tv_comment = (TextView) findViewById(R.id.article_comment_number);
         im_share = (ImageView) findViewById(R.id.im_article_title_share);
         tv_time = (TextView) findViewById(R.id.article_author_time);
+        layout_like.setOnClickListener(this);
         if (author_signature.equals("null")) {
             tv_author_signature.setText(getString(R.string.not_too_lazy));
         } else {
@@ -152,7 +152,6 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             im_like.setImageResource(R.mipmap.like01);
         } else {
             im_like.setImageResource(R.mipmap.like);
-            layout_like.setOnClickListener(this);
         }
         if (!picture_head.equals("null")) {
             picasso.with(S_ArticleActivity.this).load(Consts.host + "/" + picture_head).into(im_author_head);
@@ -207,7 +206,12 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.layout_s_artile_like:
                 if (isSigned()) {
-                    gotoLike();
+                    if(is_like != null &&is_like.equals("1")){
+
+                        cancelLike();
+                    }else{
+                        gotoLike();//点赞
+                    }
                 } else {
                     ToastUtil.show(S_ArticleActivity.this, getString(R.string.not_login));
                 }
@@ -260,7 +264,18 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
                 params, getHandler());
 
     }
+    /**
+     * 取消赞
+     */
+    private void cancelLike() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("object_id", article_id);
+        params.addQueryStringParameter("species", "article");
+        if (http == null) http = new MyHTTP(S_ArticleActivity.this);
+        http.baseRequest(Consts.cancelLikeApi, JSONHandler.JTYPE_ARTICLES_CANCEL_LIKE, HttpRequest.HttpMethod.GET,
+                params, getHandler());
 
+    }
     /**
      * 收藏
      */
@@ -289,7 +304,13 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.praise_done));
             im_like.setImageResource(R.mipmap.like01);
             tv_like.setText((Integer.parseInt(tv_like.getText().toString()) + 1) + "");
-        } else if (jtype.equals(JSONHandler.JTYPE_COLLECT)) {
+            is_like="1";
+        }else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_CANCEL_LIKE)) {
+            ToastUtil.show(S_ArticleActivity.this, getString(R.string.cancel_praise_done));
+            im_like.setImageResource(R.mipmap.like);
+            tv_like.setText((Integer.parseInt(tv_like.getText().toString())-1) + "");
+            is_like="0";
+        }else if (jtype.equals(JSONHandler.JTYPE_COLLECT)) {
             ToastUtil.show(S_ArticleActivity.this, getString(R.string.collect_done));
             im_collect.setImageResource(R.mipmap.collect_gray);
             im_collect.setClickable(false);

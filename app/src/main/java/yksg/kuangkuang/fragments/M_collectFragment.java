@@ -53,7 +53,7 @@ public class M_collectFragment extends MyBaseFragment {
     }
 
     private void initView() {
-        IntentFilter filter = new IntentFilter(NEWmeFragment.action_mycollect);
+        IntentFilter filter = new IntentFilter(MMeFragment.action_mycollect);
         getContext().registerReceiver(broadcastReceiver, filter);
         sList=new ArrayList<>();
         gridview= (SelfGridView) view.findViewById(R.id.gridview_fragment_mycollect);

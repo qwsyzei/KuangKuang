@@ -152,4 +152,8 @@
     <dimen name="time_pic_layout_height">28dp</dimen>
     <dimen name="word_layout_height">161dp</dimen>
     <dimen name="me_radiobutton_p">35dp</dimen>
+
+    <dimen name="release_gridview_width">292dp</dimen>
+    <dimen name="release_gridview_height">353dp</dimen>
+    <dimen name="release_item_gridview_size">69dp</dimen>
 </resources>

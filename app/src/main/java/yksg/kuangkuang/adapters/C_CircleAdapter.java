@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,8 +43,6 @@ import yksg.kuangkuang.views.CircleImageView;
 import yksg.kuangkuang.views.ExitDialog;
 import yksg.kuangkuang.views.MoreDialog;
 import yksg.kuangkuang.views.SelfGridView;
-
-import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 圈子的adapter
@@ -324,6 +320,7 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
             }
 
         viewHolder.time.setText(common_time);
+        viewHolder.selfGridView.setFocusable(false);//取消焦点，防止listview抖动
         cGridAdapter = new C_CircleGridAdapter(ctx, headerEntitiesList);
         viewHolder.selfGridView.setAdapter(cGridAdapter);
         viewHolder.selfGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -338,7 +335,6 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
 
     /**
      * 打开图片查看器
-     *
      * @param position
      * @param urls2
      */

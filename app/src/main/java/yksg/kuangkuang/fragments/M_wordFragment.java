@@ -54,7 +54,7 @@ public class M_wordFragment extends MyBaseFragment {
     }
 
     private void initView() {
-        IntentFilter filter = new IntentFilter(NEWmeFragment.action_myword);
+        IntentFilter filter = new IntentFilter(MMeFragment.action_myword);
         getContext().registerReceiver(broadcastReceiver, filter);
         sList=new ArrayList<>();
         gridview= (SelfGridView) view.findViewById(R.id.gridview_fragment_myword);

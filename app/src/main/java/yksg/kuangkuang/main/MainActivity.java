@@ -23,10 +23,9 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.fragments.LeftFragment;
 import yksg.kuangkuang.fragments.MCircleFragment;
-import yksg.kuangkuang.fragments.MMeFragment;
 import yksg.kuangkuang.fragments.MSubjectFragment;
 import yksg.kuangkuang.fragments.MToolFragment;
-import yksg.kuangkuang.fragments.NEWmeFragment;
+import yksg.kuangkuang.fragments.MMeFragment;
 import yksg.kuangkuang.utils.DataCenter;
 
 /**
@@ -40,8 +39,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private MSubjectFragment mSubjectFragment;
     private MCircleFragment mCircleFragment;
     private MToolFragment mToolFragment;
-//    private MMeFragment mMeFragment;
-    private NEWmeFragment mMeFragment;
+    private MMeFragment mMeFragment;
     private LinearLayout layout_main_layout;
     String str = "0";
     String sub_key="all";
@@ -162,7 +160,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 if (DataCenter.isSigned()) {
                     im_title_left.setVisibility(View.GONE);
                     showFragment(4,sub_key);
-
                 } else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -210,8 +207,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 if (mMeFragment != null)
                     ft.show(mMeFragment);
                 else {
-                    mMeFragment=new NEWmeFragment();
-//                    mMeFragment = new MMeFragment();
+                    mMeFragment=new MMeFragment();
                     ft.add(R.id.just_subject_layout, mMeFragment);
                 }
                 break;
@@ -246,7 +242,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
             } else {
                 Toast.makeText(context, getString(R.string.network_problem), Toast.LENGTH_SHORT).show();
-
             }
         }
     }

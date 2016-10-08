@@ -2,46 +2,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgray"
-    >
-        <yksg.kuangkuang.views.PullToRefresh123View
-            android:id="@+id/pull_refresh_view_me"
+    android:background="@color/lightgray">
+
+    <yksg.kuangkuang.views.PullToRefresh123View
+        android:id="@+id/pull_refresh_view_me"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/lightgray" >
+        <yksg.kuangkuang.views.ObservableScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/lightgray">
+            android:layout_height="match_parent">
 
-            <yksg.kuangkuang.views.ObservableScrollView
-                android:id="@+id/scrollview"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent">
-
+                android:layout_height="match_parent"
+                android:orientation="vertical">
                 <LinearLayout
+                    android:id="@+id/layout_zhanwei"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical">
+                    android:layout_height="@dimen/title_layout_height"
+                    android:orientation="horizontal"></LinearLayout>
+                <include layout="@layout/m_me_top"></include>
+                <include layout="@layout/m_me_blacklist"></include>
+                <RadioGroup
+                    android:id="@+id/me_radiogroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nomal_padding_dimen"
+                    android:paddingTop="@dimen/size_eight"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/layout_zhanwei"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/title_layout_height"
-                        android:orientation="horizontal"></LinearLayout>
+                    <RadioButton
+                        android:id="@+id/me_rb1"
+                        style="@style/me_radiobutton_style"
+                        android:drawableBottom="@drawable/me_line"
+                        android:paddingLeft="@dimen/me_radiobutton_p"
+                        android:text="我的说说" />
 
-                    <include layout="@layout/m_me_top"></include>
+                    <RadioButton
+                        android:id="@+id/me_rb2"
+                        style="@style/me_radiobutton_style"
+                        android:paddingRight="@dimen/me_radiobutton_p"
+                        android:drawableBottom="@drawable/me_line"
+                        android:text="我的收藏" />
 
-                    <include layout="@layout/m_me_collect"></include>
-
-                    <include layout="@layout/m_me_blacklist"></include>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <include layout="@layout/m_me_myword"></include>
-                    </LinearLayout>
-
+                </RadioGroup>
+                <LinearLayout
+                    android:id="@+id/just_me_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
                 </LinearLayout>
-            </yksg.kuangkuang.views.ObservableScrollView>
-        </yksg.kuangkuang.views.PullToRefresh123View>
 
+            </LinearLayout>
+        </yksg.kuangkuang.views.ObservableScrollView>
+    </yksg.kuangkuang.views.PullToRefresh123View>
     <include layout="@layout/title_me"></include>
 </RelativeLayout>

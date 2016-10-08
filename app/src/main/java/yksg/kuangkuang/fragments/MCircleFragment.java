@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,6 +34,7 @@ import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.utils.UIutils;
 import yksg.kuangkuang.views.ObservableScrollView;
 import yksg.kuangkuang.views.PullToRefreshView;
+import yksg.kuangkuang.views.SelfListView;
 
 /**
  * 圈子
@@ -44,7 +44,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
     private static Activity a;
     private List<Circles> cirList;
     private C_CircleAdapter cAdapter;
-    private ListView listView;
+    private SelfListView listView;
     private TextView tv_release;
     private int limit = 8;
     private int page = 1;
@@ -92,7 +92,7 @@ public class MCircleFragment extends MyBaseFragment implements View.OnClickListe
         cirList = new ArrayList<>();
         tv_release = (TextView) view.findViewById(R.id.tv_title_circle_right);
         tv_release.setOnClickListener(this);
-        listView = (ListView) view.findViewById(R.id.listview_circle);
+        listView = (SelfListView) view.findViewById(R.id.listview_circle);
         getcircleList();
         UIutils.showLoading(a);
         mPullToRefreshView = (PullToRefreshView) view.findViewById(R.id.pull_refresh_view_circle);

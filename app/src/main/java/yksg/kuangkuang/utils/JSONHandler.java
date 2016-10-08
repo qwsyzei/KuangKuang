@@ -75,6 +75,7 @@ public class JSONHandler {
     public final static String JTYPE_ARTICLES_TOP = "articles_top";
 
     public final static String JTYPE_ARTICLES_LIKE = "articles_like";
+    public final static String JTYPE_ARTICLES_CANCEL_LIKE = "cancel_articles_like";
     public final static String JTYPE_ARTICLES_VIEWS = "articles_views";
     public final static String JTYPE_ARTICLES_COMMENT = "articles_comment";
     public final static String JTYPE_ARTICLES_ALL_COMMENT = "articles_all_comment";
@@ -456,6 +457,7 @@ public class JSONHandler {
 
         osStrings.add(JTYPE_GET_TIME);
         osStrings.add(JTYPE_ARTICLES_LIKE);
+        osStrings.add(JTYPE_ARTICLES_CANCEL_LIKE);
         osStrings.add(JTYPE_COLLECT);
         osStrings.add(JTYPE_COLLECT_DESTROY);
         osStrings.add(JTYPE_COMMENT_DESTROY);

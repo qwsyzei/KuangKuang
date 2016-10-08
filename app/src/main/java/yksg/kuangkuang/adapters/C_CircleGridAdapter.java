@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.models.CircleGridViewEntity;
-import yksg.kuangkuang.utils.Consts;
 
 import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
 
