@@ -23,7 +23,6 @@ import yksg.kuangkuang.adapters.M_MyWordsAdapter;
 import yksg.kuangkuang.main.BaseActivity;
 import yksg.kuangkuang.models.MyWord;
 import yksg.kuangkuang.utils.Consts;
-import yksg.kuangkuang.utils.DataCenter;
 import yksg.kuangkuang.utils.JSONHandler;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
@@ -64,7 +63,6 @@ public class M_wordFragment extends MyBaseFragment {
 
     private   void getMyWordList() {
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("member_id", DataCenter.getMember_id());
         params.addQueryStringParameter("limit", limit + "");
         params.addQueryStringParameter("page", page + "");
         if (http == null) http = new MyHTTP(getActivity());

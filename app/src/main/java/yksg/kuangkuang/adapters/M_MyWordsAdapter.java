@@ -102,6 +102,7 @@ public class M_MyWordsAdapter extends ArrayAdapter<MyWord> {
                 intent.putExtra("content", list.get(position).getContent_son());
                 intent.putExtra("like", list.get(position).getLike_number());
                 intent.putExtra("comment", list.get(position).getComment_number());
+                intent.putExtra("is_like",list.get(position).getIs_like());
                 intent.putExtra("url1", list.get(position).getUrl1());
                 intent.putExtra("url2", list.get(position).getUrl2());
                 intent.putExtra("url3", list.get(position).getUrl3());

@@ -18,12 +18,21 @@ public class MyWord implements Serializable {
     private String url1, url2, url3, url4, url5, url6, url7, url8, url9;
     private String content_son, nickname, picture_son;
     private String like_number,comment_number;
+    private String is_like;
     private Context context;
     String day, month;
     private Bitmap bitmip;//假的
 
     public MyWord(Context context) {
         this.context = context;
+    }
+
+    public String getIs_like() {
+        return is_like;
+    }
+
+    public void setIs_like(String is_like) {
+        this.is_like = is_like;
     }
 
     public String getLike_number() {
@@ -221,11 +230,12 @@ public class MyWord implements Serializable {
         return this;
     }
 
-    public MyWord getcontentfrom(String content,String picture_son,String nickname) {
+    public MyWord getcontentfrom(String content,String picture_son,String nickname,String is_like) {
         try {
             setContent_son(content);
             setPicture_son(picture_son);
             setNickname(nickname);
+            setIs_like(is_like);
         } catch (Exception e) {
             e.printStackTrace();
         }

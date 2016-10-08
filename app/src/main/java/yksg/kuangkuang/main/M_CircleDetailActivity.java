@@ -50,7 +50,7 @@ import static yksg.kuangkuang.R.id.dialog_exit_title;
 /**
  * 朋友圈详情页
  */
-public class M_CircleDetailActivity extends BaseActivity implements View.OnClickListener, PullToRefresh123View.OnFooterRefreshListener,ObservableScrollView.ScrollViewListener {
+public class M_CircleDetailActivity extends BaseActivity implements View.OnClickListener, PullToRefresh123View.OnFooterRefreshListener, ObservableScrollView.ScrollViewListener {
     private String id, head_pic, time, nickname, content, like_number, comment_number;
     private String url1, url2, url3, url4, url5, url6, url7, url8, url9;
     private String type;//从哪里来的
@@ -61,7 +61,7 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
     private int number;//9宫格图片的个数
     private List<CircleGridViewEntity> headerEntitiesList;
     private C_CircleGridAdapter cGridAdapter;
-//    private M_DetailLikeAdapter mdAdapter;
+    //    private M_DetailLikeAdapter mdAdapter;
     ArrayList<CircleAllComment> mylist;
     private C_CircleCommentAdapter allAdapter;
     private int page = 1;
@@ -77,6 +77,9 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
     private ObservableScrollView scrollView;
     private LinearLayout layout_zhan;//占位用的布局
     private int height;
+    private String is_like;
+    private ImageView im_like;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +111,7 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
         content = intent.getStringExtra("content");
         like_number = intent.getStringExtra("like");
         comment_number = intent.getStringExtra("comment");
+        is_like = intent.getStringExtra("is_like");
         url1 = intent.getStringExtra("url1");
         url2 = intent.getStringExtra("url2");
         url3 = intent.getStringExtra("url3");
@@ -155,7 +159,7 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
         layout_delete = (LinearLayout) findViewById(R.id.layout_circle_detail_delete);
         tv_like = (TextView) findViewById(R.id.circle_detail_like);
         tv_comment = (TextView) findViewById(R.id.circle_detail_comment);
-
+        im_like = (ImageView) findViewById(R.id.circle_detail_like_im);
         if (type.equals("me")) {
             layout_delete.setVisibility(View.VISIBLE);
         } else {
@@ -186,6 +190,11 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
             tv_comment.setText(comment_number.replace(".0", ""));
         } else {
             tv_comment.setText(comment_number);
+        }
+        if (is_like != null && is_like.equals("1")) {
+            im_like.setImageResource(R.mipmap.small_like01);
+        } else {
+            im_like.setImageResource(R.mipmap.small_like);
         }
         headerEntitiesList = new ArrayList<>();
         String[] url = new String[]{url1, url2, url3, url4, url5, url6, url7, url8, url9};
@@ -220,7 +229,11 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_circle_detail_like:
-                gotoLike();
+                if (is_like != null && is_like.equals("1")) {
+                    cancelLike();
+                } else {
+                    gotoLike();//点赞
+                }
                 break;
             case R.id.layout_circle_detail_comment:
                 Comment_Dialog(view);
@@ -242,7 +255,9 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
     }
 
     MyHTTP http;
-
+    /**
+     * 点赞
+     */
     private void gotoLike() {
         RequestParams params = new RequestParams();
         params.addQueryStringParameter("object_id", id);
@@ -250,6 +265,19 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
         if (http == null) http = new MyHTTP(M_CircleDetailActivity.this);
         http.baseRequest(Consts.addLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
                 params, getHandler());
+    }
+
+    /**
+     * 取消赞
+     */
+    private void cancelLike() {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("object_id", id);
+        params.addQueryStringParameter("species", "micropost");
+        if (http == null) http = new MyHTTP(M_CircleDetailActivity.this);
+        http.baseRequest(Consts.cancelLikeApi, JSONHandler.JTYPE_ARTICLES_CANCEL_LIKE, HttpRequest.HttpMethod.GET,
+                params, getHandler());
+
     }
 
     private void gotoComment() {
@@ -296,9 +324,17 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
     public void updateData() {
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
-            ToastUtil.show(M_CircleDetailActivity.this, "已赞");
+            ToastUtil.show(M_CircleDetailActivity.this,getString(R.string.praise_done));
+            im_like.setImageResource(R.mipmap.small_like01);
+            tv_like.setText((Integer.parseInt(tv_like.getText().toString()) + 1) + "");
+            is_like="1";
+        }else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_CANCEL_LIKE)) {
+            ToastUtil.show(M_CircleDetailActivity.this, getString(R.string.cancel_praise_done));
+            im_like.setImageResource(R.mipmap.small_like);
+            tv_like.setText((Integer.parseInt(tv_like.getText().toString()) - 1) + "");
+            is_like="0";
         } else if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
-            ToastUtil.show(M_CircleDetailActivity.this, "删除成功");
+            ToastUtil.show(M_CircleDetailActivity.this, getString(R.string.delete_success));
             Intent intent = new Intent(M_CircleDetailActivity.this, MainActivity.class);
             intent.putExtra("goto", "me");
             startActivity(intent);
@@ -306,7 +342,7 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
             Intent intent123 = new Intent(action);
             sendBroadcast(intent123);
         } else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_COMMENT)) {
-            ToastUtil.show(M_CircleDetailActivity.this, "评论成功");
+            ToastUtil.show(M_CircleDetailActivity.this,getString(R.string.comment_success));
             cPopwindow.dismiss();
             edit_dialog_comment.setText("");
 
@@ -412,6 +448,7 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
         tv_no.setOnClickListener(this);
 
     }
+
     @Override
     public void onScrollChanged(ObservableScrollView scrollView, int x, int y,
                                 int oldx, int oldy) {

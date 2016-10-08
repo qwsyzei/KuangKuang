@@ -207,7 +207,6 @@ public class S_ArticleActivity extends BaseActivity implements View.OnClickListe
             case R.id.layout_s_artile_like:
                 if (isSigned()) {
                     if(is_like != null &&is_like.equals("1")){
-
                         cancelLike();
                     }else{
                         gotoLike();//点赞

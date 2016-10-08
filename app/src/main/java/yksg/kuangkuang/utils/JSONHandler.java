@@ -246,8 +246,9 @@ public class JSONHandler {
                     String content=object1.getString("mic_content");//content就是上面的12345
                     String picture=object1.getString("picture");
                     String nickname=object1.getString("nickname");
+                    String is_like=object1.getString("is_like");
                     sub.getFromJSONObjectItem(object);
-                    sub.getcontentfrom(content,picture,nickname);
+                    sub.getcontentfrom(content,picture,nickname,is_like);
                     as.add(sub);
                 }
                 bundle.putSerializable("myword_list", as);

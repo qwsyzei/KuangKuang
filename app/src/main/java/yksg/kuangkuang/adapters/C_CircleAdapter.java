@@ -276,24 +276,37 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
             viewHolder.im_like.setImageResource(R.mipmap.small_like01);
         } else {
             viewHolder.im_like.setImageResource(R.mipmap.small_like);
-            viewHolder.layout_like.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (DataCenter.isSigned()) {
-                        //点赞
-                        RequestParams params = new RequestParams();
-                        params.addQueryStringParameter("object_id", circles.getId());
-                        params.addQueryStringParameter("species", "micropost");
-                        if (http == null) http = new MyHTTP(ctx);
-                        http.baseRequest(Consts.addLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
-                                params, handler);
-                    } else {
-                        ToastUtil.show(ctx, R.string.not_login);
-                    }
 
-                }
-            });
         }
+        //由于updateData()里的数据传输不方便，因此在圈子列表先不加点赞功能
+//        viewHolder.layout_like.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (DataCenter.isSigned()) {
+//                    if (circles.getIslike().equals("1")) {
+//
+//                        RequestParams params = new RequestParams();
+//                        params.addQueryStringParameter("object_id", circles.getId());
+//                        params.addQueryStringParameter("species", "micropost");
+//                        if (http == null) http = new MyHTTP(ctx);
+//                        http.baseRequest(Consts.cancelLikeApi, JSONHandler.JTYPE_ARTICLES_CANCEL_LIKE, HttpRequest.HttpMethod.GET,
+//                                params, handler);
+//                    } else {
+//                        //点赞
+//                        RequestParams params = new RequestParams();
+//                        params.addQueryStringParameter("object_id", circles.getId());
+//                        params.addQueryStringParameter("species", "micropost");
+//                        if (http == null) http = new MyHTTP(ctx);
+//                        http.baseRequest(Consts.addLikeApi, JSONHandler.JTYPE_ARTICLES_LIKE, HttpRequest.HttpMethod.GET,
+//                                params, handler);
+//                    }
+//
+//                } else {
+//                    ToastUtil.show(ctx, R.string.not_login);
+//                }
+//
+//            }
+//        });
         if (circles.getLike().equals("null")) {
             viewHolder.like.setText("0");
         } else if (circles.getLike().contains(".0")) {
@@ -347,10 +360,11 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
     }
 
     public void updateData() {
-        if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
-            ToastUtil.show(ctx, R.string.praise_success);
-
-        } else if (jtype.equals(JSONHandler.JTYPE_ADD_BLACK)) {
+//        if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
+//            ToastUtil.show(ctx, R.string.praise_success);
+//
+//        } else
+        if (jtype.equals(JSONHandler.JTYPE_ADD_BLACK)) {
             ToastUtil.show(ctx, R.string.add_black_success);
             for (int i = mylist.size() - 1; i >= 0; i--) {
                 if (mylist.get(i).getMember_id().equals(id)) {
