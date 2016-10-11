@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -26,8 +25,6 @@ import yksg.kuangkuang.utils.JSONHandler;
 import yksg.kuangkuang.utils.MyHTTP;
 import yksg.kuangkuang.utils.ToastUtil;
 import yksg.kuangkuang.views.ExitDialog;
-
-import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
 
 /**
  * 关注列表adapter
@@ -89,9 +86,7 @@ public class M_FollowListAdapter extends ArrayAdapter<Follows> {
         } else {
             viewHolder.signature.setText(ac.getSignature());
         }
-//        Context context = ctx.getApplicationContext();
-//        initImageLoader(context);
-//        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_pic);
+
         picasso.with(ctx).load(Consts.host + "/" + ac.getPicture_son()).into(viewHolder.im_pic);
         viewHolder.layout_follow_state.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,17 +103,24 @@ public class M_FollowListAdapter extends ArrayAdapter<Follows> {
                     @Override
                     public void onClick(View view) {
                         exitDialog.dismiss();
-                        RequestParams params = new RequestParams();
-                        params.addQueryStringParameter("object", ac.getObject_id());
-                        if (http == null) http = new MyHTTP(ctx);
-                        http.baseRequest(Consts.destroyfollowsApi, JSONHandler.JTYPE_DELETE_FOLLOW, HttpRequest.HttpMethod.GET,
-                                params, handler);
+                        cancelFollow(ac.getObject_id());//取消关注
                     }
                 });
             }
         });
 
         return convertView;
+    }
+
+    /**
+     * 取消关注
+     */
+    private void cancelFollow(String object_id) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("object", object_id);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.destroyfollowsApi, JSONHandler.JTYPE_DELETE_FOLLOW, HttpRequest.HttpMethod.GET,
+                params, handler);
     }
 
     public void updateData() {

@@ -147,98 +147,7 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
         viewHolder.im_black.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                moreDialog = new MoreDialog(ctx, R.style.dialog123);//创建Dialog并设置样式主题
-                Window window = moreDialog.getWindow();
-                window.setGravity(Gravity.BOTTOM);  //此处可以设置dialog显示的位置
-                window.setWindowAnimations(R.style.mystyle);  //添加动画
-                moreDialog.setCanceledOnTouchOutside(true);//设置点击Dialog外部任意区域关闭Dialog
-                window.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-                moreDialog.show();
-
-                layout_black = (LinearLayout) moreDialog.findViewById(R.id.layout_more_black);
-                layout_tip_off = (LinearLayout) moreDialog.findViewById(R.id.layout_more_tip_off);
-                tv_dialog_cancel = (TextView) moreDialog.findViewById(R.id.tv_dialog_cancel);
-                layout_black.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        moreDialog.dismiss();
-                        if (DataCenter.isSigned()) {
-                            exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_exit);
-                            exitDialog.show();
-                            tv_title = (TextView) exitDialog.findViewById(R.id.dialog_exit_title);
-                            tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
-                            tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
-                            tv_title.setText(R.string.if_add_black);
-                            tv_yes.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    exitDialog.dismiss();
-                                    if (DataCenter.getMember_id().equals(circles.getMember_id())) {
-                                        ToastUtil.show(ctx, R.string.cannot_add_self_black_list);
-                                    } else {
-                                        id = circles.getMember_id();
-                                        //加入黑名单
-                                        RequestParams params = new RequestParams();
-                                        params.addQueryStringParameter("object_id", circles.getMember_id());
-                                        if (http == null) http = new MyHTTP(ctx);
-                                        http.baseRequest(Consts.addblacklistApi, JSONHandler.JTYPE_ADD_BLACK, HttpRequest.HttpMethod.GET,
-                                                params, handler);
-                                    }
-
-                                }
-                            });
-                            tv_no.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    exitDialog.dismiss();
-                                }
-                            });
-                        } else {
-                            //提示未登录   或弹窗登录
-                            ToastUtil.show(ctx, R.string.not_login);
-                        }
-
-                    }
-                });
-                layout_tip_off.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        moreDialog.dismiss();
-                        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_exit);
-                        exitDialog.show();
-                        tv_title = (TextView) exitDialog.findViewById(R.id.dialog_exit_title);
-                        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
-                        tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
-                        tv_title.setText(R.string.if_tip_off);
-                        tv_yes.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                exitDialog.dismiss();
-                                //举报
-                                RequestParams params = new RequestParams();
-                                params.addQueryStringParameter("object_id", circles.getId());
-                                params.addQueryStringParameter("species", "micropost");
-                                params = KelaParams.generateSignParam("POST", Consts.givesuggestApi, params);
-                                if (http == null) http = new MyHTTP(ctx);
-                                http.baseRequest(Consts.givesuggestApi, JSONHandler.JTYPE_GIVE_SUGGEST, HttpRequest.HttpMethod.POST,
-                                        params, handler);
-                            }
-                        });
-                        tv_no.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                exitDialog.dismiss();
-                            }
-                        });
-                    }
-                });
-                tv_dialog_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        moreDialog.dismiss();
-                    }
-                });
-
+                dialog_more(circles.getMember_id(), circles.getId());//更多的弹窗
             }
         });
         viewHolder.layout_comment.setOnClickListener(new View.OnClickListener() {
@@ -272,12 +181,12 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
         viewHolder.author.setText(circles.getNickname());
         viewHolder.describe.setText(circles.getContent_son());
 
-        if (circles.getIslike().equals("1")) {
-            viewHolder.im_like.setImageResource(R.mipmap.small_like01);
-        } else {
-            viewHolder.im_like.setImageResource(R.mipmap.small_like);
-
-        }
+//        if (circles.getIslike().equals("1")) {
+//            viewHolder.im_like.setImageResource(R.mipmap.small_like01);
+//        } else {
+//            viewHolder.im_like.setImageResource(R.mipmap.small_like);
+//
+//        }
         //由于updateData()里的数据传输不方便，因此在圈子列表先不加点赞功能
 //        viewHolder.layout_like.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -310,10 +219,8 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
         if (circles.getLike().equals("null")) {
             viewHolder.like.setText("0");
         } else if (circles.getLike().contains(".0")) {
-
             viewHolder.like.setText(circles.getLike().replace(".0", ""));
         } else {
-
             viewHolder.like.setText(circles.getLike());
         }
         if (circles.getComment().equals("null")) {
@@ -326,11 +233,11 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
 
         picasso.with(ctx).load(Consts.host + "/" + circles.getPicture_son()).into(viewHolder.im_head_pic);
         String common_time = null;
-            try {
-                common_time = MyDate.timeLogic(circles.getCreated_at());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            common_time = MyDate.timeLogic(circles.getCreated_at());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         viewHolder.time.setText(common_time);
         viewHolder.selfGridView.setFocusable(false);//取消焦点，防止listview抖动
@@ -347,7 +254,129 @@ public class C_CircleAdapter extends ArrayAdapter<Circles> {
     }
 
     /**
+     * 更多的弹窗（三个点）
+     */
+    private void dialog_more(final String member_idid, final String idid) {
+        moreDialog = new MoreDialog(ctx, R.style.dialog123);//创建Dialog并设置样式主题
+        Window window = moreDialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);  //此处可以设置dialog显示的位置
+        window.setWindowAnimations(R.style.mystyle);  //添加动画
+        moreDialog.setCanceledOnTouchOutside(true);//设置点击Dialog外部任意区域关闭Dialog
+        window.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        moreDialog.show();
+
+        layout_black = (LinearLayout) moreDialog.findViewById(R.id.layout_more_black);
+        layout_tip_off = (LinearLayout) moreDialog.findViewById(R.id.layout_more_tip_off);
+        tv_dialog_cancel = (TextView) moreDialog.findViewById(R.id.tv_dialog_cancel);
+        layout_black.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moreDialog.dismiss();
+                if (DataCenter.isSigned()) {
+                    dialog_black(member_idid);
+                } else {
+                    //提示未登录   或弹窗登录
+                    ToastUtil.show(ctx, R.string.not_login);
+                }
+            }
+        });
+        layout_tip_off.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moreDialog.dismiss();
+                dialog_jubao(idid);
+            }
+        });
+        tv_dialog_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moreDialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 加入黑名单的弹窗
+     */
+    private void dialog_black(final String mem_id) {
+        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_exit);
+        exitDialog.show();
+        tv_title = (TextView) exitDialog.findViewById(R.id.dialog_exit_title);
+        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
+        tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
+        tv_title.setText(R.string.if_add_black);
+        tv_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDialog.dismiss();
+                if (DataCenter.getMember_id().equals(mem_id)) {
+                    ToastUtil.show(ctx, R.string.cannot_add_self_black_list);
+                } else {
+                    id = mem_id;
+                    blacklist(mem_id);  //加入黑名单
+                }
+            }
+        });
+        tv_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 举报的弹窗
+     */
+    private void dialog_jubao(final String circleId) {
+        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_exit);
+        exitDialog.show();
+        tv_title = (TextView) exitDialog.findViewById(R.id.dialog_exit_title);
+        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
+        tv_no = (TextView) exitDialog.findViewById(R.id.exit_no);
+        tv_title.setText(R.string.if_tip_off);
+        tv_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDialog.dismiss();
+                Jubao(circleId);  //举报
+            }
+        });
+        tv_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 黑名单
+     */
+    private void blacklist(String mem_id) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("object_id", mem_id);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.addblacklistApi, JSONHandler.JTYPE_ADD_BLACK, HttpRequest.HttpMethod.GET,
+                params, handler);
+    }
+
+    /**
+     * 举报
+     */
+    private void Jubao(String ob_id) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("object_id", ob_id);
+        params.addQueryStringParameter("species", "micropost");
+        params = KelaParams.generateSignParam("POST", Consts.givesuggestApi, params);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.givesuggestApi, JSONHandler.JTYPE_GIVE_SUGGEST, HttpRequest.HttpMethod.POST,
+                params, handler);
+    }
+
+    /**
      * 打开图片查看器
+     *
      * @param position
      * @param urls2
      */

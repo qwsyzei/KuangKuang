@@ -15,7 +15,9 @@ import android.widget.TextView;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
+
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.main.M_CircleDetailActivity;
 import yksg.kuangkuang.main.MainActivity;
@@ -43,8 +45,9 @@ public class M_MyWordsAdapter extends ArrayAdapter<MyWord> {
     String error_code;
     Bundle handlerBundler;
     private int position123;
+
     public M_MyWordsAdapter(Context context, List<MyWord> list, Handler h) {
-        super(context,R.layout.item_myword_gridview,list);
+        super(context, R.layout.item_myword_gridview, list);
         this.ctx = context;
         this.list = list;
         this.handler = h;
@@ -102,7 +105,7 @@ public class M_MyWordsAdapter extends ArrayAdapter<MyWord> {
                 intent.putExtra("content", list.get(position).getContent_son());
                 intent.putExtra("like", list.get(position).getLike_number());
                 intent.putExtra("comment", list.get(position).getComment_number());
-                intent.putExtra("is_like",list.get(position).getIs_like());
+                intent.putExtra("is_like", list.get(position).getIs_like());
                 intent.putExtra("url1", list.get(position).getUrl1());
                 intent.putExtra("url2", list.get(position).getUrl2());
                 intent.putExtra("url3", list.get(position).getUrl3());
@@ -129,12 +132,7 @@ public class M_MyWordsAdapter extends ArrayAdapter<MyWord> {
                 tv_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        RequestParams params = new RequestParams();
-                        params.addQueryStringParameter("id", list.get(position).getId());
-
-                        if (http == null) http = new MyHTTP(ctx);
-                        http.baseRequest(Consts.deleteMywordApi, JSONHandler.JTYPE_DELETE_MYWORD, HttpRequest.HttpMethod.GET,
-                                params, handler);
+                        deleteMyword(list.get(position).getId());//删除
                     }
                 });
                 return true;
@@ -142,6 +140,21 @@ public class M_MyWordsAdapter extends ArrayAdapter<MyWord> {
         });
         return ret;
     }
+
+    /**
+     * 删除我的说说
+     *
+     * @param word_id
+     */
+    private void deleteMyword(String word_id) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", word_id);
+
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.deleteMywordApi, JSONHandler.JTYPE_DELETE_MYWORD, HttpRequest.HttpMethod.GET,
+                params, handler);
+    }
+
     public void updateData() {
         if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
             ToastUtil.show(ctx, R.string.delete_success);
@@ -149,7 +162,7 @@ public class M_MyWordsAdapter extends ArrayAdapter<MyWord> {
             Intent intent = new Intent(ctx, MainActivity.class);
             intent.putExtra("goto", "me");
             ctx.startActivity(intent);
-            ((Activity)ctx).finish();
+            ((Activity) ctx).finish();
         }
     }
 
@@ -160,6 +173,7 @@ public class M_MyWordsAdapter extends ArrayAdapter<MyWord> {
             ToastUtil.show(ctx, responseJson);
         }
     }
+
     class ViewHolder {
         ImageView bg_im;
         TextView tv_time;

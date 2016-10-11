@@ -102,24 +102,7 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                 public void onClick(View view) {
                     pos = position;
                     if (DataCenter.isSigned()) {
-                        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
-                        exitDialog.setCanceledOnTouchOutside(true);
-                        exitDialog.show();
-
-                        tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
-                        tv_cancel.setText(R.string.delete_the_comment);
-
-                        tv_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                exitDialog.dismiss();
-                                RequestParams params = new RequestParams();
-                                params.addQueryStringParameter("object", ac.getId());
-                                if (http == null) http = new MyHTTP(ctx);
-                                http.baseRequest(Consts.deletecirclecommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
-                                        params, handler);
-                            }
-                        });
+                        dialog_delete(ac.getId());//删除弹窗
                     } else {
                         ToastUtil.show(ctx, R.string.not_login_forbid);
                     }
@@ -133,39 +116,13 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                 public void onClick(View view) {
                     pos = position;
                     if (DataCenter.isSigned()) {
-                        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
-                        exitDialog.setCanceledOnTouchOutside(true);
-                        exitDialog.show();
-                        editText = (ContainsEmojiEditText) exitDialog.findViewById(R.id.dialog_reply_edit);
-                        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
-                        tv_cancel = (TextView) exitDialog.findViewById(R.id.exit_no);
-                        tv_yes.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //调用回复评论的接口
-                                RequestParams params = new RequestParams();
-                                params.addQueryStringParameter("micropost_id", ac.getMicropost_id());
-                                params.addQueryStringParameter("member_id", DataCenter.getMember_id());
-                                params.addQueryStringParameter("content", editText.getText().toString());
-                                params.addQueryStringParameter("object", ac.getMember_id());
-
-                                if (http == null) http = new MyHTTP(ctx);
-                                http.baseRequest(Consts.commentCircleApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
-                                        params, handler);
-                            }
-                        });
-                        tv_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                exitDialog.dismiss();
-                            }
-                        });
+                        //回复弹窗
+                        dialog_reply(ac.getMicropost_id(), DataCenter.getMember_id(), ac.getMember_id());
                     } else {
                         ToastUtil.show(ctx, R.string.not_login_forbid);
                     }
                 }
             });
-
 
         } else if (!ac.getObject_id().equals("0") && ac.getMember_id().equals(DataCenter.getMember_id())) {//有对谁，是自己的
             viewHolder.tv_replytext.setText("回复  " + ac.getObject_nickname() + "：" + ac.getContent_text());
@@ -174,24 +131,7 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                 public void onClick(View view) {
                     pos = position;
                     if (DataCenter.isSigned()) {
-                        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
-                        exitDialog.setCanceledOnTouchOutside(true);
-                        exitDialog.show();
-
-                        tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
-                        tv_cancel.setText(R.string.delete_the_comment);
-
-                        tv_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                exitDialog.dismiss();
-                                RequestParams params = new RequestParams();
-                                params.addQueryStringParameter("object", ac.getId());
-                                if (http == null) http = new MyHTTP(ctx);
-                                http.baseRequest(Consts.deletecirclecommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
-                                        params, handler);
-                            }
-                        });
+                        dialog_delete(ac.getId());//删除弹窗
                     } else {
                         ToastUtil.show(ctx, R.string.not_login_forbid);
                     }
@@ -205,33 +145,8 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
                 public void onClick(View view) {
                     pos = position;
                     if (DataCenter.isSigned()) {
-                        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
-                        exitDialog.setCanceledOnTouchOutside(true);
-                        exitDialog.show();
-                        editText = (ContainsEmojiEditText) exitDialog.findViewById(R.id.dialog_reply_edit);
-                        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
-                        tv_cancel = (TextView) exitDialog.findViewById(R.id.exit_no);
-                        tv_yes.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //调用回复评论的接口
-                                RequestParams params = new RequestParams();
-                                params.addQueryStringParameter("micropost_id", ac.getMicropost_id());
-                                params.addQueryStringParameter("member_id", DataCenter.getMember_id());
-                                params.addQueryStringParameter("content", editText.getText().toString());
-                                params.addQueryStringParameter("object", ac.getMember_id());
-
-                                if (http == null) http = new MyHTTP(ctx);
-                                http.baseRequest(Consts.commentCircleApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
-                                        params, handler);
-                            }
-                        });
-                        tv_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                exitDialog.dismiss();
-                            }
-                        });
+                        //回复弹窗
+                        dialog_reply(ac.getMicropost_id(), DataCenter.getMember_id(), ac.getMember_id());
                     } else {
                         ToastUtil.show(ctx, R.string.not_login_forbid);
                     }
@@ -239,16 +154,86 @@ public class C_CircleCommentAdapter extends ArrayAdapter<CircleAllComment> {
             });
         }
         String time = null;
-            try {
-                time = MyDate.timeLogic(ac.getCreated_at());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            time = MyDate.timeLogic(ac.getCreated_at());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         viewHolder.created_at.setText(time);
         viewHolder.tv_nickname.setText(ac.getNickname());
 
         picasso.with(ctx).load(Consts.host + "/" + ac.getPicture_son()).into(viewHolder.im_head);
         return convertView;
+    }
+
+    /**
+     * 删除弹窗
+     */
+    private void dialog_delete(final String ididid) {
+        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+        exitDialog.setCanceledOnTouchOutside(true);
+        exitDialog.show();
+
+        tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+        tv_cancel.setText(R.string.delete_the_comment);
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDialog.dismiss();
+                delete(ididid);  //删除
+            }
+        });
+    }
+
+    /**
+     * 回复弹窗
+     */
+    private void dialog_reply(final String micro_id, final String mem_id,  final String obj) {
+        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
+        exitDialog.setCanceledOnTouchOutside(true);
+        exitDialog.show();
+        editText = (ContainsEmojiEditText) exitDialog.findViewById(R.id.dialog_reply_edit);
+        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
+        tv_cancel = (TextView) exitDialog.findViewById(R.id.exit_no);
+        tv_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //调用回复评论的接口
+                getback(micro_id, mem_id, editText.getText().toString(), obj);
+            }
+        });
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 删除
+     */
+    private void delete(String idid) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("object", idid);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.deletecirclecommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
+                params, handler);
+    }
+
+    /**
+     * 回复评论
+     */
+    private void getback(String micropost_id, String member_id, String content, String object) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("micropost_id", micropost_id);
+        params.addQueryStringParameter("member_id", member_id);
+        params.addQueryStringParameter("content", content);
+        params.addQueryStringParameter("object", object);
+
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.commentCircleApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
+                params, handler);
     }
 
     public void updateData() {

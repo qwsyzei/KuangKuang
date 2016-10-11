@@ -96,25 +96,7 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
                 public void onClick(View view) {
                     position123 = position;
                     if (DataCenter.isSigned()) {
-                        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
-                        exitDialog.setCanceledOnTouchOutside(true);
-                        exitDialog.show();
-
-                        tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
-                        tv_cancel.setText(R.string.delete_the_comment);
-
-                        tv_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                exitDialog.dismiss();
-                                RequestParams params = new RequestParams();
-                                params.addQueryStringParameter("id", ac.getId());
-                                params.addQueryStringParameter("article_id", ac.getArticle_id());
-                                if (http == null) http = new MyHTTP(ctx);
-                                http.baseRequest(Consts.articlesDeleteCommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
-                                        params, handler);
-                            }
-                        });
+                        dialog_delete(ac.getId(), ac.getArticle_id());//删除弹窗
                     } else {
                         ToastUtil.show(ctx, R.string.not_login_forbid);
                     }
@@ -128,32 +110,7 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
                 public void onClick(View view) {
                     position123 = position;
                     if (DataCenter.isSigned()) {
-                        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
-                        exitDialog.setCanceledOnTouchOutside(true);
-                        exitDialog.show();
-                        editText = (ContainsEmojiEditText) exitDialog.findViewById(R.id.dialog_reply_edit);
-                        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
-                        tv_cancel = (TextView) exitDialog.findViewById(R.id.exit_no);
-                        tv_yes.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //调用回复评论的接口
-                                RequestParams params = new RequestParams();
-                                params.addQueryStringParameter("article_id", ac.getArticle_id());
-                                params.addQueryStringParameter("comment", editText.getText().toString());
-                                params.addQueryStringParameter("object", ac.getMember_id());
-
-                                if (http == null) http = new MyHTTP(ctx);
-                                http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
-                                        params, handler);
-                            }
-                        });
-                        tv_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                exitDialog.dismiss();
-                            }
-                        });
+                        dialog_reply(ac.getArticle_id(), ac.getMember_id());//回复弹窗
                     } else {
                         ToastUtil.show(ctx, R.string.not_login_forbid);
                     }
@@ -167,29 +124,10 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
                 public void onClick(View view) {
                     position123 = position;
                     if (DataCenter.isSigned()) {
-                        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
-                        exitDialog.setCanceledOnTouchOutside(true);
-                        exitDialog.show();
-
-                        tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
-                        tv_cancel.setText(R.string.delete_the_comment);
-
-                        tv_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                exitDialog.dismiss();
-                                RequestParams params = new RequestParams();
-                                params.addQueryStringParameter("id", ac.getId());
-                                params.addQueryStringParameter("article_id", ac.getArticle_id());
-                                if (http == null) http = new MyHTTP(ctx);
-                                http.baseRequest(Consts.articlesDeleteCommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
-                                        params, handler);
-                            }
-                        });
+                        dialog_delete(ac.getId(), ac.getArticle_id());//删除弹窗
                     } else {
                         ToastUtil.show(ctx, R.string.not_login_forbid);
                     }
-
                 }
             });
 
@@ -200,32 +138,7 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
                 public void onClick(View view) {
                     position123 = position;
                     if (DataCenter.isSigned()) {
-                        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
-                        exitDialog.setCanceledOnTouchOutside(true);
-                        exitDialog.show();
-                        editText = (ContainsEmojiEditText) exitDialog.findViewById(R.id.dialog_reply_edit);
-                        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
-                        tv_cancel = (TextView) exitDialog.findViewById(R.id.exit_no);
-                        tv_yes.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //调用回复评论的接口
-                                RequestParams params = new RequestParams();
-                                params.addQueryStringParameter("article_id", ac.getArticle_id());
-                                params.addQueryStringParameter("comment", editText.getText().toString());
-                                params.addQueryStringParameter("object", ac.getMember_id());
-
-                                if (http == null) http = new MyHTTP(ctx);
-                                http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
-                                        params, handler);
-                            }
-                        });
-                        tv_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                exitDialog.dismiss();
-                            }
-                        });
+                        dialog_reply(ac.getArticle_id(), ac.getMember_id());//回复弹窗
                     } else {
                         ToastUtil.show(ctx, R.string.not_login_forbid);
                     }
@@ -234,17 +147,89 @@ public class S_AllCommentAdapter extends ArrayAdapter<AllComment> {
 
         }
         String time = null;
-            try {
-                time = MyDate.timeLogic(ac.getCreated_at());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            time = MyDate.timeLogic(ac.getCreated_at());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         viewHolder.created_at.setText(time);
         viewHolder.tv_nickname.setText(ac.getNickname());
 
         picasso.with(ctx).load(Consts.host + "/" + ac.getPicture_son()).into(viewHolder.im_head);
         return convertView;
+    }
+
+    /**
+     * 删除弹窗
+     */
+    private void dialog_delete(final String idid, final String article_id) {
+        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_cancel);
+        exitDialog.setCanceledOnTouchOutside(true);
+        exitDialog.show();
+
+        tv_cancel = (TextView) exitDialog.findViewById(R.id.dialog_tv_cancel_collect);
+        tv_cancel.setText(R.string.delete_the_comment);
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDialog.dismiss();
+                delete(idid, article_id);//删除
+            }
+        });
+    }
+
+    /**
+     * 回复评论弹窗
+     */
+    private void dialog_reply(final String art_id, final String mem_id) {
+        exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_reply);
+        exitDialog.setCanceledOnTouchOutside(true);
+        exitDialog.show();
+        editText = (ContainsEmojiEditText) exitDialog.findViewById(R.id.dialog_reply_edit);
+        tv_yes = (TextView) exitDialog.findViewById(R.id.exit_yes);
+        tv_cancel = (TextView) exitDialog.findViewById(R.id.exit_no);
+        tv_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //调用回复评论的接口
+                reply(art_id, editText.getText().toString(), mem_id);
+            }
+        });
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 删除评论
+     *
+     * @param comment_id
+     * @param article_id
+     */
+    private void delete(String comment_id, String article_id) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("id", comment_id);
+        params.addQueryStringParameter("article_id", article_id);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.articlesDeleteCommentApi, JSONHandler.JTYPE_COMMENT_DESTROY, HttpRequest.HttpMethod.GET,
+                params, handler);
+    }
+
+    /**
+     * 回复评论
+     */
+    private void reply(String article_id, String comment, String object) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("article_id", article_id);
+        params.addQueryStringParameter("comment", comment);
+        params.addQueryStringParameter("object", object);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.articlesCommentApi, JSONHandler.JTYPE_ARTICLES_COMMENT, HttpRequest.HttpMethod.GET,
+                params, handler);
     }
 
     public void updateData() {

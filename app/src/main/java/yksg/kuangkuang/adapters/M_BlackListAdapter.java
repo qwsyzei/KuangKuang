@@ -97,17 +97,24 @@ public class M_BlackListAdapter extends ArrayAdapter<Blacklist> {
                     @Override
                     public void onClick(View view) {
                         exitDialog.dismiss();
-                        RequestParams params = new RequestParams();
-                        params.addQueryStringParameter("object_id", ac.getObject_id());
-                        if (http == null) http = new MyHTTP(ctx);
-                        http.baseRequest(Consts.deleteblacklistApi, JSONHandler.JTYPE_DELETE_BLACK, HttpRequest.HttpMethod.GET,
-                                params, handler);
+                        delete(ac.getObject_id());//移除
                     }
                 });
                 return true;
             }
         });
         return convertView;
+    }
+
+    /**
+     * 移除黑名单
+     */
+    private void delete(String object_id) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("object_id", object_id);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.deleteblacklistApi, JSONHandler.JTYPE_DELETE_BLACK, HttpRequest.HttpMethod.GET,
+                params, handler);
     }
 
     public void updateData() {

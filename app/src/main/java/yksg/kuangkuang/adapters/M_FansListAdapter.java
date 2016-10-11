@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -89,9 +90,7 @@ public class M_FansListAdapter extends ArrayAdapter<Fans> {
         } else {
             viewHolder.signature.setText(ac.getSignature());
         }
-//        Context context = ctx.getApplicationContext();
-//        initImageLoader(context);
-//        ImageLoader.getInstance().displayImage(Consts.host + "/" + ac.getPicture_son(), viewHolder.im_pic);
+
         picasso.with(ctx).load(Consts.host + "/" + ac.getPicture_son()).into(viewHolder.im_pic);
         if (ac.getIsfollow().equals("1")) {
             viewHolder.im_follow_state.setImageResource(R.mipmap.follow_done01);
@@ -118,11 +117,7 @@ public class M_FansListAdapter extends ArrayAdapter<Fans> {
                         @Override
                         public void onClick(View view) {
                             exitDialog.dismiss();
-                            RequestParams params = new RequestParams();
-                            params.addQueryStringParameter("object", ac.getObject_id());
-                            if (http == null) http = new MyHTTP(ctx);
-                            http.baseRequest(Consts.addfollowsApi, JSONHandler.JTYPE_ADD_FOLLOW, HttpRequest.HttpMethod.GET,
-                                    params, handler);
+                            AddFollow(ac.getObject_id());//加关注
                         }
                     });
                 }
@@ -130,6 +125,17 @@ public class M_FansListAdapter extends ArrayAdapter<Fans> {
         });
 
         return convertView;
+    }
+
+    /**
+     * 加关注
+     */
+    private void AddFollow(String object_id) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("object", object_id);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.addfollowsApi, JSONHandler.JTYPE_ADD_FOLLOW, HttpRequest.HttpMethod.GET,
+                params, handler);
     }
 
     public void updateData() {

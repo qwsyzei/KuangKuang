@@ -117,22 +117,13 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
         }
         viewHolder.tv_tag.setText("[" + subject.getTag() + "]");
 
-//        Context context = ctx.getApplicationContext();
-//        initImageLoader(context);
-//        ImageLoader.getInstance().displayImage(Consts.host + subject.getPicture(), viewHolder.im_picture);
-//        ImageLoader.getInstance().displayImage(Consts.host + "/" + subject.getPicture_son(), viewHolder.im_head_pic);
+
         picasso.with(ctx).load(Consts.host + subject.getPicture()).into(viewHolder.im_picture);
         picasso.with(ctx).load(Consts.host + "/" + subject.getPicture_son()).into(viewHolder.im_head_pic);
         viewHolder.layout_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequestParams params = new RequestParams();
-                params.addQueryStringParameter("article_id", subject.getId());
-                params = KelaParams.generateSignParam("GET", Consts.articlesViewApi, params);
-                if (http == null) http = new MyHTTP(ctx);
-                http.baseRequest(Consts.articlesViewApi, JSONHandler.JTYPE_ARTICLES_VIEWS, HttpRequest.HttpMethod.GET,
-                        params, handler);
-
+                readread(subject.getId());//阅读
                 Intent intent = new Intent(ctx, S_ArticleActivity.class);
                 intent.putExtra("article_id", subject.getId());
                 intent.putExtra("content_html", subject.getContent());
@@ -155,6 +146,18 @@ public class S_SubjectAdapter extends ArrayAdapter<Subject> {
 
 
         return convertView;
+    }
+
+    /**
+     * 阅读
+     */
+    private void readread(String article_id) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("article_id", article_id);
+        params = KelaParams.generateSignParam("GET", Consts.articlesViewApi, params);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.articlesViewApi, JSONHandler.JTYPE_ARTICLES_VIEWS, HttpRequest.HttpMethod.GET,
+                params, handler);
     }
 
     public void updateData() {

@@ -41,7 +41,8 @@ public class S_TopAdapter extends ArrayAdapter<Top> {
     String jtype, responseJson;
     String error_code;
     Bundle handlerBundler;
-private Picasso picasso;
+    private Picasso picasso;
+
     public S_TopAdapter(Context context, List<Top> list, Handler h) {
         super(context, R.layout.item_top_ten, list);
         this.ctx = context;
@@ -79,21 +80,12 @@ private Picasso picasso;
         viewHolder.top.setText("Top" + (position + 1) + "");
         viewHolder.title.setText(ac.getTitle());
         viewHolder.tag.setText(ac.getTag());
-//        Context context = ctx.getApplicationContext();
-//        initImageLoader(context);
-//        ImageLoader.getInstance().displayImage(Consts.host + ac.getPicture_url(), viewHolder.im_pic);
-picasso.with(ctx).load(Consts.host+ac.getPicture_url()).into(viewHolder.im_pic);
+
+        picasso.with(ctx).load(Consts.host + ac.getPicture_url()).into(viewHolder.im_pic);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                RequestParams params = new RequestParams();
-                params.addQueryStringParameter("article_id", ac.getId());
-                params = KelaParams.generateSignParam("GET", Consts.articlesViewApi, params);
-                if (http == null) http = new MyHTTP(ctx);
-                http.baseRequest(Consts.articlesViewApi, JSONHandler.JTYPE_ARTICLES_VIEWS, HttpRequest.HttpMethod.GET,
-                        params, handler);
-
+                readread(ac.getId());//阅读了
                 Intent intent = new Intent(ctx, S_ArticleActivity.class);
                 intent.putExtra("article_id", ac.getId());
                 intent.putExtra("content_html", ac.getContent());
@@ -108,13 +100,25 @@ picasso.with(ctx).load(Consts.host+ac.getPicture_url()).into(viewHolder.im_pic);
                 intent.putExtra("signature", ac.getSignature());
                 intent.putExtra("author_member_id", ac.getMember_id());
                 intent.putExtra("follow_state", ac.getFollow_state());
-                intent.putExtra("is_like",ac.getIs_like());
-                intent.putExtra("is_collect",ac.getIs_collect());
+                intent.putExtra("is_like", ac.getIs_like());
+                intent.putExtra("is_collect", ac.getIs_collect());
                 ctx.startActivity(intent);
             }
         });
 
         return convertView;
+    }
+
+    /**
+     * 阅读
+     */
+    private void readread(String article_id) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("article_id", article_id);
+        params = KelaParams.generateSignParam("GET", Consts.articlesViewApi, params);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.articlesViewApi, JSONHandler.JTYPE_ARTICLES_VIEWS, HttpRequest.HttpMethod.GET,
+                params, handler);
     }
 
     public void updateData() {

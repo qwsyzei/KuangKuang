@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
 import yksg.kuangkuang.R;
 import yksg.kuangkuang.models.CircleGridViewEntity;
 
@@ -21,34 +23,33 @@ import static yksg.kuangkuang.utils.MyApplication.initImageLoader;
  * Created by qiwei on 2016/7/8.
  */
 public class C_CircleGridAdapter extends ArrayAdapter<CircleGridViewEntity> {
-    private Context ctx ;
+    private Context ctx;
     private List<CircleGridViewEntity> list;
-private Picasso picasso;
+    private Picasso picasso;
 
     public C_CircleGridAdapter(Context context, List<CircleGridViewEntity> list) {
-        super(context,R.layout.item_gridview,list);
+        super(context, R.layout.item_gridview, list);
         this.ctx = context;
         this.list = list;
     }
 
     @Override
     public int getCount() {
-        int ret = 0 ;
+        int ret = 0;
         if (list != null) {
             ret = list.size();
         }
         return ret;
     }
 
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View ret = null;
         if (convertView != null) {
-            ret= convertView;
-        }else{
+            ret = convertView;
+        } else {
             ViewHolder holder = null;
-            ret = LayoutInflater.from(ctx).inflate(R.layout.item_gridview,parent,false);
+            ret = LayoutInflater.from(ctx).inflate(R.layout.item_gridview, parent, false);
             holder = new ViewHolder();
             holder.bgIcon = (ImageView) ret.findViewById(R.id.im_item_girdvie);
 

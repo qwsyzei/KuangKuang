@@ -127,17 +127,26 @@ public class M_MyCollectAdapter extends ArrayAdapter<MyCollect> {
                 tv_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        RequestParams params = new RequestParams();
-                        params.addQueryStringParameter("article_id", ac.getId());
-                        if (http == null) http = new MyHTTP(ctx);
-                        http.baseRequest(Consts.articlesCollectDestroyApi, JSONHandler.JTYPE_COLLECT_DESTROY, HttpRequest.HttpMethod.GET,
-                                params, handler);
+                        cancelCollect(ac.getId());//取消收藏
                     }
                 });
                 return true;
             }
         });
         return convertView;
+    }
+
+    /**
+     * 取消收藏
+     *
+     * @param article_id
+     */
+    private void cancelCollect(String article_id) {
+        RequestParams params = new RequestParams();
+        params.addQueryStringParameter("article_id", article_id);
+        if (http == null) http = new MyHTTP(ctx);
+        http.baseRequest(Consts.articlesCollectDestroyApi, JSONHandler.JTYPE_COLLECT_DESTROY, HttpRequest.HttpMethod.GET,
+                params, handler);
     }
 
     public void updateData() {

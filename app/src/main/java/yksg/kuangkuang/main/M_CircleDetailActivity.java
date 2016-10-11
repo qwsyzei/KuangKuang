@@ -192,9 +192,9 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
             tv_comment.setText(comment_number);
         }
         if (is_like != null && is_like.equals("1")) {
-            im_like.setImageResource(R.mipmap.small_like01);
+            im_like.setImageResource(R.mipmap.like01);
         } else {
-            im_like.setImageResource(R.mipmap.small_like);
+            im_like.setImageResource(R.mipmap.like);
         }
         headerEntitiesList = new ArrayList<>();
         String[] url = new String[]{url1, url2, url3, url4, url5, url6, url7, url8, url9};
@@ -325,12 +325,12 @@ public class M_CircleDetailActivity extends BaseActivity implements View.OnClick
         super.updateData();
         if (jtype.equals(JSONHandler.JTYPE_ARTICLES_LIKE)) {
             ToastUtil.show(M_CircleDetailActivity.this,getString(R.string.praise_done));
-            im_like.setImageResource(R.mipmap.small_like01);
+            im_like.setImageResource(R.mipmap.like01);
             tv_like.setText((Integer.parseInt(tv_like.getText().toString()) + 1) + "");
             is_like="1";
         }else if (jtype.equals(JSONHandler.JTYPE_ARTICLES_CANCEL_LIKE)) {
             ToastUtil.show(M_CircleDetailActivity.this, getString(R.string.cancel_praise_done));
-            im_like.setImageResource(R.mipmap.small_like);
+            im_like.setImageResource(R.mipmap.like);
             tv_like.setText((Integer.parseInt(tv_like.getText().toString()) - 1) + "");
             is_like="0";
         } else if (jtype.equals(JSONHandler.JTYPE_DELETE_MYWORD)) {
