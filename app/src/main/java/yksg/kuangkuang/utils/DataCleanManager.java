@@ -12,7 +12,7 @@ import android.text.TextUtils;
  * Created by qiwei on 2016/7/28.
  */
 /** * 本应用数据清除管理器 */
-public class DataCleanManager {
+public class  DataCleanManager {
     /**
      * * 清除本应用内部缓存(/data/data/com.xxx.xxx/cache) * *
      *

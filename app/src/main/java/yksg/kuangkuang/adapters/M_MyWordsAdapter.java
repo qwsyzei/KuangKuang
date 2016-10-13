@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import yksg.kuangkuang.R;
+import yksg.kuangkuang.main.C_ReleaseWordActivity;
 import yksg.kuangkuang.main.M_CircleDetailActivity;
 import yksg.kuangkuang.main.MainActivity;
 import yksg.kuangkuang.models.MyWord;
@@ -82,62 +83,79 @@ public class M_MyWordsAdapter extends ArrayAdapter<MyWord> {
             ret = convertView;
         } else {
             ViewHolder holder = null;
-            ret = LayoutInflater.from(ctx).inflate(R.layout.item_myword_gridview, parent, false);
-            holder = new ViewHolder();
-            holder.bg_im = (ImageView) ret.findViewById(R.id.item_myword_gridview_im);
-            holder.tv_time = (TextView) ret.findViewById(R.id.item_myword_gridview_tv_time);
-            holder.tv_content = (TextView) ret.findViewById(R.id.item_myword_gridview_tv_content);
-            ret.setTag(holder);
+            if (position==0){       //第一个要显示特定布局
+                ret = LayoutInflater.from(ctx).inflate(R.layout.myword_release, parent, false);
+                holder = new ViewHolder();
+                ret.setTag(holder);
+            }else{
+                ret = LayoutInflater.from(ctx).inflate(R.layout.item_myword_gridview, parent, false);
+                holder = new ViewHolder();
+                holder.bg_im = (ImageView) ret.findViewById(R.id.item_myword_gridview_im);
+                holder.tv_time = (TextView) ret.findViewById(R.id.item_myword_gridview_tv_time);
+                holder.tv_content = (TextView) ret.findViewById(R.id.item_myword_gridview_tv_content);
+                ret.setTag(holder);
+            }
+
         }
         ViewHolder holder = (ViewHolder) ret.getTag();
+        if (position==0){
+            ret.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(ctx, C_ReleaseWordActivity.class);
+                    ctx.startActivity(intent);
+                }
+            });
+        }else{
+            picasso.with(ctx).load(Consts.host + "/" + list.get(position-1).getUrl1()).into(holder.bg_im);
+            holder.tv_time.setText(list.get(position-1).get_create_time());
+            holder.tv_content.setText(list.get(position-1).getContent_son());
+            ret.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ctx, M_CircleDetailActivity.class);
+                    intent.putExtra("id", list.get(position-1).getId());
+                    intent.putExtra("head_pic", list.get(position-1).getPicture_son());
+                    intent.putExtra("created_at", list.get(position-1).getCreated_at());
+                    intent.putExtra("nickname", list.get(position-1).getNickname());
+                    intent.putExtra("content", list.get(position-1).getContent_son());
+                    intent.putExtra("like", list.get(position-1).getLike_number());
+                    intent.putExtra("comment", list.get(position-1).getComment_number());
+                    intent.putExtra("is_like", list.get(position-1).getIs_like());
+                    intent.putExtra("url1", list.get(position-1).getUrl1());
+                    intent.putExtra("url2", list.get(position-1).getUrl2());
+                    intent.putExtra("url3", list.get(position-1).getUrl3());
+                    intent.putExtra("url4", list.get(position-1).getUrl4());
+                    intent.putExtra("url5", list.get(position-1).getUrl5());
+                    intent.putExtra("url6", list.get(position-1).getUrl6());
+                    intent.putExtra("url7", list.get(position-1).getUrl7());
+                    intent.putExtra("url8", list.get(position-1).getUrl8());
+                    intent.putExtra("url9", list.get(position-1).getUrl9());
+                    intent.putExtra("url9", list.get(position-1).getUrl9());
+                    intent.putExtra("type", "me");
+                    ctx.startActivity(intent);
+                }
+            });
+            ret.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    position123 = position-1;
+                    exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_delete);
+                    exitDialog.setCanceledOnTouchOutside(true);
+                    exitDialog.show();
 
-        picasso.with(ctx).load(Consts.host + "/" + list.get(position).getUrl1()).into(holder.bg_im);
-        holder.tv_time.setText(list.get(position).get_create_time());
-        holder.tv_content.setText(list.get(position).getContent_son());
-        ret.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ctx, M_CircleDetailActivity.class);
-                intent.putExtra("id", list.get(position).getId());
-                intent.putExtra("head_pic", list.get(position).getPicture_son());
-                intent.putExtra("created_at", list.get(position).getCreated_at());
-                intent.putExtra("nickname", list.get(position).getNickname());
-                intent.putExtra("content", list.get(position).getContent_son());
-                intent.putExtra("like", list.get(position).getLike_number());
-                intent.putExtra("comment", list.get(position).getComment_number());
-                intent.putExtra("is_like", list.get(position).getIs_like());
-                intent.putExtra("url1", list.get(position).getUrl1());
-                intent.putExtra("url2", list.get(position).getUrl2());
-                intent.putExtra("url3", list.get(position).getUrl3());
-                intent.putExtra("url4", list.get(position).getUrl4());
-                intent.putExtra("url5", list.get(position).getUrl5());
-                intent.putExtra("url6", list.get(position).getUrl6());
-                intent.putExtra("url7", list.get(position).getUrl7());
-                intent.putExtra("url8", list.get(position).getUrl8());
-                intent.putExtra("url9", list.get(position).getUrl9());
-                intent.putExtra("url9", list.get(position).getUrl9());
-                intent.putExtra("type", "me");
-                ctx.startActivity(intent);
-            }
-        });
-        ret.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                position123 = position;
-                exitDialog = new ExitDialog(ctx, R.style.MyDialogStyle, R.layout.dialog_delete);
-                exitDialog.setCanceledOnTouchOutside(true);
-                exitDialog.show();
+                    tv_delete = (TextView) exitDialog.findViewById(R.id.dialog_tv_delete_myword);
+                    tv_delete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            deleteMyword(list.get(position-1).getId());//删除
+                        }
+                    });
+                    return true;
+                }
+            });
+        }
 
-                tv_delete = (TextView) exitDialog.findViewById(R.id.dialog_tv_delete_myword);
-                tv_delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        deleteMyword(list.get(position).getId());//删除
-                    }
-                });
-                return true;
-            }
-        });
         return ret;
     }
 

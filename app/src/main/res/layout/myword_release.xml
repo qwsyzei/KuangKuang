@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="@dimen/word_layout_height"
+    android:id="@+id/layout_myword_release">
+<ImageView
+    android:id="@+id/myword_release_im"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:src="@mipmap/camera_release"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/myword_release_im"
+        android:layout_marginTop="@dimen/signup__text_m_l_r"
+       android:text="@string/release_now" />
+</RelativeLayout>
